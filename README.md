@@ -1,6 +1,7 @@
 # Proyecto-Buzos-MT
 Hasta el momento se ecuentra en el repositorio del proyecto Buzos-MT, todos los entregables correspondientes al trimestre 1 y 2.
 Lista de entregables presentes en el repositorio:
+
 Trimestre 1.
 1. Nombre proyecto - Objetivo general - Objetivos especí­ficos - Planteamiento del problema y pregunta problema - Alcance del proyecto - Justificación.
 2. Mapa de procesos que implica el sistema de información (BPMN del proceso de negocio, no del aplicativo a desarrollar).
