@@ -1,7 +1,7 @@
 # Proyecto-Buzos-MT
 <p align="center">
-<img src="(https://github.com/NievesYonathan/Proyecto-Buzos-MT/assets/164965803/44c6abdd-11de-4d60-b945-41a448bd0e0e)"
-</P>
+<img src="(https://github.com/NievesYonathan/Proyecto-Buzos-MT/assets/164965803/44c6abdd-11de-4d60-b945-41a448bd0e0e)">
+</p>
 
 # Problematíca de proyecto
 En Buzos MT, la falta de un software de gestión para producción y almacenamiento afecta gravemente la planificación y gestión del inventario. Esto obliga al personal a realizar registros manuales laboriosos y propensos a errores, como controlar materiales y productos terminados en libretas. Esta situación, persistente desde la fundación hace 5 años, obstaculiza la eficiencia y limita el crecimiento de la empresa.
