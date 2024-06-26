@@ -1,4 +1,5 @@
 # Proyecto-Buzos-MT
+![Logo#1](https://github.com/NievesYonathan/Proyecto-Buzos-MT/assets/164965803/44c6abdd-11de-4d60-b945-41a448bd0e0e)
 Hasta el momento se ecuentra en el repositorio del proyecto Buzos-MT, todos los entregables correspondientes al trimestre 1 y 2.
 Lista de entregables presentes en el repositorio:
 
