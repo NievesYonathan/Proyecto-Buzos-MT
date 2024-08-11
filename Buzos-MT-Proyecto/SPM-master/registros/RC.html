@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport"
 		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<title>Nuevo usuario</title>
+	<title>Nuevo contacto</title>
 
 	<!-- Normalize V8.0.1 -->
 	<link rel="stylesheet" href="../css/normalize.css">
@@ -35,20 +35,6 @@
 </head>
 
 <body>
-
-	<!-- Page cotent -->
-	<section class="full-box page-content">
-		<nav class="full-box navbar-info">
-			<a href="#" class="float-left show-nav-lateral">
-				<i class="fas fa-exchange-alt"></i>
-			</a>
-			<a href="user-update.html">
-				<i class="fas fa-user-cog"></i>
-			</a>
-			<a href="#" class="btn-exit-system">
-				<i class="fas fa-power-off"></i>
-			</a>
-		</nav>
 
 		<!-- Page header -->
 		<div class="full-box page-header">
@@ -96,7 +82,14 @@
 
 							<div class="col-12 col-md-4">
 								<div class="form-group">
-									<label for="usuario_apellido" class="bmd-label-floating">titulo/cargo del
+									<label for="usuario_apellido" class="bmd-label-floating">perfil</label>
+									<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control"
+										name="usuario_apellido" id="usuario_apellido" maxlength="35">
+								</div>
+							</div>
+							<div class="col-12 col-md-6">
+								<div class="form-group">
+									<label for="usuario_apellido" class="bmd-label-floating">cargo del
 										contacto</label>
 									<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control"
 										name="usuario_apellido" id="usuario_apellido" maxlength="35">
@@ -123,11 +116,11 @@
 										class="form-control" name="usuario_direccion" id="usuario_direccion"
 										maxlength="190">
 								</div>
-								<div class="form-group">
-									<label for="usuario_notas" class="bmd-label-floating">notas
-										adicionales</label>
-									<input type="text" pattern="[a-zA-Z0-99áéíóúÁÉÍÓÚñÑ()# ]{1,190}"
-										class="form-control" name="usuario_notas" id="usuario_notas" maxlength="80">
+									<div class="form-group">
+										<label for="usuario_nombre" class="bmd-label-floating">Adicional</label>
+										<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control"
+											name="usuario_nombre" id="usuario_nombre" maxlength="35">
+									</div>
 								</div>
 							</div>
 						</div>

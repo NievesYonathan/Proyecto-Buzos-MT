@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport"
 		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<title>Lista de contactos</title>
+	<title>Buscar proveedor</title>
 
 	<!-- Normalize V8.0.1 -->
 	<link rel="stylesheet" href="../css/normalize.css">
@@ -31,44 +31,93 @@
 	<!-- General Styles -->
 	<link rel="stylesheet" href="../css/style.css">
 
+
 </head>
 
 <body>
+
 			<!-- Page header -->
 			<div class="full-box page-header">
 				<h3 class="text-left">
-					<i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE CONTACTOS
+					<i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR PROVEEDOR
 				</h3>
 			</div>
 
 			<div class="container-fluid">
 				<ul class="full-box list-unstyled page-nav-tabs">
 					<li>
-						<a href="RC.html"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVO CONTACTO</a>
+						<a href="CPP.html"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVO PROVEEDOR</a>
 					</li>
 					<li>
-						<a class="active" href="LC.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA
-							DE CONTACTOS</a>
+						<a href="LPP.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE
+							PROVEEDORES</a>
 					</li>
 					<li>
-						<a href="US.html"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR CONTACTO</a>
+						<a class="active" href="UPP.html"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR
+							PROVEEDOR</a>
 					</li>
 				</ul>
 			</div>
 
 			<!-- Content -->
 			<div class="container-fluid">
+				<form class="form-neon" action="">
+					<div class="container-fluid">
+						<div class="row justify-content-md-center">
+							<div class="col-12 col-md-6">
+								<div class="form-group">
+									<label for="inputSearch" class="bmd-label-floating">¿Qué proveedor estas
+										buscando?</label>
+									<input type="text" class="form-control" name="busqueda-" id="inputSearch"
+										maxlength="30">
+								</div>
+							</div>
+							<div class="col-12">
+								<p class="text-center" style="margin-top: 40px;">
+									<button type="submit" class="btn btn-raised btn-info"><i class="fas fa-search"></i>
+										&nbsp; BUSCAR</button>
+								</p>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+
+
+			<div class="container-fluid">
+				<form action="">
+					<input type="hidden" name="eliminar-busqueda" value="eliminar">
+					<div class="container-fluid">
+						<div class="row justify-content-md-center">
+							<div class="col-12 col-md-6">
+								<p class="text-center" style="font-size: 20px;">
+									Resultados de la busqueda <strong>“Buscar”</strong>
+								</p>
+							</div>
+							<div class="col-12">
+								<p class="text-center" style="margin-top: 20px;">
+									<button type="submit" class="btn btn-raised btn-danger"><i
+											class="far fa-trash-alt"></i> &nbsp; ELIMINAR BÚSQUEDA</button>
+								</p>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+
+
+			<div class="container-fluid">
 				<div class="table-responsive">
 					<table class="table table-dark table-sm">
 						<thead>
 							<tr class="text-center roboto-medium">
 								<th>#</th>
-								<th>Nombre del contacto</th>
-								<th>Perfil</th>
-								<th>cargo del contacto</th>
-								<th>direccion</th>
-								<th>Teléfono</th>
-								<th>EMAIL</th>
+								<th>nombre de la empresa</th>
+								<th>direccion de la empresa</th>
+								<th>materiales</th>
+								<th>TELÉFONO</th>
+								<th>nombre de contacto</th>
+								<th>correo electronico</th>
 								<th>ACTUALIZAR</th>
 								<th>ELIMINAR</th>
 							</tr>
@@ -76,14 +125,14 @@
 						<tbody>
 							<tr class="text-center">
 								<td>1</td>
-								<th>NOMBRE DE CONTACTO</th>
-								<th>PERFIL CONTACTO</th>
-								<th>CARGO CONTACTO</th>
-								<th>2345456</th>
+								<th>NOMBRE DE LA EMPERSA</th>
+								<th>DIRECCION DE LA EMPRESA</th>
+								<th>MATERIAL SUMINISTRADO POR LA EMPRESA</th>
 								<th>1234567890</th>
+								<th>NOMBRE DE CONTACTO</th>
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
-									<a href="UC.html" class="btn btn-success">
+									<a href="UPP.html" class="btn btn-success">
 										<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>
@@ -97,14 +146,14 @@
 							</tr>
 							<tr class="text-center">
 								<td>2</td>
-								<th>NOMBRE DE CONTACTO</th>
-								<th>PERFIL CONTACTO</th>
-								<th>CARGO CONTACTO</th>
-								<th>2345456</th>
+								<th>NOMBRE DE LA EMPERSA</th>
+								<th>DIRECCION DE LA EMPRESA</th>
+								<th>MATERIAL SUMINISTRADO POR LA EMPRESA</th>
 								<th>1234567890</th>
+								<th>NOMBRE DE CONTACTO</th>
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
-									<a href="UC.html" class="btn btn-success">
+									<a href="UPP.html" class="btn btn-success">
 										<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>
@@ -118,14 +167,14 @@
 							</tr>
 							<tr class="text-center">
 								<td>3</td>
-								<th>NOMBRE DE CONTACTO</th>
-								<th>PERFIL CONTACTO</th>
-								<th>CARGO CONTACTO</th>
-								<th>2345456</th>
+								<th>NOMBRE DE LA EMPERSA</th>
+								<th>DIRECCION DE LA EMPRESA</th>
+								<th>MATERIAL SUMINISTRADO POR LA EMPRESA</th>
 								<th>1234567890</th>
+								<th>NOMBRE DE CONTACTO</th>
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
-									<a href="UC.html" class="btn btn-success">
+									<a href="UPP.html" class="btn btn-success">
 										<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>
@@ -139,14 +188,14 @@
 							</tr>
 							<tr class="text-center">
 								<td>4</td>
-								<th>NOMBRE DE CONTACTO</th>
-								<th>PERFIL CONTACTO</th>
-								<th>CARGO CONTACTO</th>
-								<th>2345456</th>
+								<th>NOMBRE DE LA EMPERSA</th>
+								<th>DIRECCION DE LA EMPRESA</th>
+								<th>MATERIAL SUMINISTRADO POR LA EMPRESA</th>
 								<th>1234567890</th>
+								<th>NOMBRE DE CONTACTO</th>
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
-									<a href="UC.html" class="btn btn-success">
+									<a href="UPP.html" class="btn btn-success">
 										<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>

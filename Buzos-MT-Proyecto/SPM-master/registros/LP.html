@@ -5,7 +5,7 @@
 	<meta charset="UTF-8">
 	<meta name="viewport"
 		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<title>Lista de contactos</title>
+	<title>Lista de pedidos</title>
 
 	<!-- Normalize V8.0.1 -->
 	<link rel="stylesheet" href="../css/normalize.css">
@@ -37,21 +37,21 @@
 			<!-- Page header -->
 			<div class="full-box page-header">
 				<h3 class="text-left">
-					<i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE CONTACTOS
+					<i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE PEDIDOS
 				</h3>
 			</div>
 
 			<div class="container-fluid">
 				<ul class="full-box list-unstyled page-nav-tabs">
 					<li>
-						<a href="RC.html"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVO CONTACTO</a>
+						<a href="PPD.html"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVO PEDIDO</a>
 					</li>
 					<li>
-						<a class="active" href="LC.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA
-							DE CONTACTOS</a>
+						<a class="active" href="LP.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA
+							DE PEDIDOS</a>
 					</li>
 					<li>
-						<a href="US.html"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR CONTACTO</a>
+						<a href="PS.html"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR PEDIDO</a>
 					</li>
 				</ul>
 			</div>
@@ -63,12 +63,14 @@
 						<thead>
 							<tr class="text-center roboto-medium">
 								<th>#</th>
-								<th>Nombre del contacto</th>
-								<th>Perfil</th>
-								<th>cargo del contacto</th>
-								<th>direccion</th>
-								<th>Teléfono</th>
-								<th>EMAIL</th>
+								<th>FECHA DEL PEDIDO</th>
+								<th>MONTO DEL PEDIDO</th>
+								<th>ESTADO DEL PEDIDO</th>
+								<th>ID DEL PAGO</th>
+								<th>FECHA DEL PAGO</th>
+								<th>MONTO DEL PAGO</th>
+								<th>ESTADO PAGO</th>
+								<th>DESEMPEÑO</th>
 								<th>ACTUALIZAR</th>
 								<th>ELIMINAR</th>
 							</tr>
@@ -76,14 +78,16 @@
 						<tbody>
 							<tr class="text-center">
 								<td>1</td>
-								<th>NOMBRE DE CONTACTO</th>
-								<th>PERFIL CONTACTO</th>
-								<th>CARGO CONTACTO</th>
-								<th>2345456</th>
-								<th>1234567890</th>
-								<th>ADMIN@ADMIN.COM</th>
+								<th>01-01-2024</th>
+								<th>100000</th>
+								<th>COMPLETADO</th>
+								<th>1</th>
+								<th>01-01-2024</th>
+								<th>100000</th>
+								<th>COMPLETADO</th>
+								<th>EXCELENTE</th>
 								<td>
-									<a href="UC.html" class="btn btn-success">
+									<a href="UP.html" class="btn btn-success">
 										<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>
@@ -97,14 +101,16 @@
 							</tr>
 							<tr class="text-center">
 								<td>2</td>
-								<th>NOMBRE DE CONTACTO</th>
-								<th>PERFIL CONTACTO</th>
-								<th>CARGO CONTACTO</th>
-								<th>2345456</th>
-								<th>1234567890</th>
-								<th>ADMIN@ADMIN.COM</th>
+								<th>01-01-2024</th>
+								<th>100000</th>
+								<th>COMPLETADO</th>
+								<th>2</th>
+								<th>01-01-2024</th>
+								<th>100000</th>
+								<th>COMPLETADO</th>
+								<th>EXCELENTE</th>
 								<td>
-									<a href="UC.html" class="btn btn-success">
+									<a href="UP.html" class="btn btn-success">
 										<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>
@@ -118,14 +124,16 @@
 							</tr>
 							<tr class="text-center">
 								<td>3</td>
-								<th>NOMBRE DE CONTACTO</th>
-								<th>PERFIL CONTACTO</th>
-								<th>CARGO CONTACTO</th>
-								<th>2345456</th>
-								<th>1234567890</th>
-								<th>ADMIN@ADMIN.COM</th>
+								<th>01-01-2024</th>
+								<th>100000</th>
+								<th>COMPLETADO</th>
+								<th>3</th>
+								<th>01-01-2024</th>
+								<th>100000</th>
+								<th>COMPLETADO</th>
+								<th>EXCELENTE</th>
 								<td>
-									<a href="UC.html" class="btn btn-success">
+									<a href="UP.html" class="btn btn-success">
 										<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>
@@ -139,14 +147,16 @@
 							</tr>
 							<tr class="text-center">
 								<td>4</td>
-								<th>NOMBRE DE CONTACTO</th>
-								<th>PERFIL CONTACTO</th>
-								<th>CARGO CONTACTO</th>
-								<th>2345456</th>
-								<th>1234567890</th>
-								<th>ADMIN@ADMIN.COM</th>
+								<th>01-01-2024</th>
+								<th>100000</th>
+								<th>COMPLETADO</th>
+								<th>4</th>
+								<th>01-01-2024</th>
+								<th>100000</th>
+								<th>COMPLETADO</th>
+								<th>EXCELENTE</th>
 								<td>
-									<a href="UC.html" class="btn btn-success">
+									<a href="UP.html" class="btn btn-success">
 										<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>
@@ -184,22 +194,22 @@
 	=            Include JavaScript files           =
 	==============================================-->
 	<!-- jQuery V3.4.1 -->
-	<script src="../js/jquery-3.4.1.min.js"></script>
+	<script src="./js/jquery-3.4.1.min.js"></script>
 
 	<!-- popper -->
-	<script src="../js/popper.min.js"></script>
+	<script src="./js/popper.min.js"></script>
 
 	<!-- Bootstrap V4.3 -->
-	<script src="../js/bootstrap.min.js"></script>
+	<script src="./js/bootstrap.min.js"></script>
 
 	<!-- jQuery Custom Content Scroller V3.1.5 -->
-	<script src="../js/jquery.mCustomScrollbar.concat.min.js"></script>
+	<script src="./js/jquery.mCustomScrollbar.concat.min.js"></script>
 
 	<!-- Bootstrap Material Design V4.0 -->
-	<script src="../js/bootstrap-material-design.min.js"></script>
+	<script src="./js/bootstrap-material-design.min.js"></script>
 	<script>$(document).ready(function () { $('body').bootstrapMaterialDesign(); });</script>
 
-	<script src="../js/main.js"></script>
+	<script src="./js/main.js"></script>
 </body>
 
 </html>
