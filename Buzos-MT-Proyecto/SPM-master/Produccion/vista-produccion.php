@@ -37,23 +37,220 @@
 			<!-- Content -->
 			
 			
-			<div class="full-box tile-container">
+			<div class="container tile-container">
 				<div class="pro-btns-resumen">
 					<div class="pro-btns">
 						<div class="pro-btn">
-							<a href="#" class="pro-link">
+							<!-- <a href="#" class="pro-link">
 								<i class="fa-solid fa-square-plus fa-2xl" style="color: #2baf54;"></i>
-								<p>Crear Producción</p>
-							</a>
-						</div>				
+								<p>Gestionar Producción</p>
+							</a> -->
+							<button type="button" name="agregar" value="agregar" class="btn" data-bs-toggle="modal" data-bs-target="#agregar"><i class="fa-solid fa-square-plus fa-2xl" style="color: #2baf54;"></i></button>
+							<p>Gestionar Producción</p>
+						</div>
+						
+						<!-- Gestionar Producción - Modal -->
+						<div class="modal fade" id="agregar" tabindex="-1" role="dialog" data-bs-backdrop="static">
+							<div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
+								<div class="modal-content">
+
+									<div class="modal-header">
+										<h5 class="modal-title">Gestionar Producción:</h5>
+										<button class="btn-close" data-bs-dismiss="modal"></button>
+									</div>
+									
+									<div class="modal-body" >
+										<form action="" class="form-neon" autocomplete="off">
+											<fieldset>
+												<legend><i class="fas fa-industry"></i> &nbsp; Información de la producción</legend>
+												<div class="container-fluid">
+													<div class="row">
+														<div class="col-12 col-md-4">
+															<div class="form-group">
+																<label for="produccion_nombre" class="bmd-label-floating">Nombre de la Producción</label>
+																<input type="text" class="form-control" name="produccion_nombre" id="produccion_nombre" maxlength="50" required>
+															</div>
+														</div>
+
+														<div class="col-12 col-md-4">
+															<div class="form-group">
+																<label for="produccion_fecha_inicio" class="bmd-label-floating">Fecha de Inicio</label>
+																<input type="date" class="form-control" name="produccion_fecha_inicio" id="produccion_fecha_inicio" required>
+															</div>
+														</div>
+
+														<div class="col-12 col-md-4">
+															<div class="form-group">
+																<label for="produccion_fecha_fin" class="bmd-label-floating">Fecha de Finalización</label>
+																<input type="date" class="form-control" name="produccion_fecha_fin" id="produccion_fecha_fin" required>
+															</div>
+														</div>
+													</div>
+												</div>
+											</fieldset>
+
+											<br><br><br>
+
+											<fieldset>
+												<legend><i class="fas fa-tasks"></i> &nbsp; Detalles de la Tarea</legend>
+												<div class="container-fluid">
+													<div class="row">
+														<div class="col-12 col-md-4">
+															<div class="form-group">
+																<label for="produccion_tarea" class="bmd-label-floating">Tarea Asignada</label>
+																<input type="text" class="form-control" name="produccion_tarea" id="produccion_tarea" maxlength="50" required>
+															</div>
+														</div>
+
+														<div class="col-12 col-md-4">
+															<div class="form-group">
+																<label for="produccion_estado" class="bmd-label-floating">Estado de la Producción</label>
+																<select class="form-control" name="produccion_estado" id="produccion_estado">
+																	<option value="" selected="" disabled="">Seleccione un estado</option>
+																	<option value="en_progreso">En Progreso</option>
+																	<option value="completado">Completado</option>
+																	<option value="pendiente">Pendiente</option>
+																</select>
+															</div>
+														</div>
+
+														<div class="col-12 col-md-4">
+															<div class="form-group">
+																<label for="produccion_responsable" class="bmd-label-floating">Responsable</label>
+																<input type="text" class="form-control" name="produccion_responsable" id="produccion_responsable" maxlength="50" required>
+															</div>
+														</div>
+													</div>
+												</div>
+											</fieldset>
+
+											<p class="text-center" style="margin-top: 40px;">
+												<button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
+												&nbsp; &nbsp;
+												<button type="submit" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
+											</p>
+										</form>
+
+									</div>
+
+									<div class="modal-footer">
+										<button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button> 
+										
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Fin Model Producción -->
+
+						
 						<div class="pro-btn">		
-							<a href="#" class="pro-link">		
+							<!-- <a href="#" class="pro-link">		
 								<i class="fa-solid fa-file-circle-plus fa-2xl" style="color: #2baf54;"></i>
 							</a>
 							<div class="text-btn-link">
-								<p>Añadir Tarea</p>
+								<p>Gestionar Tareas</p>
+							</div> -->
+							<button type="button" name="tarea" value="tarea" class="btn" data-bs-toggle="modal" data-bs-target="#tarea"><i class="fa-solid fa-file-circle-plus fa-2xl" style="color: #2baf54;"></i></button>
+							<p>Gestionar Tareas</p>
+						</div>
+						
+						<!-- Gestionar Tarea - Modal -->
+						<div class="modal fade" id="tarea" tabindex="-1" role="dialog" data-bs-backdrop="static">
+							<div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
+								<div class="modal-content">
+
+									<div class="modal-header">
+										<h5 class="modal-title">Gestionar Tareas:</h5>
+										<button class="btn-close" data-bs-dismiss="modal"></button>
+									</div>
+									
+									<div class="modal-body" >
+										<form action="" class="form-neon" autocomplete="off">
+											<fieldset>
+												<legend><i class="far fa-address-card"></i> &nbsp; Información de la tarea</legend>
+												<div class="container-fluid">
+													<div class="row">
+														<div class="col-12 col-md-4">
+															<div class="form-group">
+																<label for="tarea_id" class="bmd-label-floating">ID de la Tarea</label>
+																<input type="text" pattern="[0-9]{1,20}" class="form-control" name="tarea_id" id="tarea_id" maxlength="20">
+															</div>
+														</div>
+														
+														<div class="col-12 col-md-4">
+															<div class="form-group">
+																<label for="tarea_nombre" class="bmd-label-floating">Nombre de la Tarea</label>
+																<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="tarea_nombre" id="tarea_nombre" maxlength="35">
+															</div>
+														</div>
+														
+														<div class="col-12 col-md-4">
+															<div class="form-group">
+																<label for="empleado_id" class="bmd-label-floating">ID del Empleado</label>
+																<input type="text" pattern="[0-9]{1,20}" class="form-control" name="empleado_id" id="empleado_id" maxlength="20">
+															</div>
+														</div>
+														
+														<div class="col-12 col-md-6">
+															<div class="form-group">
+																<label for="fecha_asignacion" class="bmd-label-floating">Fecha de Asignación</label>
+																<input type="date" class="form-control" name="fecha_asignacion" id="fecha_asignacion">
+															</div>
+														</div>
+														
+														<div class="col-12 col-md-6">
+															<div class="form-group">
+																<label for="fecha_entrega" class="bmd-label-floating">Fecha de Entrega</label>
+																<input type="date" class="form-control" name="fecha_entrega" id="fecha_entrega">
+															</div>
+														</div>
+													</div>
+												</div>
+											</fieldset>
+											<br><br><br>
+											<fieldset>
+												<legend><i class="fas fa-user-lock"></i> &nbsp; Estado y Descripción</legend>
+												<div class="container-fluid">
+													<div class="row">
+														<div class="col-12 col-md-6">
+															<div class="form-group">
+																<label for="estado_tarea" class="bmd-label-floating">Estado de la Tarea</label>
+																<select class="form-control" name="estado_tarea" id="estado_tarea">
+																	<option value="" selected="" disabled="">Seleccione una opción</option>
+																	<option value="Pendiente">Pendiente</option>
+																	<option value="En Proceso">En Proceso</option>
+																	<option value="Completada">Completada</option>
+																</select>
+															</div>
+														</div>
+														
+														<div class="col-12 col-md-6">
+															<div class="form-group">
+																<label for="descripcion_tarea" class="bmd-label-floating">Descripción de la Tarea</label>
+																<textarea class="form-control" name="descripcion_tarea" id="descripcion_tarea" maxlength="200"></textarea>
+															</div>
+														</div>
+													</div>
+												</div>
+											</fieldset>
+											<p class="text-center" style="margin-top: 40px;">
+												<button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
+												&nbsp; &nbsp;
+												<button type="submit" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
+											</p>
+										</form>
+
+									</div>
+
+									<div class="modal-footer">
+										<button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button> 
+										
+									</div>
+								</div>
 							</div>
-						</div>				
+						</div>
+						<!-- Fin Modal Tarea -->
+						
 					</div>
 					<div class="pro-resumen">
 						<h4>Resumen de Producción</h4>
@@ -69,7 +266,52 @@
 						</div>
 					</div>
 				</div>
-			</div>			
+				<div class="calendario">
+					<h1>Agosto</h1>
+					<ol>
+						<li class="day-name">Domingo</li>
+						<li class="day-name">Lunes</li>
+						<li class="day-name">Martes</li>
+						<li class="day-name">Miercoles</li>
+						<li class="day-name">Jueves</li>
+						<li class="day-name">Viernes</li>
+						<li class="day-name">Sábado</li>
+						<li class="fisrt-day">1</li>
+						<li>2</li>
+						<li>3</li>
+						<li>4</li>
+						<li>5</li>
+						<li>6</li>
+						<li>7</li>
+						<li>8</li>
+						<li>9</li>
+						<li>10</li>
+						<li>11</li>
+						<li>12</li>
+						<li>13</li>
+						<li>14</li>
+						<li>15</li>
+						<li>16</li>
+						<li>17</li>
+						<li>18</li>
+						<li>19</li>
+						<li>20</li>
+						<li>21</li>
+						<li>22</li>
+						<li>23</li>
+						<li>24</li>
+						<li>25</li>
+						<li>26</li>
+						<li>27</li>
+						<li>28</li>
+						<li>29</li>
+						<li>30</li>
+						<li>31</li>
+					</ol>
+				</div>
+			</div>
+
+			
 		</section>
 	</main>
 	

@@ -1,45 +1,29 @@
 <!DOCTYPE html>
 <html lang="es">
-
-<head>
-	<meta charset="UTF-8">
-	<meta name="viewport"
-		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-	<title>Buscar contacto</title>
-
-	<!-- Normalize V8.0.1 -->
-	<link rel="stylesheet" href="../css/normalize.css">
-
-	<!-- Bootstrap V4.3 -->
-	<link rel="stylesheet" href="../css/bootstrap.min.css">
-
-	<!-- Bootstrap Material Design V4.0 -->
-	<link rel="stylesheet" href="../css/bootstrap-material-design.min.css">
-
-	<!-- Font Awesome V5.9.0 -->
-	<link rel="stylesheet" href="../css/all.css">
-
-	<!-- Sweet Alerts V8.13.0 CSS file -->
-	<link rel="stylesheet" href="../css/sweetalert2.min.css">
-
-	<!-- Sweet Alert V8.13.0 JS file-->
-	<script src="../js/sweetalert2.min.js"></script>
-
-	<!-- jQuery Custom Content Scroller V3.1.5 -->
-	<link rel="stylesheet" href="../css/jquery.mCustomScrollbar.css">
-
-	<!-- General Styles -->
-	<link rel="stylesheet" href="../css/style.css">
-
-
-</head>
-
+<?php include '../Componentes/Head/head.php' ?>
 <body>
+
+		<!-- Nav lateral -->
+		<?php include '../Componentes/Sidebar/sidebar.php' ?>
+
+		<!-- Page content -->
+		<section class="full-box page-content">
+			<nav class="full-box navbar-info">
+				<a href="#" class="float-left show-nav-lateral">
+					<i class="fas fa-exchange-alt"></i>
+				</a>
+				<a href="user-update.html">
+					<i class="fas fa-user-cog"></i>
+				</a>
+				<a href="#" class="btn-exit-system">
+					<i class="fas fa-power-off"></i>
+				</a>
+			</nav>
 
 			<!-- Page header -->
 			<div class="full-box page-header">
 				<h3 class="text-left">
-					<i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR CONTACTO
+					<i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE CONTACTOS
 				</h3>
 			</div>
 
@@ -49,63 +33,16 @@
 						<a href="RC.html"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVO CONTACTO</a>
 					</li>
 					<li>
-						<a href="LC.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE
-							CONTACTOS</a>
+						<a class="active" href="LC.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA
+							DE CONTACTOS</a>
 					</li>
 					<li>
-						<a class="active" href="US.html"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR
-							CONTACTO</a>
+						<a href="US.html"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR CONTACTO</a>
 					</li>
 				</ul>
 			</div>
 
 			<!-- Content -->
-			<div class="container-fluid">
-				<form class="form-neon" action="">
-					<div class="container-fluid">
-						<div class="row justify-content-md-center">
-							<div class="col-12 col-md-6">
-								<div class="form-group">
-									<label for="inputSearch" class="bmd-label-floating">¿Qué contacto estas
-										buscando?</label>
-									<input type="text" class="form-control" name="busqueda-" id="inputSearch"
-										maxlength="30">
-								</div>
-							</div>
-							<div class="col-12">
-								<p class="text-center" style="margin-top: 40px;">
-									<button type="submit" class="btn btn-raised btn-info"><i class="fas fa-search"></i>
-										&nbsp; BUSCAR</button>
-								</p>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-
-
-			<div class="container-fluid">
-				<form action="">
-					<input type="hidden" name="eliminar-busqueda" value="eliminar">
-					<div class="container-fluid">
-						<div class="row justify-content-md-center">
-							<div class="col-12 col-md-6">
-								<p class="text-center" style="font-size: 20px;">
-									Resultados de la busqueda <strong>“Buscar”</strong>
-								</p>
-							</div>
-							<div class="col-12">
-								<p class="text-center" style="margin-top: 20px;">
-									<button type="submit" class="btn btn-raised btn-danger"><i
-											class="far fa-trash-alt"></i> &nbsp; ELIMINAR BÚSQUEDA</button>
-								</p>
-							</div>
-						</div>
-					</div>
-				</form>
-			</div>
-
-
 			<div class="container-fluid">
 				<div class="table-responsive">
 					<table class="table table-dark table-sm">
@@ -229,26 +166,8 @@
 	</main>
 
 
-	<!--=============================================
-	=            Include JavaScript files           =
-	==============================================-->
-	<!-- jQuery V3.4.1 -->
-	<script src="../js/jquery-3.4.1.min.js"></script>
-
-	<!-- popper -->
-	<script src="../js/popper.min.js"></script>
-
-	<!-- Bootstrap V4.3 -->
-	<script src="../js/bootstrap.min.js"></script>
-
-	<!-- jQuery Custom Content Scroller V3.1.5 -->
-	<script src="../js/jquery.mCustomScrollbar.concat.min.js"></script>
-
-	<!-- Bootstrap Material Design V4.0 -->
-	<script src="../js/bootstrap-material-design.min.js"></script>
-	<script>$(document).ready(function () { $('body').bootstrapMaterialDesign(); });</script>
-
-	<script src="../js/main.js"></script>
+	<!--===Include JavaScript files======-->
+	<?php include '../Componentes/Script/script.php' ?>
 </body>
 
 </html>
