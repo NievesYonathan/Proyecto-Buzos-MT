@@ -220,7 +220,7 @@ table form{
 }
 
 /*----------  Page layout Styles  ----------*/
-.container{
+.contenedor{
 	display: flex;
 	justify-content: space-between; /* Espacio entre los elementos */
 	align-items: flex-start; /* Alineación superior */

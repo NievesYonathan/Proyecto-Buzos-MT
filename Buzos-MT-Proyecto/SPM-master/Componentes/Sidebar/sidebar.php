@@ -76,16 +76,16 @@
 							<a href="#" class="nav-btn-submenu"><i class="fa-solid fa-user fa-fw"></i> &nbsp; Usuarios <i class="fas fa-chevron-down"></i></a>
 							<ul>
 								<li>
-									<a href="user-new.html"><i class="fas fa-plus fa-fw"></i> &nbsp; Nuevo usuario</a>
+									<a href="../Usuarios/user-new.php"><i class="fas fa-plus fa-fw"></i> &nbsp; Nuevo usuario</a>
 								</li>
 								<li>
-									<a href="../Usuarios/client-list.php"><i class="fa-solid fa-user-tie"></i> &nbsp; Empleados</a>
+									<a href="../Usuarios/user-list.php"><i class="fa-solid fa-user-tie"></i> &nbsp; Empleados</a>
 								</li>
 								<li>
 									<a href="../registros/lista_proveedor.php"><i class="fa-solid fa-truck"></i> &nbsp; Proveedores</a>
 								</li>
 								<li>
-									<a href="user-search.html"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar usuario</a>
+									<a href="../Usuarios/user-search.php"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar usuario</a>
 								</li>
 							</ul>
 						</li>
@@ -94,9 +94,18 @@
 							<a href="company.html"><i class="fas fa-store-alt fa-fw"></i> &nbsp; Empresa</a>
 						</li> -->
 
-                        <li>
-							<a href="../Produccion/vista-produccion.php"><i class="fa-solid fa-industry"></i> &nbsp; Producción</a>
+						<li>
+							<a href="#" class="nav-btn-submenu"><i class="fa-solid fa-industry"></i> &nbsp; Producción <i class="fas fa-chevron-down"></i></a>
+							<ul>
+								<li>
+									<a href="../Produccion/vista-produccion.php"><i class="fa-solid fa-industry"></i> &nbsp; Gestion de Producción</a>
+								</li>
+								<li>
+									<a href="../Produccion/vista-pro-fabricados.php" style="font-size: 15px"><i class="fa-solid fa-user-tie"></i> &nbsp; Gestion Productos Fabricados</a>
+								</li>
+							</ul>
 						</li>
+
 
 						<li>
 							<a href="../Usuarios/user-update.php"><i class="fa-solid fa-gear"></i> &nbsp; Configuración</a>

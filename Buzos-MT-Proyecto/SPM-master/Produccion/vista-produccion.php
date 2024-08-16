@@ -37,7 +37,7 @@
 			<!-- Content -->
 			
 			
-			<div class="container tile-container">
+			<div class="contenedor tile-container">
 				<div class="pro-btns-resumen">
 					<div class="pro-btns">
 						<div class="pro-btn">
