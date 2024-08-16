@@ -43,17 +43,19 @@
                     </li>
                 </ul>
             </div>
-            <div class="col-12 col-md-4">
+            
+            <!--CONTENT-->
+            <div class="container-fluid tile-container">
+			<div class="col-12 col-md-4">
                 <div class="form-group">
                     <label for="prestamo_fecha_inicio">Seleccione la Fecha</label>
                     <input type="date" class="form-control" name="prestamo_fecha_inicio" id="admin-dni">
                 </div>
             </div>
 
-            <h4 class="text-left"><i class="fas fa-calendar-check"></i> &nbsp; Datos del Inventario de la fecha: 01/08/2024</h4>
-            
-            <!--CONTENT-->
-            <div class="container-fluid">
+            <h4 class="text-left"> &nbsp; Datos del Inventario de la fecha: 01/08/2024</h4>
+
+
 				<div class="table-responsive">
 					<table class="table table-dark table-sm">
 						<thead>

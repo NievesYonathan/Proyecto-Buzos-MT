@@ -31,21 +31,26 @@
 						</li> -->
 
 						<li>
-							<a href="#" class="nav-btn-submenu"><i class="fas fa-pallet fa-fw"></i> &nbsp; Items <i class="fas fa-chevron-down"></i></a>
+							<a href="#" class="nav-btn-submenu"><i class="fas fa-pallet fa-fw"></i> &nbsp; Materia Prima <i class="fas fa-chevron-down"></i></a>
 							<ul>
 								<li>
-									<a href="item-new.html"><i class="fas fa-plus fa-fw"></i> &nbsp; Agregar item</a>
+									<a href="../Gestion_materias_primas/item-new.php"><i class="fas fa-plus fa-fw"></i> &nbsp; Agregar item</a>
 								</li>
 								<li>
 									<a href="../Gestion_materias_primas/item-list.php"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de items</a>
 								</li>
 								<li>
-									<a href="item-search.html"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar item</a>
+									<a href="../Gestion_materias_primas/item-search.php"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar item</a>
 								</li>
 								<li>
-									<a href="../Gestion_materias_primas/item-detail.php"><i class="fas fa-search fa-fw"></i> &nbsp; Detalles item</a>
+									<a href="../Gestion_materias_primas/item-detail.php"><i class="fa-solid fa-info-circle"></i> &nbsp; Detalles item</a>
 								</li>
-
+								<li>
+									<a href="../Gestion_materias_primas/item-history.php"><i class="fa-solid fa-clock-rotate-left"></i> &nbsp; Historial</a>
+								</li>
+								<li>
+									<a href="../Gestion_materias_primas/item-update.php"><i class="fa-solid fa-pen-to-square"></i> &nbsp; Actualizar</a>
+								</li>
 							</ul>
 						</li>
 
@@ -74,10 +79,10 @@
 									<a href="user-new.html"><i class="fas fa-plus fa-fw"></i> &nbsp; Nuevo usuario</a>
 								</li>
 								<li>
-									<a href="../Usuarios/client-list.php"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Empleados</a>
+									<a href="../Usuarios/client-list.php"><i class="fa-solid fa-user-tie"></i> &nbsp; Empleados</a>
 								</li>
 								<li>
-									<a href="user-list.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Proveedores</a>
+									<a href="../registros/lista_proveedor.php"><i class="fa-solid fa-truck"></i> &nbsp; Proveedores</a>
 								</li>
 								<li>
 									<a href="user-search.html"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar usuario</a>
@@ -90,7 +95,11 @@
 						</li> -->
 
                         <li>
-							<a href="#"><i class="fa-solid fa-industry"></i> &nbsp; Producción</a>
+							<a href="../Produccion/vista-produccion.php"><i class="fa-solid fa-industry"></i> &nbsp; Producción</a>
+						</li>
+
+						<li>
+							<a href="../Usuarios/user-update.php"><i class="fa-solid fa-gear"></i> &nbsp; Configuración</a>
 						</li>
 					</ul>
 				</nav>

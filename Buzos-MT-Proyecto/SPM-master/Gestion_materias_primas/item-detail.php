@@ -39,32 +39,24 @@
            <div class="container-fluid">
 				<div class="table-responsive">
 					<table class="table table-dark table-sm">
-                    <thead>
-                        <tr class="text-center roboto-medium">
-                            <th>FECHA</th>
-                            <th>HORA</th>
-                            <th>TIPO DE OPERACION</th>
-                            <th colspan="2">CANTIDAD</th>
-                            <th>USUARIO</th>
-                        </tr>
-                        <tr class="text-center roboto-medium">
-                            <th></th> <!-- Celda vacía para FECHA -->
-                            <th></th> <!-- Celda vacía para HORA -->
-                            <th></th> <!-- Celda vacía para TIPO DE OPERACION -->
-                            <th>ANTES</th>
-                            <th>DESPUES</th>
-                            <th></th> <!-- Celda vacía para USUARIO -->
-                        </tr>
-                    </thead>
-
+						<thead>
+							<tr class="text-center roboto-medium">
+								<th>#</th>
+								<th>CÓDIGO</th>
+								<th>NOMBRE</th>
+								<th>STOCK</th>
+								<th>DESCRIPCIÒN</th>
+								<th>ESTADO</th>
+							</tr>
+						</thead>
 						<tbody>
 							<tr class="text-center" >
-								<td>29-01-2023</td>
-								<td>15-30-00</td>
-								<td>ENTRADA</td>
-								<td>30</td>
-								<td>30</td>
-                                <td>HAROLD</td>
+								<td>1</td>
+								<td>012342567</td>
+								<td>NOMBRE DEL ITEM</td>
+								<td>20</td>
+								<td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic non similique cum sapiente amet alias a vero debitis sunt veritatis, placeat minima dolores obcaecati quod ab fugit laudantium reprehenderit excepturi.</td>
+                                <td>Habilitado</td>
 							</tr>
 						</tbody>
 					</table>
