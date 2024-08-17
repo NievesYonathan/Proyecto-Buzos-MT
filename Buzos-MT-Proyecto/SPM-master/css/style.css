@@ -220,7 +220,7 @@ table form{
 }
 
 /*----------  Page layout Styles  ----------*/
-.container{
+.contenedor{
 	display: flex;
 	justify-content: space-between; /* Espacio entre los elementos */
 	align-items: flex-start; /* Alineación superior */
@@ -444,14 +444,14 @@ table form{
 
 .fisrt-day{
 	grid-column-start: 5;
-	background-color: #2f765c;
+	background-color: #333;
 	margin-top: 2px;
 	border-radius: 60%;
 	color: #FFF;
 }
 
 .day-name{
-	background-color: #027926;
+	background-color: #333;
 	color: #F5F5F5;
 	font-weight: bold;
 	text-align: center;
