@@ -2,9 +2,6 @@
     <a href="#" class="float-left show-nav-lateral">
         <i class="fas fa-exchange-alt"></i>
     </a>
-    <a  href="#" >
-        <i class="fa fa-arrow-left"></i>
-    </a>
     <a href="#" >
         <i class="fa-solid fa-bell"></i>
     </a>

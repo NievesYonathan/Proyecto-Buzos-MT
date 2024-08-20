@@ -18,27 +18,27 @@
 				<h3 class="text-left">
 					<i class="fab fa-dashcube fa-fw"></i> &nbsp; DASHBOARD
 				</h3>
-				<p class="text-justify">
+				<!-- <p class="text-justify">
 					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit nostrum rerum animi natus beatae ex. Culpa blanditiis tempore amet alias placeat, obcaecati quaerat ullam, sunt est, odio aut veniam ratione.
-				</p>
+				</p> -->
 			</div>
 			
 			<!-- Content -->
 			<div class="full-box tile-container">
 
 				<a href="client-new.html" class="tile">
-					<div class="tile-tittle">Clientes</div>
+					<div class="tile-tittle">Producción</div>
 					<div class="tile-icon">
-						<i class="fas fa-users fa-fw"></i>
-						<p>5 Registrados</p>
+						<i class="fa-solid fa-industry"></i>
+						<!-- <p>5 Registrados</p> -->
 					</div>
 				</a>
 
 				<a href="item-list.html" class="tile">
-					<div class="tile-tittle">Items</div>
+					<div class="tile-tittle">Materia Prima</div>
 					<div class="tile-icon">
 						<i class="fas fa-pallet fa-fw"></i>
-						<p>9 Registrados</p>
+						<!-- <p>9 Registrados</p> -->
 					</div>
 				</a>
 
@@ -54,7 +54,7 @@
 					<div class="tile-tittle">Usuarios</div>
 					<div class="tile-icon">
 						<i class="fa-solid fa-user fa-fw"></i>
-						<p>50 Registrados</p>
+						<!-- <p>50 Registrados</p> -->
 					</div>
 				</a>
 
