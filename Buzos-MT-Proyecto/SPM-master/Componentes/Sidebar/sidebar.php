@@ -1,6 +1,9 @@
 <section class="full-box nav-lateral">
 			<div class="full-box nav-lateral-bg show-nav-lateral"></div>
 			<div class="full-box nav-lateral-content">
+				<button class="btn btn-secondary" id="btn-reversa">
+					<i class="fa fa-arrow-left"></i>
+				</button>
 				<figure class="full-box nav-lateral-avatar">
 					<i class="far fa-times-circle show-nav-lateral"></i>
 					<img src="../assets/avatar/Avatar.png" class="img-fluid" alt="Avatar">

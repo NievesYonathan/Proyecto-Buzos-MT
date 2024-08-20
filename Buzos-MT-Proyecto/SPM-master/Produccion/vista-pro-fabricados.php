@@ -23,8 +23,21 @@
 			<!-- Content -->
 			<div class="full-box tile-container">
 
-				
-				
+				<div class="product-list">
+					<div class="product-item">
+						<img src="https://i0.wp.com/centrotintas.com/wp-content/uploads/2020/09/Buzo-png.png?fit=1000%2C1000&ssl=1" alt="Producto" class="product-image">
+						<div class="product-info">
+							<h3 class="product-name">Buzos unixes</h3>
+							<p class="product-quantity">Cantidad de Producción: 500 unidades</p>
+							<p class="product-dates">Fecha de Inicio: 01/08/2024 - Fecha de Fin: 15/08/2024</p>
+							<p class="product-status">Estado: En curso</p>
+							<p class="product-material">Material: Algodón</p>
+							<div class="product-actions">
+								<button class="btn btn-info">Ver Detalles</button>
+							</div>
+						</div>
+					</div>
+				</div>			
 			</div>
 			
 

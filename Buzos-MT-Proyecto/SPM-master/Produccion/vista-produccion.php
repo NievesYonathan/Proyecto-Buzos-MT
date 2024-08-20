@@ -68,21 +68,21 @@
 														<div class="col-12 col-md-4">
 															<div class="form-group">
 																<label for="produccion_nombre" class="bmd-label-floating">Nombre de la Producción</label>
-																<input type="text" class="form-control" name="produccion_nombre" id="produccion_nombre" maxlength="50" required>
+																<input type="text" class="form-control border border-dark" name="produccion_nombre" id="produccion_nombre" maxlength="50" required>
 															</div>
 														</div>
 
 														<div class="col-12 col-md-4">
 															<div class="form-group">
 																<label for="produccion_fecha_inicio" class="bmd-label-floating">Fecha de Inicio</label>
-																<input type="date" class="form-control" name="produccion_fecha_inicio" id="produccion_fecha_inicio" required>
+																<input type="date" class="form-control border border-dark" name="produccion_fecha_inicio" id="produccion_fecha_inicio" required>
 															</div>
 														</div>
 
 														<div class="col-12 col-md-4">
 															<div class="form-group">
 																<label for="produccion_fecha_fin" class="bmd-label-floating">Fecha de Finalización</label>
-																<input type="date" class="form-control" name="produccion_fecha_fin" id="produccion_fecha_fin" required>
+																<input type="date" class="form-control border border-dark" name="produccion_fecha_fin" id="produccion_fecha_fin" required>
 															</div>
 														</div>
 													</div>
@@ -98,14 +98,14 @@
 														<div class="col-12 col-md-4">
 															<div class="form-group">
 																<label for="produccion_tarea" class="bmd-label-floating">Tarea Asignada</label>
-																<input type="text" class="form-control" name="produccion_tarea" id="produccion_tarea" maxlength="50" required>
+																<input type="text" class="form-control border border-dark" name="produccion_tarea" id="produccion_tarea" maxlength="50" required>
 															</div>
 														</div>
 
 														<div class="col-12 col-md-4">
 															<div class="form-group">
 																<label for="produccion_estado" class="bmd-label-floating">Estado de la Producción</label>
-																<select class="form-control" name="produccion_estado" id="produccion_estado">
+																<select class="form-control border border-dark" name="produccion_estado" id="produccion_estado">
 																	<option value="" selected="" disabled="">Seleccione un estado</option>
 																	<option value="en_progreso">En Progreso</option>
 																	<option value="completado">Completado</option>
@@ -117,7 +117,7 @@
 														<div class="col-12 col-md-4">
 															<div class="form-group">
 																<label for="produccion_responsable" class="bmd-label-floating">Responsable</label>
-																<input type="text" class="form-control" name="produccion_responsable" id="produccion_responsable" maxlength="50" required>
+																<input type="text" class="form-control border border-dark" name="produccion_responsable" id="produccion_responsable" maxlength="50" required>
 															</div>
 														</div>
 													</div>
@@ -170,21 +170,19 @@
 												<legend><i class="far fa-address-card"></i> &nbsp; Información de la tarea</legend>
 												<div class="container-fluid">
 													<div class="row">
-														<div class="col-12 col-md-4">
+														<div class="col-12 col-md-6">
 															<div class="form-group">
-																<label for="tarea_id" class="bmd-label-floating">ID de la Tarea</label>
-																<input type="text" pattern="[0-9]{1,20}" class="form-control" name="tarea_id" id="tarea_id" maxlength="20">
+																<label for="estado_tarea" class="bmd-label-floating">Tarea</label>
+																<select class="form-control" name="estado_tarea" id="estado_tarea">
+																	<option value="" selected="" disabled="">Seleccione una opción</option>
+																	<option value="Pendiente">Pendiente</option>
+																	<option value="En Proceso">En Proceso</option>
+																	<option value="Completada">Completada</option>
+																</select>
 															</div>
 														</div>
 														
-														<div class="col-12 col-md-4">
-															<div class="form-group">
-																<label for="tarea_nombre" class="bmd-label-floating">Nombre de la Tarea</label>
-																<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="tarea_nombre" id="tarea_nombre" maxlength="35">
-															</div>
-														</div>
-														
-														<div class="col-12 col-md-4">
+														<div class="col-12 col-md-6">
 															<div class="form-group">
 																<label for="empleado_id" class="bmd-label-floating">ID del Empleado</label>
 																<input type="text" pattern="[0-9]{1,20}" class="form-control" name="empleado_id" id="empleado_id" maxlength="20">
@@ -257,14 +255,110 @@
 						<div class="pro-res-detalle">
 							<p>Producción: <span>Buzos Amarillos de Algodón</span></p>
 							<p>Etapa: <span>2 - Armado de los patrones.</span></p>
-							<a href="#" class="pro-ver">Ver Detalles</a>
+							<button type="button" name="detalle" value="detalle" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#detalleProduccion">Ver Detalles</button>
+							<!-- <a href="#" class="pro-ver">Ver Detalles</a> -->
 						</div>
 						<div class="pro-res-detalle">
 							<p>Producción: <span>Buzos Amarillos de Algodón</span></p>
 							<p>Etapa: <span>2 - Armado de los patrones.</span></p>
-							<a href="#" class="pro-ver">Ver Detalles</a>
+							<button type="button" name="detalle" value="detalle" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#detalleProduccion">Ver Detalles</button>
+							<!-- <a href="#" class="pro-ver">Ver Detalles</a> -->
 						</div>
 					</div>
+
+					<!-- Modal-Detalles-Producción -->
+					<div class="modal fade" id="detalleProduccion" tabindex="-1" role="dialog" data-bs-backdrop="static">
+						<div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
+							<div class="modal-content">
+
+								<div class="modal-header">
+									<h5 class="modal-title">Detalles de Producción:</h5>
+									<button class="btn-close" data-bs-dismiss="modal"></button>
+								</div>
+								
+								<div class="modal-body">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="col-12">
+												<h6><strong>1. Nombre de la Producción:</strong></h6>
+												<p id="nombreProduccion">Buzos Amarillos de Algodón</p>
+											</div>
+											<div class="col-12">
+												<h6><strong>2. Código de Producción:</strong></h6>
+												<p id="codigoProduccion">PROD-00123</p>
+											</div>
+											<div class="col-12 col-md-6">
+												<h6><strong>3. Fecha de Inicio:</strong></h6>
+												<p id="fechaInicio">01/08/2024</p>
+											</div>
+											<div class="col-12 col-md-6">
+												<h6><strong>4. Fecha Estimada de Finalización:</strong></h6>
+												<p id="fechaEstimadaFinalizacion">15/08/2024</p>
+											</div>
+											<div class="col-12">
+												<h6><strong>5. Etapas de Producción:</strong></h6>
+												<ul id="etapasProduccion">
+													<li>Corte de tela</li>
+													<li>Costura</li>
+													<li>Revisión de calidad</li>
+												</ul>
+											</div>
+											<div class="col-12">
+												<h6><strong>6. Estado Actual:</strong></h6>
+												<p id="estadoActual">2 - Armado de los patrones</p>
+											</div>
+											<div class="col-12 col-md-6">
+												<h6><strong>7. Cantidad Total a Producir:</strong></h6>
+												<p id="cantidadTotal">500 unidades</p>
+											</div>
+											<div class="col-12 col-md-6">
+												<h6><strong>8. Cantidad Producida:</strong></h6>
+												<p id="cantidadProducida">250 unidades</p>
+											</div>
+											<div class="col-12">
+												<h6><strong>9. Responsables:</strong></h6>
+												<ul id="responsables">
+													<li>Juan Pérez - Corte de tela</li>
+													<li>María García - Costura</li>
+													<li>Carlos López - Revisión de calidad</li>
+												</ul>
+											</div>
+											<div class="col-12">
+												<h6><strong>10. Materiales Usados:</strong></h6>
+												<p id="materialesUsados">Algodón 100%, Hilo de poliéster</p>
+											</div>
+											<div class="col-12">
+												<h6><strong>11. Recursos Asignados:</strong></h6>
+												<p id="recursosAsignados">Máquina de coser industrial, Mesa de corte, Personal de costura</p>
+											</div>
+											<div class="col-12">
+												<h6><strong>12. Comentarios o Notas:</strong></h6>
+												<p id="comentariosNotas">Ajustar las costuras laterales para mayor durabilidad.</p>
+											</div>
+											<div class="col-12">
+												<h6><strong>13. Historial de Cambios:</strong></h6>
+												<ul id="historialCambios">
+													<li>05/08/2024: Cambio de proveedor de hilo</li>
+													<li>07/08/2024: Ajuste en las medidas del patrón</li>
+												</ul>
+											</div>
+											<div class="col-12">
+												<h6><strong>14. Prioridad:</strong></h6>
+												<p id="prioridad">Alta</p>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="modal-footer">
+									<button class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button> 
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Fin-Modal -->
+
 				</div>
 				<div class="calendario">
 					<h1>Agosto</h1>
@@ -319,3 +413,5 @@
 	<?php include '../Componentes/Script/script.php' ?>
 </body>
 </html>
+
+

@@ -457,6 +457,57 @@ table form{
 	text-align: center;
 }
 
+#btn-reversa{
+	margin: 2px;
+	padding-left: 2px;
+}
+
+.product-list {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 20px;
+  }
+  
+  .product-item {
+	border: 1px solid #ddd;
+	padding: 20px;
+	display: flex;
+	width: 100%;
+	background-color: #f9f9f9;
+  }
+  
+  .product-image {
+	width: 20%;
+	height: inherit;
+	object-fit: cover;
+	margin-right: 20px;
+  }
+  
+  .product-info {
+	flex: 1;
+  }
+  
+  .product-name {
+	font-size: 1.5em;
+	margin-bottom: 10px;
+  }
+  
+  .product-quantity,
+  .product-dates,
+  .product-status,
+  .product-material {
+	margin-bottom: 5px;
+  }
+  
+  .product-actions {
+	margin-top: 15px;
+  }
+  
+  .product-actions .btn {
+	margin-right: 10px;
+  }
+  
+
 .tile{
 	height: 200px;
 	width: 200px;
