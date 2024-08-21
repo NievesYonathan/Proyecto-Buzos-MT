@@ -28,6 +28,7 @@
 	
 	<!-- General Styles -->
 	<link rel="stylesheet" href="../css/style.css">
-	<!-- <link rel="stylesheet" href="../css/produccion.css"> -->
 
+	<!-- Icono -->
+	<link rel="icon" href="../assets/img/icon.png" sizes="32x32" type="image/png">
 </head>

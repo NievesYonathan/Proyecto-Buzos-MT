@@ -10,17 +10,9 @@
 
         <!-- Page content -->
 		<section class="full-box page-content">
-			<nav class="full-box navbar-info">
-				<a href="#" class="float-left show-nav-lateral">
-					<i class="fas fa-exchange-alt"></i>
-				</a>
-				<a href="user-update.html">
-					<i class="fas fa-user-cog"></i>
-				</a>
-				<a href="#" class="btn-exit-system">
-					<i class="fas fa-power-off"></i>
-				</a>
-			</nav>
+			<!-- Navbar -->
+			<?php include '../Componentes/Navbar/navbar.php' ?>
+
             <!-- Page header -->
             <div class="full-box page-header">
                 <h3 class="text-left">
@@ -33,27 +25,28 @@
             <div class="container-fluid">
                 <ul class="full-box list-unstyled page-nav-tabs">
                     <li>
-                        <a href="informes.html"><i class="fas fa-plus fa-fw"></i> &nbsp; INFORME INVENTARIO</a>
+                        <a href="informes.php"><i class="fas fa-plus fa-fw"></i> &nbsp; INFORME INVENTARIO</a>
                     </li>
                     <li>
-                        <a class="active" href="info-produccion.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; INFORME PRODUCCION</a>
+                        <a class="active" href="info-produccion.php"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; INFORME PRODUCCION</a>
                     </li>
                     <li>
-                        <a href="info-Rec.Humanos.html"><i class="fas fa-search fa-fw"></i> &nbsp; INFORME RECURSOS HUMANOS</a>
+                        <a href="info-Rec.Humanos.php"><i class="fas fa-search fa-fw"></i> &nbsp; INFORME RECURSOS HUMANOS</a>
                     </li>
                 </ul>
             </div>
-            <div class="col-12 col-md-4">
-                <div class="form-group">
-                    <label for="prestamo_fecha_inicio">Seleccione la Fecha</label>
-                    <input type="date" class="form-control" name="prestamo_fecha_inicio" id="admin-dni">
-                </div>
-            </div>
-
-            <h4 class="text-left"><i class="fas fa-calendar-check"></i> &nbsp; Datos de produccion de la fecha: 07/08/2024</h4>
             
             <!--CONTENT-->
-            <div class="container-fluid">
+            <div class="container-fluid tile-container">
+				<div class="col-12 col-md-4">
+					<div class="form-group">
+						<label for="prestamo_fecha_inicio">Seleccione la Fecha</label>
+						<input type="date" class="form-control" name="prestamo_fecha_inicio" id="admin-dni">
+					</div>
+            	</div>
+
+            	<h4 class="text-left"><i class="fas fa-calendar-check"></i> &nbsp; Datos de produccion de la fecha: 07/08/2024</h4>
+
 				<div class="table-responsive">
 					<table class="table table-dark table-sm">
 						<thead>

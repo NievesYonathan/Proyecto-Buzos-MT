@@ -10,18 +10,10 @@
 
         <!-- Page content -->
 		<section class="full-box page-content">
-			<nav class="full-box navbar-info">
-				<a href="#" class="float-left show-nav-lateral">
-					<i class="fas fa-exchange-alt"></i>
-				</a>
-				<a href="user-update.html">
-					<i class="fas fa-user-cog"></i>
-				</a>
-				<a href="#" class="btn-exit-system">
-					<i class="fas fa-power-off"></i>
-				</a>
-			</nav>
-            <!-- Page header -->
+			<!-- Navbar -->
+			<?php include '../Componentes/Navbar/navbar.php' ?>
+
+			<!-- Page header -->
             <div class="full-box page-header">
                 <h3 class="text-left">
                     <i class="fas fa-clipboard-list fa-fw"></i> &nbsp; INFORMES Y REPORTES
@@ -33,27 +25,27 @@
             <div class="container-fluid">
                 <ul class="full-box list-unstyled page-nav-tabs">
                     <li>
-                        <a class="active" href="informes.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; INFORME INVENTARIO</a>
+                        <a class="active" href="informes.php"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; INFORME INVENTARIO</a>
                     </li>
                     <li>
-                        <a href="info-produccion.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; INFORME PRODUCCION</a>
+                        <a href="info-produccion.php"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; INFORME PRODUCCION</a>
                     </li>
                     <li>
-                        <a href="info-Rec.Humanos.html"><i class="fas fa-search fa-fw"></i> &nbsp; INFORME RECURSOS HUMANOS</a>
+                        <a href="info-Rec.Humanos.php"><i class="fas fa-search fa-fw"></i> &nbsp; INFORME RECURSOS HUMANOS</a>
                     </li>
                 </ul>
             </div>
             
             <!--CONTENT-->
             <div class="container-fluid tile-container">
-			<div class="col-12 col-md-4">
-                <div class="form-group">
-                    <label for="prestamo_fecha_inicio">Seleccione la Fecha</label>
-                    <input type="date" class="form-control" name="prestamo_fecha_inicio" id="admin-dni">
-                </div>
-            </div>
+				<div class="col-12 col-md-4">
+					<div class="form-group">
+						<label for="prestamo_fecha_inicio">Seleccione la Fecha</label>
+						<input type="date" class="form-control" name="prestamo_fecha_inicio" id="admin-dni">
+					</div>
+				</div>
 
-            <h4 class="text-left"> &nbsp; Datos del Inventario de la fecha: 01/08/2024</h4>
+            	<h4 class="text-left"> &nbsp; Datos del Inventario de la fecha: 01/08/2024</h4>
 
 
 				<div class="table-responsive">
@@ -161,6 +153,7 @@
 						</tbody>
 					</table>
 				</div>
+				
 				<nav aria-label="Page navigation example">
 					<ul class="pagination justify-content-center">
 						<li class="page-item disabled">
@@ -172,17 +165,13 @@
 						<li class="page-item">
 							<a class="page-link" href="#">Next</a>
 						</li>
-					</ul>
+					</ul>				
 				</nav>
+				
 			</div>
         </section>
-
-
-
-
     </main>
-    
-    	
+       	
 	<!--===Include JavaScript files======-->
 	<?php include '../Componentes/Script/script.php' ?>
 </body>

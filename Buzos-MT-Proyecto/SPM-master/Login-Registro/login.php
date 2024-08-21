@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="login.css">
     <link rel="shortcut icon" href="../assets/img/favicon.ico" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Icono -->
+	<link rel="icon" href="../assets/img/icon.png" sizes="32x32" type="image/png">
+
 </head>
 <body>
     <section>

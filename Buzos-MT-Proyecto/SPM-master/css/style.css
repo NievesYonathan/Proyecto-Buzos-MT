@@ -28,7 +28,7 @@
 :root{
 	--color-one: #F5F5F5;
 	--color-two: #24292E;
-	--color-three: #EC5252;
+	--color-three: #12464c;
 	/*--color-three: #0366D6;*/
 
 	--form-color: #14111A;
@@ -267,7 +267,7 @@ table form{
 .nav-lateral-content{
 	max-width: 300px;
 	height: 100%;
-	background-color: rgba(36, 41, 46, .8);
+	background: linear-gradient(#0f3443, #0f3443, #34e69f);
 }
 .nav-lateral-bar{
 	height: 3px;
