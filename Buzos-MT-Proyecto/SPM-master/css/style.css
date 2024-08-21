@@ -1,7 +1,7 @@
 /* @font-face {
     font-family: 'roboto_medium_regular';
     src: url('../webfonts/roboto-medium-webfont.woff2') format('woff2'),
-         url('../webfonts/roboto-medium-webfont.woff') format('woff');
+        url('../webfonts/roboto-medium-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
@@ -10,8 +10,8 @@
 @font-face {
     font-family: 'roboto_condensed_light';
     src: url('../webfonts/robotocondensed-light-webfont.woff2') format('woff2'),
-         url('../webfonts/robotocondensed-light-webfont.woff') format('woff'),
-         url('../webfonts/robotocondensed-light-webfont.ttf') format('truetype');
+        url('../webfonts/robotocondensed-light-webfont.woff') format('woff'),
+        url('../webfonts/robotocondensed-light-webfont.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -19,7 +19,7 @@
 @font-face {
     font-family: 'roboto_condensed_regular';
     src: url('../webfonts/robotocondensed-regular-webfont.woff2') format('woff2'),
-         url('../webfonts/robotocondensed-regular-webfont.woff') format('woff');
+        url('../webfonts/robotocondensed-regular-webfont.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 
@@ -59,7 +59,7 @@ body,html{
 	border: 1px solid var(--border-color);
 	background-color: #FFF;
 	padding: 15px;
-	border-radius: 3px;
+	border-radius: 5px;
 }
 
 /*----------  Page headers styles  ----------*/
@@ -151,7 +151,7 @@ body,html{
 }
 .table-dark tr:hover{
 	color: var(--color-three);
-	background-image: linear-gradient(to right, transparent, rgba(124, 100, 112, .2) 85%, transparent);
+	background-image: linear-gradient(to right, transparent, rgba(255, 0, 128, 0.2) 85%, transparent);
 }
 .page-link{
 	transition: all .2s ease-in-out;
@@ -161,7 +161,7 @@ body,html{
 	color: #FFF;
 }
 table form{
-	margin-bottom: 0;
+	margin-bottom: 5px;
 }
 /*----------  Text Styles  ----------*/
 .roboto-medium{
@@ -466,47 +466,47 @@ table form{
 	display: flex;
 	flex-wrap: wrap;
 	gap: 20px;
-  }
-  
-  .product-item {
+}
+
+.product-item {
 	border: 1px solid #ddd;
 	padding: 20px;
 	display: flex;
 	width: 100%;
 	background-color: #f9f9f9;
-  }
-  
-  .product-image {
+}
+
+.product-image {
 	width: 20%;
 	height: inherit;
 	object-fit: cover;
 	margin-right: 20px;
-  }
-  
-  .product-info {
+}
+
+.product-info {
 	flex: 1;
-  }
-  
-  .product-name {
+}
+
+.product-name {
 	font-size: 1.5em;
 	margin-bottom: 10px;
-  }
-  
-  .product-quantity,
-  .product-dates,
-  .product-status,
-  .product-material {
+}
+
+.product-quantity,
+.product-dates,
+.product-status,
+.product-material {
 	margin-bottom: 5px;
-  }
-  
-  .product-actions {
+}
+
+.product-actions {
 	margin-top: 15px;
-  }
-  
-  .product-actions .btn {
+}
+
+.product-actions .btn {
 	margin-right: 10px;
-  }
-  
+}
+
 
 .tile{
 	height: 200px;
@@ -644,3 +644,54 @@ table form{
 }
 
 /*----------  Keyframes  ----------*/
+
+/*----------------------------  ESTILOS TABLAS  -------------------------------*/
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #E6FFFA; /* Fondo verde claro */
+    border: 2px solid #00BFA6; /* Borde verde aqua */
+    box-shadow: 0 6px 15px rgba(0, 191, 166, 0.3); /* Sombra verde aqua */
+    transition: all 0.3s ease-in-out;
+}
+
+.table thead {
+    background-color: #00BFA6; /* Verde aqua */
+    color: #FFF;
+}
+
+.table thead th {
+    padding: 15px;
+    text-align: left;
+    font-weight: bold;
+    border-bottom: 3px solid #26D3A3; /* Verde más claro */
+}
+
+.table tbody tr {
+    transition: background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.table tbody tr:hover {
+    background-color: #A0F1D6; /* Verde menta */
+    color: #00796B; /* Verde más oscuro */
+    transform: translateX(3px); /* Desplazamiento hacia la derecha */
+}
+
+.table tbody tr:nth-child(odd) {
+    background-color: #CFF3EB; /* Verde pastel */
+}
+
+.table td {
+    padding: 12px 15px;
+    border-top: 1px solid #00BFA6; /* Verde aqua */
+    font-family: 'roboto_condensed_regular', Arial, sans-serif;
+}
+
+/* Efecto cuando se pasa el cursor sobre la tabla completa */
+.table:hover {
+    box-shadow: 0 8px 20px rgba(0, 191, 166, 0.4); /* Sombra verde aqua más fuerte */
+    border-color: #26D3A3; /* Verde más claro */
+}
+
+/*---------------------------- FIN ESTILOS TABLAS  -------------------------------*/

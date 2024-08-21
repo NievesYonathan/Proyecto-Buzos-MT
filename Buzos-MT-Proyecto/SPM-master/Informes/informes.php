@@ -45,7 +45,7 @@
 					</div>
 				</div>
 
-            	<h4 class="text-left"> &nbsp; Datos del Inventario de la fecha: 01/08/2024</h4>
+            <h4 class="text-left"> &nbsp; Datos del Inventario de la fecha: 01/08/2024</h4>
 
 
 				<div class="table-responsive">
@@ -165,13 +165,12 @@
 						<li class="page-item">
 							<a class="page-link" href="#">Next</a>
 						</li>
-					</ul>				
+					</ul>
 				</nav>
 				
 			</div>
         </section>
     </main>
-       	
 	<!--===Include JavaScript files======-->
 	<?php include '../Componentes/Script/script.php' ?>
 </body>

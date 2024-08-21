@@ -34,7 +34,7 @@
 					<li>
 						<a href="user-search.html"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR USUARIO</a>
 					</li>
-				</ul>	
+				</ul>
 			</div>
 			
 			<!-- Content -->
@@ -65,13 +65,13 @@
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
 									<a href="user-update.html" class="btn btn-success">
-	  									<i class="fas fa-sync-alt"></i>	
+	  								<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>
 								<td>
 									<form action="">
 										<button type="button" class="btn btn-warning">
-		  									<i class="far fa-trash-alt"></i>
+		  							<i class="far fa-trash-alt"></i>
 										</button>
 									</form>
 								</td>
@@ -86,13 +86,13 @@
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
 									<a href="user-update.html" class="btn btn-success">
-	  									<i class="fas fa-sync-alt"></i>	
+	  								<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>
 								<td>
 									<form action="">
 										<button type="button" class="btn btn-warning">
-		  									<i class="far fa-trash-alt"></i>
+		  							<i class="far fa-trash-alt"></i>
 										</button>
 									</form>
 								</td>
@@ -107,13 +107,13 @@
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
 									<a href="user-update.html" class="btn btn-success">
-	  									<i class="fas fa-sync-alt"></i>	
+	  								<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>
 								<td>
 									<form action="">
 										<button type="button" class="btn btn-warning">
-		  									<i class="far fa-trash-alt"></i>
+		  								<i class="far fa-trash-alt"></i>
 										</button>
 									</form>
 								</td>
@@ -128,13 +128,13 @@
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
 									<a href="user-update.html" class="btn btn-success">
-	  									<i class="fas fa-sync-alt"></i>	
+	  								<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>
 								<td>
 									<form action="">
 										<button type="button" class="btn btn-warning">
-		  									<i class="far fa-trash-alt"></i>
+		  								<i class="far fa-trash-alt"></i>
 										</button>
 									</form>
 								</td>
