@@ -1,0 +1,430 @@
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+
+@import url('https://fonts.googleapis.com/css2?family=Jersey+10&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Permanent Marker", cursive;
+  font-weight: 500;
+  font-style: normal;
+}
+
+html,
+body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+#main {
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgb(255, 255, 255);
+}
+
+.d-flex {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.d-flex-c {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: #fff;
+}
+
+
+nav {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: 10vh;
+  justify-content: space-between !important;
+  padding: 0vw 10vw;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #ffffff;
+  z-index: 999999;
+}
+
+.cntr-nav {
+  width: 50%;
+  gap: 3vw;
+}
+
+.cntr-nav a {
+  text-decoration: none;
+  color: #ffffff;
+}
+
+.ri-menu-line {
+  font-size: 1.5vw;
+}
+
+.section {
+  width: 100%;
+  height: 100vh;
+}
+
+.section1 {
+  background-image: url(./Assets2/Gradient24.png);
+  background-size: cover;
+  background-position: center;
+}
+
+.section1 h1 {
+  font-size: 22vw;
+  color: #fff;
+  z-index: 1;
+}
+
+.section1 img {
+  position: absolute;
+  transition: all cubic-bezier(0.19, 1, 0.22, 1) 0.5s;
+}
+
+#leaf1 {
+  left: 20%;
+  top: 20%;
+  height: 15vw;
+}
+
+#fanta {
+  width: 20vw;
+  z-index: 1;
+}
+
+#orange {
+  top: 65%;
+  left: 48%;
+  width: 20vw;
+}
+
+#leaf2 {
+  top: 55%;
+  left: 75%;
+  width: 25vw;
+  transform: rotate(110deg);
+}
+
+#orange2 {
+  top: 10%;
+  left: 30%;
+  width: 15vw;
+}
+
+/* -------section-2 */
+.section2 .lft {
+  width: 50%;
+  height: 100%;
+  /* background-color: red; */
+  background-image: url(./Assets2/magicpattern-gradient-1724138799214.png);
+  background-size: cover;
+  background-position: center;
+}
+
+.section2 .rght {
+  width: 50%;
+  height: 100%;
+  align-items: start;
+  gap: 5vh;
+  padding: 0vw 10vw 0vw 0vw;
+  /*¿ background-color: orange; */
+  background-image: url(./Assets2/magicpattern-gradient-1724138799214.png);
+  background-size: cover;
+  background-position: center;
+}
+
+.magicpattern {
+  width: 80%;
+  height: 80%;
+  background-size: cover;
+  background-position: right;
+  background-repeat: repeat;
+  background-image: url(./Assets2/blob.svg);
+}
+
+.mainHeading {
+  font-size: 3vw;
+  color: #ffffff;
+}
+
+.mainP {
+  font-size: 1vw;
+  color: #ffffff;
+  font-weight: 400;
+}
+
+.section2 .rght button {
+  padding: 1vw 2vw;
+  background-color: #12464c;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+}
+
+/* Section-3 */
+
+.section3 {
+  gap: 5vw;
+  overflow: hidden;
+  background-image: url(./Assets2/Gradient24.png);
+  background-size: cover;
+  background-position: center;
+
+}
+
+.section3 .card {
+  width: 25vw;
+  height: 70vh;
+  background-color: #ffffff;
+  padding: 1vw;
+  gap: 2vh;
+  border-radius: 20px;
+}
+
+.img-div {
+  position: relative;
+  width: 100%;
+  height: 80%;
+  /* background-color: rebeccapurple; */
+}
+
+.img-div img {
+  position: absolute;
+  width: 100%;
+}
+
+.card .mainHeading {
+  color: #000;
+  font-size: 2vw;
+}
+
+.card button {
+  padding: 1vw 2vw;
+  background-color: #12464c;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+}
+
+#pineapple {
+  width: 22vw;
+}
+
+#yellow {
+  top: 8%;
+  width: 25vw;
+}
+
+#pineapplecut,
+#orangefruit {
+  width: 20vw;
+}
+
+#resp-orange {
+  width: 90vw;
+}
+
+#resp-fanta {
+  width: 50vw;
+}
+
+#resp-orange,
+#resp-fanta {
+  display: none;
+}
+
+@media (max-width: 799px) {
+  .cntr-nav {
+    display: none;
+  }
+
+  .ri-menu-line {
+    font-size: 7vw;
+  }
+
+  .section1 h1 {
+    font-size: 32vw;
+  }
+
+  #fanta {
+    width: 95vw;
+  }
+
+  #orange2 {
+    top: 15%;
+    left: 10%;
+    width: 39vw;
+  }
+
+  #leaf1 {
+    top: 14%;
+    left: 67%;
+    width: 19vw;
+  }
+
+  #orange {
+    top: 58%;
+    left: 47%;
+    width: 42vw;
+  }
+
+  #leaf2 {
+    top: 76%;
+    left: 12%;
+    width: 16vw;
+  }
+
+  .section2 {
+    flex-direction: column;
+    height: 200vh;
+  }
+
+  .magicpattern {
+    width: 100%;
+    height: 40%;
+  }
+
+  .section2 .lft {
+    width: 100%;
+    height: 40%;
+  }
+
+  .section2 .rght {
+    width: 100%;
+    padding: 10vw;
+    height: 60%;
+  }
+
+  .mainHeading {
+    font-size: 8vw;
+  }
+
+  .mainP {
+    font-size: 5vw;
+  }
+
+  .section2 .rght button {
+    padding: 5vw 10vw;
+  }
+
+  .section3 {
+    flex-direction: column;
+    height: 210vh;
+  }
+
+  .section3 .card {
+    width: 80vw;
+    padding: 5vw;
+  }
+
+  .card button {
+    padding: 5vw 10vw;
+  }
+
+  #pineapple {
+    width: 37vw;
+  }
+
+  #pineapplecut,
+  #orangefruit {
+    width: 75vw;
+  }
+
+  #pineapplecut,
+  #orangefruit {
+    width: 75vw;
+  }
+
+  #yellow {
+    width: 57vw;
+  }
+
+  #resp-orange,
+  #resp-fanta {
+    display: initial;
+  }
+}
+
+
+.section1 {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  background-color: #f5f5f5;
+}
+
+#titulo {
+  white-space: nowrap;
+  font-size: 15rem;
+  position: absolute;
+  animation: marquee 18s linear infinite;
+  z-index: 2;
+}
+
+@keyframes marquee {
+  from {
+    transform: translateX(100%);
+  }
+
+  to {
+    transform: translateX(-100%);
+  }
+}
+
+.section4 {
+  /* background-color: red; */
+  background-image: url(./Assets2/magicpattern-gradient-1724138799214.png);
+  background-size: cover;
+  background-position: center;
+}
+
+/* Conócenos */
+.rounded-circle {
+  width: 250px;
+  height: 250px;
+
+}
+
+.container .row h2+.row p {
+  text-align: justify;
+}
+
+footer {
+  background-color: #12464c;
+  text-align: center;
+  padding: 2rem;
+  color: #fff;
+}
