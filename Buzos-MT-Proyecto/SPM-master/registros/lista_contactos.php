@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
-<?php 
-$perfil = "Operari";
+	<?php 
+	include '../Config/variable_global.php';
 
-include '../Componentes/Head/head.php' ?>
+	include '../Componentes/Head/head.php' ?>
+
 <body>
 
 		<!-- Nav lateral -->

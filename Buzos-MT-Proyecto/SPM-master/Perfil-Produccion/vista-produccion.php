@@ -2,7 +2,7 @@
 <html lang="es">
 
 <?php 
-$perfil = "JefProduccion";
+include '../Config/variable_global.php';
 
 include '../Componentes/Head/head.php' ?>
 

@@ -111,10 +111,10 @@
 						<a href="#" class="nav-btn-submenu"><i class="fa-solid fa-industry"></i> &nbsp; Producción <i class="fas fa-chevron-down"></i></a>
 						<ul>
 							<li>
-								<a href="../Produccion/vista-produccion.php"><i class="fa-solid fa-industry"></i> &nbsp; Gestion de Producción</a>
+								<a href="../Perfil-Produccion/vista-produccion.php"><i class="fa-solid fa-industry"></i> &nbsp; Gestion de Producción</a>
 							</li>
 							<li>
-								<a href="../Produccion/vista-pro-fabricados.php" style="font-size: 15px"><i class="fa-solid fa-shirt"></i> &nbsp; Gestion Productos Fabricados</a>
+								<a href="../Perfil-Produccion/vista-pro-fabricados.php" style="font-size: 15px"><i class="fa-solid fa-shirt"></i> &nbsp; Gestion Productos Fabricados</a>
 							</li>
 						</ul>
 					</li>
