@@ -35,9 +35,9 @@
                         <div class="inputBox">
                             <a href="../Dashboard/home.php" class="submit-btn">Iniciar</a>
                         </div>
-                        <p class="forget"><a href="registros.html">No Tengo Un Usuario</a></p>
+                        <p class="forget"><a href="registros.php">No Tengo Un Usuario</a></p>
                         <br>
-                        <p class="forget"><a href="not-password.html">Olvide Mi Contraseña</a></p>
+                        <p class="forget"><a href="not-password.php">Olvide Mi Contraseña</a></p>
                     </form>
                 </div>
             </div>

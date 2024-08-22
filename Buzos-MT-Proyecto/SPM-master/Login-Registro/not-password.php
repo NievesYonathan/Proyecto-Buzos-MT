@@ -29,7 +29,7 @@
                             <input type="email" id="correo" name="correo" placeholder="Correo Electrónico" required>
                         </div>
                         <div class="inputBox">
-                            <a href="login.html" class="submit-btn">Enviar</a>
+                            <a href="login.php" class="submit-btn">Enviar</a>
                         </div>
                     </form>
                 </div>

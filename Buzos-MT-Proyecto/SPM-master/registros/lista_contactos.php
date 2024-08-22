@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
-<?php include '../Componentes/Head/head.php' ?>
+<?php 
+$perfil = "Operari";
+
+include '../Componentes/Head/head.php' ?>
 <body>
 
 		<!-- Nav lateral -->

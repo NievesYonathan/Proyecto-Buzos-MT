@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<?php include '../Componentes/Head/head.php' ?>
+<?php 
+$perfil = "JefProduccion";
+
+include '../Componentes/Head/head.php' ?>
 
 <body>
 	
