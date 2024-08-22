@@ -29,21 +29,29 @@
 			<!-- Content -->
 			<div class="full-box tile-container">
 
-				<a href="client-new.html" class="tile">
-					<div class="tile-tittle">Producción</div>
-					<div class="tile-icon">
-						<i class="fa-solid fa-industry"></i>
-						<!-- <p>5 Registrados</p> -->
-					</div>
-				</a>
+				<?php 
+				//Enlace solo visible para Jefe de Producción
+				if ($perfil == 'JefProduccion'): ?>
+					<a href="client-new.html" class="tile">
+						<div class="tile-tittle">Producción</div>
+						<div class="tile-icon">
+							<i class="fa-solid fa-industry"></i>
+							<!-- <p>5 Registrados</p> -->
+						</div>
+					</a>
+				<?php endif; ?>
 
-				<a href="item-list.html" class="tile">
-					<div class="tile-tittle">Materia Prima</div>
-					<div class="tile-icon">
-						<i class="fas fa-pallet fa-fw"></i>
-						<!-- <p>9 Registrados</p> -->
-					</div>
-				</a>
+				<?php 
+				//Enlace solo visible para Jefe de Producción
+				if ($perfil == 'Inventario'): ?>
+					<a href="item-list.html" class="tile">
+						<div class="tile-tittle">Materia Prima</div>
+						<div class="tile-icon">
+							<i class="fas fa-pallet fa-fw"></i>
+							<!-- <p>9 Registrados</p> -->
+						</div>
+					</a>
+				<?php endif; ?>
 
 				<!-- <a href="reservation-list.html" class="tile">
 					<div class="tile-tittle">Prestamos</div>
@@ -53,13 +61,17 @@
 					</div>
 				</a> -->
 
-				<a href="user-list.html" class="tile">
-					<div class="tile-tittle">Usuarios</div>
-					<div class="tile-icon">
-						<i class="fa-solid fa-user fa-fw"></i>
-						<!-- <p>50 Registrados</p> -->
-					</div>
-				</a>
+				<?php 
+				//Enlace solo visible para Jefe de Producción
+				if ($perfil == 'AdminUsuario'): ?>
+					<a href="user-list.html" class="tile">
+						<div class="tile-tittle">Usuarios</div>
+						<div class="tile-icon">
+							<i class="fa-solid fa-user fa-fw"></i>
+							<!-- <p>50 Registrados</p> -->
+						</div>
+					</a>
+				<?php endif; ?>
 
 				<!-- <a href="company.html" class="tile">
 					<div class="tile-tittle">Empresa</div>
@@ -68,10 +80,19 @@
 						<p>1 Registrada</p>
 					</div>
 				</a> -->
-				
-			</div>
-			
 
+								<?php 
+				//Enlace solo visible para Jefe de Producción
+				if ($perfil == 'JefProduccion'): ?>
+					<a href="client-new.html" class="tile">
+						<div class="tile-tittle">Informes</div>
+						<div class="tile-icon">
+							<i class="fa-solid fa-file-circle-plus"></i>
+							<!-- <p>5 Registrados</p> -->
+						</div>
+					</a>
+				<?php endif; ?>
+			</div>
 		</section>
 	</main>
 	
