@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
-	<?php include '../Componentes/Head/head.php' ?>
+	<?php 
+	include '../Config/variable_global.php';
+
+	include '../Componentes/Head/head.php' ?>
+
 <body>
-	
-	<!-- Main container -->
-	<main class="full-box main-container">
+
 		<!-- Nav lateral -->
 		<?php include '../Componentes/Sidebar/sidebar.php' ?>
 
@@ -16,27 +18,25 @@
 			<!-- Page header -->
 			<div class="full-box page-header">
 				<h3 class="text-left">
-					<i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE USUARIOS
+					<i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE PROVEEDORES
 				</h3>
-				<p class="text-justify">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit nostrum rerum animi natus beatae ex. Culpa blanditiis tempore amet alias placeat, obcaecati quaerat ullam, sunt est, odio aut veniam ratione.
-				</p>
 			</div>
-			
+
 			<div class="container-fluid">
 				<ul class="full-box list-unstyled page-nav-tabs">
 					<li>
-						<a href="user-new.html"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVO USUARIO</a>
+						<a href="CPP.html"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVO PROVEEDOR</a>
 					</li>
 					<li>
-						<a class="active" href="user-list.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE USUARIOS</a>
+						<a class="active" href="LPP.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA
+							DE PROVEEDORES</a>
 					</li>
 					<li>
-						<a href="user-search.html"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR USUARIO</a>
+						<a href="PPS.html"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR PROVEEDOR</a>
 					</li>
-				</ul>	
+				</ul>
 			</div>
-			
+
 			<!-- Content -->
 			<div class="container-fluid">
 				<div class="table-responsive">
@@ -44,97 +44,97 @@
 						<thead>
 							<tr class="text-center roboto-medium">
 								<th>#</th>
-								<th>DNI</th>
-								<th>NOMBRE</th>
-								<th>APELLIDO</th>
+								<th>nombre de la empresa</th>
+								<th>direccion de la empresa</th>
+								<th>materiales</th>
 								<th>TELÉFONO</th>
-								<th>USUARIO</th>
-								<th>EMAIL</th>
+								<th>nombre de contacto</th>
+								<th>correo electronico</th>
 								<th>ACTUALIZAR</th>
 								<th>ELIMINAR</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center" >
+							<tr class="text-center">
 								<td>1</td>
-								<th>03045643</th>
-								<th>NOMBRE DE USUARIO</th>
-								<th>APELLIDO DE USUARIO</th>
-								<th>2345456</th>
-								<th>NOMBRE DE USUARIO</th>
+								<th>NOMBRE DE LA EMPERSA</th>
+								<th>DIRECCION DE LA EMPRESA</th>
+								<th>MATERIAL SUMINISTRADO POR LA EMPRESA</th>
+								<th>1234567890</th>
+								<th>NOMBRE DE CONTACTO</th>
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
-									<a href="user-update.html" class="btn btn-success">
-	  									<i class="fas fa-sync-alt"></i>	
+									<a href="UPP.html" class="btn btn-success">
+										<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>
 								<td>
 									<form action="">
 										<button type="button" class="btn btn-warning">
-		  									<i class="far fa-trash-alt"></i>
+											<i class="far fa-trash-alt"></i>
 										</button>
 									</form>
 								</td>
 							</tr>
-							<tr class="text-center" >
+							<tr class="text-center">
 								<td>2</td>
-								<th>03045643</th>
-								<th>NOMBRE DE USUARIO</th>
-								<th>APELLIDO DE USUARIO</th>
-								<th>2345456</th>
-								<th>NOMBRE DE USUARIO</th>
+								<th>NOMBRE DE LA EMPERSA</th>
+								<th>DIRECCION DE LA EMPRESA</th>
+								<th>MATERIAL SUMINISTRADO POR LA EMPRESA</th>
+								<th>1234567890</th>
+								<th>NOMBRE DE CONTACTO</th>
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
-									<a href="user-update.html" class="btn btn-success">
-	  									<i class="fas fa-sync-alt"></i>	
+									<a href="UPP.html" class="btn btn-success">
+										<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>
 								<td>
 									<form action="">
 										<button type="button" class="btn btn-warning">
-		  									<i class="far fa-trash-alt"></i>
+											<i class="far fa-trash-alt"></i>
 										</button>
 									</form>
 								</td>
 							</tr>
-							<tr class="text-center" >
+							<tr class="text-center">
 								<td>3</td>
-								<th>03045643</th>
-								<th>NOMBRE DE USUARIO</th>
-								<th>APELLIDO DE USUARIO</th>
-								<th>2345456</th>
-								<th>NOMBRE DE USUARIO</th>
+								<th>NOMBRE DE LA EMPERSA</th>
+								<th>DIRECCION DE LA EMPRESA</th>
+								<th>MATERIAL SUMINISTRADO POR LA EMPRESA</th>
+								<th>1234567890</th>
+								<th>NOMBRE DE CONTACTO</th>
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
-									<a href="user-update.html" class="btn btn-success">
-	  									<i class="fas fa-sync-alt"></i>	
+									<a href="UPP.html" class="btn btn-success">
+										<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>
 								<td>
 									<form action="">
 										<button type="button" class="btn btn-warning">
-		  									<i class="far fa-trash-alt"></i>
+											<i class="far fa-trash-alt"></i>
 										</button>
 									</form>
 								</td>
 							</tr>
-							<tr class="text-center" >
+							<tr class="text-center">
 								<td>4</td>
-								<th>03045643</th>
-								<th>NOMBRE DE USUARIO</th>
-								<th>APELLIDO DE USUARIO</th>
-								<th>2345456</th>
-								<th>NOMBRE DE USUARIO</th>
+								<th>NOMBRE DE LA EMPRESA</th>
+								<th>DIRECCION DE LA EMPRESA</th>
+								<th>MATERIAL SUMINISTRADO POR LA EMPRESA</th>
+								<th>1234567890</th>
+								<th>NOMBRE DE CONTACTO</th>
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
-									<a href="user-update.html" class="btn btn-success">
-	  									<i class="fas fa-sync-alt"></i>	
+									<a href="UPP.html" class="btn btn-success">
+										<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>
 								<td>
 									<form action="">
 										<button type="button" class="btn btn-warning">
-		  									<i class="far fa-trash-alt"></i>
+											<i class="far fa-trash-alt"></i>
 										</button>
 									</form>
 								</td>
@@ -159,9 +159,10 @@
 
 		</section>
 	</main>
-	
-	
+
+
 	<!--===Include JavaScript files======-->
 	<?php include '../Componentes/Script/script.php' ?>
 </body>
+
 </html>

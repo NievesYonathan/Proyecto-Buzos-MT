@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
-	<?php include '../Componentes/Head/head.php' ?>
+	<?php 
+	include '../Config/variable_global.php';
+
+	include '../Componentes/Head/head.php' ?>
 <body>
 	
 	<!-- Main container -->
@@ -25,7 +28,7 @@
 
 				<div class="product-list">
 					<div class="product-item">
-						<img src="https://i0.wp.com/centrotintas.com/wp-content/uploads/2020/09/Buzo-png.png?fit=1000%2C1000&ssl=1" alt="Producto" class="product-image">
+						<img src="https://lh5.googleusercontent.com/proxy/qSbTXu5kBnkHZvxBc4fhU1Kktwp1fUcrVFklTH2NUaIUIhfKOyxVhKMPIUxODR77A-ZDMH2huxyrPifk4rLoy-zprigwgZ0CnQriaumBm0bpFjUlphotjuZ4PWsc2G-LBOSJDQNznsi9r_o1rVhK6Jh0k6liF3c" alt="Producto" class="product-image">
 						<div class="product-info">
 							<h3 class="product-name">Buzos unixes</h3>
 							<p class="product-quantity">Cantidad de Producción: 500 unidades</p>

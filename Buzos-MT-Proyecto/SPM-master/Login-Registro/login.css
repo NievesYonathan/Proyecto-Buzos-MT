@@ -21,30 +21,23 @@ section {
 
 .color {
     position: absolute;
-    filter: blur(150px);
+    filter: blur(100px); /* Reducción del blur para mayor visibilidad */
 }
 
 .color:nth-child(1) {
-    top: -350px;
-    width: 600px;
-    height: 600px;
-    background-color: #000000;
+    top: -50%; /* Ajuste para que cubra toda la pantalla */
+    left: -50%; /* Alineación para expandir el gradiente */
+    width: 150%; /* Expandir para cubrir la pantalla completa */
+    height: 150%;
+    background: linear-gradient(to bottom right, #34e69f, transparent); /* Gradiente del negro al transparente */
 }
 
 .color:nth-child(2) {
-    bottom: -150px;
-    left: 100px;
-    width: 500px;
-    height: 500px;
-    background-color: #00c040;
-}
-
-.color:nth-child(3) {
-    bottom: 50px;
-    right: 100px;
-    width: 300px;
-    height: 300px;
-    background-color: #00c040;
+    top: -50%; /* Alineación para crear el degradado */
+    left: -45%; /* Alineación para expandir el gradiente */
+    width: 150%; /* Expandir para cubrir la pantalla completa */
+    height: 150%;
+    background: linear-gradient(to top left, #004e5c, transparent); /* Gradiente del color a transparente */
 }
 
 .box {
@@ -66,10 +59,10 @@ section {
 
 @keyframes animate {
     0%, 100% {
-        transform: translatex(-20px);
+        transform: translatex(-30px);
     }
     50% {
-        transform: translateY(20px);
+        transform: translateY(30px);
     }
 }
 
@@ -141,17 +134,17 @@ section {
 }
 
 .form .inputBox select option {
-    background: #333;
+    background: #12464c77;
     color: #fff;
     padding: 10px;
 }
 
 .form .inputBox select option:hover {
-    background: #444;
+    background: #12464c77;
 }
 
 .form .inputBox select option:selected {
-    background: #555;
+    background: #12464c77;
 }
 
 .form .inputBox select option,
@@ -209,7 +202,7 @@ section {
 }
 
 .form .inputBox input[type="submit"] {
-    background: #00c040;
+    background: #12464c77;
     color: #fff;
     max-width: 150px;
     cursor: pointer;
@@ -219,7 +212,7 @@ section {
 
 .submit-btn {
     display: inline-block;
-    background: #00c040;
+    background: #12464c77;
     color: #fff;
     padding: 10px 20px;
     border-radius: 35px;
@@ -244,7 +237,7 @@ section {
 }
 
 .forget a:hover {
-    color: #00c040; /* Cambia el color del texto al pasar el mouse */
+    color: #12464c; /* Cambia el color del texto al pasar el mouse */
     transform: scale(1.05); /* Escala el enlace ligeramente al pasar el mouse */
 }
 

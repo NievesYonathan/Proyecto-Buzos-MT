@@ -1,7 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 
-<?php include '../Componentes/Head/head.php' ?>
+<?php 
+include '../Config/variable_global.php';
+
+include '../Componentes/Head/head.php' ?>
 
 <body>
 	

@@ -4,10 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Olvide Mi Contraseña</title>
+    <title>Iniciar Sesión</title>
     <link rel="stylesheet" href="login.css">
     <link rel="shortcut icon" href="../assets/img/favicon.ico" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Icono -->
+	<link rel="icon" href="../assets/img/icon.png" sizes="32x32" type="image/png">
+
 </head>
 <body>
     <section>
@@ -22,15 +25,19 @@
             <div class="square" style="--i:4;"></div>
             <div class="container">
                 <div class="form">
-                        <h2>Olvide Mi Contraseña</h2>
-                        <br><br><br>
-                        <h4>Mandaremos un codigo a su correo para actualizar su contraseña</h4>
+                        <h2>Iniciar Sesión</h2>
                         <div class="inputBox">
                             <input type="email" id="correo" name="correo" placeholder="Correo Electrónico" required>
                         </div>
                         <div class="inputBox">
-                            <a href="login.html" class="submit-btn">Enviar</a>
+                            <input type="password" id="password" name="password" placeholder="Contraseña" required>
                         </div>
+                        <div class="inputBox">
+                            <a href="../Dashboard/home.php" class="submit-btn">Iniciar</a>
+                        </div>
+                        <p class="forget"><a href="registros.php">No Tengo Un Usuario</a></p>
+                        <br>
+                        <p class="forget"><a href="not-password.php">Olvide Mi Contraseña</a></p>
                     </form>
                 </div>
             </div>

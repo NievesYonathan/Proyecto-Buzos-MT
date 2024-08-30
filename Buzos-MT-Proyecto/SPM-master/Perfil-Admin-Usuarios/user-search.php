@@ -6,48 +6,41 @@
 	include '../Componentes/Head/head.php' ?>
 
 <body>
-
+	
+	<!-- Main container -->
+	<main class="full-box main-container">
 		<!-- Nav lateral -->
 		<?php include '../Componentes/Sidebar/sidebar.php' ?>
 
 		<!-- Page content -->
 		<section class="full-box page-content">
-			<nav class="full-box navbar-info">
-				<a href="#" class="float-left show-nav-lateral">
-					<i class="fas fa-exchange-alt"></i>
-				</a>
-				<a href="user-update.html">
-					<i class="fas fa-user-cog"></i>
-				</a>
-				<a href="#" class="btn-exit-system">
-					<i class="fas fa-power-off"></i>
-				</a>
-			</nav>
-
+			<!-- Navbar -->
+			<?php include '../Componentes/Navbar/navbar.php' ?>
 
 			<!-- Page header -->
 			<div class="full-box page-header">
 				<h3 class="text-left">
-					<i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR CONTACTO
+					<i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR USUARIO
 				</h3>
+				<p class="text-justify">
+					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit nostrum rerum animi natus beatae ex. Culpa blanditiis tempore amet alias placeat, obcaecati quaerat ullam, sunt est, odio aut veniam ratione.
+				</p>
 			</div>
-
+			
 			<div class="container-fluid">
 				<ul class="full-box list-unstyled page-nav-tabs">
 					<li>
-						<a href="RC.html"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVO CONTACTO</a>
+						<a href="user-new.html"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVO USUARIO</a>
 					</li>
 					<li>
-						<a href="LC.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE
-							CONTACTOS</a>
+						<a href="user-list.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE USUARIOS</a>
 					</li>
 					<li>
-						<a class="active" href="US.html"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR
-							CONTACTO</a>
+						<a class="active" href="user-search.html"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR USUARIO</a>
 					</li>
-				</ul>
+				</ul>	
 			</div>
-
+			
 			<!-- Content -->
 			<div class="container-fluid">
 				<form class="form-neon" action="">
@@ -55,16 +48,13 @@
 						<div class="row justify-content-md-center">
 							<div class="col-12 col-md-6">
 								<div class="form-group">
-									<label for="inputSearch" class="bmd-label-floating">¿Qué contacto estas
-										buscando?</label>
-									<input type="text" class="form-control" name="busqueda-" id="inputSearch"
-										maxlength="30">
+									<label for="inputSearch" class="bmd-label-floating">¿Qué usuario estas buscando?</label>
+									<input type="text" class="form-control" name="busqueda-" id="inputSearch" maxlength="30">
 								</div>
 							</div>
 							<div class="col-12">
 								<p class="text-center" style="margin-top: 40px;">
-									<button type="submit" class="btn btn-raised btn-info"><i class="fas fa-search"></i>
-										&nbsp; BUSCAR</button>
+									<button type="submit" class="btn btn-raised btn-info"><i class="fas fa-search"></i> &nbsp; BUSCAR</button>
 								</p>
 							</div>
 						</div>
@@ -72,7 +62,7 @@
 				</form>
 			</div>
 
-
+			
 			<div class="container-fluid">
 				<form action="">
 					<input type="hidden" name="eliminar-busqueda" value="eliminar">
@@ -85,8 +75,7 @@
 							</div>
 							<div class="col-12">
 								<p class="text-center" style="margin-top: 20px;">
-									<button type="submit" class="btn btn-raised btn-danger"><i
-											class="far fa-trash-alt"></i> &nbsp; ELIMINAR BÚSQUEDA</button>
+									<button type="submit" class="btn btn-raised btn-danger"><i class="far fa-trash-alt"></i> &nbsp; ELIMINAR BÚSQUEDA</button>
 								</p>
 							</div>
 						</div>
@@ -101,97 +90,97 @@
 						<thead>
 							<tr class="text-center roboto-medium">
 								<th>#</th>
-								<th>Nombre del contacto</th>
-								<th>Perfil</th>
-								<th>cargo del contacto</th>
-								<th>direccion</th>
-								<th>Teléfono</th>
+								<th>DNI</th>
+								<th>NOMBRE</th>
+								<th>APELLIDO</th>
+								<th>TELÉFONO</th>
+								<th>USUARIO</th>
 								<th>EMAIL</th>
 								<th>ACTUALIZAR</th>
 								<th>ELIMINAR</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center">
+							<tr class="text-center" >
 								<td>1</td>
-								<th>NOMBRE DE CONTACTO</th>
-								<th>PERFIL CONTACTO</th>
-								<th>CARGO CONTACTO</th>
+								<th>03045643</th>
+								<th>NOMBRE DE USUARIO</th>
+								<th>APELLIDO DE USUARIO</th>
 								<th>2345456</th>
-								<th>1234567890</th>
+								<th>NOMBRE DE USUARIO</th>
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
-									<a href="UC.html" class="btn btn-success">
-										<i class="fas fa-sync-alt"></i>
+									<a href="user-update.html" class="btn btn-success">
+	  									<i class="fas fa-sync-alt"></i>	
 									</a>
 								</td>
 								<td>
 									<form action="">
 										<button type="button" class="btn btn-warning">
-											<i class="far fa-trash-alt"></i>
+		  									<i class="far fa-trash-alt"></i>
 										</button>
 									</form>
 								</td>
 							</tr>
-							<tr class="text-center">
+							<tr class="text-center" >
 								<td>2</td>
-								<th>NOMBRE DE CONTACTO</th>
-								<th>PERFIL CONTACTO</th>
-								<th>CARGO CONTACTO</th>
+								<th>03045643</th>
+								<th>NOMBRE DE USUARIO</th>
+								<th>APELLIDO DE USUARIO</th>
 								<th>2345456</th>
-								<th>1234567890</th>
+								<th>NOMBRE DE USUARIO</th>
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
-									<a href="UC.html" class="btn btn-success">
-										<i class="fas fa-sync-alt"></i>
+									<a href="user-update.html" class="btn btn-success">
+	  									<i class="fas fa-sync-alt"></i>	
 									</a>
 								</td>
 								<td>
 									<form action="">
 										<button type="button" class="btn btn-warning">
-											<i class="far fa-trash-alt"></i>
+		  									<i class="far fa-trash-alt"></i>
 										</button>
 									</form>
 								</td>
 							</tr>
-							<tr class="text-center">
+							<tr class="text-center" >
 								<td>3</td>
-								<th>NOMBRE DE CONTACTO</th>
-								<th>PERFIL CONTACTO</th>
-								<th>CARGO CONTACTO</th>
+								<th>03045643</th>
+								<th>NOMBRE DE USUARIO</th>
+								<th>APELLIDO DE USUARIO</th>
 								<th>2345456</th>
-								<th>1234567890</th>
+								<th>NOMBRE DE USUARIO</th>
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
-									<a href="UC.html" class="btn btn-success">
-										<i class="fas fa-sync-alt"></i>
+									<a href="user-update.html" class="btn btn-success">
+	  									<i class="fas fa-sync-alt"></i>	
 									</a>
 								</td>
 								<td>
 									<form action="">
 										<button type="button" class="btn btn-warning">
-											<i class="far fa-trash-alt"></i>
+		  									<i class="far fa-trash-alt"></i>
 										</button>
 									</form>
 								</td>
 							</tr>
-							<tr class="text-center">
+							<tr class="text-center" >
 								<td>4</td>
-								<th>NOMBRE DE CONTACTO</th>
-								<th>PERFIL CONTACTO</th>
-								<th>CARGO CONTACTO</th>
+								<th>03045643</th>
+								<th>NOMBRE DE USUARIO</th>
+								<th>APELLIDO DE USUARIO</th>
 								<th>2345456</th>
-								<th>1234567890</th>
+								<th>NOMBRE DE USUARIO</th>
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
-									<a href="UC.html" class="btn btn-success">
-										<i class="fas fa-sync-alt"></i>
+									<a href="user-update.html" class="btn btn-success">
+	  									<i class="fas fa-sync-alt"></i>	
 									</a>
 								</td>
 								<td>
 									<form action="">
 										<button type="button" class="btn btn-warning">
-											<i class="far fa-trash-alt"></i>
+		  									<i class="far fa-trash-alt"></i>
 										</button>
 									</form>
 								</td>
@@ -216,10 +205,9 @@
 
 		</section>
 	</main>
-
-
+	
+	
 	<!--===Include JavaScript files======-->
 	<?php include '../Componentes/Script/script.php' ?>
 </body>
-
 </html>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Iniciar Sesión</title>
+    <title>Olvide Mi Contraseña</title>
     <link rel="stylesheet" href="login.css">
     <link rel="shortcut icon" href="../assets/img/favicon.ico" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -22,19 +22,15 @@
             <div class="square" style="--i:4;"></div>
             <div class="container">
                 <div class="form">
-                        <h2>Iniciar Sesión</h2>
+                        <h2>Olvide Mi Contraseña</h2>
+                        <br><br><br>
+                        <h4>Mandaremos un codigo a su correo para actualizar su contraseña</h4>
                         <div class="inputBox">
                             <input type="email" id="correo" name="correo" placeholder="Correo Electrónico" required>
                         </div>
                         <div class="inputBox">
-                            <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                            <a href="login.php" class="submit-btn">Enviar</a>
                         </div>
-                        <div class="inputBox">
-                            <a href="../Dashboard/home.php" class="submit-btn">Iniciar</a>
-                        </div>
-                        <p class="forget"><a href="registros.html">No Tengo Un Usuario</a></p>
-                        <br>
-                        <p class="forget"><a href="not-password.html">Olvide Mi Contraseña</a></p>
                     </form>
                 </div>
             </div>
