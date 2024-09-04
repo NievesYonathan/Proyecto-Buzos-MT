@@ -23,20 +23,37 @@
             <div class="container">
                 <div class="form">
                     <h2>Registro de Usuario</h2>
-                    <form id="registroForm">
+                    <form id="registroForm" action="../Controlador/ControladorRegistro.php" method="POST">
                         <div class="inputBox">
-                            <input type="text" id="nombre" name="nombre" placeholder="Nombre Completo" required pattern="[A-Za-zÁ-ÿ\s]+" title="Solo se permiten letras y espacios">
-                        </div>
-                        <div class="inputBox">
-                            <select id="tipoDocumento" name="tipoDocumento"required>
+                            <select id="tipoDocumento" name="tipoDocumento" required>
                                 <option value=""> Tipo de documento</option>
-                                <option value="ti">TI</option>
-                                <option value="pasaporte">Pasaporte</option>
-                                <option value="cedula">Cédula</option>
+                                <option value="1">Cédula</option>
+                                <option value="TI">TI</option>
+                                <option value="Pasaporte">Pasaporte</option>
                             </select>
                         </div>
                         <div class="inputBox">
                             <input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Número de Documento" required pattern="\d+" title="Solo se permiten números">
+                        </div>
+                        <div class="inputBox">
+                            <input type="text" id="nombres" name="nombres" placeholder="Nombres" required pattern="[A-Za-zÁ-ÿ\s]+" title="Solo se permiten letras y espacios">
+                        </div>
+                        <div class="inputBox">
+                            <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" required pattern="[A-Za-zÁ-ÿ\s]+" title="Solo se permiten letras y espacios">
+                        </div>
+                        <div class="inputBox">
+                            <label for="fechaNacimiento">F/N</label>
+                            <input type="date" id="fechaNacimiento" name="fechaNacimiento" placeholder="fechaNacimiento" required>
+                        </div>
+                        <div class="inputBox">
+                            <select id="sexo" name="sexo"required>
+                                <option value="">Sexo</option>
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                            </select>
+                        </div>
+                        <div class="inputBox">
+                            <input type="number" id="celular" name="celular" placeholder="Teléfono Celular" required>
                         </div>
                         <div class="inputBox">
                             <input type="email" id="correo" name="correo" placeholder="Correo Electrónico" required>
@@ -44,11 +61,11 @@
                         <div class="inputBox">
                             <input type="password" id="password" name="password" placeholder="Contraseña" required pattern=".{8,}" title="Debe contener al menos 8 caracteres">
                         </div>
-                        <div class="inputBox">
+                        <!-- <div class="inputBox">
                             <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar Contraseña" required>
-                        </div>
+                        </div> -->
                         <div class="inputBox">
-                            <a href="login.php" class="submit-btn">Registrarme</a>
+                            <button class="btn submit-btn" type="submit">Registrarme</button>
                         </div>
                         <p class="forget"><a href="login.php">¿Ya tienes una cuenta? Inicia sesión</a></p>
                     </form>
