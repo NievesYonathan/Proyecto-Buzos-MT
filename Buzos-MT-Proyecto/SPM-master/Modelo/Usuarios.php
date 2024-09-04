@@ -33,10 +33,10 @@ class Usuarios {
         $this->imagPerfil = $imagPerfil;
     }
     
-    public function crearUsuario ($numDoc = null,$tDoc = null,$usuNombres = null,$usuApellidos = null,$usuFechaNacimiento = null,$usuSexo = null,$usuTelefono = null,$usuFechaContratacion = null,$usuEmail = null,$clave = null)
+    public function crearUsuario($numDoc = null,$tDoc = null,$usuNombres = null,$usuApellidos = null,$usuFechaNacimiento = null,$usuSexo = null,$usuTelefono = null,$usuFechaContratacion = null,$usuEmail = null,$clave = null)
     {
         $conexion = new Conexion();
-        $conetar = $conexion->conectarse();
+        $conectar = $conexion->conectarse();
 
         $usuEstado = "Activo";
         $usuDireccion = "Bogotá";
@@ -46,13 +46,43 @@ class Usuarios {
                 VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         ";
 
-        $stmt = $conetar->prepare($sql);
+        $stmt = $conectar->prepare($sql);
         $stmt->bind_param("iisssssssss", $numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuDireccion, $usuTelefono, $usuEmail, $usuFechaContratacion, $usuEstado);
         $stmt->execute();
         $stmt->close();
-        $conetar->close();
+        $conectar->close();
 
         $seguridad = new Seguridad();
         $seguridad->addClaveUsuario($numDoc, $clave);
+    }
+
+    public function iniciarSesion($numDoc = null, $tDoc = null, $clave = null)
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+
+        $sql = "SELECT u.num_doc, u.t_doc, u.usu_estado, s.seg_clave_hash
+                FROM usuarios AS u
+                LEFT JOIN seguridad AS s ON u.num_doc = s.usu_num_doc
+                WHERE u.t_doc = ? AND u.num_doc = ?
+        ";
+
+        $stmt = $conectar->prepare($sql);
+        $stmt->bind_param("ii", $tDoc, $numDoc);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $stmt->close();
+        $conectar->close();
+
+        $fila = $res->fetch_assoc();
+
+        $hasClaveBD = $fila['seg_clave_hash'];
+
+        $verificado = password_verify($clave, $hasClaveBD);
+
+        if($verificado)
+        {
+            return $res;
+        }
     }
 }

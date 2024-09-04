@@ -37,20 +37,30 @@ session_start();
                     <div class="alert alert-info" role="alert">
                         <?php echo $_SESSION['alerta'] ?>
                     </div>
-                    <?php   
+                    <?php 
+                    unset($_SESSION['alerta']);  
                 }
                 ?>
 
                 <div class="form">
+                    <form class="form" method="POST" action="../Controlador/ControladorRegistro.php">
                         <h2>Iniciar Sesión</h2>
                         <div class="inputBox">
-                            <input type="email" id="correo" name="correo" placeholder="Correo Electrónico" required>
+                            <select id="tipoDocumento" name="tipoDocumento" required>
+                                <option value=""> Tipo de documento</option>
+                                <option value="1">Cédula</option>
+                                <option value="TI">TI</option>
+                                <option value="Pasaporte">Pasaporte</option>
+                            </select>
+                        </div>
+                        <div class="inputBox">
+                            <input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Número de Documento" required pattern="\d+" title="Solo se permiten números">
                         </div>
                         <div class="inputBox">
                             <input type="password" id="password" name="password" placeholder="Contraseña" required>
                         </div>
                         <div class="inputBox">
-                            <a href="../Dashboard/home.php" class="submit-btn">Iniciar</a>
+                            <button class="submit-btn" name="Accion" value="IniciarSesion">Iniciar</button>
                         </div>
                         <p class="forget"><a href="registros.php">No Tengo Un Usuario</a></p>
                         <br>

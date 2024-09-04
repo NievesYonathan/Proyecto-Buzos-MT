@@ -3,8 +3,7 @@ session_start();
 
 include_once "../Modelo/Usuarios.php";
 
-class ControladorRegistro{
-
+class ControladorUsuario{
     public function registroUsuario()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -22,14 +21,36 @@ class ControladorRegistro{
             // $imagPerfil = $_POST[''];
             $clave = $_POST['password'];
 
-            $registroUsuario = new Usuarios();
-            $registroUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
+            $controladorUsuario = new Usuarios();
+            $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
         
             $_SESSION['alerta'] = "Se registró el usuario.";
             header("Location: ../Login-Registro/login.php");
         }
     }
+
+    public function iniciarSesion()
+    {
+        if($_SERVER['REQUEST_METHOD'] = 'POST')
+        {
+            $numDoc = $_POST['numeroDocumento'];
+            $tDoc = $_POST['tipoDocumento'];
+            $clave = $_POST['password'];
+            
+            $controladorUsuario = new Usuarios();
+            $controladorUsuario->iniciarSesion($numDoc, $tDoc, $clave);
+        
+            header("Location: ../Dashboard/home.php");
+        }
+    }
 }
 
-$controlador = new ControladorRegistro();
-$controlador->registroUsuario();
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    $controlador = new ControladorUsuario();
+    if($_POST['Accion'] == "Registrar")
+    {       
+        $controlador->registroUsuario();
+    }if ($_POST['Accion'] == "IniciarSesion") {
+        $controlador->iniciarSesion();
+    }
+}

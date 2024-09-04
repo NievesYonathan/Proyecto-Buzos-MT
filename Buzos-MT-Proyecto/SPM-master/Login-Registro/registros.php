@@ -74,7 +74,7 @@
                             <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar Contraseña" required>
                         </div> -->
                         <div class="inputBox">
-                            <button class="btn submit-btn" type="submit">Registrarme</button>
+                            <button class="btn submit-btn" type="submit" name="Accion" value="Registrar">Registrarme</button>
                         </div>
                         <p class="forget"><a href="login.php">¿Ya tienes una cuenta? Inicia sesión</a></p>
                     </form>
