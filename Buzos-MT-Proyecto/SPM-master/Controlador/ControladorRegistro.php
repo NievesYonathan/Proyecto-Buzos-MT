@@ -1,4 +1,5 @@
 <?php
+session_start();
 
 include_once "../Modelo/Usuarios.php";
 
@@ -24,7 +25,8 @@ class ControladorRegistro{
             $registroUsuario = new Usuarios();
             $registroUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
         
-            header("Location: ");
+            $_SESSION['alerta'] = "Se registró el usuario.";
+            header("Location: ../Login-Registro/login.php");
         }
     }
 }
