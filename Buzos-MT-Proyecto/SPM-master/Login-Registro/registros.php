@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="login.css">
     <link rel="shortcut icon" href="../assets/img/favicon.ico" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 </head>
 <body>
     <section>
@@ -20,46 +23,52 @@
             <div class="square" style="--i:2;"></div>
             <div class="square" style="--i:3;"></div>
             <div class="square" style="--i:4;"></div>
-            <div class="container">
-                <div class="form">
+            <div class="container ">
+                <div class="form w-1000">
                     <h2>Registro de Usuario</h2>
                     <form id="registroForm" action="../Controlador/ControladorRegistro.php" method="POST">
-                        <div class="inputBox">
-                            <select id="tipoDocumento" name="tipoDocumento" required>
-                                <option value=""> Tipo de documento</option>
-                                <option value="1">Cédula</option>
-                                <option value="TI">TI</option>
-                                <option value="Pasaporte">Pasaporte</option>
-                            </select>
-                        </div>
-                        <div class="inputBox">
-                            <input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Número de Documento" required pattern="\d+" title="Solo se permiten números">
-                        </div>
-                        <div class="inputBox">
-                            <input type="text" id="nombres" name="nombres" placeholder="Nombres" required pattern="[A-Za-zÁ-ÿ\s]+" title="Solo se permiten letras y espacios">
-                        </div>
-                        <div class="inputBox">
-                            <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" required pattern="[A-Za-zÁ-ÿ\s]+" title="Solo se permiten letras y espacios">
-                        </div>
-                        <div class="inputBox">
-                            <label for="fechaNacimiento">F/N</label>
-                            <input type="date" id="fechaNacimiento" name="fechaNacimiento" placeholder="fechaNacimiento" required>
-                        </div>
-                        <div class="inputBox">
-                            <select id="sexo" name="sexo"required>
-                                <option value="">Sexo</option>
-                                <option value="M">Masculino</option>
-                                <option value="F">Femenino</option>
-                            </select>
-                        </div>
-                        <div class="inputBox">
-                            <input type="number" id="celular" name="celular" placeholder="Teléfono Celular" required>
-                        </div>
-                        <div class="inputBox">
-                            <input type="email" id="correo" name="correo" placeholder="Correo Electrónico" required>
-                        </div>
-                        <div class="inputBox">
-                            <input type="password" id="password" name="password" placeholder="Contraseña" required pattern=".{8,}" title="Debe contener al menos 8 caracteres">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="inputBox">
+                                    <select id="tipoDocumento" name="tipoDocumento" required>
+                                        <option value=""> Tipo de documento</option>
+                                        <option value="1">Cédula</option>
+                                        <option value="TI">TI</option>
+                                        <option value="Pasaporte">Pasaporte</option>
+                                    </select>
+                                </div>
+                                <div class="inputBox">
+                                    <input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Número de Documento" required pattern="\d+" title="Solo se permiten números">
+                                </div>
+                                <div class="inputBox">
+                                    <input type="text" id="nombres" name="nombres" placeholder="Nombres" required pattern="[A-Za-zÁ-ÿ\s]+" title="Solo se permiten letras y espacios">
+                                </div>
+                                <div class="inputBox">
+                                    <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" required pattern="[A-Za-zÁ-ÿ\s]+" title="Solo se permiten letras y espacios">
+                                </div>
+                                <div class="inputBox">
+                                    <label for="fechaNacimiento">F/N</label>
+                                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" placeholder="fechaNacimiento" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="inputBox">
+                                    <select id="sexo" name="sexo"required>
+                                        <option value="">Sexo</option>
+                                        <option value="M">Masculino</option>
+                                        <option value="F">Femenino</option>
+                                    </select>
+                                </div>
+                                <div class="inputBox">
+                                    <input type="number" id="celular" name="celular" placeholder="Teléfono Celular" required>
+                                </div>
+                                <div class="inputBox">
+                                    <input type="email" id="correo" name="correo" placeholder="Correo Electrónico" required>
+                                </div>
+                                <div class="inputBox">
+                                    <input type="password" id="password" name="password" placeholder="Contraseña" required pattern=".{8,}" title="Debe contener al menos 8 caracteres">
+                                </div>
+                            </div>
                         </div>
                         <!-- <div class="inputBox">
                             <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar Contraseña" required>

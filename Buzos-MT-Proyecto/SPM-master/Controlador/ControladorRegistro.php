@@ -23,6 +23,8 @@ class ControladorRegistro{
 
             $registroUsuario = new Usuarios();
             $registroUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
+        
+            header("Location: ");
         }
     }
 }
