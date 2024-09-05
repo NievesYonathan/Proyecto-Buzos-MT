@@ -103,6 +103,15 @@
 						</ul>
 					</li>
 				<?php endif; ?>
+
+				<?php 
+				//Enlace solo visible para Admin de Usuario
+				if ($perfil == 'AdminUsuario'): ?>
+					<li>
+						<a href="#" class="nav-btn-submenu"><i class="fa-solid fa-address-book"></i> &nbsp; Cargos </a>
+					</li>
+				<?php endif; ?>
+
 				
 				<?php 
 				//Enlace solo visible para Jefe de Producción
