@@ -23,7 +23,7 @@
             <div class="square" style="--i:2;"></div>
             <div class="square" style="--i:3;"></div>
             <div class="square" style="--i:4;"></div>
-            <div class="container ">
+            <div class="container" id="registro-container">
                 <div class="form">
                     <h2>Registro de Usuario</h2>
                     <form id="registroForm" action="../Controlador/ControladorRegistro.php" method="POST">
