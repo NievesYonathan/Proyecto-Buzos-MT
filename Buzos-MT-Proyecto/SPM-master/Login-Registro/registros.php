@@ -18,11 +18,11 @@
         <div class="color"></div>
         <div class="color"></div>
         <div class="box">
-            <div class="square" style="--i:0;"></div>
-            <div class="square" style="--i:1;"></div>
-            <div class="square" style="--i:2;"></div>
-            <div class="square" style="--i:3;"></div>
-            <div class="square" style="--i:4;"></div>
+            <div class="squares" style="--i:0;"></div>
+            <div class="squares" style="--i:1;"></div>
+            <div class="squares" style="--i:2;"></div>
+            <div class="squares" style="--i:3;"></div>
+            <div class="squares" style="--i:4;"></div>
             <div class="container" id="registro-container">
                 <div class="form">
                     <h2>Registro de Usuario</h2>
@@ -47,7 +47,7 @@
                                     <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" required pattern="[A-Za-zÁ-ÿ\s]+" title="Solo se permiten letras y espacios">
                                 </div>
                                 <div class="inputBox">
-                                    <label for="fechaNacimiento">F/N</label>
+                                    <label for="fechaNacimiento">Fecha De Nacimiento</label>
                                     <input type="date" id="fechaNacimiento" name="fechaNacimiento" placeholder="fechaNacimiento" required>
                                 </div>
                             </div>
@@ -74,7 +74,7 @@
                             <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar Contraseña" required>
                         </div> -->
                         <div class="inputBox">
-                            <button class="btn submit-btn" type="submit" name="Accion" value="Registrar">Registrarme</button>
+                            <button class="submit-btn" type="submit" name="Accion" value="Registrar">Registrarme</button>
                         </div>
                         <p class="forget"><a href="login.php">¿Ya tienes una cuenta? Inicia sesión</a></p>
                     </form>
