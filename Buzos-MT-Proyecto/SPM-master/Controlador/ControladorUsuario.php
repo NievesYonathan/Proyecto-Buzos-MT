@@ -24,7 +24,7 @@ class ControladorUsuario{
             $controladorUsuario = new Usuarios();
             $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
         
-            $_SESSION['alerta'] = "Se registró el usuario.";
+            $_SESSION['alerta'] = "El Uusario Fue Registrado Con Éxito.";
             header("Location: ../Login-Registro/login.php");
         }
     }
