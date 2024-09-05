@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="login.css">
     <link rel="shortcut icon" href="../assets/img/favicon.ico" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Icono -->
+	<link rel="icon" href="../assets/img/icon.png" sizes="32x32" type="image/png">
     <!-- CDN de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
@@ -26,7 +28,7 @@
             <div class="container" id="registro-container">
                 <div class="form">
                     <h2>Registro de Usuario</h2>
-                    <form id="registroForm" action="../Controlador/ControladorRegistro.php" method="POST">
+                    <form id="registroForm" action="../Controlador/ControladorUsuario.php" method="POST">
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="inputBox">
