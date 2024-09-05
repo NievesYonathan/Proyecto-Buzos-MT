@@ -140,7 +140,7 @@
 				<?php endif; ?>
 				
 				<li>
-					<a href="../Usuarios/user-update.php"><i class="fa-solid fa-gear"></i> &nbsp; Configuración</a>
+					<a href="../Perfil-Admin-Usuarios/user-update.php"><i class="fa-solid fa-gear"></i> &nbsp; Configuración</a>
 				</li>
 
 				<?php 
