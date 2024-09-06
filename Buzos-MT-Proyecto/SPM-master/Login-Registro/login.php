@@ -62,7 +62,7 @@ if(isset($_SESSION['alerta'])) {
 
 
                 <div class="form">
-                    <form class="form" method="POST" action="../Controlador/ControladorRegistro.php">
+                    <form class="form" method="POST" action="../Controlador/ControladorUsuario.php">
                         <h2>Iniciar Sesión</h2>
                         <div class="inputBox">
                             <select id="tipoDocumento" name="tipoDocumento" required>

@@ -89,7 +89,7 @@
 						<a href="#" class="nav-btn-submenu"><i class="fa-solid fa-user fa-fw"></i> &nbsp; Usuarios <i class="fas fa-chevron-down"></i></a>
 						<ul>
 							<li>
-								<a href="../Usuarios/user-new.php"><i class="fas fa-plus fa-fw"></i> &nbsp; Nuevo usuario</a>
+								<a href="../Perfil-Admin-Usuarios/user-new.php"><i class="fas fa-plus fa-fw"></i> &nbsp; Nuevo usuario</a>
 							</li>
 							<li>
 								<a href="../Usuarios/user-list.php"><i class="fa-solid fa-user-tie"></i> &nbsp; Empleados</a>
@@ -108,7 +108,7 @@
 				//Enlace solo visible para Admin de Usuario
 				if ($perfil == 'AdminUsuario'): ?>
 					<li>
-						<a href="#" class="nav-btn-submenu"><i class="fa-solid fa-address-book"></i> &nbsp; Cargos </a>
+						<a href="../Perfil-Admin-Usuarios/cargos.php"><i class="fa-solid fa-address-book"></i> &nbsp; Cargos </a>
 					</li>
 				<?php endif; ?>
 
