@@ -37,15 +37,15 @@
 			
 			<!-- Content -->
 			<div class="container-fluid">
-				<form action="" class="form-neon" autocomplete="off">
+				<form action="../Controlador/ControladorCargo.php" method="POST" class="form-neon" autocomplete="off">
 					<fieldset>
-						<legend><i class="fas fa-user-lock"></i> &nbsp; Registrar Roles del Sistema</legend>
+						<legend><i class="fas fa-user-lock"></i> &nbsp; Registrar Cargos del Sistema</legend>
 						<div class="container-fluid">
 							<div class="row">
 								<div class="col-12 col-md-6">
 									<div class="form-group">
-										<label for="usuario_usuario" class="bmd-label-floating">Nombre de usuario</label>
-										<input type="text" pattern="[a-zA-Z0-9]{1,35}" class="form-control" name="usuario_usuario" id="usuario_usuario" maxlength="35">
+										<label for="cargo_sistema" class="bmd-label-floating">Nombre del Cargo</label>
+										<input type="text" class="form-control" name="cargo_sistema" id="cargo_sistema">
 									</div>
 								</div>
 							</div>
