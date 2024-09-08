@@ -85,4 +85,17 @@ class Usuarios {
             return $res;
         }
     }
+
+    public function mostrarUsuarios()
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+
+        $sql = "SELECT u.num_doc, u.t_doc, u.usu_nombres, t.tip_doc_descripcion
+                FROM usuarios AS u
+                INNER JOIN tipo_doc AS t ON u.t_doc = t.id_tipo_documento";        
+        $res = $conectar->query($sql);
+        $conectar->close();
+        return $res;
+    }
 }

@@ -31,27 +31,56 @@ session_start();
             <div class="square" style="--i:3;"></div>
             <div class="square" style="--i:4;"></div>
             <div class="container">
-            <?php
-                if(isset($_SESSION['alerta'])){
-                    ?>
-                    <div class="alert alert-info" role="alert">
-                        <?php echo $_SESSION['alerta'] ?>
-                    </div>
-                    <?php 
-                    unset($_SESSION['alerta']);  
-                }
-                ?>
+
+
+                 <!-- Inicio Alerta PHP -->
+                 <?php
+if(isset($_SESSION['alerta'])) {
+    ?>
+    <div id="alerta" class="alert alert-info" role="alert" 
+         style="position: fixed; top: 20px; left: 20px; padding: 15px; 
+                border: 1px solid #12464c; border-radius: 8px; 
+                background-color: #12464c; color: white; z-index: 9999;">
+        <?php echo $_SESSION['alerta']; ?>
+    </div>
+
+    <script>
+        // Mover la alerta al principio del <body>
+        var alerta = document.getElementById("alerta");
+        document.body.insertBefore(alerta, document.body.firstChild);
+
+        // Ocultar la alerta después de 4 segundos
+        setTimeout(function() {
+            alerta.style.display = 'none';
+        }, 4000); // 4000 milisegundos = 4 segundos
+    </script>
+    <?php 
+    unset($_SESSION['alerta']);  
+}
+?>
+<!-- Fin Alerta PHP -->
+
 
                 <div class="form">
-                    <form class="form" method="POST" action="../Controlador/ControladorRegistro.php">
+                    <form class="form" method="POST" action="../Controlador/ControladorUsuario.php">
                         <h2>Iniciar Sesión</h2>
                         <div class="inputBox">
                             <select id="tipoDocumento" name="tipoDocumento" required>
                                 <option value=""> Tipo de documento</option>
-                                <option value="1">Cédula</option>
-                                <option value="TI">TI</option>
-                                <option value="Pasaporte">Pasaporte</option>
-                            </select>
+                                <?php
+                                include_once '../Modelo/Conexion.php';
+                                $conexion = new Conexion();
+                                $conectarse = $conexion->conectarse();
+            
+                                $sql = "SELECT * FROM tipo_doc";
+                                $res = $conectarse->query($sql);
+                                $conectarse->close();
+            
+                                while($fila = mysqli_fetch_assoc($res)) { ?>                                      
+                                    <option value="<?= $fila['id_tipo_documento'] ?>"><?= $fila['tip_doc_descripcion'] ?></option>
+                                <?php
+                                }
+                                ?>                            </select>
                         </div>
                         <div class="inputBox">
                             <input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Número de Documento" required pattern="\d+" title="Solo se permiten números">

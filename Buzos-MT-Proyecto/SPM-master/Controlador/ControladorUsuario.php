@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 
 include_once "../Modelo/Usuarios.php";
 
@@ -24,7 +24,7 @@ class ControladorUsuario{
             $controladorUsuario = new Usuarios();
             $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
         
-            $_SESSION['alerta'] = "Se registró el usuario.";
+            $_SESSION['alerta'] = "El Uusario Fue Registrado Con Éxito.";
             header("Location: ../Login-Registro/login.php");
         }
     }
@@ -42,6 +42,18 @@ class ControladorUsuario{
         
             header("Location: ../Dashboard/home.php");
         }
+    }
+
+    public function mostrarUsuarios()
+    {
+        // if($_SERVER['REQUEST_METHOD'] = 'GET')
+        // {
+            
+            $controladorUsuario = new Usuarios();
+            $res = $controladorUsuario->mostrarUsuarios();          
+            return $res;
+        //     header("Location: ../Dashboard/home.php");
+        // }
     }
 }
 
