@@ -67,10 +67,20 @@ if(isset($_SESSION['alerta'])) {
                         <div class="inputBox">
                             <select id="tipoDocumento" name="tipoDocumento" required>
                                 <option value=""> Tipo de documento</option>
-                                <option value="1">Cédula</option>
-                                <option value="TI">TI</option>
-                                <option value="Pasaporte">Pasaporte</option>
-                            </select>
+                                <?php
+                                include_once '../Modelo/Conexion.php';
+                                $conexion = new Conexion();
+                                $conectarse = $conexion->conectarse();
+            
+                                $sql = "SELECT * FROM tipo_doc";
+                                $res = $conectarse->query($sql);
+                                $conectarse->close();
+            
+                                while($fila = mysqli_fetch_assoc($res)) { ?>                                      
+                                    <option value="<?= $fila['id_tipo_documento'] ?>"><?= $fila['tip_doc_descripcion'] ?></option>
+                                <?php
+                                }
+                                ?>                            </select>
                         </div>
                         <div class="inputBox">
                             <input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Número de Documento" required pattern="\d+" title="Solo se permiten números">

@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 
 include_once "../Modelo/Usuarios.php";
 
@@ -42,6 +42,18 @@ class ControladorUsuario{
         
             header("Location: ../Dashboard/home.php");
         }
+    }
+
+    public function mostrarUsuarios()
+    {
+        // if($_SERVER['REQUEST_METHOD'] = 'GET')
+        // {
+            
+            $controladorUsuario = new Usuarios();
+            $res = $controladorUsuario->mostrarUsuarios();          
+            return $res;
+        //     header("Location: ../Dashboard/home.php");
+        // }
     }
 }
 
