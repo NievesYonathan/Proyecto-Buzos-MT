@@ -64,7 +64,7 @@
 				<?php 
 				//Enlace solo visible para Jefe de Producción
 				if ($perfil == 'AdminUsuario'): ?>
-					<a href="user-list.html" class="tile">
+					<a href="../Perfil-Admin-Usuarios/user-list.php" class="tile">
 						<div class="tile-tittle">Usuarios</div>
 						<div class="tile-icon">
 							<i class="fa-solid fa-user fa-fw"></i>

@@ -23,7 +23,7 @@
 					<i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE USUARIOS
 				</h3>
 				<p class="text-justify">
-					Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit nostrum rerum animi natus beatae ex. Culpa blanditiis tempore amet alias placeat, obcaecati quaerat ullam, sunt est, odio aut veniam ratione.
+
 				</p>
 			</div>
 			
@@ -68,7 +68,7 @@
 								<th>NOMBRE DE USUARIO</th>
 								<th>ADMIN@ADMIN.COM</th>
 								<td>
-									<a href="user-update.html" class="btn btn-success">
+									<a href="user-update.php" class="btn btn-success">
 	  								<i class="fas fa-sync-alt"></i>
 									</a>
 								</td>
@@ -76,69 +76,6 @@
 									<form action="">
 										<button type="button" class="btn btn-warning">
 		  							<i class="far fa-trash-alt"></i>
-										</button>
-									</form>
-								</td>
-							</tr>
-							<tr class="text-center" >
-								<td>2</td>
-								<th>03045643</th>
-								<th>NOMBRE DE USUARIO</th>
-								<th>APELLIDO DE USUARIO</th>
-								<th>2345456</th>
-								<th>NOMBRE DE USUARIO</th>
-								<th>ADMIN@ADMIN.COM</th>
-								<td>
-									<a href="user-update.html" class="btn btn-success">
-	  								<i class="fas fa-sync-alt"></i>
-									</a>
-								</td>
-								<td>
-									<form action="">
-										<button type="button" class="btn btn-warning">
-		  							<i class="far fa-trash-alt"></i>
-										</button>
-									</form>
-								</td>
-							</tr>
-							<tr class="text-center" >
-								<td>3</td>
-								<th>03045643</th>
-								<th>NOMBRE DE USUARIO</th>
-								<th>APELLIDO DE USUARIO</th>
-								<th>2345456</th>
-								<th>NOMBRE DE USUARIO</th>
-								<th>ADMIN@ADMIN.COM</th>
-								<td>
-									<a href="user-update.html" class="btn btn-success">
-	  								<i class="fas fa-sync-alt"></i>
-									</a>
-								</td>
-								<td>
-									<form action="">
-										<button type="button" class="btn btn-warning">
-		  								<i class="far fa-trash-alt"></i>
-										</button>
-									</form>
-								</td>
-							</tr>
-							<tr class="text-center" >
-								<td>4</td>
-								<th>03045643</th>
-								<th>NOMBRE DE USUARIO</th>
-								<th>APELLIDO DE USUARIO</th>
-								<th>2345456</th>
-								<th>NOMBRE DE USUARIO</th>
-								<th>ADMIN@ADMIN.COM</th>
-								<td>
-									<a href="user-update.html" class="btn btn-success">
-	  								<i class="fas fa-sync-alt"></i>
-									</a>
-								</td>
-								<td>
-									<form action="">
-										<button type="button" class="btn btn-warning">
-		  								<i class="far fa-trash-alt"></i>
 										</button>
 									</form>
 								</td>
