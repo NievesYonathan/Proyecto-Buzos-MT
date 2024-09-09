@@ -27,10 +27,10 @@
 			<div class="container-fluid">
 				<ul class="full-box list-unstyled page-nav-tabs">
 					<li>
-						<a class="active" href="user-new.html"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVO USUARIO</a>
+						<a class="active" href="cargos.php"><i class="fas fa-plus fa-fw"></i> &nbsp; CARGOS</a>
 					</li>
 					<li>
-						<a href="user-list.html"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE USUARIOS</a>
+						<a href="user-list-cargo.php"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE USUARIOS</a>
 					</li>
 				</ul>	
 			</div>
@@ -57,6 +57,28 @@
 						<button type="submit" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
 					</p>
 				</form>
+
+				<div class="form-neon mt-20">
+					<p>Lista de Cargos del Sistema</p>
+					<ul >
+						<?php
+						include_once '../Modelo/Conexion.php';
+						$conexion = new Conexion();
+						$conectarse = $conexion->conectarse();
+
+						$sql = "SELECT * FROM cargos";
+						$stmt = $conectarse->prepare($sql);
+						$stmt->execute();
+						$res = $stmt->get_result();
+						$stmt->close();
+						$conectarse->close();
+
+						while($fila = mysqli_fetch_assoc($res)) {
+						echo "<li>" . $fila['car_nombre'] . "</li>";
+						}
+						?>
+					</ul>
+				</div>
 			</div>
 			
 
