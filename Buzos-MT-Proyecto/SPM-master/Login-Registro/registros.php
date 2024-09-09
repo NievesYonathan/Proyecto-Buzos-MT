@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -13,6 +16,7 @@
     <!-- CDN de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 </head>
 <body>
     <section>
@@ -26,8 +30,36 @@
             <div class="squares" style="--i:3;"></div>
             <div class="squares" style="--i:4;"></div>
             <div class="container" id="registro-container">
+
+<!-- Inicio Alerta PHP -->
+<?php
+if(isset($_SESSION['alerta'])) {
+    ?>
+    <div id="alerta" class="alert alert-info" role="alert" 
+         style="position: fixed; top: 20px; left: 20px; padding: 15px; 
+                border: 1px solid #12464c; border-radius: 8px; 
+                background-color: #12464c; color: white; z-index: 9999;">
+        <?php echo $_SESSION['alerta']; ?>
+    </div>
+
+    <script>
+        // Mover la alerta al principio del <body>
+        var alerta = document.getElementById("alerta");
+        document.body.insertBefore(alerta, document.body.firstChild);
+
+        // Ocultar la alerta después de 4 segundos
+        setTimeout(function() {
+            alerta.style.display = 'none';
+        }, 4000); // 4000 milisegundos = 4 segundos
+    </script>
+    <?php 
+    unset($_SESSION['alerta']);  
+}
+?>
+<!-- Fin Alerta PHP -->
+
                 <div class="form">
-                    <h2>Registro de Usuario</h2>
+                    <h2>Registro De Usuario</h2>
                     <form id="registroForm" action="../Controlador/ControladorUsuario.php" method="POST">
                         <div class="row">
                             <div class="col-md-6">
@@ -40,7 +72,7 @@
                                     </select>
                                 </div>
                                 <div class="inputBox">
-                                    <input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Número de Documento" required pattern="\d+" title="Solo se permiten números">
+                                    <input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Número de Documento" requiered maxlength="10" required pattern="\d+{1,10}" title="Solo se permiten números">
                                 </div>
                                 <div class="inputBox">
                                     <input type="text" id="nombres" name="nombres" placeholder="Nombres" required pattern="[A-Za-zÁ-ÿ\s]+" title="Solo se permiten letras y espacios">
@@ -49,9 +81,9 @@
                                     <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" required pattern="[A-Za-zÁ-ÿ\s]+" title="Solo se permiten letras y espacios">
                                 </div>
                                 <div class="inputBox">
-                                    <label for="fechaNacimiento">Fecha De Nacimiento</label>
-                                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" placeholder="fechaNacimiento" required>
+                                    <input type="password" id="password" name="password" placeholder="Contraseña" required pattern=".{8,}" title="Debe contener al menos 8 caracteres">
                                 </div>
+
                             </div>
                             <div class="col-md-6">
                                 <div class="inputBox">
@@ -62,23 +94,25 @@
                                     </select>
                                 </div>
                                 <div class="inputBox">
-                                    <input type="number" id="celular" name="celular" placeholder="Teléfono Celular" required>
+                                    <input type="number" id="celular" name="celular" placeholder="Teléfono Celular" requiered maxlength="10" required pattern="\d+{1,10}" title="Solo se permiten números">
                                 </div>
                                 <div class="inputBox">
                                     <input type="email" id="correo" name="correo" placeholder="Correo Electrónico" required>
                                 </div>
+
                                 <div class="inputBox">
-                                    <input type="password" id="password" name="password" placeholder="Contraseña" required pattern=".{8,}" title="Debe contener al menos 8 caracteres">
+                                   
+                                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" placeholder="fechaNacimiento" required title="Ingrese Su Fecha De Nacimiento">
                                 </div>
+                                <div class="inputBox">
+                            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar Contraseña" required pattern=".{8,}" title="Debe contener al menos 8 caracteres">
+                        </div> 
                             </div>
                         </div>
-                        <!-- <div class="inputBox">
-                            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar Contraseña" required>
-                        </div> -->
                         <div class="inputBox">
                             <button class="submit-btn" type="submit" name="Accion" value="Registrar">Registrarme</button>
                         </div>
-                        <p class="forget"><a href="login.php">¿Ya tienes una cuenta? Inicia sesión</a></p>
+                        <p class="forget"><a href="login.php">Ya Tengo Una Cuenta<br>Iniciar Sesión</a></p>
                     </form>
                 </div>
             </div>

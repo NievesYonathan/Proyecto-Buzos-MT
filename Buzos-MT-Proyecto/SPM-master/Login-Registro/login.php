@@ -1,5 +1,11 @@
 <?php
 session_start();
+if(isset($_SESSION['login_errors'])) {
+    foreach($_SESSION['login_errors'] as $error) {
+        echo "<p class='error'>$error</p>";
+    }
+    unset($_SESSION['login_errors']);
+}
 ?>
 
 <!DOCTYPE html>
@@ -73,10 +79,10 @@ if(isset($_SESSION['alerta'])) {
                             </select>
                         </div>
                         <div class="inputBox">
-                            <input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Número de Documento" required pattern="\d+" title="Solo se permiten números">
-                        </div>
+                                    <input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Número de Documento" requiered maxlength="10" required pattern="\d+{1,10}" title="Solo se permiten números">
+                                </div>
                         <div class="inputBox">
-                            <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                            <input type="password" id="password" name="password" placeholder="Contraseña" required pattern=".{8,}" title="Debe contener al menos 8 caracteres">
                         </div>
                         <div class="inputBox">
                             <button class="submit-btn" name="Accion" value="IniciarSesion">Iniciar</button>
