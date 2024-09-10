@@ -22,9 +22,6 @@
 				<h3 class="text-left">
 					<i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE USUARIOS
 				</h3>
-				<p class="text-justify">
-
-				</p>
 			</div>
 			
 			<div class="container-fluid">
@@ -47,27 +44,35 @@
 					<table class="table table-dark table-sm">
 						<thead>
 							<tr class="text-center roboto-medium">
-								<th>#</th>
-								<th>DNI</th>
+								<th>TIPO DOCUMENTO</th>
+								<th>NUMERO DE DOCUMENTO</th>
 								<th>NOMBRE</th>
 								<th>APELLIDO</th>
 								<th>TELÉFONO</th>
-								<th>USUARIO</th>
 								<th>EMAIL</th>
+								<th>ESTADO</th>
 								<th>ACTUALIZAR</th>
 								<th>ELIMINAR</th>
 							</tr>
 						</thead>
 						<tbody>
+							<?php
+								include_once "../Controlador/ControladorUsuario.php";
+
+								$objConUsuario = new ControladorUsuario();								
+								$res = $objConUsuario->mostrarUsuarios();
+
+								while($fila = $res->fetch_assoc()){
+							?>
 							<tr class="text-center" >
-								<td>1</td>
-								<th>03045643</th>
-								<th>NOMBRE DE USUARIO</th>
-								<th>APELLIDO DE USUARIO</th>
-								<th>2345456</th>
-								<th>NOMBRE DE USUARIO</th>
-								<th>ADMIN@ADMIN.COM</th>
-								<td>
+									<td><?= $fila['t_doc']?></td>
+									<th><?= $fila['num_doc']?></th>
+									<th><?= $fila['usu_nombres']?></th>
+									<th><?= $fila['usu_apellidos']?></th>
+									<th><?= $fila['usu_telefono']?></th>
+									<th><?= $fila['usu_email']?></th>
+									<th><?= $fila['usu_estado']?></th>
+									<td>
 									<a href="user-update.php" class="btn btn-success">
 	  								<i class="fas fa-sync-alt"></i>
 									</a>
@@ -79,7 +84,10 @@
 										</button>
 									</form>
 								</td>
-							</tr>
+								</tr>
+							<?php
+								}
+							?>
 						</tbody>
 					</table>
 				</div>

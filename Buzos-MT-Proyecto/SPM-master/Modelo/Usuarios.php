@@ -91,7 +91,7 @@ class Usuarios {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
 
-        $sql = "SELECT u.num_doc, u.t_doc, u.usu_nombres, t.tip_doc_descripcion
+        $sql = "SELECT u.num_doc, u.t_doc, u.usu_nombres, u.usu_apellidos, u.usu_telefono, u.usu_email, u.usu_estado ,t.tip_doc_descripcion
                 FROM usuarios AS u
                 INNER JOIN tipo_doc AS t ON u.t_doc = t.id_tipo_documento";        
         $res = $conectar->query($sql);

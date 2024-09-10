@@ -50,8 +50,20 @@
 							<div class="row">
 								<div class="col-12 col-md-4">
 									<div class="form-group">
-										<label for="usuario_dni" class="bmd-label-floating">DNI</label>
-										<input type="text" pattern="[0-9-]{1,20}" class="form-control" name="usuario_dni" id="usuario_dni" maxlength="20">
+										<label for="tipo_documento" class="bmd-label-floating">Tipo documento</label>
+										<select class="form-control" name="tipo_documento" id="tipo_documento">
+											<option value="">-- Selecciona una opción --</option>
+											<option value="dni">Cedula de ciudadania</option>
+											<option value="pasaporte">Tarjeta de identidad</option>
+											<option value="identidad">PPT</option>
+										</select>
+									</div>
+								</div>
+
+								<div class="col-12 col-md-4">
+									<div class="form-group">
+										<label for="usuario_dni" class="bmd-label-floating">Numero de documento</label>
+										<input type="number" pattern="[0-9-]{1,20}" class="form-control" name="usuario_dni" id="usuario_dni" maxlength="20">
 									</div>
 								</div>
 								
@@ -67,18 +79,35 @@
 										<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="usuario_apellido" id="usuario_apellido" maxlength="35">
 									</div>
 								</div>
+
+								<div class="col-12 col-md-4">
+									<div class="form-group">
+										<label for="usuario_apellido" class="bmd-label-floating">Fecha de nacimiento</label>
+										<input type="date" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="usuario_apellido" id="usuario_apellido" maxlength="35">
+									</div>
+								</div>
+
 								<div class="col-12 col-md-6">
 									<div class="form-group">
-										<label for="usuario_telefono" class="bmd-label-floating">Teléfono</label>
+										<label for="usuario_telefono" class="bmd-label-floating">sexo</label>
 										<input type="text" pattern="[0-9()+]{1,20}" class="form-control" name="usuario_telefono" id="usuario_telefono" maxlength="20">
 									</div>
 								</div>
+
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="usuario_direccion" class="bmd-label-floating">Dirección</label>
 										<input type="text" pattern="[a-zA-Z0-99áéíóúÁÉÍÓÚñÑ()# ]{1,190}" class="form-control" name="usuario_direccion" id="usuario_direccion" maxlength="190">
 									</div>
 								</div>
+
+								<div class="col-12 col-md-6">
+									<div class="form-group">
+										<label for="usuario_telefono" class="bmd-label-floating">Teléfono</label>
+										<input type="text" pattern="[0-9()+]{1,20}" class="form-control" name="usuario_telefono" id="usuario_telefono" maxlength="20">
+									</div>
+								</div>
+
 							</div>
 						</div>
 					</fieldset>
@@ -89,8 +118,8 @@
 							<div class="row">
 								<div class="col-12 col-md-6">
 									<div class="form-group">
-										<label for="usuario_usuario" class="bmd-label-floating">Nombre de usuario</label>
-										<input type="text" pattern="[a-zA-Z0-9]{1,35}" class="form-control" name="usuario_usuario" id="usuario_usuario" maxlength="35">
+										<label for="usuario_usuario" class="bmd-label-floating">Fecha contratacion</label>
+										<input type="date" pattern="[a-zA-Z0-9]{1,35}" class="form-control" name="usuario_usuario" id="usuario_usuario" maxlength="35">
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
