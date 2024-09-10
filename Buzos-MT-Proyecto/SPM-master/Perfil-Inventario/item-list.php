@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 	<?php 
+    include_once '../Controlador/ControladorMateriasP.php';
 	include '../Config/variable_global.php';
 
 	include '../Componentes/Head/head.php' ?>
@@ -45,10 +46,11 @@
 					<table class="table table-dark table-sm">
 						<thead>
 							<tr class="text-center roboto-medium">
-								<th>#</th>
+								
 								<th>CÓDIGO</th>
 								<th>NOMBRE</th>
 								<th>STOCK</th>
+								<th>ESTADO</th>
 								<th>ACTUALIZAR</th>
 								<th>ELIMINAR</th>
                                 <th>MOVIMIENTOS</th>
@@ -56,10 +58,14 @@
 						</thead>
 						<tbody>
 							<tr class="text-center details" >
-								<td>1</td>
-								<td>012342567</td>
-								<td>NOMBRE DEL ITEM</td>
-								<td>20</td>
+                                <?php //bucle de la materia prima
+                                $objConsul = new ControladorMateriaPrima();
+								$result = $objConsul->consultarMateriaPrima();
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                echo '<td>'. $row['id_materia_prima'].'</td>
+								<td>'.$row['mat_pri_nombre'].'</td>
+								<td>'.$row['mat_pri_cantidad'].'</td>
+								<td>'.$row['mat_pri_estado'].'</td>
 								<td>
                                     <a href="item-update.php" class="btn btn-success">
                                         <i class="fas fa-sync-alt"></i> 
@@ -73,80 +79,34 @@
                                     </form>
                                 </td>
                                 <td>
-                                    <a href="item-history.php" class="btn btn-success">
-                                    <i class="fas fa-sync-alt"></i> 
-                                    </a>
+                                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#movimientosItems">
+                                        <i class="fa-solid fa-clock-rotate-left"></i> 
+                                    </button>
                                 </td>
-							</tr>
-							<tr class="text-center details" >
-								<td>2</td>
-								<td>012342567</td>
-								<td>NOMBRE DEL ITEM</td>
-								<td>57</td>
-								<td>
-                                    <a href="item-update.php" class="btn btn-success">
-                                        <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-                                <td>
-                                    <form action="">
-                                        <button type="button" class="btn btn-warning">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <a href="item-history.php" class="btn btn-success">
-                                    <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-							</tr>
-							<tr class="text-center details" >
-								<td>3</td>
-								<td>012342567</td>
-								<td>NOMBRE DEL ITEM</td>
-								<td>81</td>
-								<td>
-                                    <a href="item-update.php" class="btn btn-success">
-                                        <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-                                <td>
-                                    <form action="">
-                                        <button type="button" class="btn btn-warning">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <a href="item-history.php" class="btn btn-success">
-                                    <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-							</tr>
-							<tr class="text-center details" >
-								<td>4</td>
-								<td>012342567</td>
-								<td>NOMBRE DEL ITEM</td>
-								<td>90</td>
-								<td>
-                                    <a href="item-update.php" class="btn btn-success">
-                                        <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-                                <td>
-                                    <form action="">
-                                        <button type="button" class="btn btn-warning">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <a href="item-history.php" class="btn btn-success">
-                                    <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-							</tr>
+							</tr>';
+                            
+                                }
+							?>
+							<div class="modal fade" id="movimientosItems" tabindex="-1" role="dialog" data-bs-backdrop="static">
+						<div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
+							<div class="modal-content">
+
+								<div class="modal-header">
+									<h5 class="modal-title">Detalles de Producción:</h5>
+									<button class="btn-close" data-bs-dismiss="modal"></button>
+								</div>
+								
+								<div class="modal-body">
+									
+										</div>
+									</div>
+								</div>
+
+								<div class="modal-footer">
+									<button class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button> 
+								</div>
+							</div>
+						</div>
 						</tbody>
 					</table>
 				</div>

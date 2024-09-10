@@ -47,7 +47,7 @@ session_start();
 				<?php 
 				//Enlace solo visible para Jefe de Producción
 				if ($perfil == 'Inventario'): ?>
-					<a href="item-list.html" class="tile">
+					<a href="../Perfil-Inventario/item-list.php" class="tile">
 						<div class="tile-tittle">Materia Prima</div>
 						<div class="tile-icon">
 							<i class="fas fa-pallet fa-fw"></i>
