@@ -3,7 +3,7 @@
 include_once "Conexion.php";
 
 class TipoDocumento{
-    private $tipoDocumento
+    private $tipoDocumento;
 
     public function agrgarTipoDoc($tipoDocumento)
     {
@@ -14,7 +14,7 @@ class TipoDocumento{
                 VALUE (?)
         ";
 
-        $stmt = prepare_sql($sql);
+        $stmt = $conetar->prepare($sql);
         $stmt->bind_param("s", $tipoDocumento);
         $stmt->execute();
         $stmt->close();
