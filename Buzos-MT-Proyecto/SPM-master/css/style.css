@@ -126,7 +126,6 @@ html {
 .form-control:focus,
 .form-control:active {
 	outline: none;
-	box-shadow: none;
 	border: none;
 }
 

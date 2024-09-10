@@ -60,24 +60,25 @@
 
 				<div class="form-neon mt-20">
 					<p>Lista de Cargos del Sistema</p>
-					<ul >
-						<?php
-						include_once '../Modelo/Conexion.php';
-						$conexion = new Conexion();
-						$conectarse = $conexion->conectarse();
+					<!-- Elimina el punto de la lista --><style>ul {list-style-type: none; }</style>
+<ul>
+    <?php
+    include_once '../Modelo/Conexion.php';
+    $conexion = new Conexion();
+    $conectarse = $conexion->conectarse();
 
-						$sql = "SELECT * FROM cargos";
-						$stmt = $conectarse->prepare($sql);
-						$stmt->execute();
-						$res = $stmt->get_result();
-						$stmt->close();
-						$conectarse->close();
+    $sql = "SELECT * FROM cargos";
+    $stmt = $conectarse->prepare($sql);
+    $stmt->execute();
+    $res = $stmt->get_result();
+    $stmt->close();
+    $conectarse->close();
 
-						while($fila = mysqli_fetch_assoc($res)) {
-						echo "<li>" . $fila['car_nombre'] . "</li>";
-						}
-						?>
-					</ul>
+    while($fila = mysqli_fetch_assoc($res)) {
+        echo "<li><i class='fas fa-check-circle'></i> " . $fila['car_nombre'] . "</li>";
+    }
+    ?>
+</ul>
 				</div>
 			</div>
 			
