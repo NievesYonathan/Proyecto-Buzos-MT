@@ -45,45 +45,37 @@ class ControladorUsuario{
             $tDoc = $_POST['tipoDocumento'];
             $clave = $_POST['password'];
             
-            // // Validar entrada
-            // $errors = [];
+            // Validar entrada
+            $errors = [];
 
-            // // Verificar si los campos no están vacíos
-            // if (empty($numDoc)) {
-            //     $errors[] = "El número de documento es requerido.";
-            // }
-            // if (empty($tDoc)) {
-            //     $errors[] = "El tipo de documento es requerido.";
-            // }
-            // if (empty($clave)) {
-            //     $errors[] = "La contraseña es requerida.";
-            // }
+            // Verificar si los campos no están vacíos
+            if (empty($numDoc)) {
+                $errors[] = "El número de documento es requerido.";
+            }
+            if (empty($tDoc)) {
+                $errors[] = "El tipo de documento es requerido.";
+            }
+            if (empty($clave)) {
+                $errors[] = "La contraseña es requerida.";
+            }
 
-            // // Validar número de documento (asumiendo que debe ser numérico y tener una longitud razonable)
-            // if (!empty($numDoc) && (!is_numeric($numDoc) || strlen($numDoc) < 5 || strlen($numDoc) > 20)) {
-            //     $errors[] = "El número de documento no es válido.";
-            // }
+            // Validar número de documento (asumiendo que debe ser numérico y tener una longitud razonable)
+            if (!empty($numDoc) && (!is_numeric($numDoc) || strlen($numDoc) < 5 || strlen($numDoc) > 20)) {
+                $errors[] = "El número de documento no es válido.";
+            }
 
-<<<<<<< Updated upstream
             // Validar tipo de documento (asumiendo que debe ser uno de los tipos permitidos)
             $allowedDocTypes = [1, 2, 3]; // Agregar aquí todos los tipos de documento válidos
             if (!empty($tDoc) && !in_array($tDoc, $allowedDocTypes)) {
                 $errors[] = "El tipo de documento no es válido.";
             }
-=======
-            // // Validar tipo de documento (asumiendo que debe ser uno de los tipos permitidos)
-            // $allowedDocTypes = [1, 2, 3]; // Agregar aquí todos los tipos de documento válidos
-            // if (!empty($tDoc) && !in_array($tDoc, $allowedDocTypes)) {
-            //     $errors[] = "El tipo de documento no es válido.";
-            // }
->>>>>>> Stashed changes
 
-            // // Si hay errores, redirigir de vuelta a la página de inicio de sesión con mensajes de error
-            // if (!empty($errors)) {
-            //     $_SESSION['login_errors'] = $errors;
-            //     header("Location: ../Login-Registro/login.php");
-            //     exit();
-            // }
+            // Si hay errores, redirigir de vuelta a la página de inicio de sesión con mensajes de error
+            if (!empty($errors)) {
+                $_SESSION['login_errors'] = $errors;
+                header("Location: ../Login-Registro/login.php");
+                exit();
+            }
 
             // Si la validación pasa, intentar iniciar sesión
             $controladorUsuario = new Usuarios();
@@ -91,7 +83,6 @@ class ControladorUsuario{
             
             if ($resultado && $resultado->num_rows > 0) {
                 // Inicio de sesión exitoso
-<<<<<<< Updated upstream
                 $fila = $resultado->fetch_assoc();
 
                 $numDoc = $fila['clave_descifrada'];
@@ -99,9 +90,6 @@ class ControladorUsuario{
 
                 $_SESSION['user_id'] = $numDoc; // Almacenar ID de usuario en la sesión
                 $_SESSION['user_cargo'] = $cargo; // Almacenar ID de usuario en la sesión
-=======
-                //$_SESSION['user_id'] = $numDoc; // Almacenar ID de usuario en la sesión
->>>>>>> Stashed changes
                 header("Location: ../Dashboard/home.php");
                 exit();
             } else {
