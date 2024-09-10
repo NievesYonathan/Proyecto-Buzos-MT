@@ -8,8 +8,6 @@ class Seguridad {
 
     public function addClaveUsuario($usuNum, $clave)
     {
-        $hashClave = password_hash($clave, PASSWORD_DEFAULT);
-
         $conexion = new Conexion();
         $conetar = $conexion->conectarse();
 
@@ -18,7 +16,7 @@ class Seguridad {
         ";
 
         $stmt = $conetar->prepare($sql);
-        $stmt->bind_param("is", $usuNum, $hashClave);
+        $stmt->bind_param("is", $usuNum, $clave);
         $stmt->execute();
         $stmt->close();
         $conetar->close();

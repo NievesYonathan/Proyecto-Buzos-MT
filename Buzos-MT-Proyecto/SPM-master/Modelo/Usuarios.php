@@ -61,14 +61,8 @@ class Usuarios {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
 
-        $sql = "SELECT u.num_doc, u.t_doc, u.usu_estado, s.seg_clave_hash
-                FROM usuarios AS u
-                LEFT JOIN seguridad AS s ON u.num_doc = s.usu_num_doc
-                WHERE u.t_doc = ? AND u.num_doc = ?
-        ";
-
-        $stmt = $conectar->prepare($sql);
-        $stmt->bind_param("ii", $tDoc, $numDoc);
+        $stmt = $conectar->prepare( "CALL ObtenerDatosSeguridad(?, ?)");
+        $stmt->bind_param("is", $numDoc, $tDoc);
         $stmt->execute();
         $res = $stmt->get_result();
         $stmt->close();
@@ -76,12 +70,9 @@ class Usuarios {
 
         $fila = $res->fetch_assoc();
 
-        $hasClaveBD = $fila['seg_clave_hash'];
-
-        $verificado = password_verify($clave, $hasClaveBD);
-
-        if($verificado)
-        {
+        $descifrada = $fila['clave_descifrada'];
+        
+        if($descifrada == $clave){
             return $res;
         }
     }

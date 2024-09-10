@@ -1,3 +1,3 @@
 <?php
 
-$perfil = "AdminUsuario";
+$perfil = "Administrador Usuario";

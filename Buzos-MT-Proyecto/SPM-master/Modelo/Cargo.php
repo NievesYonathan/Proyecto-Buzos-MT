@@ -25,4 +25,14 @@ class Cargo
         $stmt->close();
         $conectar->close();
     }
+
+    public function getCargos()
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+        $sql = "SELECT * FROM cargos";
+        $res = $conectar->query($sql);
+        $conectar->close();
+        return $res;
+    }
 }

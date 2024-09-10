@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
-	<?php 
-	include '../Config/variable_global.php';
+<?php
+include '../Config/variable_global.php';
 
-	include '../Componentes/Head/head.php' ?>
+include '../Componentes/Head/head.php' ?>
 
 <body>
-	
+
 	<!-- Main container -->
 	<main class="full-box main-container">
 		<!-- Nav lateral -->
@@ -23,7 +23,7 @@
 					<i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE USUARIOS
 				</h3>
 			</div>
-			
+
 			<div class="container-fluid">
 				<ul class="full-box list-unstyled page-nav-tabs">
 					<li>
@@ -34,7 +34,7 @@
 					</li>
 				</ul>
 			</div>
-			
+
 			<!-- Content -->
 			<div class="container-fluid">
 				<div class="table-responsive">
@@ -49,40 +49,54 @@
 						</thead>
 						<tbody>
 							<?php
-								include_once "../Controlador/ControladorUsuario.php";
+							include_once "../Controlador/ControladorUsuario.php";
 
-								$objConUsuario = new ControladorUsuario();								
-								$res = $objConUsuario->mostrarUsuarios();
+							$objConUsuario = new ControladorUsuario();
+							$res = $objConUsuario->mostrarUsuarios();
 
-								while($fila = $res->fetch_assoc()){
+							while ($fila = $res->fetch_assoc()) {
 							?>
-								<tr class="text-center" >
-									<td><?= $fila['tip_doc_descripcion']?></td>
-									<th><?= $fila['num_doc']?></th>
-									<th><?= $fila['usu_nombres']?></th>
-									<th><button class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#addModal<?= $fila['num_doc']?>">ADD</button></th>
+								<tr class="text-center">
+									<td><?= $fila['tip_doc_descripcion'] ?></td>
+									<th><?= $fila['num_doc'] ?></th>
+									<th><?= $fila['usu_nombres'] ?></th>
+									<th><button class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#addModal<?= $fila['num_doc'] ?>">ADD</button></th>
 								</tr>
 								<!-- Modal para agregar Cargos -->
-								<div class="modal fade" id="addModal<?= $fila['num_doc']?>" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+								<div class="modal fade" id="addModal<?= $fila['num_doc'] ?>" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
 									<div class="modal-dialog">
 										<div class="modal-content">
-											<div class="modal-header">
-												<h5 class="modal-title" id="addModalLabel">Agregar Cargos / <?= $fila['num_doc']?></h5>
-												<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-											</div>
-											<div class="modal-body">
-												<div class="form-check form-switch">
-												<input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
-												<label class="form-check-label" for="flexSwitchCheckDefault">Default switch checkbox input</label>
+											<form method="POST" action="../Controlador/ControladorCargo.php">
+												<div class="modal-header">
+													<h5 class="modal-title" id="addModalLabel">Agregar Cargos / <?= $fila['num_doc'] ?></h5>
+													<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 												</div>
-											</div>
-											<div class="modal-footer">
-											</div>
+												<div class="modal-body">
+													<div class="form-check form-switch">
+														<?php
+														include_once "../Controlador/ControladorCargo.php";
+
+														$objCargo = new ControladorCargo();
+														$res = $objCargo->getCargo();
+
+														while ($fila = $res->fetch_assoc()) {
+														?>
+															<input class="form-check-input" value="<?= $fila['id_cargos'] ?>" type="checkbox" role="switch" id="checkbox<?= $fila['id_cargos'] ?>">
+															<label class="form-check-label" for="checkbox<?= $fila['id_cargos'] ?>"><?= $fila['car_nombre'] ?></label>
+														<?php
+														}
+														?>
+													</div>
+												</div>
+												<div class="modal-footer">
+													<button type="submit" class="btn btn-primary">Guardar</button>
+												</div>
+											</form>
 										</div>
 									</div>
 								</div>
 							<?php
-								}
+							}
 							?>
 						</tbody>
 					</table>
@@ -104,9 +118,10 @@
 
 		</section>
 	</main>
-	
-	
+
+
 	<!--===Include JavaScript files======-->
 	<?php include '../Componentes/Script/script.php' ?>
 </body>
+
 </html>

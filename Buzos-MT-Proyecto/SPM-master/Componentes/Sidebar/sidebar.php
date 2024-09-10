@@ -84,7 +84,7 @@
 
 				<?php 
 				//Enlace solo visible para Admin de Usuario
-				if ($perfil == 'AdminUsuario'): ?>
+				if ($perfil == 'Administrador Usuario'): ?>
 					<li>
 						<a href="#" class="nav-btn-submenu"><i class="fa-solid fa-user fa-fw"></i> &nbsp; Usuarios <i class="fas fa-chevron-down"></i></a>
 						<ul>
@@ -106,7 +106,7 @@
 
 				<?php 
 				//Enlace solo visible para Admin de Usuario
-				if ($perfil == 'AdminUsuario'): ?>
+				if ($perfil == 'Administrador Usuario'): ?>
 					<li>
 						<a href="../Perfil-Admin-Usuarios/cargos.php"><i class="fa-solid fa-address-book"></i> &nbsp; Cargos </a>
 					</li>
@@ -131,7 +131,7 @@
 				
 				<?php 
 				//Enlace solo visible para Jefe de Producción | Administrador de Usuarios | Administrador de Inventario
-				if ($perfil == 'JefProduccion' || $perfil == 'AdminUsuario' || $perfil == 'Inventario'): ?>
+				if ($perfil == 'JefProduccion' || $perfil == 'Administrador Usuario' || $perfil == 'Inventario'): ?>
 					<li>
 						<a href="#" class="nav-btn-submenu"><i class="fa-solid fa-file-circle-plus"></i> &nbsp; Informes <i class="fas fa-chevron-down"></i></a>
 						<ul>

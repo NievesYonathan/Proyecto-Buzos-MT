@@ -86,7 +86,8 @@ if(isset($_SESSION['alerta'])) {
                                     <option value="<?= $fila['id_tipo_documento'] ?>"><?= $fila['tip_doc_descripcion'] ?></option>
                                 <?php
                                 }
-                                ?>                            </select>
+                                ?>                            
+                            </select>
                         </div>
                         <div class="inputBox">
                                     <input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Número de Documento" requiered maxlength="10" required pattern="\d+{1,10}" title="Solo se permiten números">
