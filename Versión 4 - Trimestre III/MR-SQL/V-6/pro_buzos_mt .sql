@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Generation Time: Sep 09, 2024 at 01:51 AM
--- Server version: 10.4.32-MariaDB
--- PHP Version: 8.2.12
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 10-09-2024 a las 13:50:55
+-- Versión del servidor: 10.4.32-MariaDB
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,12 +18,12 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `pro_buzos_mt`
+-- Base de datos: `pro_buzos_mt`
 --
 
 DELIMITER $$
 --
--- Procedures
+-- Procedimientos
 --
 CREATE DEFINER=`root`@`localhost` PROCEDURE `asignar_tarea` (IN `p_id_tarea` INT, IN `p_id_empleado` INT)   BEGIN
     -- Asignar tarea a empleado
@@ -31,7 +31,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `asignar_tarea` (IN `p_id_tarea` INT
     VALUES (p_id_empleado, p_id_tarea, NOW());
 END$$
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerDatosSeguridad` ()   BEGIN
+CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerDatosSeguridad` (IN `numero_doc` INT, IN `tipo_doc` INT)   BEGIN
     -- Selecciona datos de la tabla 'seguridad' y descifra la columna 'seg_clave_hash'
     SELECT u.num_doc, 
            u.t_doc, 
@@ -44,8 +44,8 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerDatosSeguridad` ()   BEGIN
            AES_DECRYPT(s.seg_clave_hash, 'BUZOSMT') AS clave_descifrada
     FROM usuarios AS u
     LEFT JOIN seguridad AS s ON u.num_doc = s.usu_num_doc
-    WHERE u.t_doc = u.t_doc 
-      AND u.num_doc = u.num_doc;
+    WHERE u.t_doc = tipo_doc
+      AND u.num_doc = numero_doc;
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `registrar_produccion` (IN `p_id_produccion` INT, IN `p_id_materia_prima` INT, IN `p_cantidad_usada` DECIMAL(10,2))   BEGIN
@@ -60,7 +60,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `registrar_produccion` (IN `p_id_pro
 END$$
 
 --
--- Functions
+-- Funciones
 --
 CREATE DEFINER=`root`@`localhost` FUNCTION `calcular_dias` (`id` INT) RETURNS LONGTEXT CHARSET utf8mb4 COLLATE utf8mb4_general_ci  BEGIN
     DECLARE fecha_asignacion DATE;
@@ -102,7 +102,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cargos`
+-- Estructura de tabla para la tabla `cargos`
 --
 
 CREATE TABLE `cargos` (
@@ -113,7 +113,7 @@ CREATE TABLE `cargos` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cargos_has_usuarios`
+-- Estructura de tabla para la tabla `cargos_has_usuarios`
 --
 
 CREATE TABLE `cargos_has_usuarios` (
@@ -127,7 +127,7 @@ CREATE TABLE `cargos_has_usuarios` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `emp_tarea`
+-- Estructura de tabla para la tabla `emp_tarea`
 --
 
 CREATE TABLE `emp_tarea` (
@@ -144,7 +144,7 @@ CREATE TABLE `emp_tarea` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `etapas`
+-- Estructura de tabla para la tabla `etapas`
 --
 
 CREATE TABLE `etapas` (
@@ -156,7 +156,7 @@ CREATE TABLE `etapas` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `materia_prima`
+-- Estructura de tabla para la tabla `materia_prima`
 --
 
 CREATE TABLE `materia_prima` (
@@ -173,7 +173,7 @@ CREATE TABLE `materia_prima` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `modulos`
+-- Estructura de tabla para la tabla `modulos`
 --
 
 CREATE TABLE `modulos` (
@@ -185,7 +185,7 @@ CREATE TABLE `modulos` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `operaciones`
+-- Estructura de tabla para la tabla `operaciones`
 --
 
 CREATE TABLE `operaciones` (
@@ -197,7 +197,7 @@ CREATE TABLE `operaciones` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `operaciones_has_cargos`
+-- Estructura de tabla para la tabla `operaciones_has_cargos`
 --
 
 CREATE TABLE `operaciones_has_cargos` (
@@ -211,7 +211,7 @@ CREATE TABLE `operaciones_has_cargos` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `produccion`
+-- Estructura de tabla para la tabla `produccion`
 --
 
 CREATE TABLE `produccion` (
@@ -226,7 +226,7 @@ CREATE TABLE `produccion` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `produccion_reg_mat_prima`
+-- Estructura de tabla para la tabla `produccion_reg_mat_prima`
 --
 
 CREATE TABLE `produccion_reg_mat_prima` (
@@ -238,7 +238,7 @@ CREATE TABLE `produccion_reg_mat_prima` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reg_mat_prima`
+-- Estructura de tabla para la tabla `reg_mat_prima`
 --
 
 CREATE TABLE `reg_mat_prima` (
@@ -252,7 +252,7 @@ CREATE TABLE `reg_mat_prima` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Triggers `reg_mat_prima`
+-- Disparadores `reg_mat_prima`
 --
 DELIMITER $$
 CREATE TRIGGER `actualizar_stock_materia_prima` AFTER INSERT ON `reg_mat_prima` FOR EACH ROW BEGIN
@@ -268,7 +268,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reg_pro_fabricados`
+-- Estructura de tabla para la tabla `reg_pro_fabricados`
 --
 
 CREATE TABLE `reg_pro_fabricados` (
@@ -285,7 +285,7 @@ CREATE TABLE `reg_pro_fabricados` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `reg_pro_mat_prima`
+-- Estructura de tabla para la tabla `reg_pro_mat_prima`
 --
 
 CREATE TABLE `reg_pro_mat_prima` (
@@ -299,7 +299,7 @@ CREATE TABLE `reg_pro_mat_prima` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `salida_productos`
+-- Estructura de tabla para la tabla `salida_productos`
 --
 
 CREATE TABLE `salida_productos` (
@@ -314,7 +314,7 @@ CREATE TABLE `salida_productos` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `seguridad`
+-- Estructura de tabla para la tabla `seguridad`
 --
 
 CREATE TABLE `seguridad` (
@@ -324,7 +324,14 @@ CREATE TABLE `seguridad` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Triggers `seguridad`
+-- Volcado de datos para la tabla `seguridad`
+--
+
+INSERT INTO `seguridad` (`id_seguridad`, `usu_num_doc`, `seg_clave_hash`) VALUES
+(6, 1022934571, 'p±ÓÐP>”TÚÑÖ±··tYƒäð¶ßœóüÙ±ânòç¦›0 ‰Œº');
+
+--
+-- Disparadores `seguridad`
 --
 DELIMITER $$
 CREATE TRIGGER `encriptar_contraseña` BEFORE INSERT ON `seguridad` FOR EACH ROW BEGIN
@@ -342,7 +349,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tarea`
+-- Estructura de tabla para la tabla `tarea`
 --
 
 CREATE TABLE `tarea` (
@@ -355,25 +362,25 @@ CREATE TABLE `tarea` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tipo_doc`
+-- Estructura de tabla para la tabla `tipo_doc`
 --
 
 CREATE TABLE `tipo_doc` (
   `id_tipo_documento` int(11) NOT NULL COMMENT 'Identificador unico de la tabla tipo de documento',
-  `tip_doc_descripcion` varchar(8) NOT NULL COMMENT 'Atributo que identifica la descripcion del tipo del documento'
+  `tip_doc_descripcion` varchar(20) NOT NULL COMMENT 'Atributo que identifica la descripcion del tipo del documento'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `tipo_doc`
+-- Volcado de datos para la tabla `tipo_doc`
 --
 
 INSERT INTO `tipo_doc` (`id_tipo_documento`, `tip_doc_descripcion`) VALUES
-(1, 'chamo');
+(1, 'Cedula de ciudadania');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuarios`
+-- Estructura de tabla para la tabla `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -391,7 +398,15 @@ CREATE TABLE `usuarios` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Triggers `usuarios`
+-- Volcado de datos para la tabla `usuarios`
+--
+
+INSERT INTO `usuarios` (`num_doc`, `t_doc`, `usu_nombres`, `usu_apellidos`, `usu_fecha_nacimiento`, `usu_sexo`, `usu_direccion`, `usu_telefono`, `usu_email`, `usu_fecha_contratacion`, `usu_estado`) VALUES
+(123456780, 1, 'Juan', 'Pérez', '1985-06-15', 'M', 'Av. Siempre Viva 742', '555-1234', 'juan.perez@example.com', '2024-01-10', 'activo'),
+(1022934571, 1, 'josé', 'guerrero', '2024-09-08', 'M', 'Bogotá', '324354281', 'multygems@gmail.com', '2024-09-03', 'Activo');
+
+--
+-- Disparadores `usuarios`
 --
 DELIMITER $$
 CREATE TRIGGER `actualizar usuario` AFTER UPDATE ON `usuarios` FOR EACH ROW BEGIN
@@ -407,9 +422,9 @@ CREATE TRIGGER `actualizar usuario` AFTER UPDATE ON `usuarios` FOR EACH ROW BEGI
             usu_email, 
             usu_fecha_contratacion, 
             usu_estado, 
-            operacion, 
             fecha_operacion, 
-            usuario_operacion
+            usuario_operacion,
+            operacion
         )
         VALUES (
             NEW.t_doc, 
@@ -481,9 +496,9 @@ CREATE TRIGGER `insertar_usuario` AFTER INSERT ON `usuarios` FOR EACH ROW BEGIN
         usu_email, 
         usu_fecha_contratacion, 
         usu_estado, 
-        operacion, 
         fecha_operacion, 
-        usuario_operacion
+        usuario_operacion,
+        operacion
     )
     VALUES (
         NEW.t_doc, 
@@ -508,7 +523,7 @@ DELIMITER ;
 -- --------------------------------------------------------
 
 --
--- Table structure for table `usuarios_espejo`
+-- Estructura de tabla para la tabla `usuarios_espejo`
 --
 
 CREATE TABLE `usuarios_espejo` (
@@ -522,21 +537,33 @@ CREATE TABLE `usuarios_espejo` (
   `usu_telefono` varchar(10) NOT NULL COMMENT 'Atributo que identifica el el numero de contacto del Usuario',
   `usu_email` varchar(100) NOT NULL COMMENT 'Atributo que identifica el correo del Usuario',
   `usu_fecha_contratacion` date NOT NULL COMMENT 'Atributo que identifica el la fecha de contracion del Usuario',
-  `usu_estado` varchar(45) NOT NULL COMMENT 'Atributo que identifica el estado del Usuario'
+  `usu_estado` varchar(45) NOT NULL COMMENT 'Atributo que identifica el estado del Usuario',
+  `operacion` varchar(15) NOT NULL,
+  `fecha_operacion` date NOT NULL,
+  `usuario_operacion` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Indexes for dumped tables
+-- Volcado de datos para la tabla `usuarios_espejo`
+--
+
+INSERT INTO `usuarios_espejo` (`num_doc`, `t_doc`, `usu_nombres`, `usu_apellidos`, `usu_fecha_nacimiento`, `usu_sexo`, `usu_direccion`, `usu_telefono`, `usu_email`, `usu_fecha_contratacion`, `usu_estado`, `operacion`, `fecha_operacion`, `usuario_operacion`) VALUES
+(123456780, 1, 'Juan', 'Pérez', '1985-06-15', 'M', 'Av. Siempre Viva 742', '555-1234', 'juan.perez@example.com', '2024-01-10', 'activo', 'root@localhost', '0000-00-00', '2024-09-09 07:5'),
+(123456789, 1, 'Juan', 'Pérez', '1985-06-15', 'M', 'Av. Siempre Viva 742', '555-1234', 'juan.perez@example.com', '2024-01-10', 'activo', 'root@localhost', '0000-00-00', '2024-09-09 07:4'),
+(1022934571, 1, 'josé', 'guerrero', '2024-09-08', 'M', 'Bogotá', '324354281', 'multygems@gmail.com', '2024-09-03', 'Activo', 'root@localhost', '0000-00-00', '2024-09-09 07:5');
+
+--
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `cargos`
+-- Indices de la tabla `cargos`
 --
 ALTER TABLE `cargos`
   ADD PRIMARY KEY (`id_cargos`);
 
 --
--- Indexes for table `cargos_has_usuarios`
+-- Indices de la tabla `cargos_has_usuarios`
 --
 ALTER TABLE `cargos_has_usuarios`
   ADD PRIMARY KEY (`id_usuario_cargo`),
@@ -544,7 +571,7 @@ ALTER TABLE `cargos_has_usuarios`
   ADD KEY `fk_cargos_has_usuarios_cargos1_idx` (`cargos_id_cargos`);
 
 --
--- Indexes for table `emp_tarea`
+-- Indices de la tabla `emp_tarea`
 --
 ALTER TABLE `emp_tarea`
   ADD PRIMARY KEY (`id_empleado_tarea`),
@@ -553,33 +580,33 @@ ALTER TABLE `emp_tarea`
   ADD KEY `fk_doc_empleado` (`empleados_tipo_documento_id_tipo_documento`,`empleados_num_doc`);
 
 --
--- Indexes for table `etapas`
+-- Indices de la tabla `etapas`
 --
 ALTER TABLE `etapas`
   ADD PRIMARY KEY (`id_etapas`);
 
 --
--- Indexes for table `materia_prima`
+-- Indices de la tabla `materia_prima`
 --
 ALTER TABLE `materia_prima`
   ADD PRIMARY KEY (`id_materia_prima`),
   ADD KEY `fk_proveedor_idx` (`proveedores_id_proveedores`);
 
 --
--- Indexes for table `modulos`
+-- Indices de la tabla `modulos`
 --
 ALTER TABLE `modulos`
   ADD PRIMARY KEY (`id_modulos(11)`);
 
 --
--- Indexes for table `operaciones`
+-- Indices de la tabla `operaciones`
 --
 ALTER TABLE `operaciones`
   ADD PRIMARY KEY (`id_operaciones`),
   ADD KEY `fk_operaciones_modulos1_idx` (`modulos_id_modulos(11)`);
 
 --
--- Indexes for table `operaciones_has_cargos`
+-- Indices de la tabla `operaciones_has_cargos`
 --
 ALTER TABLE `operaciones_has_cargos`
   ADD PRIMARY KEY (`idOperaCargos`),
@@ -587,14 +614,14 @@ ALTER TABLE `operaciones_has_cargos`
   ADD KEY `fk_operaciones_has_cargos_operaciones1_idx` (`operaciones_id`);
 
 --
--- Indexes for table `produccion`
+-- Indices de la tabla `produccion`
 --
 ALTER TABLE `produccion`
   ADD PRIMARY KEY (`id_produccion`),
   ADD KEY `fk_produccion_etapas1_idx` (`pro_etapa`);
 
 --
--- Indexes for table `produccion_reg_mat_prima`
+-- Indices de la tabla `produccion_reg_mat_prima`
 --
 ALTER TABLE `produccion_reg_mat_prima`
   ADD PRIMARY KEY (`produccion_id_produccion`,`reg_pro_mat_prima_id_registro`),
@@ -602,155 +629,155 @@ ALTER TABLE `produccion_reg_mat_prima`
   ADD KEY `fk_produccion_has_reg_pro_mat_prima_produccion1_idx` (`produccion_id_produccion`);
 
 --
--- Indexes for table `reg_mat_prima`
+-- Indices de la tabla `reg_mat_prima`
 --
 ALTER TABLE `reg_mat_prima`
   ADD PRIMARY KEY (`id_reg_materia_prima`,`materia_prima_id_materia_prima`),
   ADD KEY `fk_Registro_Materia_Prima_Materia_Prima1_idx` (`materia_prima_id_materia_prima`);
 
 --
--- Indexes for table `reg_pro_fabricados`
+-- Indices de la tabla `reg_pro_fabricados`
 --
 ALTER TABLE `reg_pro_fabricados`
   ADD PRIMARY KEY (`id_reg_prod_fabricados`),
   ADD KEY `fk_Registro_Productos_Fabricados_Producción1_idx` (`produccion_id_produccion`);
 
 --
--- Indexes for table `reg_pro_mat_prima`
+-- Indices de la tabla `reg_pro_mat_prima`
 --
 ALTER TABLE `reg_pro_mat_prima`
   ADD PRIMARY KEY (`id_registro`),
   ADD KEY `fk_reg_pro_mat_prima_reg_mat_prima1_idx` (`reg_pro_materia_prima`);
 
 --
--- Indexes for table `salida_productos`
+-- Indices de la tabla `salida_productos`
 --
 ALTER TABLE `salida_productos`
   ADD PRIMARY KEY (`id_salida_productos`),
   ADD KEY `fk_salida_productos_reg_pro_fabricados1_idx` (`id_reg_prod_fabricados`);
 
 --
--- Indexes for table `seguridad`
+-- Indices de la tabla `seguridad`
 --
 ALTER TABLE `seguridad`
   ADD PRIMARY KEY (`id_seguridad`),
   ADD KEY `fk_seguridad_usuarios1_idx` (`usu_num_doc`);
 
 --
--- Indexes for table `tarea`
+-- Indices de la tabla `tarea`
 --
 ALTER TABLE `tarea`
   ADD PRIMARY KEY (`id_tarea`);
 
 --
--- Indexes for table `tipo_doc`
+-- Indices de la tabla `tipo_doc`
 --
 ALTER TABLE `tipo_doc`
   ADD PRIMARY KEY (`id_tipo_documento`);
 
 --
--- Indexes for table `usuarios`
+-- Indices de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`num_doc`),
   ADD KEY `fk_TipoDoc_idx` (`t_doc`);
 
 --
--- Indexes for table `usuarios_espejo`
+-- Indices de la tabla `usuarios_espejo`
 --
 ALTER TABLE `usuarios_espejo`
   ADD PRIMARY KEY (`num_doc`),
   ADD KEY `fk_TipoDoc_idx` (`t_doc`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `cargos`
+-- AUTO_INCREMENT de la tabla `cargos`
 --
 ALTER TABLE `cargos`
   MODIFY `id_cargos` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla Rol', AUTO_INCREMENT=2;
 
 --
--- AUTO_INCREMENT for table `emp_tarea`
+-- AUTO_INCREMENT de la tabla `emp_tarea`
 --
 ALTER TABLE `emp_tarea`
   MODIFY `id_empleado_tarea` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla puente Emp Tarea\n ';
 
 --
--- AUTO_INCREMENT for table `etapas`
+-- AUTO_INCREMENT de la tabla `etapas`
 --
 ALTER TABLE `etapas`
   MODIFY `id_etapas` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla etapas';
 
 --
--- AUTO_INCREMENT for table `materia_prima`
+-- AUTO_INCREMENT de la tabla `materia_prima`
 --
 ALTER TABLE `materia_prima`
   MODIFY `id_materia_prima` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla materia prima';
 
 --
--- AUTO_INCREMENT for table `modulos`
+-- AUTO_INCREMENT de la tabla `modulos`
 --
 ALTER TABLE `modulos`
   MODIFY `id_modulos(11)` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `produccion`
+-- AUTO_INCREMENT de la tabla `produccion`
 --
 ALTER TABLE `produccion`
   MODIFY `id_produccion` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla produccion';
 
 --
--- AUTO_INCREMENT for table `reg_mat_prima`
+-- AUTO_INCREMENT de la tabla `reg_mat_prima`
 --
 ALTER TABLE `reg_mat_prima`
   MODIFY `id_reg_materia_prima` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla materia prima';
 
 --
--- AUTO_INCREMENT for table `reg_pro_fabricados`
+-- AUTO_INCREMENT de la tabla `reg_pro_fabricados`
 --
 ALTER TABLE `reg_pro_fabricados`
   MODIFY `id_reg_prod_fabricados` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla registro de productos fabricados';
 
 --
--- AUTO_INCREMENT for table `reg_pro_mat_prima`
+-- AUTO_INCREMENT de la tabla `reg_pro_mat_prima`
 --
 ALTER TABLE `reg_pro_mat_prima`
   MODIFY `id_registro` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla registro';
 
 --
--- AUTO_INCREMENT for table `seguridad`
+-- AUTO_INCREMENT de la tabla `seguridad`
 --
 ALTER TABLE `seguridad`
-  MODIFY `id_seguridad` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla seguridad.', AUTO_INCREMENT=6;
+  MODIFY `id_seguridad` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla seguridad.', AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `tarea`
+-- AUTO_INCREMENT de la tabla `tarea`
 --
 ALTER TABLE `tarea`
   MODIFY `id_tarea` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla Tarea';
 
 --
--- AUTO_INCREMENT for table `tipo_doc`
+-- AUTO_INCREMENT de la tabla `tipo_doc`
 --
 ALTER TABLE `tipo_doc`
   MODIFY `id_tipo_documento` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla tipo de documento', AUTO_INCREMENT=2;
 
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `cargos_has_usuarios`
+-- Filtros para la tabla `cargos_has_usuarios`
 --
 ALTER TABLE `cargos_has_usuarios`
   ADD CONSTRAINT `fk_cargos_has_usuarios_cargos1` FOREIGN KEY (`cargos_id_cargos`) REFERENCES `cargos` (`id_cargos`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_cargos_has_usuarios_usuarios1` FOREIGN KEY (`usuarios_num_doc`) REFERENCES `usuarios` (`num_doc`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `emp_tarea`
+-- Filtros para la tabla `emp_tarea`
 --
 ALTER TABLE `emp_tarea`
   ADD CONSTRAINT `fk_Empleados_has_Tarea_Tarea1` FOREIGN KEY (`tarea_id_tarea`) REFERENCES `tarea` (`id_tarea`) ON DELETE NO ACTION ON UPDATE NO ACTION,
@@ -758,69 +785,69 @@ ALTER TABLE `emp_tarea`
   ADD CONSTRAINT `fk_emp_tarea_produccion1` FOREIGN KEY (`produccion_id_produccion`) REFERENCES `produccion` (`id_produccion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `materia_prima`
+-- Filtros para la tabla `materia_prima`
 --
 ALTER TABLE `materia_prima`
   ADD CONSTRAINT `fk_proveedor` FOREIGN KEY (`proveedores_id_proveedores`) REFERENCES `usuarios` (`num_doc`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 --
--- Constraints for table `operaciones`
+-- Filtros para la tabla `operaciones`
 --
 ALTER TABLE `operaciones`
   ADD CONSTRAINT `fk_operaciones_modulos1` FOREIGN KEY (`modulos_id_modulos(11)`) REFERENCES `modulos` (`id_modulos(11)`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `operaciones_has_cargos`
+-- Filtros para la tabla `operaciones_has_cargos`
 --
 ALTER TABLE `operaciones_has_cargos`
   ADD CONSTRAINT `fk_operaciones_has_cargos_cargos1` FOREIGN KEY (`cargos_id`) REFERENCES `cargos` (`id_cargos`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_operaciones_has_cargos_operaciones1` FOREIGN KEY (`operaciones_id`) REFERENCES `operaciones` (`id_operaciones`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `produccion`
+-- Filtros para la tabla `produccion`
 --
 ALTER TABLE `produccion`
   ADD CONSTRAINT `fk_produccion_etapas1` FOREIGN KEY (`pro_etapa`) REFERENCES `etapas` (`id_etapas`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `produccion_reg_mat_prima`
+-- Filtros para la tabla `produccion_reg_mat_prima`
 --
 ALTER TABLE `produccion_reg_mat_prima`
   ADD CONSTRAINT `fk_produccion_has_reg_pro_mat_prima_produccion1` FOREIGN KEY (`produccion_id_produccion`) REFERENCES `produccion` (`id_produccion`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_produccion_has_reg_pro_mat_prima_reg_pro_mat_prima1` FOREIGN KEY (`reg_pro_mat_prima_id_registro`) REFERENCES `reg_pro_mat_prima` (`id_registro`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `reg_mat_prima`
+-- Filtros para la tabla `reg_mat_prima`
 --
 ALTER TABLE `reg_mat_prima`
   ADD CONSTRAINT `fk_Registro_Materia_Prima_Materia_Prima1` FOREIGN KEY (`materia_prima_id_materia_prima`) REFERENCES `materia_prima` (`id_materia_prima`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `reg_pro_fabricados`
+-- Filtros para la tabla `reg_pro_fabricados`
 --
 ALTER TABLE `reg_pro_fabricados`
   ADD CONSTRAINT `fk_Registro_Productos_Fabricados_Producción1` FOREIGN KEY (`produccion_id_produccion`) REFERENCES `produccion` (`id_produccion`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `reg_pro_mat_prima`
+-- Filtros para la tabla `reg_pro_mat_prima`
 --
 ALTER TABLE `reg_pro_mat_prima`
   ADD CONSTRAINT `fk_reg_pro_mat_prima_reg_mat_prima1` FOREIGN KEY (`reg_pro_materia_prima`) REFERENCES `reg_mat_prima` (`id_reg_materia_prima`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `salida_productos`
+-- Filtros para la tabla `salida_productos`
 --
 ALTER TABLE `salida_productos`
   ADD CONSTRAINT `fk_salida_productos_reg_pro_fabricados1` FOREIGN KEY (`id_reg_prod_fabricados`) REFERENCES `reg_pro_fabricados` (`id_reg_prod_fabricados`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Constraints for table `seguridad`
+-- Filtros para la tabla `seguridad`
 --
 ALTER TABLE `seguridad`
   ADD CONSTRAINT `fk_seguridad_usuarios1` FOREIGN KEY (`usu_num_doc`) REFERENCES `usuarios` (`num_doc`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `usuarios`
+-- Filtros para la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD CONSTRAINT `fk_TipoDoc` FOREIGN KEY (`t_doc`) REFERENCES `tipo_doc` (`id_tipo_documento`) ON DELETE NO ACTION ON UPDATE CASCADE;
