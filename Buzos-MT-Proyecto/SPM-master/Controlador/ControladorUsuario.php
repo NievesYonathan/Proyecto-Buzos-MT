@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 
 include_once "../Modelo/Usuarios.php";
 
@@ -65,7 +65,7 @@ class ControladorUsuario{
             }
 
             // Validar tipo de documento (asumiendo que debe ser uno de los tipos permitidos)
-            $allowedDocTypes = ['1', 'TI', 'Pasaporte']; // Agregar aquí todos los tipos de documento válidos
+            $allowedDocTypes = [1, 2, 3]; // Agregar aquí todos los tipos de documento válidos
             if (!empty($tDoc) && !in_array($tDoc, $allowedDocTypes)) {
                 $errors[] = "El tipo de documento no es válido.";
             }
@@ -83,12 +83,20 @@ class ControladorUsuario{
             
             if ($resultado && $resultado->num_rows > 0) {
                 // Inicio de sesión exitoso
+                $fila = $resultado->fetch_assoc();
+
+                $numDoc = $fila['clave_descifrada'];
+                $cargo = $fila['clave_descifrada'];
+
                 $_SESSION['user_id'] = $numDoc; // Almacenar ID de usuario en la sesión
+                $_SESSION['user_cargo'] = $cargo; // Almacenar ID de usuario en la sesión
                 header("Location: ../Dashboard/home.php");
+                exit();
             } else {
                 // Inicio de sesión fallido
                 $_SESSION['login_errors'] = ["Credenciales inválidas. Por favor, intente de nuevo."];
                 header("Location: ../Login-Registro/login.php");
+                exit();
             }
         }
     }
