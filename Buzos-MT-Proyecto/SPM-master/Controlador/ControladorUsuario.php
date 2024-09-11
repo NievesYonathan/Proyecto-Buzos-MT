@@ -105,57 +105,58 @@ class ControladorUsuario
         }
     }
 
-    public function mostrarUsuarios()
-    {
-        $controladorUsuario = new Usuarios();
-        $res = $controladorUsuario->mostrarUsuarios();
-        return $res;
-    }
-    public function compararAcciones()
-    {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $controlador = new ControladorUsuario();
-            if ($_POST['Accion'] == "Registrar") {
-                return $controlador->registroUsuario();
-            }
-            if ($_POST['Accion'] == "IniciarSesion") {
-                return $controlador->iniciarSesion();
-            }
-        }
-    }
+    // public function mostrarUsuarios()
+    // {
+    //     $controladorUsuario = new Usuarios();
+    //     $res = $controladorUsuario->mostrarUsuarios();
+    //     return $res;
+    // }
+    // public function compararAcciones()
+    // {
+    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //         $controlador = new ControladorUsuario();
+    //         if ($_POST['Accion'] == "Registrar") {
+    //             return $controlador->registroUsuario();
+    //         }
+    //         if ($_POST['Accion'] == "IniciarSesion") {
+    //             return $controlador->iniciarSesion();
+    //         }
+    //     }
+    // }
 
 
-/*
-    public function actualizarUsuario()
-    {
-        $controladorUsuario = new ControladorUsuario();
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $numDoc = $_POST['num_doc'];
-            $tipo_documento = $_POST['t_doc'];
-            $nombre = $_POST['usu_nombres'];
-            $apellido = $_POST['usu_apellidos'];
-            $sexo = $_POST['sexo'];
-            $direccion = $_POST['usu_direccion'];
-            $telefono = $_POST['usu_telefono'];
-            $email = $_POST['usu_email'];
-            $fecha_contratacion = $_POST['usu_fecha_contratacion'];
 
-            if ($controladorUsuario->actualizarUsuario($numDoc, $tipo_documento, $nombre, $apellido, $sexo, $direccion, $telefono, $email, $fecha_contratacion)) {
-                header("Location: usuarios.php?status=success");
-            } else {
-                header("Location: usuarios.php?status=error");
-            }
-        }
-    }
+    // public function actualizarUsuario()
+    // {
+    //     $controladorUsuario = new ControladorUsuario();
+    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    //         $numDoc = $_POST['num_doc'];
+    //         $tipo_documento = $_POST['t_doc'];
+    //         $nombre = $_POST['usu_nombres'];
+    //         $apellido = $_POST['usu_apellidos'];
+    //         $fechaNaciemiento = $_POST['usu_fecha_naciemiento'];
+    //         $sexo = $_POST['sexo'];
+    //         $direccion = $_POST['usu_direccion'];
+    //         $telefono = $_POST['usu_telefono'];
+    //         $email = $_POST['usu_email'];
+    //         $fecha_contratacion = $_POST['usu_fecha_contratacion'];
+    //         $controladorUsuario->actualizarUsuario($numDoc, $tipo_documento, $nombre, $apellido, $fechaNaciemiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion);
 
-    public function mostrarUsuario($numDoc)
-    {
-        $controladorUsuario = new Usuarios();
-        return $controladorUsuario->obtenerUsuarioPornumDoc($numDoc);
-    }
-}*/
+    //         /*if ($controladorUsuario->actualizarUsuario($numDoc, $tipo_documento, $nombre, $apellido, $sexo, $direccion, $telefono, $email, $fecha_contratacion)) {
+    //             header("Location: usuarios.php?status=success");
+    //         } else {
+    //             header("Location: usuarios.php?status=error");
+    //         }*/
+    //     }
+    // }
 
+    // public function mostrarUsuario($numDoc)
+    // {
+    //     $controladorUsuario = new Usuarios();
+    //     return $controladorUsuario->obtenerUsuarioPornumDoc($numDoc);
+    // }
 }
+
 
 //Si se envían datos por POST, actualizar el usuario
 if($_SERVER['REQUEST_METHOD'] == 'POST'){
