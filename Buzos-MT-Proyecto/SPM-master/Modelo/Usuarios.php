@@ -90,3 +90,32 @@ class Usuarios {
         return $res;
     }
 }
+
+
+class UsuarioModel {
+    private $conn;
+
+    public function __construct($db) {
+        $this->conn = $db;
+    }
+
+    // Método para obtener los datos del usuario por ID
+    public function obtenerUsuarioPornumDoc($numDoc) {
+        $sql = "SELECT * FROM usuarios WHERE num_doc = ?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("i", $numDoc);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result->fetch_assoc();
+    }
+
+    // Método para actualizar los datos del usuario
+    public function actualizarUsuario($numDoc, $tipo_documento, $dni, $nombre, $apellido, $sexo, $direccion, $telefono, $email, $fecha_contratacion) {
+        $sql = "UPDATE usuarios SET t_doc=?, usu_nombres=?, usu_apellidos=?, sexo=?, usu_direccion=?, usu_telefono=?, usu_email=?, usu_fecha_contratacion=? WHERE num_doc=?";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bind_param("sssssssssi", $tipo_documento, $nombre, $apellido, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $numDoc);
+        return $stmt->execute();
+    }
+}
+
+

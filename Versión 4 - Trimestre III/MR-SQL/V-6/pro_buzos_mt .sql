@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-09-2024 a las 13:50:55
+-- Tiempo de generación: 10-09-2024 a las 16:55:07
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -375,7 +375,9 @@ CREATE TABLE `tipo_doc` (
 --
 
 INSERT INTO `tipo_doc` (`id_tipo_documento`, `tip_doc_descripcion`) VALUES
-(1, 'Cedula de ciudadania');
+(1, 'Cedula de ciudadania'),
+(2, 'Tarjeta de identidad'),
+(3, 'PPT');
 
 -- --------------------------------------------------------
 
@@ -763,7 +765,7 @@ ALTER TABLE `tarea`
 -- AUTO_INCREMENT de la tabla `tipo_doc`
 --
 ALTER TABLE `tipo_doc`
-  MODIFY `id_tipo_documento` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla tipo de documento', AUTO_INCREMENT=2;
+  MODIFY `id_tipo_documento` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla tipo de documento', AUTO_INCREMENT=4;
 
 --
 -- Restricciones para tablas volcadas

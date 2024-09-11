@@ -2,6 +2,8 @@
 session_start();
 
 include_once "../Modelo/Usuarios.php";
+require_once '../Modelo/Conexion.php';
+require_once '../Modelo/Usuarios.php';
 
 class ControladorUsuario{
     public function registroUsuario()
@@ -123,3 +125,47 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $controlador->iniciarSesion();
     }
 }
+
+class UsuarioController {
+    private $model;
+
+    public function __construct() {
+        $conexion = new Conexion();
+        $db = $conexion->conectarse(); // Conectar a la base de datos
+        $this->model = new UsuarioModel($db);
+    }
+
+    public function actualizarUsuario() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $numDoc = $_POST['num_doc'];
+            $tipo_documento = $_POST['t_doc'];
+            $dni = $_POST['usuario_dni'];
+            $nombre = $_POST['usu_nombres'];
+            $apellido = $_POST['usu_apellidos'];
+            $sexo = $_POST['sexo'];
+            $direccion = $_POST['usu_direccion'];
+            $telefono = $_POST['usu_telefono'];
+            $email = $_POST['usu_email'];
+            $fecha_contratacion = $_POST['usu_fecha_contratacion'];
+
+            if ($this->model->actualizarUsuario($numDoc, $tipo_documento, $dni, $nombre, $apellido, $sexo, $direccion, $telefono, $email, $fecha_contratacion)) {
+                header("Location: usuarios.php?status=success");
+            } else {
+                header("Location: usuarios.php?status=error");
+            }
+        }
+    }
+
+    public function mostrarUsuario($numDoc) {
+        return $this->model->obtenerUsuarioPornumDoc($numDoc);
+    }
+}
+
+// Si se envían datos por POST, actualizar el usuario
+$controller = new UsuarioController();
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $controller->actualizarUsuario();
+}
+?>
+
+
