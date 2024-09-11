@@ -32,9 +32,7 @@ include '../Componentes/Head/head.php';
 
 			<div class="container-fluid">
 				<form action="../Controlador/ControladorUsuario.php" method="POST" class="form-neon" autocomplete="off">
-					<?php
-					?>
-					<input type="hidden" name="id" value="<?php echo $_POST['num_doc'] ?>">
+
 					<fieldset>
 						<legend><i class="far fa-address-card"></i> &nbsp; Información personal</legend>
 						<div class="container-fluid">
@@ -53,49 +51,49 @@ include '../Componentes/Head/head.php';
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="usuario_dni" class="bmd-label-floating">Numero de documento</label>
-										<input type="number" pattern="[0-9-]{1,20}" class="form-control" name="usuario_dni" id="usuario_dni" maxlength="20" value="">
+										<input type="number" pattern="[0-9-]{1,20}" class="form-control" name="usuario_dni" id="usuario_dni" maxlength="20" value="<?php echo $_POST['num_doc'] ?>">
 									</div>
 								</div>
 
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="usuario_nombre" class="bmd-label-floating">Nombres</label>
-										<input type="text" class="form-control" name="usuario_nombre" id="usuario_nombre" value="<?php echo $usuario['nombre']; ?>" maxlength="35">
+										<input type="text" class="form-control" name="usuario_nombre" id="usuario_nombre" value="<?php echo $_POST['usu_nombres'] ?>" maxlength="35">
 									</div>
 								</div>
 
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="usuario_apellido" class="bmd-label-floating">Apellidos</label>
-										<input type="text" class="form-control" name="usuario_apellido" id="usuario_apellido" value="<?php echo $usuario['apellido']; ?>" maxlength="35">
+										<input type="text" class="form-control" name="usuario_apellido" id="usuario_apellido" value="<?php echo $_POST['usu_apellidos'] ?>" maxlength="35">
 									</div>
 								</div>
 
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="usuario_apellido" class="bmd-label-floating">Fecha de nacimiento</label>
-										<input type="date" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="usuario_apellido" id="usuario_apellido" maxlength="35">
+										<input type="date" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="" id="usuario_apellido" maxlength="35" value="<?php echo $_POST['usu_apellidos'] ?>">
 									</div>
 								</div>
 
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="usuario_telefono" class="bmd-label-floating">sexo</label>
-										<input type="text" pattern="[0-9()+]{1,20}" class="form-control" name="usuario_telefono" id="usuario_telefono" maxlength="20">
+										<input type="text" pattern="[0-9()+]{1,20}" class="form-control" name="usuario_telefono" id="usuario_telefono" maxlength="20" value="<?php echo $_POST['usu_sexo'] ?>">
 									</div>
 								</div>
 
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="usuario_direccion" class="bmd-label-floating">Dirección</label>
-										<input type="text" pattern="[a-zA-Z0-99áéíóúÁÉÍÓÚñÑ()# ]{1,190}" class="form-control" name="usuario_direccion" id="usuario_direccion" maxlength="190">
+										<input type="text" pattern="[a-zA-Z0-99áéíóúÁÉÍÓÚñÑ()# ]{1,190}" class="form-control" name="usuario_direccion" id="usuario_direccion" maxlength="190" value="<?php echo $_POST['usu_direccion'] ?>">
 									</div>
 								</div>
 
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="usuario_telefono" class="bmd-label-floating">Teléfono</label>
-										<input type="text" pattern="[0-9()+]{1,20}" class="form-control" name="usuario_telefono" id="usuario_telefono" maxlength="20">
+										<input type="text" pattern="[0-9()+]{1,20}" class="form-control" name="usuario_telefono" id="usuario_telefono" maxlength="20" value="<?php echo $_POST['usu_telefono'] ?>">
 									</div>
 								</div>
 
@@ -110,13 +108,13 @@ include '../Componentes/Head/head.php';
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="usuario_usuario" class="bmd-label-floating">Fecha contratacion</label>
-										<input type="date" pattern="[a-zA-Z0-9]{1,35}" class="form-control" name="usuario_usuario" id="usuario_usuario" maxlength="35">
+										<input type="date" pattern="[a-zA-Z0-9]{1,35}" class="form-control" name="usuario_usuario" id="usuario_usuario" maxlength="35" value="<?php echo $_POST['usu_fecha_contratacion'] ?>">
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="usuario_email" class="bmd-label-floating">Email</label>
-										<input type="email" class="form-control" name="usuario_email" id="usuario_email" maxlength="70">
+										<input type="email" class="form-control" name="usuario_email" id="usuario_email" maxlength="70" value="<?php echo $_POST['usu_email'] ?>">
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
