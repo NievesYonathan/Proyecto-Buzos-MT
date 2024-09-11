@@ -5,18 +5,18 @@ include '../Config/variable_global.php';
 
 include '../Componentes/Head/head.php';
 
-$controller = new UsuarioController();
-$usuario = $controller->mostrarUsuario($_GET['num_doc']);
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <title>Actualizar Usuario</title>
+	<title>Actualizar Usuario</title>
 </head>
+
 <body>
 
-    <!-- Main container -->
+	<!-- Main container -->
 	<main class="full-box main-container">
 		<!-- Nav lateral -->
 		<?php include '../Componentes/Sidebar/sidebar.php' ?>
@@ -26,43 +26,52 @@ $usuario = $controller->mostrarUsuario($_GET['num_doc']);
 			<!-- Navbar -->
 			<?php include '../Componentes/Navbar/navbar.php' ?>
 
-            <div class="full-box page-header">
-                <h3 class="text-left"><i class="fas fa-sync-alt fa-fw"></i> &nbsp; ACTUALIZAR DATOS</h3>
-            </div>
+			<div class="full-box page-header">
+				<h3 class="text-left"><i class="fas fa-sync-alt fa-fw"></i> &nbsp; ACTUALIZAR DATOS</h3>
+			</div>
 
-            <div class="container-fluid">
-                <form action="UsuarioController.php" method="POST" class="form-neon" autocomplete="off">
-                    <input type="hidden" name="id" value="<?php echo $usuario['num_doc']; ?>">
-                    <fieldset>
-                        <legend><i class="far fa-address-card"></i> &nbsp; Información personal</legend>
-                        <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-12 col-md-2">
-                                    <div class="form-group">
-                                        <label for="tipo_documento" class="bmd-label-floating">Tipo documento</label>
-                                        <select class="form-control" name="tipo_documento" id="tipo_documento">
-                                            <option value="dni" <?php echo ($usuario['tipo_documento'] == 'dni') ? 'selected' : ''; ?>>Cédula de ciudadanía</option>
-                                            <option value="pasaporte" <?php echo ($usuario['tipo_documento'] == 'pasaporte') ? 'selected' : ''; ?>>Pasaporte</option>
-                                            <option value="identidad" <?php echo ($usuario['tipo_documento'] == 'identidad') ? 'selected' : ''; ?>>PPT</option>
-                                        </select>
-                                    </div>
-                                </div>
+			<div class="container-fluid">
+				<form action="../Controlador/ControladorUsuario.php" method="POST" class="form-neon" autocomplete="off">
+					<?php
+					?>
+					<input type="hidden" name="id" value="<?php echo $_POST['num_doc'] ?>">
+					<fieldset>
+						<legend><i class="far fa-address-card"></i> &nbsp; Información personal</legend>
+						<div class="container-fluid">
+							<div class="row">
+								<div class="col-12 col-md-2">
+									<div class="form-group">
+										<label for="tipo_documento" class="bmd-label-floating">Tipo documento</label>
+										<select class="form-control" name="tipo_documento" id="tipo_documento">
+											<option value="dni">Cédula de ciudadanía</option>
+											<option value="pasaporte">Pasaporte</option>
+											<option value="identidad">PPT</option>
+										</select>
+									</div>
+								</div>
 
-                                <div class="col-12 col-md-4">
-                                    <div class="form-group">
-                                        <label for="usuario_nombre" class="bmd-label-floating">Nombres</label>
-                                        <input type="text" class="form-control" name="usuario_nombre" id="usuario_nombre" value="<?php echo $usuario['nombre']; ?>" maxlength="35">
-                                    </div>
-                                </div>
+								<div class="col-12 col-md-4">
+									<div class="form-group">
+										<label for="usuario_dni" class="bmd-label-floating">Numero de documento</label>
+										<input type="number" pattern="[0-9-]{1,20}" class="form-control" name="usuario_dni" id="usuario_dni" maxlength="20" value="">
+									</div>
+								</div>
 
-                                <div class="col-12 col-md-4">
-                                    <div class="form-group">
-                                        <label for="usuario_apellido" class="bmd-label-floating">Apellidos</label>
-                                        <input type="text" class="form-control" name="usuario_apellido" id="usuario_apellido" value="<?php echo $usuario['apellido']; ?>" maxlength="35">
-                                    </div>
-                                </div>
+								<div class="col-12 col-md-4">
+									<div class="form-group">
+										<label for="usuario_nombre" class="bmd-label-floating">Nombres</label>
+										<input type="text" class="form-control" name="usuario_nombre" id="usuario_nombre" value="<?php echo $usuario['nombre']; ?>" maxlength="35">
+									</div>
+								</div>
 
-                                <div class="col-12 col-md-4">
+								<div class="col-12 col-md-4">
+									<div class="form-group">
+										<label for="usuario_apellido" class="bmd-label-floating">Apellidos</label>
+										<input type="text" class="form-control" name="usuario_apellido" id="usuario_apellido" value="<?php echo $usuario['apellido']; ?>" maxlength="35">
+									</div>
+								</div>
+
+								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="usuario_apellido" class="bmd-label-floating">Fecha de nacimiento</label>
 										<input type="date" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="usuario_apellido" id="usuario_apellido" maxlength="35">
@@ -123,22 +132,23 @@ $usuario = $controller->mostrarUsuario($_GET['num_doc']);
 									</div>
 								</div>
 
-                                <!-- Otros campos -->
+								<!-- Otros campos -->
 
-                            </div>
-                        </div>
-                    </fieldset>
-                    <p class="text-center" style="margin-top: 40px;">
-                        <button type="submit" class="btn btn-raised btn-success btn-sm">
-                            <i class="fas fa-sync-alt"></i> &nbsp; ACTUALIZAR
-                        </button>
-                    </p>
-                </form>
-            </div>
-        </section>
-    </main>
+							</div>
+						</div>
+					</fieldset>
+					<p class="text-center" style="margin-top: 40px;">
+						<button type="submit" class="btn btn-raised btn-success btn-sm">
+							<i class="fas fa-sync-alt"></i> &nbsp; ACTUALIZAR
+						</button>
+					</p>
+				</form>
+			</div>
+		</section>
+	</main>
 
-    <!-- JavaScript files -->
-    <?php include '../Componentes/Script/script.php'; ?>
+	<!-- JavaScript files -->
+	<?php include '../Componentes/Script/script.php'; ?>
 </body>
+
 </html>

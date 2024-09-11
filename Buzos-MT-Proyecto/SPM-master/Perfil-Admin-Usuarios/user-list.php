@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
-	<?php 
-	include '../Config/variable_global.php';
+<?php
+include '../Config/variable_global.php';
 
-	include '../Componentes/Head/head.php' ?>
+include '../Componentes/Head/head.php' ?>
 
 <body>
-	
+
 	<!-- Main container -->
 	<main class="full-box main-container">
 		<!-- Nav lateral -->
@@ -23,7 +23,7 @@
 					<i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE USUARIOS
 				</h3>
 			</div>
-			
+
 			<div class="container-fluid">
 				<ul class="full-box list-unstyled page-nav-tabs">
 					<li>
@@ -37,7 +37,7 @@
 					</li>
 				</ul>
 			</div>
-			
+
 			<!-- Content -->
 			<div class="container-fluid">
 				<div class="table-responsive">
@@ -57,36 +57,47 @@
 						</thead>
 						<tbody>
 							<?php
-								include_once "../Controlador/ControladorUsuario.php";
+							include_once "../Controlador/ControladorUsuario.php";
 
-								$objConUsuario = new ControladorUsuario();								
-								$res = $objConUsuario->mostrarUsuarios();
+							$objConUsuario = new ControladorUsuario();
+							$res = $objConUsuario->mostrarUsuarios();
 
-								while($fila = $res->fetch_assoc()){
+							while ($fila = $res->fetch_assoc()) {
 							?>
-							<tr class="text-center" >
-									<td><?= $fila['t_doc']?></td>
-									<th><?= $fila['num_doc']?></th>
-									<th><?= $fila['usu_nombres']?></th>
-									<th><?= $fila['usu_apellidos']?></th>
-									<th><?= $fila['usu_telefono']?></th>
-									<th><?= $fila['usu_email']?></th>
-									<th><?= $fila['usu_estado']?></th>
-									<td>
-									<a href="user-update.php" class="btn btn-success">
-	  								<i class="fas fa-sync-alt"></i>
-									</a>
-								</td>
-								<td>
-									<form action="">
-										<button type="button" class="btn btn-warning">
-		  							<i class="far fa-trash-alt"></i>
-										</button>
+								<tr class="text-center">
+									<form action="user-update.php" method="post">
+										<td><?= $fila['t_doc'] ?></td>
+										<th><?= $fila['num_doc'] ?></th>
+										<th><?= $fila['usu_nombres'] ?></th>
+										<th><?= $fila['usu_apellidos'] ?></th>
+										<th><?= $fila['usu_telefono'] ?></th>
+										<th><?= $fila['usu_email'] ?></th>
+										<th><?= $fila['usu_estado'] ?></th>
+										<td>
+											<input type="hidden" name="t_doc" value="<?php $fila['t_doc'] ?>">
+											<input type="hidden" name="<?php $fila['num_doc'] ?>" value="<?php $fila['num_doc'] ?>">
+											<input type="hidden" name="_doc" value="<?php $fila['usu_nombres'] ?>">
+											<input type="hidden" name="num_doc" value="<?php $fila['usu_apellidos'] ?>">
+											<input type="hidden" name="num_doc" value="<?php $fila['usu_telefono'] ?>">
+											<input type="hidden" name="num_doc" value="<?php $fila['usu_email'] ?>">
+											<input type="hidden" name="num_doc" value="<?php $fila['usu_estado'] ?>">
+
+
+											<button type="submit" class="btn btn-success">
+												<i class="fas fa-sync-alt"></i>
+											</button>
 									</form>
-								</td>
+									</td>
+									<td>
+										<form action="">
+											<button type="button" class="btn btn-warning">
+												<i class="far fa-trash-alt"></i>
+											</button>
+										</form>
+									</td>
 								</tr>
 							<?php
-								}
+							}
 							?>
 						</tbody>
 					</table>
@@ -108,9 +119,10 @@
 
 		</section>
 	</main>
-	
-	
+
+
 	<!--===Include JavaScript files======-->
 	<?php include '../Componentes/Script/script.php' ?>
 </body>
+
 </html>

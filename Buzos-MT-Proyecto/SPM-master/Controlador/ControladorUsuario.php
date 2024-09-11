@@ -2,14 +2,14 @@
 //session_start();
 
 include_once "../Modelo/Usuarios.php";
-require_once '../Modelo/Conexion.php';
-require_once '../Modelo/Usuarios.php';
 
-class ControladorUsuario{
+
+
+class ControladorUsuario
+{
     public function registroUsuario()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST')
-        {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $numDoc = $_POST['numeroDocumento'];
             $tDoc = $_POST['tipoDocumento'];
             $usuNombres = $_POST['nombres'];
@@ -22,18 +22,19 @@ class ControladorUsuario{
             $usuFechaContratacion = "2024-09-03";
             // $imagPerfil = $_POST[''];
             $clave = $_POST['password'];
-            $confirmarClave = $_POST['confirm_password']; $confirmarClave = $_POST['confirm_password']; // Agregamos la confirmación de la contraseña
+            $confirmarClave = $_POST['confirm_password'];
+            $confirmarClave = $_POST['confirm_password']; // Agregamos la confirmación de la contraseña
 
             // Validar si las contraseñas coinciden
-        if ($clave !== $confirmarClave) {
-            $_SESSION['alerta'] = "Las Contraseñas No Coinciden.";
-            header("Location: ../Login-Registro/registros.php");
-            exit();
-        }
-        
+            if ($clave !== $confirmarClave) {
+                $_SESSION['alerta'] = "Las Contraseñas No Coinciden.";
+                header("Location: ../Login-Registro/registros.php");
+                exit();
+            }
+
             $controladorUsuario = new Usuarios();
             $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
-        
+
             $_SESSION['alerta'] = "El Usuario Fue Registrado Con Éxito.";
             header("Location: ../Login-Registro/login.php");
         }
@@ -41,12 +42,11 @@ class ControladorUsuario{
 
     public function iniciarSesion()
     {
-        if($_SERVER['REQUEST_METHOD'] == 'POST')
-        {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $numDoc = $_POST['numeroDocumento'];
             $tDoc = $_POST['tipoDocumento'];
             $clave = $_POST['password'];
-            
+
             // Validar entrada
             $errors = [];
 
@@ -82,7 +82,7 @@ class ControladorUsuario{
             // Si la validación pasa, intentar iniciar sesión
             $controladorUsuario = new Usuarios();
             $resultado = $controladorUsuario->iniciarSesion($numDoc, $tDoc, $clave);
-            
+
             if ($resultado && $resultado->num_rows > 0) {
                 // Inicio de sesión exitoso
                 $fila = $resultado->fetch_assoc();
@@ -106,35 +106,30 @@ class ControladorUsuario{
     public function mostrarUsuarios()
     {
         $controladorUsuario = new Usuarios();
-        $res = $controladorUsuario->mostrarUsuarios();          
+        $res = $controladorUsuario->mostrarUsuarios();
         return $res;
     }
-}
-
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
-    $controlador = new ControladorUsuario();
-    if($_POST['Accion'] == "Registrar")
-    {       
-        $controlador->registroUsuario();
-    }if ($_POST['Accion'] == "IniciarSesion") {
-        $controlador->iniciarSesion();
-    }
-}
-
-class UsuarioController {
-    private $model;
-
-    public function __construct() {
-        $conexion = new Conexion();
-        $db = $conexion->conectarse(); // Conectar a la base de datos
-        $this->model = new UsuarioModel($db);
+    public function compararAcciones()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $controlador = new ControladorUsuario();
+            if ($_POST['Accion'] == "Registrar") {
+                return $controlador->registroUsuario();
+            }
+            if ($_POST['Accion'] == "IniciarSesion") {
+                return $controlador->iniciarSesion();
+            }
+        }
     }
 
-    public function actualizarUsuario() {
+
+/*
+    public function actualizarUsuario()
+    {
+        $controladorUsuario = new ControladorUsuario();
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $numDoc = $_POST['num_doc'];
             $tipo_documento = $_POST['t_doc'];
-            $dni = $_POST['usuario_dni'];
             $nombre = $_POST['usu_nombres'];
             $apellido = $_POST['usu_apellidos'];
             $sexo = $_POST['sexo'];
@@ -143,7 +138,7 @@ class UsuarioController {
             $email = $_POST['usu_email'];
             $fecha_contratacion = $_POST['usu_fecha_contratacion'];
 
-            if ($this->model->actualizarUsuario($numDoc, $tipo_documento, $dni, $nombre, $apellido, $sexo, $direccion, $telefono, $email, $fecha_contratacion)) {
+            if ($controladorUsuario->actualizarUsuario($numDoc, $tipo_documento, $nombre, $apellido, $sexo, $direccion, $telefono, $email, $fecha_contratacion)) {
                 header("Location: usuarios.php?status=success");
             } else {
                 header("Location: usuarios.php?status=error");
@@ -151,16 +146,15 @@ class UsuarioController {
         }
     }
 
-    public function mostrarUsuario($numDoc) {
-        return $this->model->obtenerUsuarioPornumDoc($numDoc);
+    public function mostrarUsuario($numDoc)
+    {
+        $controladorUsuario = new Usuarios();
+        return $controladorUsuario->obtenerUsuarioPornumDoc($numDoc);
     }
 }
 
 // Si se envían datos por POST, actualizar el usuario
-$controller = new UsuarioController();
+$controladorUsuario = new ControladorUsuario();
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $controller->actualizarUsuario();
+    $controladorUsuario->actualizarUsuario();*/
 }
-?>
-
-
