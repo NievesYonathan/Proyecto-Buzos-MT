@@ -66,7 +66,7 @@ session_start();
 
 				<?php 
 				//Enlace solo visible para Jefe de Producción
-				if ($perfil == 'AdminUsuario'): ?>
+				if ($perfil == 'Administrador Usuario'): ?>
 					<a href="../Perfil-Admin-Usuarios/user-list.php" class="tile">
 						<div class="tile-tittle">Usuarios</div>
 						<div class="tile-icon">
