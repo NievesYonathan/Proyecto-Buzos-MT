@@ -5,11 +5,15 @@
 			<i class="fa fa-arrow-left"></i>
 		</a>
 
+		<?php
+			$name = $_SESSION['user_nombre'];
+			$perfil = $_SESSION['user_cargo'];
+		?>
 		<figure class="full-box nav-lateral-avatar">
 			<i class="far fa-times-circle show-nav-lateral"></i>
 			<img src="../assets/avatar/Avatar.png" class="img-fluid" alt="Avatar">
 			<figcaption class="roboto-medium text-name">
-				Carlos Alfaro <br><small class="roboto-condensed-light">Web Developer</small>
+				<?=$name?> <br><small class="roboto-condensed-light"><?=$perfil?></small>
 			</figcaption>
 		</figure>
 
@@ -38,7 +42,7 @@
 
 				<?php 
 				//Enlace solo visible para Admin de Inventario
-				if ($perfil == 'Inventario'): ?>
+				if ($perfil == 'Jefe Inventario'): ?>
 					<li>
 						<a href="#" class="nav-btn-submenu"><i class="fas fa-pallet fa-fw"></i> &nbsp; Materia Prima <i class="fas fa-chevron-down"></i></a>
 						<ul>
@@ -115,7 +119,7 @@
 				
 				<?php 
 				//Enlace solo visible para Jefe de Producción
-				if ($perfil == 'JefProduccion'): ?>
+				if ($perfil == 'Jefe Producción'): ?>
 					<li>
 						<a href="#" class="nav-btn-submenu"><i class="fa-solid fa-industry"></i> &nbsp; Producción <i class="fas fa-chevron-down"></i></a>
 						<ul>
@@ -131,7 +135,7 @@
 				
 				<?php 
 				//Enlace solo visible para Jefe de Producción | Administrador de Usuarios | Administrador de Inventario
-				if ($perfil == 'JefProduccion' || $perfil == 'Administrador Usuario' || $perfil == 'Inventario'): ?>
+				if ($perfil == 'Jefe Producción' || $perfil == 'Administrador Usuario' || $perfil == 'Jefe Inventario'): ?>
 					<li>
 						<a href="#" class="nav-btn-submenu"><i class="fa-solid fa-file-circle-plus"></i> &nbsp; Informes <i class="fas fa-chevron-down"></i></a>
 						<ul>
@@ -155,7 +159,7 @@
 				<?php 
 				//Enlace solo visible para Operarios
 				if ($perfil == 'Operario'): ?>
-					<li><a href="/tareas">Mis Tareas</a></li>
+					<li><a href="../Perfil-Operarios/vista-tar-asignadas.php"><i class="fa-brands fa-stack-exchange"></i> &nbsp; Mis Tareas</a></li>
 				<?php endif; ?>
 			</ul>
 		</nav>

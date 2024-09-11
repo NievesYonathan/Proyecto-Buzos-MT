@@ -6,7 +6,10 @@ class ControladorCarUsu {
     public function asociarCarUsu(){
         $idCargo = $_POST['idCargo'];
         $idUsuario = $_POST['numDoc'];
-        $fechaAsignacion = '2024-09-05';
+
+        date_default_timezone_set('America/Bogota');
+        $fechaAsignacion = date('Y-m-d H:i:s');
+        
         $estado = "Activo";
 
         include_once "../Modelo/CargosUsuarios.php";

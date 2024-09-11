@@ -72,6 +72,15 @@ class Usuarios
 
         $descifrada = $fila['clave_descifrada'];
 
+        $numDoc = $fila['num_doc'];
+        $cargo = $fila['car_nombre'];
+        $nombre = $fila['usu_nombres'];
+
+        $_SESSION['user_id'] = $numDoc; // Almacenar ID de usuario en la sesión
+        $_SESSION['user_cargo'] = $cargo;
+        $_SESSION['user_nombre'] = $nombre;
+
+
         if ($descifrada == $clave) {
             return $res;
         }
