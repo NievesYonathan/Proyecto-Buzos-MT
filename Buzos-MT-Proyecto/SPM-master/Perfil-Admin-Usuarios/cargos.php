@@ -57,9 +57,9 @@
 						<button type="submit" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
 					</p>
 				</form>
-
+<br>
 				<div class="form-neon mt-20">
-					<p>Lista de Cargos del Sistema</p>
+				<legend><i class="fa-regular fa-address-book"></i> &nbsp; Lista de Cargos del Sistema</legend>
 					<!-- Elimina el punto de la lista --><style>ul {list-style-type: none; }</style>
 <ul>
     <?php
