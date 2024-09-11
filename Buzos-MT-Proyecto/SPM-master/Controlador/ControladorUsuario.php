@@ -1,5 +1,5 @@
 <?php
-//session_start();
+session_start();
 
 include_once "../Modelo/Usuarios.php";
 
@@ -82,16 +82,18 @@ class ControladorUsuario
             // Si la validación pasa, intentar iniciar sesión
             $controladorUsuario = new Usuarios();
             $resultado = $controladorUsuario->iniciarSesion($numDoc, $tDoc, $clave);
+            // $fila = $resultado->fetch_assoc();
+
+            // var_dump($fila);
+
+            // $numDoc = $fila['num_doc'];
+            // $cargo = $fila['car_nombre'];
+
+            // $_SESSION['user_id'] = $numDoc; // Almacenar ID de usuario en la sesión
+            // $_SESSION['user_cargo'] = $cargo;
 
             if ($resultado && $resultado->num_rows > 0) {
                 // Inicio de sesión exitoso
-                $fila = $resultado->fetch_assoc();
-
-                $numDoc = $fila['clave_descifrada'];
-                $cargo = $fila['clave_descifrada'];
-
-                $_SESSION['user_id'] = $numDoc; // Almacenar ID de usuario en la sesión
-                $_SESSION['user_cargo'] = $cargo; // Almacenar ID de usuario en la sesión
                 header("Location: ../Dashboard/home.php");
                 exit();
             } else {
@@ -151,10 +153,17 @@ class ControladorUsuario
         $controladorUsuario = new Usuarios();
         return $controladorUsuario->obtenerUsuarioPornumDoc($numDoc);
     }
+}*/
+
 }
 
-// Si se envían datos por POST, actualizar el usuario
-$controladorUsuario = new ControladorUsuario();
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $controladorUsuario->actualizarUsuario();*/
+//Si se envían datos por POST, actualizar el usuario
+if($_SERVER['REQUEST_METHOD'] == 'POST'){
+    $controlador = new ControladorUsuario();
+    if($_POST['Accion'] == "Registrar")
+    {       
+        $controlador->registroUsuario();
+    }if ($_POST['Accion'] == "IniciarSesion") {
+        $controlador->iniciarSesion();
+    }
 }

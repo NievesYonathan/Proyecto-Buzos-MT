@@ -32,9 +32,11 @@ session_start();
 			<!-- Content -->
 			<div class="full-box tile-container">
 
-				<?php 
+				<?php
+				$perfil = $_SESSION['user_cargo'];
+
 				//Enlace solo visible para Jefe de Producción
-				if ($perfil == 'JefProduccion'): ?>
+				if ($perfil == 'Jefe Producción'): ?>
 					<a href="client-new.html" class="tile">
 						<div class="tile-tittle">Producción</div>
 						<div class="tile-icon">
@@ -46,7 +48,7 @@ session_start();
 
 				<?php 
 				//Enlace solo visible para Jefe de Producción
-				if ($perfil == 'Inventario'): ?>
+				if ($perfil == 'Jefe Inventario'): ?>
 					<a href="item-list.html" class="tile">
 						<div class="tile-tittle">Materia Prima</div>
 						<div class="tile-icon">
@@ -86,7 +88,7 @@ session_start();
 
 								<?php 
 				//Enlace solo visible para Jefe de Producción
-				if ($perfil == 'JefProduccion'): ?>
+				if ($perfil == 'Jefe Producción'): ?>
 					<a href="client-new.html" class="tile">
 						<div class="tile-tittle">Informes</div>
 						<div class="tile-icon">

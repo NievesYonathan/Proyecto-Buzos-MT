@@ -8,7 +8,7 @@
     <a href="user-update.html">
         <i class="fas fa-user-cog"></i>
     </a>
-    <a href="../Login-Registro/login.html" class="btn-exit-system">
+    <a href="../Controlador/cerrar_sesion.php">
         <i class="fas fa-power-off"></i>
     </a>
 </nav>

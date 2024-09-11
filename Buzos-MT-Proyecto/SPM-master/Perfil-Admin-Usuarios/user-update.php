@@ -1,4 +1,7 @@
 <?php
+session_start();
+?>
+<?php
 require_once '../Controlador/ControladorUsuario.php';
 
 include '../Config/variable_global.php';
