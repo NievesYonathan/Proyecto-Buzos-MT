@@ -7,6 +7,33 @@
 
 <body>
 	
+<!-- Inicio Alerta PHP -->
+<?php
+if(isset($_SESSION['alerta'])) {
+    ?>
+    <div id="alerta" class="alert alert-info" role="alert" 
+         style="position: fixed; top: 20px; left: 20px; padding: 15px; 
+                border: 1px solid #12464c; border-radius: 8px; 
+                background-color: #12464c; color: white; z-index: 9999;">
+        <?php echo $_SESSION['alerta']; ?>
+    </div>
+
+    <script>
+        // Mover la alerta al principio del <body>
+        var alerta = document.getElementById("alerta");
+        document.body.insertBefore(alerta, document.body.firstChild);
+
+        // Ocultar la alerta después de 4 segundos
+        setTimeout(function() {
+            alerta.style.display = 'none';
+        }, 4000); // 4000 milisegundos = 4 segundos
+    </script>
+    <?php 
+    unset($_SESSION['alerta']);  
+}
+?>
+<!-- Fin Alerta PHP -->
+ 
 	<!-- Main container -->
 	<main class="full-box main-container">
 		<!-- Nav lateral -->
@@ -43,7 +70,6 @@
 			
 			<!-- Content -->
 			<div class="container-fluid">
-				<form action="" class="form-neon" autocomplete="off">
 					<fieldset>
 						<legend><i class="far fa-address-card"></i> &nbsp; Información personal</legend>
 						<div class="container-fluid">
@@ -52,10 +78,21 @@
 									<div class="form-group">
 										<label for="tipo_documento" class="bmd-label-floating">Tipo documento</label>
 										<select class="form-control" name="tipo_documento" id="tipo_documento">
-											<option value="">-- Selecciona una opción --</option>
-											<option value="dni">Cedula de ciudadania</option>
-											<option value="pasaporte">Tarjeta de identidad</option>
-											<option value="identidad">PPT</option>
+										<?php
+                                        include_once '../Modelo/Conexion.php';
+										include "../Controlador/registroPersona.php";
+                                        $conexion = new Conexion();
+                                        $conectarse = $conexion->conectarse();
+                    
+                                        $sql = "SELECT * FROM tipo_doc";
+                                        $res = $conectarse->query($sql);
+                                        $conectarse->close();
+                    
+                                        while($fila = mysqli_fetch_assoc($res)) { ?>                                      
+                                            <option value="<?= $fila['id_tipo_documento'] ?>"><?= $fila['tip_doc_descripcion'] ?></option>
+                                        <?php
+                                        }
+                                        ?>
 										</select>
 									</div>
 								</div>
@@ -82,18 +119,22 @@
 
 								<div class="col-12 col-md-4">
 									<div class="form-group">
-										<label for="usuario_apellido" class="bmd-label-floating">Fecha de nacimiento</label>
-										<input type="date" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="usuario_apellido" id="usuario_apellido" maxlength="35">
+										<label for="usu_fecha_nac" class="bmd-label-floating">Fecha de nacimiento</label>
+										<input type="date" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="Fecha_nacimiento" id="usuario_apellido" maxlength="35">
 									</div>
 								</div>
 
-								<div class="col-12 col-md-6">
+								<div class="col-12 col-md-4">
 									<div class="form-group">
-										<label for="usuario_telefono" class="bmd-label-floating">sexo</label>
-										<input type="text" pattern="[0-9()+]{1,20}" class="form-control" name="usuario_telefono" id="usuario_telefono" maxlength="20">
+										<label for="sexo" class="bmd-label-floating">sexo</label>
+										<select class="form-control" name="sexo" id="sexo">
+										<option value="">Sexo</option>
+                                        <option value="M">Masculino</option>
+                                        <option value="F">Femenino</option>
+                                        </select>
 									</div>
 								</div>
-
+											
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="usuario_direccion" class="bmd-label-floating">Dirección</label>
@@ -118,8 +159,8 @@
 							<div class="row">
 								<div class="col-12 col-md-6">
 									<div class="form-group">
-										<label for="usuario_usuario" class="bmd-label-floating">Fecha contratacion</label>
-										<input type="date" pattern="[a-zA-Z0-9]{1,35}" class="form-control" name="usuario_usuario" id="usuario_usuario" maxlength="35">
+										<label for="usu_fecha_contratacion" class="bmd-label-floating">Fecha contratacion</label>
+										<input type="date" pattern="[a-zA-Z0-9]{1,35}" class="form-control" name="usu_fecha_contratacion" id="usu_fecha_contratacion" maxlength="35">
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
@@ -144,7 +185,7 @@
 						</div>
 					</fieldset>
 					<br><br><br>
-					<fieldset>
+					<!-- priviliegios <fieldset>
 						<legend><i class="fas fa-medal"></i> &nbsp; Nivel de privilegio</legend>
 						<div class="container-fluid">
 							<div class="row">
@@ -163,16 +204,15 @@
 								</div>
 							</div>
 						</div>
-					</fieldset>
+					</fieldset> -->
 					<p class="text-center" style="margin-top: 40px;">
 						<button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
 						&nbsp; &nbsp;
-						<button type="submit" class="btn btn-raised btn-info btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
+						<button type="submit" class="btn btn-raised btn-info btn-sm" name="btnguardar" ><i class="far fa-save"> </i> &nbsp; GUARDAR</button>
 					</p>
 				</form>
 			</div>
 			
-
 		</section>
 	</main>
 	

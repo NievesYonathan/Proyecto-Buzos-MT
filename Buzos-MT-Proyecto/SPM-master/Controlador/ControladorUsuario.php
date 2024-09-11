@@ -40,6 +40,45 @@ class ControladorUsuario
         }
     }
 
+ if (!empty ($_POST["btnguardar"])){
+
+    if (!empty($_POST["usuario_dni"]) and 
+    !empty($_POST["usuario_nombre"]) and 
+    !empty($_POST["usuario_apellido"]) and 
+    !empty($_POST["Fecha_nacimiento"]) and 
+    !empty($_POST["sexo"]) and
+    !empty($_POST["usuario_direccion"]) and
+    !empty($_POST["usuario_telefono"]) and
+    !empty($_POST["usu_fecha_contratacion"]) and
+    !empty($_POST["usuario_email"]) and 
+    !empty($_POST["usuario_clave_1"])){
+
+    $numDoc = $_POST['usuario_dni'];
+    $tDoc = $_POST['tipo_documento'];
+    $usuNombres = $_POST['usuario_nombre'];
+    $usuApellidos = $_POST['usuario_apellido'];
+    $usuFechaNacimiento = $_POST['Fecha_nacimiento'];
+    $usuTelefono = $_POST['usuario_telefono'];
+    $usuSexo = $_POST['sexo'];
+    $usuDireccion = $_POST['usuario_direccion'];
+    $usuEmail = $_POST['correo'];
+    $usuFechaContratacion = "usu_fecha_contratacion";
+    $clave = $_POST['usuario_clave_1'];
+
+    $sql=$conexion->query("insert into usuarios(usuario_dni,tipo_documento,usuario_nombre,usuario_apellido,Fecha_nacimiento,sexo,usuario_direccion,usuario_telefono,usu_fecha_contratacion,usuario_email,usuario_clave_1) values('$numDoc','$tDoc','$usuNombres',' $usuApellidos',' $usuFechaNacimiento','$usuTelefono','$usuSexo',' $usuDireccion','$usuEmail','$usuFechaContratacion','$clave') ");
+    if($sql==1) {
+        echo '<div class="alert-success"> usuaior insertado correctamente</div>';
+    } else {
+        echo '<div class="alert-success"> error al insertar usuario</div>';
+    }
+
+ }else{
+    echo '<div class="alert alert-warning"> algún campo está vacio</div>';
+ }
+
+ }
+   
+
     public function iniciarSesion()
     {
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -132,7 +171,7 @@ class ControladorUsuario
             $tipo_documento = $_POST['t_doc'];
             $nombre = $_POST['usu_nombres'];
             $apellido = $_POST['usu_apellidos'];
-            $fechaNaciemiento = $_POST['usu_fecha_naciemiento'];
+            $fechaNaciemiento = $_POST['usu_fecha_nacimiento'];
             $sexo = $_POST['sexo'];
             $direccion = $_POST['usu_direccion'];
             $telefono = $_POST['usu_telefono'];

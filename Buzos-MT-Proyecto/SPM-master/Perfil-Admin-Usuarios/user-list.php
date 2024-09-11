@@ -78,14 +78,9 @@ include '../Componentes/Head/head.php' ?>
 											<input type="hidden" name="num_doc" value="<?php echo $fila['num_doc'] ?>">
 											<input type="hidden" name="usu_nombres" value="<?php echo $fila['usu_nombres'] ?>">
 											<input type="hidden" name="usu_apellidos" value="<?php echo $fila['usu_apellidos'] ?>">
-											<input type="hidden" name="usu_fecha_nacimiento" value="<?php echo $fila['usu_fecha_nacimiento'] ?>">
 											<input type="hidden" name="usu_telefono" value="<?php echo $fila['usu_telefono'] ?>">
 											<input type="hidden" name="usu_email" value="<?php echo $fila['usu_email'] ?>">
 											<input type="hidden" name="usu_estado" value="<?php echo $fila['usu_estado'] ?>">
-											<input type="hidden" name="usu_fecha_contratacion" value="<?php echo $fila['usu_fecha_contratacion'] ?>">
-											<input type="hidden" name="usu_sexo" value="<?php echo $fila['usu_sexo'] ?>">
-											<input type="hidden" name="usu_direccion" value="<?php echo $fila['usu_direccion'] ?>">
-
 
 											<button type="submit" class="btn btn-success">
 												<i class="fas fa-sync-alt"></i>
