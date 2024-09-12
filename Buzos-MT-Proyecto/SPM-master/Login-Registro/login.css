@@ -15,30 +15,16 @@ section {
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: linear-gradient(to bottom, #f1f4f9, #dff1ff);
+    background: linear-gradient(to bottom, #0f3443, #34e69f);
     overflow: hidden;
 }
 
 .color {
     position: absolute;
-    filter: blur(100px); /* Reducción del blur para mayor visibilidad */
+    filter: blur(100px);
+    /* Reducción del blur para mayor visibilidad */
 }
 
-.color:nth-child(1) {
-    top: -50%; /* Ajuste para que cubra toda la pantalla */
-    left: -50%; /* Alineación para expandir el gradiente */
-    width: 150%; /* Expandir para cubrir la pantalla completa */
-    height: 150%;
-    background: linear-gradient(to bottom right, #34e69f, transparent); /* Gradiente del negro al transparente */
-}
-
-.color:nth-child(2) {
-    top: -50%; /* Alineación para crear el degradado */
-    left: -45%; /* Alineación para expandir el gradiente */
-    width: 150%; /* Expandir para cubrir la pantalla completa */
-    height: 150%;
-    background: linear-gradient(to top left, #004e5c, transparent); /* Gradiente del color a transparente */
-}
 
 .box {
     position: relative;
@@ -58,9 +44,12 @@ section {
 }
 
 @keyframes animate {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translatex(-30px);
     }
+
     50% {
         transform: translateY(30px);
     }
@@ -167,18 +156,23 @@ section {
     font-size: 24px;
     font-weight: 600;
     letter-spacing: 1px;
-    margin-top: -30px; /* Reduce el margen superior */
-    margin-bottom: 10px; /* Ajusta el margen inferior si es necesario */
+    margin-top: -30px;
+    /* Reduce el margen superior */
+    margin-bottom: 10px;
+    /* Ajusta el margen inferior si es necesario */
     text-align: center;
 }
+
 .form h4 {
     position: center;
     color: #fff;
     font-size: 15px;
     font-weight: 600;
     letter-spacing: 1px;
-    margin-top: -50px; /* Reduce el margen superior */
-    margin-bottom: 2px; /* Ajusta el margen inferior si es necesario */
+    margin-top: -50px;
+    /* Reduce el margen superior */
+    margin-bottom: 2px;
+    /* Ajusta el margen inferior si es necesario */
     text-align: center;
 }
 
@@ -230,32 +224,40 @@ section {
 }
 
 .forget a {
-    color: #fff; /* Color de texto por defecto */
+    color: #fff;
+    /* Color de texto por defecto */
     font-weight: 600;
     text-decoration: none;
-    transition: color 0.3s ease, transform 0.3s ease; /* Añade una transición suave */
+    transition: color 0.3s ease, transform 0.3s ease;
+    /* Añade una transición suave */
 }
 
 .forget a:hover {
-    color: #12464c; /* Cambia el color del texto al pasar el mouse */
-    transform: scale(1.05); /* Escala el enlace ligeramente al pasar el mouse */
+    color: #12464c;
+    /* Cambia el color del texto al pasar el mouse */
+    transform: scale(1.05);
+    /* Escala el enlace ligeramente al pasar el mouse */
 }
 
 
 @media (max-width: 768px) {
-    .box, .container {
+
+    .box,
+    .container {
         width: 90%;
         max-width: 350px;
     }
 
-    .form .inputBox input, 
+    .form .inputBox input,
     .form .inputBox select {
         max-width: 90%;
     }
 }
 
 @media (max-width: 480px) {
-    .box, .container {
+
+    .box,
+    .container {
         width: 95%;
         max-width: 300px;
     }
@@ -264,7 +266,7 @@ section {
         font-size: 18px;
     }
 
-    .form .inputBox input, 
+    .form .inputBox input,
     .form .inputBox select {
         max-width: 95%;
         font-size: 14px;
@@ -294,9 +296,12 @@ section {
 }
 
 @keyframes animate {
-    0%, 100% {
+
+    0%,
+    100% {
         transform: translatex(-30px);
     }
+
     50% {
         transform: translateY(30px);
     }
@@ -344,21 +349,24 @@ section {
     width: 600px !important;
     padding: 20px;
     border-radius: 10px;
-    background-color: rgba(255, 255, 255, 0.1); 
+    background-color: rgba(255, 255, 255, 0.1);
     box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
     position: relative;
-    left: -120px; /* Desplazamiento a la izquierda */
+    left: -120px;
+    /* Desplazamiento a la izquierda */
 }
 
 @media (max-width: 768px) {
     #registro-container {
-        width: 90% !important; /* Ancho adaptado para pantallas pequeñas */
+        width: 90% !important;
+        /* Ancho adaptado para pantallas pequeñas */
     }
 }
 
 .form .inputBox {
     display: flex;
-    flex-direction: column; /* Coloca el label arriba del input */
+    flex-direction: column;
+    /* Coloca el label arriba del input */
     margin-top: 20px;
     width: 100%;
 }
@@ -367,7 +375,8 @@ section {
     color: #fff;
     font-size: 16px;
     margin-left: 25px;
-    margin-bottom: 5px; /* Espacio entre el label y el input */
+    margin-bottom: 5px;
+    /* Espacio entre el label y el input */
 }
 
 .form .inputBox input[type="date"] {
@@ -382,3 +391,63 @@ section {
     color: #fff;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
 }
+
+/* Asegúrate de que el contenedor principal tenga posición relativa */
+.full-box {
+    position: relative;
+
+}
+
+/* Posiciona el botón en la esquina superior izquierda */
+#btn-reversa {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px;
+    /* Ajusta el margen si es necesario */
+}
+
+/* Opcional: Si quieres que el botón esté encima de otros elementos, asegúrate de darle un z-index alto */
+#btn-reversa {
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+
+
+/* Asegúrate de que el contenedor principal tenga posición relativa */
+.full-boxx {
+    position: relative;
+
+}
+
+/* Posiciona el botón en la esquina superior izquierda */
+#btn-reversas {
+    position: absolute;
+    top: 20px;
+    left: -100px;
+    margin: 6px;
+    /* Ajusta el margen si es necesario */
+}
+
+/* Opcional: Si quieres que el botón esté encima de otros elementos, asegúrate de darle un z-index alto */
+#btn-reversas {
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilo para el campo de texto cuando está vacío */
+.inputBox input[type="text"] {
+    color: #ffffff;
+    /* Color gris claro para el texto del placeholder */
+}
+
+/* Estilo cuando el campo de texto está en foco y el tipo cambia a date */
+.inputBox input[type="date"] {
+    color: #000;
+    /* Color negro para la fecha seleccionada */
+}   
