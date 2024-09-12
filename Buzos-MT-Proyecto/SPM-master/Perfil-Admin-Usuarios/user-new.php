@@ -3,40 +3,40 @@ session_start();
 ?>
 <!DOCTYPE html>
 <html lang="es">
-	<?php 
-	include '../Config/variable_global.php';
+<?php
+include '../Config/variable_global.php';
 
-	include '../Componentes/Head/head.php' ?>
+include '../Componentes/Head/head.php' ?>
 
 <body>
-	
-<!-- Inicio Alerta PHP -->
-<?php
-if(isset($_SESSION['alerta'])) {
-    ?>
-    <div id="alerta" class="alert alert-info" role="alert" 
-         style="position: fixed; top: 20px; left: 20px; padding: 15px; 
+
+	<!-- Inicio Alerta PHP -->
+	<?php
+	if (isset($_SESSION['alerta'])) {
+	?>
+		<div id="alerta" class="alert alert-info" role="alert"
+			style="position: fixed; top: 20px; left: 20px; padding: 15px; 
                 border: 1px solid #12464c; border-radius: 8px; 
                 background-color: #12464c; color: white; z-index: 9999;">
-        <?php echo $_SESSION['alerta']; ?>
-    </div>
+			<?php echo $_SESSION['alerta']; ?>
+		</div>
 
-    <script>
-        // Mover la alerta al principio del <body>
-        var alerta = document.getElementById("alerta");
-        document.body.insertBefore(alerta, document.body.firstChild);
+		<script>
+			// Mover la alerta al principio del <body>
+			var alerta = document.getElementById("alerta");
+			document.body.insertBefore(alerta, document.body.firstChild);
 
-        // Ocultar la alerta después de 4 segundos
-        setTimeout(function() {
-            alerta.style.display = 'none';
-        }, 4000); // 4000 milisegundos = 4 segundos
-    </script>
-    <?php 
-    unset($_SESSION['alerta']);  
-}
-?>
-<!-- Fin Alerta PHP -->
- 
+			// Ocultar la alerta después de 4 segundos
+			setTimeout(function() {
+				alerta.style.display = 'none';
+			}, 4000); // 4000 milisegundos = 4 segundos
+		</script>
+	<?php
+		unset($_SESSION['alerta']);
+	}
+	?>
+	<!-- Fin Alerta PHP -->
+
 	<!-- Main container -->
 	<main class="full-box main-container">
 		<!-- Nav lateral -->
@@ -56,7 +56,7 @@ if(isset($_SESSION['alerta'])) {
 
 				</p>
 			</div>
-			
+
 			<div class="container-fluid">
 				<ul class="full-box list-unstyled page-nav-tabs">
 					<li>
@@ -68,11 +68,13 @@ if(isset($_SESSION['alerta'])) {
 					<li>
 						<a href="user-search.php"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR USUARIO</a>
 					</li>
-				</ul>	
+				</ul>
 			</div>
-			
+
 			<!-- Content -->
 			<div class="container-fluid">
+				<form method="get" action="../Controlador/ControladorUsuario.php">
+
 					<fieldset>
 						<legend><i class="far fa-address-card"></i> &nbsp; Información personal</legend>
 						<div class="container-fluid">
@@ -80,22 +82,22 @@ if(isset($_SESSION['alerta'])) {
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="tipo_documento" class="bmd-label-floating">Tipo documento</label>
-										<select class="form-control" name="tipo_documento" id="tipo_documento">
-										<?php
-                                        include_once '../Modelo/Conexion.php';
-										include "../Controlador/ControladorUsuario.php";
-                                        $conexion = new Conexion();
-                                        $conectarse = $conexion->conectarse();
-                    
-                                        $sql = "SELECT * FROM tipo_doc";
-                                        $res = $conectarse->query($sql);
-                                        $conectarse->close();
-                    
-                                        while($fila = mysqli_fetch_assoc($res)) { ?>                                      
-                                            <option value="<?= $fila['id_tipo_documento'] ?>"><?= $fila['tip_doc_descripcion'] ?></option>
-                                        <?php
-                                        }
-                                        ?>
+										<select class="form-control" name="tipoDocumento" id="tipo_documento">
+											<?php
+											include_once '../Modelo/Conexion.php';
+											include "../Controlador/ControladorUsuario.php";
+											$conexion = new Conexion();
+											$conectarse = $conexion->conectarse();
+
+											$sql = "SELECT * FROM tipo_doc";
+											$res = $conectarse->query($sql);
+											$conectarse->close();
+
+											while ($fila = mysqli_fetch_assoc($res)) { ?>
+												<option value="<?= $fila['id_tipo_documento'] ?>"><?= $fila['tip_doc_descripcion'] ?></option>
+											<?php
+											}
+											?>
 										</select>
 									</div>
 								</div>
@@ -103,27 +105,27 @@ if(isset($_SESSION['alerta'])) {
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="usuario_dni" class="bmd-label-floating">Numero de documento</label>
-										<input type="number" pattern="[0-9-]{1,20}" class="form-control" name="usuario_dni" id="usuario_dni" maxlength="20">
+										<input type="number" pattern="[0-9-]{1,20}" class="form-control" name="numeroDocumento" id="usuario_dni" maxlength="20">
 									</div>
 								</div>
-								
+
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="usuario_nombre" class="bmd-label-floating">Nombres</label>
-										<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="usuario_nombre" id="usuario_nombre" maxlength="35">
+										<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="nombres" id="usuario_nombre" maxlength="35">
 									</div>
 								</div>
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="usuario_apellido" class="bmd-label-floating">Apellidos</label>
-										<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="usuario_apellido" id="usuario_apellido" maxlength="35">
+										<input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="apellidos" id="usuario_apellido" maxlength="35">
 									</div>
 								</div>
 
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="usu_fecha_nac" class="bmd-label-floating">Fecha de nacimiento</label>
-										<input type="date" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="Fecha_nacimiento" id="usuario_apellido" maxlength="35">
+										<input type="date" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="fechaNacimiento" id="usuario_apellido" maxlength="35">
 									</div>
 								</div>
 
@@ -131,24 +133,24 @@ if(isset($_SESSION['alerta'])) {
 									<div class="form-group">
 										<label for="sexo" class="bmd-label-floating">sexo</label>
 										<select class="form-control" name="sexo" id="sexo">
-										<option value="">Sexo</option>
-                                        <option value="M">Masculino</option>
-                                        <option value="F">Femenino</option>
-                                        </select>
+											<option value="">Sexo</option>
+											<option value="M">Masculino</option>
+											<option value="F">Femenino</option>
+										</select>
 									</div>
 								</div>
-											
+
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="usuario_direccion" class="bmd-label-floating">Dirección</label>
-										<input type="text" pattern="[a-zA-Z0-99áéíóúÁÉÍÓÚñÑ()# ]{1,190}" class="form-control" name="usuario_direccion" id="usuario_direccion" maxlength="190">
+										<input type="text" pattern="[a-zA-Z0-99áéíóúÁÉÍÓÚñÑ()# ]{1,190}" class="form-control" name="direccion" id="usuario_direccion" maxlength="190">
 									</div>
 								</div>
 
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="usuario_telefono" class="bmd-label-floating">Teléfono</label>
-										<input type="text" pattern="[0-9()+]{1,20}" class="form-control" name="usuario_telefono" id="usuario_telefono" maxlength="20">
+										<input type="text" pattern="[0-9()+]{1,20}" class="form-control" name="celular" id="celular" maxlength="20">
 									</div>
 								</div>
 
@@ -163,25 +165,25 @@ if(isset($_SESSION['alerta'])) {
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="usu_fecha_contratacion" class="bmd-label-floating">Fecha contratacion</label>
-										<input type="date" pattern="[a-zA-Z0-9]{1,35}" class="form-control" name="usu_fecha_contratacion" id="usu_fecha_contratacion" maxlength="35">
+										<input type="date" pattern="[a-zA-Z0-9]{1,35}" class="form-control" name="2024-09-03" id="usu_fecha_contratacion" maxlength="35">
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="usuario_email" class="bmd-label-floating">Email</label>
-										<input type="email" class="form-control" name="usuario_email" id="usuario_email" maxlength="70">
+										<input type="email" class="form-control" name="correo" id="correo" maxlength="70">
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="usuario_clave_1" class="bmd-label-floating">Contraseña</label>
-										<input type="password" class="form-control" name="usuario_clave_1" id="usuario_clave_1" maxlength="200">
+										<input type="password" class="form-control" name="password" id="usuario_clave_1" maxlength="200">
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="usuario_clave_2" class="bmd-label-floating">Repetir contraseña</label>
-										<input type="password" class="form-control" name="usuario_clave_2" id="usuario_clave_2" maxlength="200">
+										<input type="password" class="form-control" name="password" id="usuario_clave_2" maxlength="200">
 									</div>
 								</div>
 							</div>
@@ -211,16 +213,17 @@ if(isset($_SESSION['alerta'])) {
 					<p class="text-center" style="margin-top: 40px;">
 						<button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
 						&nbsp; &nbsp;
-						<button type="submit" class="btn btn-raised btn-info btn-sm" name="btnguardar" ><i class="far fa-save"> </i> &nbsp; GUARDAR</button>
+						<button type="submit" class="btn btn-raised btn-info btn-sm" name="Accion" value="Guardar"><i class="far fa-save"> </i> &nbsp; GUARDAR</button>
 					</p>
 				</form>
 			</div>
-			
+
 		</section>
 	</main>
-	
-	
+
+
 	<!--===Include JavaScript files======-->
 	<?php include '../Componentes/Script/script.php' ?>
 </body>
+
 </html>

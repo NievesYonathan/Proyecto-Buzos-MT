@@ -138,11 +138,15 @@ include '../Componentes/Head/head.php';
 							</div>
 						</div>
 					</fieldset>
-					<p class="text-center" style="margin-top: 40px;">
-						<button type="submit" name="Accion" value="Actualizar" class="btn btn-raised btn-success btn-sm">
-							<i class="fas fa-sync-alt"></i> &nbsp; ACTUALIZAR
-						</button>
-					</p>
+					<td>
+						<p class="text-center" style="margin-top: 40px;">
+							<button type="submit" name="Accion" value="Actualizar" class="btn btn-raised btn-success btn-sm">
+								<i class="fas fa-sync-alt"></i> &nbsp; ACTUALIZAR
+							</button>
+						</p>
+					</td>
+
+					
 				</form>
 			</div>
 		</section>

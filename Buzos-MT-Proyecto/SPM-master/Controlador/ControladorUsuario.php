@@ -17,10 +17,10 @@ class ControladorUsuario
             $usuApellidos = $_POST['apellidos'];
             $usuFechaNacimiento = $_POST['fechaNacimiento'];
             $usuSexo = $_POST['sexo'];
-            // $usuDireccion = $_POST[''];
+            $usuDireccion = $_POST['direccion'] ? null : "";
             $usuTelefono = $_POST['celular'];
             $usuEmail = $_POST['correo'];
-            $usuFechaContratacion = "2024-09-03";
+            $usuFechaContratacion = $_POST['direccion'] ? null : "2024-09-03";
             // $imagPerfil = $_POST[''];
             $clave = $_POST['password'];
             $confirmarClave = $_POST['confirm_password'];
@@ -34,12 +34,46 @@ class ControladorUsuario
             }
 
             $controladorUsuario = new Usuarios();
-            $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
+            $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuDireccion, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
 
             $_SESSION['alerta'] = "El Usuario Fue Registrado Con Éxito.";
             header("Location: ../Login-Registro/login.php");
         }
     }
+
+    public function insertarUsuario()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $numDoc = $_POST['numeroDocumento'];
+            $tDoc = $_POST['tipoDocumento'];
+            $usuNombres = $_POST['nombres'];
+            $usuApellidos = $_POST['apellidos'];
+            $usuFechaNacimiento = $_POST['fechaNacimiento'];
+            $usuSexo = $_POST['sexo'];
+            $usuDireccion = $_POST['direccion'] ? null : "";
+            $usuTelefono = $_POST['celular'];
+            $usuEmail = $_POST['correo'];
+            $usuFechaContratacion = $_POST['direccion'] ? null : "2024-09-03";
+            // $imagPerfil = $_POST[''];
+            $clave = $_POST['password'];
+            $confirmarClave = $_POST['confirm_password'];
+            $confirmarClave = $_POST['confirm_password']; // Agregamos la confirmación de la contraseña
+
+            // Validar si las contraseñas coinciden
+            if ($clave !== $confirmarClave) {
+                $_SESSION['alerta'] = "Las Contraseñas No Coinciden.";
+                header("Location: ../Perfil-Admin-Usuarios/user-list.php");
+                exit();
+            }
+
+            $controladorUsuario = new Usuarios();
+            $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuDireccion, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
+
+            $_SESSION['alerta'] = "El Usuario Fue Registrado Con Éxito.";
+            header("Location: ../Perfil-Admin-Usuarios/user-list.php");
+        }
+    }
+
 
     public function iniciarSesion()
     {
@@ -109,7 +143,7 @@ class ControladorUsuario
     public function mostrarUsuarios()
     {
         $controladorUsuario = new Usuarios();
-        $res = $controladorUsuario->mostrarUsuarios();          
+        $res = $controladorUsuario->mostrarUsuarios();
         return $res;
     }
 
@@ -142,7 +176,7 @@ class ControladorUsuario
             $email = $_POST['usuario_email'];
             $fecha_contratacion = $_POST['usu_fecha_contratacion'];
             $estado = $_POST['usuario_estado'];
-            
+
             $controladorUsuario->actualizarUsuario($numDoc, $tipo_documento, $nombre, $apellido, $fechaNaciemiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $estado);
 
             /*if ($controladorUsuario->actualizarUsuario($numDoc, $tipo_documento, $nombre, $apellido, $sexo, $direccion, $telefono, $email, $fecha_contratacion)) {
@@ -152,19 +186,22 @@ class ControladorUsuario
             }*/
         }
     }
-
 }
 
 
 //Si se envían datos por POST, actualizar el usuario
-if($_SERVER['REQUEST_METHOD'] == 'POST'){
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $controlador = new ControladorUsuario();
-    if($_POST['Accion'] == "Registrar")
-    {       
+    if ($_POST['Accion'] == "Registrar") {
         $controlador->registroUsuario();
-    }if ($_POST['Accion'] == "IniciarSesion") {
+    }
+    if ($_POST['Accion'] == "IniciarSesion") {
         $controlador->iniciarSesion();
-    }if ($_POST['Accion'] == "Actualizar") {
+    }
+    if ($_POST['Accion'] == "Actualizar") {
         $controlador->actualizarUsuario();
+    }
+    if ($_POST['Accion'] == "Guardar") {
+        $controlador->insertarUsuario();
     }
 }
