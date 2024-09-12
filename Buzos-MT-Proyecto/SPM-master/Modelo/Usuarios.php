@@ -118,7 +118,7 @@ class Usuarios
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
         $sql = "UPDATE usuarios SET t_doc=?, usu_nombres=?, usu_apellidos=?, usu_fecha_nacimiento=?, sexo=?, usu_direccion=?, usu_telefono=?, usu_email=?, usu_fecha_contratacion=?, usu_estado=? WHERE num_doc=?";
-        $stmt = $this->$conectar->prepare($sql);
+        $stmt = $conectar->prepare($sql);
         $stmt->bind_param("issssssssi", $tipo_documento, $nombre, $apellido, $usuFechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $usuEstado, $numDoc);
         $stmt->execute();
         $res = $stmt->get_result();

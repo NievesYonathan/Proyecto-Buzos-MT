@@ -50,19 +50,18 @@ class ControladorUsuario
             $usuApellidos = $_POST['apellidos'];
             $usuFechaNacimiento = $_POST['fechaNacimiento'];
             $usuSexo = $_POST['sexo'];
-            $usuDireccion = $_POST['direccion'] ? null : "";
+            $usuDireccion = $_POST['direccion'];
             $usuTelefono = $_POST['celular'];
             $usuEmail = $_POST['correo'];
-            $usuFechaContratacion = $_POST['direccion'] ? null : "2024-09-03";
+            $usuFechaContratacion = $_POST['direccion'];
             // $imagPerfil = $_POST[''];
             $clave = $_POST['password'];
-            $confirmarClave = $_POST['confirm_password'];
             $confirmarClave = $_POST['confirm_password']; // Agregamos la confirmación de la contraseña
 
             // Validar si las contraseñas coinciden
             if ($clave !== $confirmarClave) {
                 $_SESSION['alerta'] = "Las Contraseñas No Coinciden.";
-                header("Location: ../Perfil-Admin-Usuarios/user-list.php");
+                header("Location: ../Perfil-Admin-Usuarios/user-new.php");
                 exit();
             }
 
@@ -70,8 +69,7 @@ class ControladorUsuario
             $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuDireccion, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
 
             $_SESSION['alerta'] = "El Usuario Fue Registrado Con Éxito.";
-            header("Location: ../Perfil-Admin-Usuarios/user-list.php");
-        }
+            header("Location: ../Perfil-Admin-Usuarios/user-list.php");        }
     }
 
 

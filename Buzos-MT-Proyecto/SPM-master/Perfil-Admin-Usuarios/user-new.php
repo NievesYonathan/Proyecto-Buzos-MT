@@ -73,7 +73,7 @@ include '../Componentes/Head/head.php' ?>
 
 			<!-- Content -->
 			<div class="container-fluid">
-				<form method="get" action="../Controlador/ControladorUsuario.php">
+				<form method="post" action="../Controlador/ControladorUsuario.php">
 
 					<fieldset>
 						<legend><i class="far fa-address-card"></i> &nbsp; Información personal</legend>
@@ -183,7 +183,7 @@ include '../Componentes/Head/head.php' ?>
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="usuario_clave_2" class="bmd-label-floating">Repetir contraseña</label>
-										<input type="password" class="form-control" name="password" id="usuario_clave_2" maxlength="200">
+										<input type="password" class="form-control" name="confirm_password" id="usuario_clave_2" maxlength="200">
 									</div>
 								</div>
 							</div>
