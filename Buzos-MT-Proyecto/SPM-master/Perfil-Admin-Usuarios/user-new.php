@@ -83,7 +83,7 @@ if(isset($_SESSION['alerta'])) {
 										<select class="form-control" name="tipo_documento" id="tipo_documento">
 										<?php
                                         include_once '../Modelo/Conexion.php';
-										include "../Controlador/registroPersona.php";
+										include "../Controlador/ControladorUsuario.php";
                                         $conexion = new Conexion();
                                         $conectarse = $conexion->conectarse();
                     
