@@ -56,6 +56,7 @@ class Usuarios
         $seguridad->addClaveUsuario($numDoc, $clave);
     }
 
+
     public function iniciarSesion($numDoc = null, $tDoc = null, $clave = null)
     {
         $conexion = new Conexion();
@@ -113,18 +114,34 @@ class Usuarios
     }
 
     // Método para actualizar los datos del usuario
-    public function actualizarUsuario($numDoc, $tipo_documento, $nombre, $apellido, $usuFechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $usuEstado)
-    {
-        $conexion = new Conexion();
-        $conectar = $conexion->conectarse();
-        $sql = "UPDATE usuarios SET t_doc=?, usu_nombres=?, usu_apellidos=?, usu_fecha_nacimiento=?, sexo=?, usu_direccion=?, usu_telefono=?, usu_email=?, usu_fecha_contratacion=?, usu_estado=? WHERE num_doc=?";
-        $stmt = $conectar->prepare($sql);
-        $stmt->bind_param("issssssssi", $tipo_documento, $nombre, $apellido, $usuFechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $usuEstado, $numDoc);
-        $stmt->execute();
-        $res = $stmt->get_result();
+    public function actualizarUsuario($numDoc, $tipo_documento, $nombre, $apellido, $usuFechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $usuEstado, $clave)
+{
+    $conexion = new Conexion();
+    $conectar = $conexion->conectarse();
+
+    $sql = "UPDATE usuarios SET t_doc=?, usu_nombres=?, usu_apellidos=?, usu_fecha_nacimiento=?, usu_sexo=?, usu_direccion=?, usu_telefono=?, usu_email=?, usu_fecha_contratacion=?, usu_estado=? WHERE num_doc=?";
+    
+    $stmt = $conectar->prepare($sql);
+
+    // Tipos de parámetros: i = integer, s = string
+    $stmt->bind_param("isssssssssi", $tipo_documento, $nombre, $apellido, $usuFechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $usuEstado, $numDoc);
+
+    // Ejecutar la sentencia
+    if ($stmt->execute()) {
+        // Cerrar la conexión
         $stmt->close();
         $conectar->close();
 
-        return $res;
+        // Actualizar la clave del usuario
+        $seguridad = new Seguridad();
+        $seguridad->addClaveUsuario($numDoc, $clave);
+
+        return true;  // Devuelve true si la actualización fue exitosa
+    } else {
+        // Si hay un error en la consulta, muestra el error
+        error_log("Error al actualizar el usuario: " . $stmt->error);
+        return false; // Devuelve false si falló
     }
+}
+
 }
