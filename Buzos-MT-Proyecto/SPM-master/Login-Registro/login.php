@@ -27,6 +27,10 @@ if(isset($_SESSION['login_errors'])) {
 </head>
 <body>
     <section>
+        <div class="full-box nav-lateral-content">
+		<a href="../Home-Page-MT/V-2/index.html" class="btn btn-secondary" id="btn-reversa">
+			<i class="fa fa-arrow-left"></i>
+		</a>
         <div class="color"></div>
         <div class="color"></div>
         <div class="color"></div>

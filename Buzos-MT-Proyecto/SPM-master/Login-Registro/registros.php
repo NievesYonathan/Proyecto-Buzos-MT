@@ -20,6 +20,10 @@ session_start();
 </head>
 <body>
     <section>
+        <div class="full-boxx nav-lateral-content">
+		<a href="login.php" class="btn btn-secondary" id="btn-reversas">
+			<i class="fa fa-arrow-left"></i>
+		</a>
         <div class="color"></div>
         <div class="color"></div>
         <div class="color"></div>
@@ -112,9 +116,9 @@ if(isset($_SESSION['alerta'])) {
                                 </div>
 
                                 <div class="inputBox">
-                                   
-                                    <input type="date" id="fechaNacimiento" name="fechaNacimiento" placeholder="fechaNacimiento" required title="Ingrese Su Fecha De Nacimiento">
-                                </div>
+    <input type="text" id="fechaNacimiento" name="fechaNacimiento" required title="Ingrese su fecha de nacimiento" onfocus="this.type='date'" onblur="this.type='text'" placeholder="Fecha de nacimiento">
+</div>
+
                                 <div class="inputBox">
                             <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirmar Contraseña" required pattern=".{8,}" title="Debe contener al menos 8 caracteres">
                         </div> 
