@@ -73,9 +73,9 @@ include '../Componentes/Head/head.php' ?>
 							?>
 								<tr class="text-center">
 									<td><?= $filaU['tip_doc_descripcion'] ?></td>
-									<th><?= $filaU['num_doc'] ?></th>
-									<th><?= $filaU['usu_nombres'] ?></th>
-									<th><button class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#addModal<?= $filaU['num_doc'] ?>">ADD</button></th>
+									<td><?= $filaU['num_doc'] ?></td>
+									<td><?= $filaU['usu_nombres'] ?></td>
+									<td><button class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#addModal<?= $filaU['num_doc'] ?>">ADD</button></td>
 								</tr>
 								<!-- Modal para agregar Cargos -->
 								<div class="modal fade" id="addModal<?= $filaU['num_doc'] ?>" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">

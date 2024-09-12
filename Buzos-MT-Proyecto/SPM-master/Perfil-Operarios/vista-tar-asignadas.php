@@ -29,7 +29,7 @@ session_start();
         <!-- Content -->
 <div class="container-fluid">
     <div class="table-responsive">
-        <table class="table table-sm">
+        <table class="table table-dark table-sm">
             <thead>
                 <tr class="text-center roboto-medium">
                     <th>#</th>

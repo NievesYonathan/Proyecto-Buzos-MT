@@ -114,12 +114,12 @@
 						<tbody>
 							<tr class="text-center">
 								<td>1</td>
-								<th>NOMBRE DE LA EMPERSA</th>
-								<th>DIRECCION DE LA EMPRESA</th>
-								<th>MATERIAL SUMINISTRADO POR LA EMPRESA</th>
-								<th>1234567890</th>
-								<th>NOMBRE DE CONTACTO</th>
-								<th>ADMIN@ADMIN.COM</th>
+								<td>NOMBRE DE LA EMPRESA</td>
+								<td>DIRECCION DE LA EMPRESA</td>
+								<td>MATERIAL SUMINISTRADO POR LA EMPRESA</td>
+								<td>1234567890</td>
+								<td>NOMBRE DE CONTACTO</td>
+								<td>ADMIN@ADMIN.COM</td>
 								<td>
 									<a href="UPP.html" class="btn btn-success">
 										<i class="fas fa-sync-alt"></i>
@@ -133,67 +133,6 @@
 									</form>
 								</td>
 							</tr>
-							<tr class="text-center">
-								<td>2</td>
-								<th>NOMBRE DE LA EMPERSA</th>
-								<th>DIRECCION DE LA EMPRESA</th>
-								<th>MATERIAL SUMINISTRADO POR LA EMPRESA</th>
-								<th>1234567890</th>
-								<th>NOMBRE DE CONTACTO</th>
-								<th>ADMIN@ADMIN.COM</th>
-								<td>
-									<a href="UPP.html" class="btn btn-success">
-										<i class="fas fa-sync-alt"></i>
-									</a>
-								</td>
-								<td>
-									<form action="">
-										<button type="button" class="btn btn-warning">
-											<i class="far fa-trash-alt"></i>
-										</button>
-									</form>
-								</td>
-							</tr>
-							<tr class="text-center">
-								<td>3</td>
-								<th>NOMBRE DE LA EMPERSA</th>
-								<th>DIRECCION DE LA EMPRESA</th>
-								<th>MATERIAL SUMINISTRADO POR LA EMPRESA</th>
-								<th>1234567890</th>
-								<th>NOMBRE DE CONTACTO</th>
-								<th>ADMIN@ADMIN.COM</th>
-								<td>
-									<a href="UPP.html" class="btn btn-success">
-										<i class="fas fa-sync-alt"></i>
-									</a>
-								</td>
-								<td>
-									<form action="">
-										<button type="button" class="btn btn-warning">
-											<i class="far fa-trash-alt"></i>
-										</button>
-									</form>
-								</td>
-							</tr>
-							<tr class="text-center">
-								<td>4</td>
-								<th>NOMBRE DE LA EMPERSA</th>
-								<th>DIRECCION DE LA EMPRESA</th>
-								<th>MATERIAL SUMINISTRADO POR LA EMPRESA</th>
-								<th>1234567890</th>
-								<th>NOMBRE DE CONTACTO</th>
-								<th>ADMIN@ADMIN.COM</th>
-								<td>
-									<a href="UPP.html" class="btn btn-success">
-										<i class="fas fa-sync-alt"></i>
-									</a>
-								</td>
-								<td>
-									<form action="">
-										<button type="button" class="btn btn-warning">
-											<i class="far fa-trash-alt"></i>
-										</button>
-									</form>
 								</td>
 							</tr>
 						</tbody>

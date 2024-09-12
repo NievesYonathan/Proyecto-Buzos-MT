@@ -106,12 +106,12 @@ session_start();
 						<tbody>
 							<tr class="text-center" >
 								<td>1</td>
-								<th>03045643</th>
-								<th>NOMBRE DE USUARIO</th>
-								<th>APELLIDO DE USUARIO</th>
-								<th>2345456</th>
-								<th>NOMBRE DE USUARIO</th>
-								<th>ADMIN@ADMIN.COM</th>
+								<td>03045643</td>
+								<td>NOMBRE DE USUARIO</td>
+								<td>APELLIDO DE USUARIO</td>
+								<td>2345456</td>
+								<td>NOMBRE DE USUARIO</td>
+								<td>ADMIN@ADMIN.COM</td>
 								<td>
 									<a href="user-update.php" class="btn btn-success">
 	  									<i class="fas fa-sync-alt"></i>	
@@ -125,26 +125,7 @@ session_start();
 									</form>
 								</td>
 							</tr>
-							<tr class="text-center" >
-								<td>4</td>
-								<th>03045643</th>
-								<th>NOMBRE DE USUARIO</th>
-								<th>APELLIDO DE USUARIO</th>
-								<th>2345456</th>
-								<th>NOMBRE DE USUARIO</th>
-								<th>ADMIN@ADMIN.COM</th>
-								<td>
-									<a href="user-update.php" class="btn btn-success">
-	  									<i class="fas fa-sync-alt"></i>	
-									</a>
-								</td>
-								<td>
-									<form action="">
-										<button type="button" class="btn btn-warning">
-		  									<i class="far fa-trash-alt"></i>
-										</button>
-									</form>
-								</td>
+							
 							</tr>
 						</tbody>
 					</table>
