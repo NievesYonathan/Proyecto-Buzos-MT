@@ -91,7 +91,7 @@ class Usuarios
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
 
-        $sql = "SELECT u.num_doc, u.t_doc, u.usu_nombres, u.usu_apellidos, u.usu_telefono, u.usu_email, u.usu_estado ,t.tip_doc_descripcion
+        $sql = "SELECT u.num_doc, u.t_doc, u.usu_nombres, u.usu_apellidos, u.usu_fecha_nacimiento, u.usu_sexo, u.usu_direccion, u.usu_telefono, u.usu_email, u.usu_fecha_contratacion, u.usu_estado ,t.tip_doc_descripcion
                 FROM usuarios AS u
                 INNER JOIN tipo_doc AS t ON u.t_doc = t.id_tipo_documento";
         $res = $conectar->query($sql);
@@ -113,13 +113,18 @@ class Usuarios
     }
 
     // Método para actualizar los datos del usuario
-    public function actualizarUsuario($numDoc, $tipo_documento, $nombre, $apellido,$usuFechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion)
+    public function actualizarUsuario($numDoc, $tipo_documento, $nombre, $apellido, $usuFechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $usuEstado)
     {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
-        $sql = "UPDATE usuarios SET t_doc=?, usu_nombres=?, usu_apellidos=?, usu_fecha_nacimiento=?, sexo=?, usu_direccion=?, usu_telefono=?, usu_email=?, usu_fecha_contratacion=? WHERE num_doc=?";
+        $sql = "UPDATE usuarios SET t_doc=?, usu_nombres=?, usu_apellidos=?, usu_fecha_nacimiento=?, sexo=?, usu_direccion=?, usu_telefono=?, usu_email=?, usu_fecha_contratacion=?, usu_estado=? WHERE num_doc=?";
         $stmt = $this->$conectar->prepare($sql);
-        $stmt->bind_param("sssssssssi", $tipo_documento, $nombre, $apellido, $usuFechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $numDoc);
-        return $stmt->execute();
+        $stmt->bind_param("issssssssi", $tipo_documento, $nombre, $apellido, $usuFechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $usuEstado, $numDoc);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $stmt->close();
+        $conectar->close();
+
+        return $res;
     }
 }

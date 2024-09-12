@@ -1,6 +1,7 @@
 <?php
-session_start();
-
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 include_once "../Modelo/Usuarios.php";
 
 
@@ -105,12 +106,13 @@ class ControladorUsuario
         }
     }
 
-    // public function mostrarUsuarios()
-    // {
-    //     $controladorUsuario = new Usuarios();
-    //     $res = $controladorUsuario->mostrarUsuarios();
-    //     return $res;
-    // }
+    public function mostrarUsuarios()
+    {
+        $controladorUsuario = new Usuarios();
+        $res = $controladorUsuario->mostrarUsuarios();          
+        return $res;
+    }
+
     // public function compararAcciones()
     // {
     //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -125,36 +127,32 @@ class ControladorUsuario
     // }
 
 
+    public function actualizarUsuario()
+    {
+        $controladorUsuario = new Usuarios();
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $numDoc = $_POST['usuario_dni'];
+            $tipo_documento = $_POST['tipoDocumento'];
+            $nombre = $_POST['usuario_nombre'];
+            $apellido = $_POST['usuario_apellido'];
+            $fechaNaciemiento = $_POST['usuario_fecha_nacimiento'];
+            $sexo = $_POST['usuario_sexo'];
+            $direccion = $_POST['usuario_direccion'];
+            $telefono = $_POST['usuario_telefono'];
+            $email = $_POST['usuario_email'];
+            $fecha_contratacion = $_POST['usu_fecha_contratacion'];
+            $estado = $_POST['usuario_estado'];
+            
+            $controladorUsuario->actualizarUsuario($numDoc, $tipo_documento, $nombre, $apellido, $fechaNaciemiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $estado);
 
-    // public function actualizarUsuario()
-    // {
-    //     $controladorUsuario = new ControladorUsuario();
-    //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    //         $numDoc = $_POST['num_doc'];
-    //         $tipo_documento = $_POST['t_doc'];
-    //         $nombre = $_POST['usu_nombres'];
-    //         $apellido = $_POST['usu_apellidos'];
-    //         $fechaNaciemiento = $_POST['usu_fecha_naciemiento'];
-    //         $sexo = $_POST['sexo'];
-    //         $direccion = $_POST['usu_direccion'];
-    //         $telefono = $_POST['usu_telefono'];
-    //         $email = $_POST['usu_email'];
-    //         $fecha_contratacion = $_POST['usu_fecha_contratacion'];
-    //         $controladorUsuario->actualizarUsuario($numDoc, $tipo_documento, $nombre, $apellido, $fechaNaciemiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion);
+            /*if ($controladorUsuario->actualizarUsuario($numDoc, $tipo_documento, $nombre, $apellido, $sexo, $direccion, $telefono, $email, $fecha_contratacion)) {
+                header("Location: usuarios.php?status=success");
+            } else {
+                header("Location: usuarios.php?status=error");
+            }*/
+        }
+    }
 
-    //         /*if ($controladorUsuario->actualizarUsuario($numDoc, $tipo_documento, $nombre, $apellido, $sexo, $direccion, $telefono, $email, $fecha_contratacion)) {
-    //             header("Location: usuarios.php?status=success");
-    //         } else {
-    //             header("Location: usuarios.php?status=error");
-    //         }*/
-    //     }
-    // }
-
-    // public function mostrarUsuario($numDoc)
-    // {
-    //     $controladorUsuario = new Usuarios();
-    //     return $controladorUsuario->obtenerUsuarioPornumDoc($numDoc);
-    // }
 }
 
 
@@ -166,5 +164,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST'){
         $controlador->registroUsuario();
     }if ($_POST['Accion'] == "IniciarSesion") {
         $controlador->iniciarSesion();
+    }if ($_POST['Accion'] == "Actualizar") {
+        $controlador->actualizarUsuario();
     }
 }

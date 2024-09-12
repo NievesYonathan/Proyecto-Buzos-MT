@@ -1,5 +1,5 @@
 <?php
-session_start();
+//session_start();
 ?>
 <?php
 require_once '../Controlador/ControladorUsuario.php';
@@ -75,7 +75,7 @@ include '../Componentes/Head/head.php';
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="usuario_apellido" class="bmd-label-floating">Fecha de nacimiento</label>
-										<input type="date" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="" id="usuario_apellido" maxlength="35" value="<?php echo $_POST['usu_apellidos'] ?>">
+										<input type="date" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="" id="usuario_apellido" maxlength="35" value="<?php echo $_POST['usu_fecha_nacimiento'] ?>">
 									</div>
 								</div>
 
@@ -139,7 +139,7 @@ include '../Componentes/Head/head.php';
 						</div>
 					</fieldset>
 					<p class="text-center" style="margin-top: 40px;">
-						<button type="submit" class="btn btn-raised btn-success btn-sm">
+						<button type="submit" name="Accion" value="Actualizar" class="btn btn-raised btn-success btn-sm">
 							<i class="fas fa-sync-alt"></i> &nbsp; ACTUALIZAR
 						</button>
 					</p>
