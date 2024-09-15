@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-09-2024 a las 16:55:07
+-- Tiempo de generación: 15-09-2024 a las 18:34:00
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Versión de PHP: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -404,7 +404,7 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`num_doc`, `t_doc`, `usu_nombres`, `usu_apellidos`, `usu_fecha_nacimiento`, `usu_sexo`, `usu_direccion`, `usu_telefono`, `usu_email`, `usu_fecha_contratacion`, `usu_estado`) VALUES
-(123456780, 1, 'Juan', 'Pérez', '1985-06-15', 'M', 'Av. Siempre Viva 742', '555-1234', 'juan.perez@example.com', '2024-01-10', 'activo'),
+(123456780, 1, 'yonathan', 'nieves', '1985-11-30', 'M', 'ciudad bolivar', '3006290689', 'yonathannieves@gmail.com', '2024-01-08', 'activo'),
 (1022934571, 1, 'josé', 'guerrero', '2024-09-08', 'M', 'Bogotá', '324354281', 'multygems@gmail.com', '2024-09-03', 'Activo');
 
 --
@@ -412,38 +412,51 @@ INSERT INTO `usuarios` (`num_doc`, `t_doc`, `usu_nombres`, `usu_apellidos`, `usu
 --
 DELIMITER $$
 CREATE TRIGGER `actualizar usuario` AFTER UPDATE ON `usuarios` FOR EACH ROW BEGIN
-        INSERT INTO usuarios_espejo (
-            t_doc, 
-            num_doc, 
-            usu_nombres, 
-            usu_apellidos, 
-            usu_fecha_nacimiento, 
-            usu_sexo, 
-            usu_direccion, 
-            usu_telefono, 
-            usu_email, 
-            usu_fecha_contratacion, 
-            usu_estado, 
-            fecha_operacion, 
-            usuario_operacion,
-            operacion
-        )
-        VALUES (
-            NEW.t_doc, 
-            NEW.num_doc, 
-            NEW.usu_nombres, 
-            NEW.usu_apellidos, 
-            NEW.usu_fecha_nacimiento, 
-            NEW.usu_sexo, 
-            NEW.usu_direccion, 
-            NEW.usu_telefono, 
-            NEW.usu_email, 
-            NEW.usu_fecha_contratacion, 
-            NEW.usu_estado, 
-            'UPDATE', 
-            NOW(), 
-            CURRENT_USER()
-        );
+    INSERT INTO usuarios_espejo (
+        t_doc, 
+        num_doc, 
+        usu_nombres, 
+        usu_apellidos, 
+        usu_fecha_nacimiento, 
+        usu_sexo, 
+        usu_direccion, 
+        usu_telefono, 
+        usu_email, 
+        usu_fecha_contratacion, 
+        usu_estado, 
+        fecha_operacion, 
+        usuario_operacion,
+        operacion
+    )
+    VALUES (
+        NEW.t_doc, 
+        NEW.num_doc, 
+        NEW.usu_nombres, 
+        NEW.usu_apellidos, 
+        NEW.usu_fecha_nacimiento, 
+        NEW.usu_sexo, 
+        NEW.usu_direccion, 
+        NEW.usu_telefono, 
+        NEW.usu_email, 
+        NEW.usu_fecha_contratacion, 
+        NEW.usu_estado, 
+        NOW(), 
+        CURRENT_USER(),
+        'UPDATE'
+    )
+    ON DUPLICATE KEY UPDATE
+        usu_nombres = VALUES(usu_nombres),
+        usu_apellidos = VALUES(usu_apellidos),
+        usu_fecha_nacimiento = VALUES(usu_fecha_nacimiento),
+        usu_sexo = VALUES(usu_sexo),
+        usu_direccion = VALUES(usu_direccion),
+        usu_telefono = VALUES(usu_telefono),
+        usu_email = VALUES(usu_email),
+        usu_fecha_contratacion = VALUES(usu_fecha_contratacion),
+        usu_estado = VALUES(usu_estado),
+        fecha_operacion = VALUES(fecha_operacion),
+        usuario_operacion = VALUES(usuario_operacion),
+        operacion = VALUES(operacion);
 END
 $$
 DELIMITER ;
@@ -480,7 +493,20 @@ CREATE TRIGGER `eliminar_usuario` AFTER DELETE ON `usuarios` FOR EACH ROW BEGIN
         'delete', 
         NOW(), 
         CURRENT_USER()
-    );
+    )
+    ON DUPLICATE KEY UPDATE
+        usu_nombres = VALUES(usu_nombres),
+        usu_apellidos = VALUES(usu_apellidos),
+        usu_fecha_nacimiento = VALUES(usu_fecha_nacimiento),
+        usu_sexo = VALUES(usu_sexo),
+        usu_direccion = VALUES(usu_direccion),
+        usu_telefono = VALUES(usu_telefono),
+        usu_email = VALUES(usu_email),
+        usu_fecha_contratacion = VALUES(usu_fecha_contratacion),
+        usu_estado = VALUES(usu_estado),
+        operacion = VALUES(operacion),
+        fecha_operacion = VALUES(fecha_operacion),
+        usuario_operacion = VALUES(usuario_operacion);
 END
 $$
 DELIMITER ;
@@ -514,10 +540,23 @@ CREATE TRIGGER `insertar_usuario` AFTER INSERT ON `usuarios` FOR EACH ROW BEGIN
         NEW.usu_email, 
         NEW.usu_fecha_contratacion, 
         NEW.usu_estado, 
-        'insert', 
         NOW(), 
-        CURRENT_USER()
-    );
+        CURRENT_USER(),
+        'insert'
+    )
+    ON DUPLICATE KEY UPDATE
+        usu_nombres = VALUES(usu_nombres),
+        usu_apellidos = VALUES(usu_apellidos),
+        usu_fecha_nacimiento = VALUES(usu_fecha_nacimiento),
+        usu_sexo = VALUES(usu_sexo),
+        usu_direccion = VALUES(usu_direccion),
+        usu_telefono = VALUES(usu_telefono),
+        usu_email = VALUES(usu_email),
+        usu_fecha_contratacion = VALUES(usu_fecha_contratacion),
+        usu_estado = VALUES(usu_estado),
+        fecha_operacion = VALUES(fecha_operacion),
+        usuario_operacion = VALUES(usuario_operacion),
+        operacion = VALUES(operacion);
 END
 $$
 DELIMITER ;
@@ -544,15 +583,6 @@ CREATE TABLE `usuarios_espejo` (
   `fecha_operacion` date NOT NULL,
   `usuario_operacion` varchar(15) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Volcado de datos para la tabla `usuarios_espejo`
---
-
-INSERT INTO `usuarios_espejo` (`num_doc`, `t_doc`, `usu_nombres`, `usu_apellidos`, `usu_fecha_nacimiento`, `usu_sexo`, `usu_direccion`, `usu_telefono`, `usu_email`, `usu_fecha_contratacion`, `usu_estado`, `operacion`, `fecha_operacion`, `usuario_operacion`) VALUES
-(123456780, 1, 'Juan', 'Pérez', '1985-06-15', 'M', 'Av. Siempre Viva 742', '555-1234', 'juan.perez@example.com', '2024-01-10', 'activo', 'root@localhost', '0000-00-00', '2024-09-09 07:5'),
-(123456789, 1, 'Juan', 'Pérez', '1985-06-15', 'M', 'Av. Siempre Viva 742', '555-1234', 'juan.perez@example.com', '2024-01-10', 'activo', 'root@localhost', '0000-00-00', '2024-09-09 07:4'),
-(1022934571, 1, 'josé', 'guerrero', '2024-09-08', 'M', 'Bogotá', '324354281', 'multygems@gmail.com', '2024-09-03', 'Activo', 'root@localhost', '0000-00-00', '2024-09-09 07:5');
 
 --
 -- Índices para tablas volcadas
