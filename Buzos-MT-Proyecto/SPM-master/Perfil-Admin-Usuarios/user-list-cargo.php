@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+if(!isset($_SESSION['user_id'])){
+	header('Location: ../Login-Registro/login.php');
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -47,6 +52,7 @@ include '../Componentes/Head/head.php' ?>
 								<th>Tipo Documento</th>
 								<th>Numero</th>
 								<th>Nombre</th>
+								<th>Cargo</th>
 								<th>Añadir Cargo</th>
 							</tr>
 						</thead>
@@ -96,7 +102,7 @@ include '../Componentes/Head/head.php' ?>
 																// Evitar errores asegurándonos de que las claves existen en el array $cargo
 																if (isset($cargo['id_cargos']) && isset($cargo['car_nombre'])) {
 														?>
-																<input class="form-check-input" name="idCargo" value="<?= $cargo['id_cargos'] ?>" type="checkbox" id="checkbox<?= $cargo['id_cargos'] ?>">
+																<input class="form-check-input" name="idCargo[]" value="<?= $cargo['id_cargos'] ?>" type="checkbox" id="checkbox<?= $cargo['id_cargos'] ?>">
 																<label class="form-check-label" for="checkbox<?= $cargo['id_cargos'] ?>"><?= $cargo['car_nombre'] ?></label>
 																<br>
 														<?php

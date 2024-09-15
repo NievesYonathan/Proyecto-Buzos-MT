@@ -218,14 +218,14 @@ class ControladorUsuario
         return $usuario;
     }
 
-public function cambiarEstadoUsuario()
+public function eliminarUsuario()
 {
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $numDoc = $_POST['usuario_dni'];
 
         // Cambiar el estado del usuario a inactivo
         $controladorUsuario = new Usuarios();
-        $result = $controladorUsuario->cambiarEstado($numDoc, 'Inactivo');
+        $result = $controladorUsuario->eliminarUsuario($numDoc, 'Inactivo');
 
         if ($result) {
             $_SESSION['alerta'] = "Usuario inactivado con éxito.";
@@ -270,7 +270,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $controlador->insertarUsuario();
     }
     if ($_POST['Accion'] == "CambiarEstado") {
-        $controlador->cambiarEstadoUsuario();
+        $controlador->eliminarUsuario();
     }
     if (isset($_POST['accion']) && $_POST['accion'] == 'eliminar') {
         $num_doc = $_POST['num_doc'];

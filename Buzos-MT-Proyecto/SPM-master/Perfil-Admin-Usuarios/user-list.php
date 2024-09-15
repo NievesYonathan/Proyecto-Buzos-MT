@@ -1,5 +1,10 @@
 <?php
 session_start();
+
+if(!isset($_SESSION['user_id'])){
+	header('Location: ../Login-Registro/login.php');
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -148,12 +153,11 @@ include '../Componentes/Head/head.php' ?>
 																<div class="col-12 col-md-4">
 																	<div class="form-group">
 																		<label for="tipo_documento" class="bmd-label-floating">Tipo documento</label>
-																		<select id="tipoDocumento" name="tipoDocumento" required>
+																		<select  class="form-select" aria-label="Default select example" id="tipoDocumento" name="tipoDocumento" required>
 																			<option value=""> Tipo de documento</option>
 																			<?php
-
 																			foreach ($tipoDoc as $filaT) { ?>
-																				<option value="<?= $filaT['id_tipo_documento'] ?>" <?php ($filaT['id_tipo_documento'] == $fila['t_doc'] ? 'selected' : '') ?>><?= $filaT['tip_doc_descripcion'] ?></option>
+																				<option value="<?= $filaT['id_tipo_documento'] ?>" <?= ($filaT['id_tipo_documento'] == $fila['t_doc'] ? 'selected' : '') ?>><?= $filaT['tip_doc_descripcion'] ?></option>
 																			<?php
 																			}
 																			?>
@@ -213,7 +217,7 @@ include '../Componentes/Head/head.php' ?>
 															</div>
 														</div>
 													</fieldset>
-													<br><br><br>
+													<br><br>
 													<fieldset>
 														<legend><i class="fas fa-user-lock"></i> &nbsp; Información de la cuenta</legend>
 														<div class="container-fluid">
@@ -236,23 +240,14 @@ include '../Componentes/Head/head.php' ?>
 																		<input type="text" class="form-control" name="usuario_estado" id="usuario_estado" maxlength="70" value="<?php echo $fila['usu_estado'] ?>">
 																	</div>
 																</div>
-																<div class="col-12 col-md-6">
-																	<div class="form-group">
-																		<label for="usuario_clave_1" class="bmd-label-floating">Contraseña</label>
-																		<input type="password" class="form-control" name="usuario_clave_1" id="usuario_clave_1" maxlength="200">
-																	</div>
-																</div>
-																<div class="col-12 col-md-6">
-																	<div class="form-group">
-																		<label for="usuario_clave_2" class="bmd-label-floating">Repetir contraseña</label>
-																		<input type="password" class="form-control" name="usuario_clave_2" id="usuario_clave_2" maxlength="200">
-																	</div>
-																</div>
 															</div>
 														</div>
 													</fieldset>
+											</div>
+											<div class="modal-footer">
 													<button class="btn btn-success" type="submit" name="Accion" value="Actualizar">Actualizar</button>
 												</form>
+
 											</div>
 										</div>
 									</div>

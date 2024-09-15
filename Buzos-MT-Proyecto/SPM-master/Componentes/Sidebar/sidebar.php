@@ -97,13 +97,13 @@
 								<a href="../Perfil-Admin-Usuarios/user-new.php"><i class="fas fa-plus fa-fw"></i> &nbsp; Nuevo usuario</a>
 							</li>
 							<li>
-								<a href="../Usuarios/user-list.php"><i class="fa-solid fa-user-tie"></i> &nbsp; Empleados</a>
+								<a href="../Perfil-Admin-Usuarios/user-list.php"><i class="fa-solid fa-user-tie"></i> &nbsp; Empleados</a>
 							</li>
 							<li>
 								<a href="../Perfil-Inventario/lista_proveedor.php"><i class="fa-solid fa-truck"></i> &nbsp; Proveedores</a>
 							</li>
 							<li>
-								<a href="../Usuarios/user-search.php"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar usuario</a>
+								<a href="../Perfil-Admin-Usuarios/user-search.php"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar usuario</a>
 							</li>
 						</ul>
 					</li>
