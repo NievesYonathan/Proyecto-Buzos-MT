@@ -144,6 +144,7 @@ class ControladorUsuario
         return $res;
     }
 
+
     // public function compararAcciones()
     // {
     //     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -241,6 +242,17 @@ public function cambiarEstadoUsuario()
 
 }
 
+class ControladorProveedor
+{
+    public function mostrarProveedor()
+    {
+        $modeloProveedor = new Proveedor(); // Asegúrate de usar el nombre correcto del modelo
+        $res = $modeloProveedor->mostrarProveedor();
+        return $res;
+    }
+}
+
+
 
 //Si se envían datos por POST, actualizar el usuario
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -260,4 +272,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($_POST['Accion'] == "CambiarEstado") {
         $controlador->cambiarEstadoUsuario();
     }
+    if (isset($_POST['accion']) && $_POST['accion'] == 'eliminar') {
+        $num_doc = $_POST['num_doc'];
+        
+        // Crear instancia del modelo y llamar a la función de eliminación
+        $ControladorUsuario = new ControladorUsuario();
+        $resultado = $ControladorUsuario->eliminarUsuario($num_doc);
+        
+        if ($resultado) {
+            $_SESSION['alerta'] = 'Usuario eliminado exitosamente.';
+        } else {
+            $_SESSION['alerta'] = 'Error al eliminar el usuario.';
+        }
+        
+        header('Location: user-list.php');
+        exit();
+    }
 }
+
+
+

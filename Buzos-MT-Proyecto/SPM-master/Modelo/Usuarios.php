@@ -100,6 +100,7 @@ class Usuarios
         return $res;
     }
 
+
     public function obtenerUsuarioPornumDoc($numDoc)
     {
         $conexion = new Conexion();
@@ -153,30 +154,47 @@ class Usuarios
     return $rowsAffected > 0 || $claveActualizada;
 }
 
-public function cambiarEstado($numDoc, $nuevoEstado)
-{
+public function eliminarUsuario($num_doc) {
     $conexion = new Conexion();
     $conectar = $conexion->conectarse();
-
-    $sql = "UPDATE usuarios SET usu_estado=? WHERE num_doc=?";
+    
+    // Consulta para eliminar o actualizar el estado del usuario
+    $sql = "UPDATE usuarios SET usu_estado = 'Inactivo' WHERE num_doc = ?";
     
     $stmt = $conectar->prepare($sql);
-
-    // Tipos de parámetros: s = string, i = integer
-    $stmt->bind_param("si", $nuevoEstado, $numDoc);
-
-    // Ejecutar la sentencia
-    if ($stmt->execute()) {
-        // Cerrar la conexión
-        $stmt->close();
-        $conectar->close();
-        return true;  // Devuelve true si la actualización fue exitosa
-    } else {
-        // Si hay un error en la consulta, muestra el error
-        error_log("Error al cambiar el estado del usuario: " . $stmt->error);
-        return false; // Devuelve false si falló
-    }
+    $stmt->bind_param("i", $num_doc);
+    $resultado = $stmt->execute();
+    
+    $stmt->close();
+    $conectar->close();
+    
+    return $resultado;
 }
+
  
 
 }
+
+class Proveedor
+{
+    public function mostrarProveedor()
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+
+        // Consulta SQL para obtener los usuarios cuyo cargo es proveedor
+        $sql = "SELECT u.num_doc, u.t_doc, u.usu_nombres, u.usu_apellidos, u.usu_direccion, u.usu_telefono, u.usu_email, u.usu_fecha_contratacion, 
+                       u.usu_estado
+                FROM usuarios AS u
+                INNER JOIN tipo_doc AS t ON u.t_doc = t.id_tipo_documento
+                INNER JOIN cargos_has_usuarios AS cu ON u.num_doc = cu.usuarios_num_doc
+                INNER JOIN cargos AS c ON cu.cargos_id_cargos = c.id_cargos
+                WHERE c.car_nombre = 'proveedor'";
+
+        $res = $conectar->query($sql);
+        $conectar->close();
+
+        return $res;
+    }
+}
+

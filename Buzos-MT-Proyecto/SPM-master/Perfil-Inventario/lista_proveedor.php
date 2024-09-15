@@ -1,19 +1,22 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="es">
 	<?php 
 	include '../Config/variable_global.php';
-
-	include '../Componentes/Head/head.php' ?>
+	include '../Componentes/Head/head.php';
+	?>
 
 <body>
 
 		<!-- Nav lateral -->
-		<?php include '../Componentes/Sidebar/sidebar.php' ?>
+		<?php include '../Componentes/Sidebar/sidebar.php'; ?>
 
 		<!-- Page content -->
 		<section class="full-box page-content">
 			<!-- Navbar -->
-			<?php include '../Componentes/Navbar/navbar.php' ?>
+			<?php include '../Componentes/Navbar/navbar.php'; ?>
 
 			<!-- Page header -->
 			<div class="full-box page-header">
@@ -40,46 +43,62 @@
 			<!-- Content -->
 			<div class="container-fluid">
 				<div class="table-responsive">
-					<table class="table table-dark table-sm">
-						<thead>
-							<tr class="text-center roboto-medium">
-								<th>#</th>
-								<th>nombre de la empresa</th>
-								<th>direccion de la empresa</th>
-								<th>materiales</th>
-								<th>TELÉFONO</th>
-								<th>nombre de contacto</th>
-								<th>correo electronico</th>
-								<th>ACTUALIZAR</th>
-								<th>ELIMINAR</th>
-							</tr>
-						</thead>
-						<tbody>
-							<tr class="text-center">
-								<td>1</td>
-								<td>NOMBRE DE LA EMPERSA</td>
-								<td>DIRECCION DE LA EMPRESA</td>
-								<td>MATERIAL SUMINISTRADO POR LA EMPRESA</td>
-								<td>1234567890</td>
-								<td>NOMBRE DE CONTACTO</td>
-								<td>ADMIN@ADMIN.COM</td>
-								<td>
-									<a href="UPP.html" class="btn btn-success">
-										<i class="fas fa-sync-alt"></i>
-									</a>
-								</td>
-								<td>
-									<form action="">
-										<button type="button" class="btn btn-warning">
-											<i class="far fa-trash-alt"></i>
-										</button>
-									</form>
-								</td>
-							</tr>
-								</td>
-							</tr>
-						</tbody>
-					</table>
+				<table class="table table-dark table-sm">
+    <thead>
+        <tr class="text-center roboto-medium">
+            <th>Numero de documento</th>
+            <th>Tipo de documento</th>
+            <th>Nombres</th>
+            <th>Apellidos</th>
+            <th>Dirección</th>
+            <th>Teléfono</th>
+            <th>Email</th>
+            <th>Fecha de contratación</th>
+            <th>Estado</th>
+            <th>Actualizar</th>
+            <th>Eliminar</th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php
+
+        include_once "../Controlador/ControladorUsuario.php";
+
+        $controladorUsuario = new ControladorProveedor();
+        $res = $controladorUsuario->mostrarProveedor();
+
+        
+        while ($fila = $res->fetch_assoc()) {
+    ?>
+            <tr class="text-center">
+                <td><?= $fila['num_doc'] ?></td>
+                <td><?= $fila['t_doc'] ?></td>
+                <td><?= $fila['usu_nombres'] ?></td>
+                <td><?= $fila['usu_apellidos'] ?></td>
+                <td><?= $fila['usu_direccion'] ?></td>
+                <td><?= $fila['usu_telefono'] ?></td>
+                <td><?= $fila['usu_email'] ?></td>
+                <td><?= $fila['usu_fecha_contratacion'] ?></td>
+                <td><?= $fila['usu_estado'] ?></td>
+                <td>
+                    <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal<?= $fila['num_doc'] ?>">
+                        <i class="fa-solid fa-user-pen"></i>
+                    </button>
+                </td>
+                <td>
+                    <form action="">
+                        <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal<?= $fila['num_doc'] ?>">
+                            <i class="far fa-trash-alt"></i>
+                        </button>
+                    </form>
+                </td>
+            </tr>
+    <?php
+        }
+    ?>
+    </tbody>
+</table>
+
 				</div>
 				<nav aria-label="Page navigation example">
 					<ul class="pagination justify-content-center">
@@ -99,9 +118,8 @@
 		</section>
 	</main>
 
-
 	<!--===Include JavaScript files======-->
-	<?php include '../Componentes/Script/script.php' ?>
+	<?php include '../Componentes/Script/script.php'; ?>
 </body>
 
 </html>

@@ -101,7 +101,7 @@ include '../Componentes/Head/head.php' ?>
 							//----
 							include_once "../Controlador/ControladorUsuario.php";
 
-							$objConUsuario = new ControladorUsuario();
+							$objConUsuario = new ControladorUsuario ();
 							$res = $objConUsuario->mostrarUsuarios();
 
 							while ($fila = $res->fetch_assoc()) {
@@ -120,11 +120,14 @@ include '../Componentes/Head/head.php' ?>
 										</button>
 									</td>
 									<td>
-										<form action="">
-											<button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal<?= $fila['num_doc'] ?>">
-												<i class="far fa-trash-alt"></i>
-											</button>
-										</form>
+									<form action="../Controlador/ControladorUsuario.php" method="post">
+    <input type="hidden" name="accion" value="eliminar">
+    <input type="hidden" name="num_doc" value="<?= $fila['num_doc'] ?>">
+    <button class="btn btn-danger" type="submit">
+        <i class="far fa-trash-alt"></i>
+    </button>
+</form>
+
 									</td>
 								</tr>
 
