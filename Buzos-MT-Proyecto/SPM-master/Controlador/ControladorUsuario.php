@@ -158,43 +158,81 @@ class ControladorUsuario
     // }
 
 
-    public function actualizarUsuario()
-{
-    $controladorUsuario = new Usuarios();
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Captura de los demás campos...
-        $numDoc = $_POST['usuario_dni'];
-        $tipo_documento = $_POST['tipoDocumento'];
-        $nombre = $_POST['usuario_nombre'];
-        $apellido = $_POST['usuario_apellido'];
-        $fechaNacimiento = $_POST['usuario_fecha_nacimiento'];
-        $sexo = $_POST['usuario_sexo'];
-        $direccion = $_POST['usuario_direccion'];
-        $telefono = $_POST['usuario_telefono'];
-        $email = $_POST['usuario_email'];
-        $fecha_contratacion = $_POST['usu_fecha_contratacion'];
-        $estado = $_POST['usuario_estado'];
-
-        // Captura de las contraseñas
-        $clave = isset($_POST['password']) ? $_POST['password'] : null;
-        $confirmarClave = isset($_POST['confirm_password']) ? $_POST['confirm_password'] : null;
-
-        // Validar que las contraseñas coincidan y no sean nulas
-        if ($clave && $clave === $confirmarClave) {
-            $result = $controladorUsuario->actualizarUsuario($numDoc, $tipo_documento, $nombre, $apellido, $fechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $estado, $clave);
-
-            // Verificar si la actualización fue exitosa
-            if ($result) {
-                header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=success");
-                exit();
-            } else {
-                header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=error");
+        public function actualizarUsuario()
+        {
+            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+                $numDoc = $_POST['usuario_dni'];
+                
+                // Obtener los datos actuales del usuario
+                $usuarioActual = $this->obtenerUsuarioPorNumDoc($numDoc);
+                
+                if (!$usuarioActual) {
+                    $_SESSION['alerta'] = "Usuario no encontrado.";
+                    header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=error");
+                    exit();
+                }
+        
+                // Actualizar solo los campos que se han modificado
+                $tipo_documento = $_POST['tipo_documento'] ?? $usuarioActual['t_doc'];
+                $nombre = $_POST['usuario_nombre'] ?? $usuarioActual['usu_nombres'];
+                $apellido = $_POST['usuario_apellido'] ?? $usuarioActual['usu_apellidos'];
+                $fechaNacimiento = $_POST['usuario_fecha_nacimiento'] ?? $usuarioActual['usu_fecha_nacimiento'];
+                $sexo = $_POST['usuario_sexo'] ?? $usuarioActual['usu_sexo'];
+                $direccion = $_POST['usuario_direccion'] ?? $usuarioActual['usu_direccion'];
+                $telefono = $_POST['usuario_telefono'] ?? $usuarioActual['usu_telefono'];
+                $email = $_POST['usuario_email'] ?? $usuarioActual['usu_email'];
+                $fecha_contratacion = $_POST['usu_fecha_contratacion'] ?? $usuarioActual['usu_fecha_contratacion'];
+                $estado = $_POST['usuario_estado'] ?? $usuarioActual['usu_estado'];
+                $clave = !empty($_POST['password']) ? $_POST['password'] : null;
+        
+                $controladorUsuario = new Usuarios();
+                $result = $controladorUsuario->actualizarUsuario($tipo_documento, $numDoc, $nombre, $apellido, $fechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $estado, $clave);
+        
+                if ($result) {
+                    $_SESSION['alerta'] = "Usuario actualizado con éxito.";
+                    header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=success");
+                } else {
+                    $_SESSION['alerta'] = "Error al actualizar el usuario.";
+                    header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=error");
+                }
                 exit();
             }
+        }
+    
+    private function obtenerUsuarioPorNumDoc($numDoc)
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+        
+        $sql = "SELECT * FROM usuarios WHERE num_doc = ?";
+        $stmt = $conectar->prepare($sql);
+        $stmt->bind_param("s", $numDoc);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
+        $usuario = $resultado->fetch_assoc();
+        
+        $stmt->close();
+        $conectar->close();
+        
+        return $usuario;
+    }
+
+public function cambiarEstadoUsuario()
+{
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        $numDoc = $_POST['usuario_dni'];
+
+        // Cambiar el estado del usuario a inactivo
+        $controladorUsuario = new Usuarios();
+        $result = $controladorUsuario->cambiarEstado($numDoc, 'Inactivo');
+
+        if ($result) {
+            $_SESSION['alerta'] = "Usuario inactivado con éxito.";
+            header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=success");
+            exit();
         } else {
-            // Manejar error de contraseñas
-            header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=password_mismatch");
+            $_SESSION['alerta'] = "Error al inactivar el usuario.";
+            header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=error");
             exit();
         }
     }
@@ -218,5 +256,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     if ($_POST['Accion'] == "Guardar") {
         $controlador->insertarUsuario();
+    }
+    if ($_POST['Accion'] == "CambiarEstado") {
+        $controlador->cambiarEstadoUsuario();
     }
 }

@@ -113,8 +113,7 @@ class Usuarios
         return $result->fetch_assoc();
     }
 
-    // Método para actualizar los datos del usuario
-    public function actualizarUsuario($numDoc, $tipo_documento, $nombre, $apellido, $usuFechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $usuEstado, $clave)
+    public function actualizarUsuario($tipo_documento, $numDoc, $nombre, $apellido, $fechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $estado, $clave)
 {
     $conexion = new Conexion();
     $conectar = $conexion->conectarse();
@@ -123,25 +122,61 @@ class Usuarios
     
     $stmt = $conectar->prepare($sql);
 
-    // Tipos de parámetros: i = integer, s = string
-    $stmt->bind_param("isssssssssi", $tipo_documento, $nombre, $apellido, $usuFechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $usuEstado, $numDoc);
+    if (!$stmt) {
+        error_log("Error en la preparación de la consulta: " . $conectar->error);
+        return false;
+    }
+
+    $stmt->bind_param("sssssssssss", $tipo_documento, $nombre, $apellido, $fechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $estado, $numDoc);
+
+    $result = $stmt->execute();
+    if (!$result) {
+        error_log("Error al ejecutar la consulta: " . $stmt->error);
+        $stmt->close();
+        $conectar->close();
+        return false;
+    }
+
+    $rowsAffected = $stmt->affected_rows;
+    $stmt->close();
+
+    if ($clave) {
+        $seguridad = new Seguridad();
+        $claveActualizada = $seguridad->addClaveUsuario($numDoc, $clave);
+        if (!$claveActualizada) {
+            error_log("Error al actualizar la clave del usuario");
+        }
+    }
+
+    $conectar->close();
+
+    return $rowsAffected > 0 || $claveActualizada;
+}
+
+public function cambiarEstado($numDoc, $nuevoEstado)
+{
+    $conexion = new Conexion();
+    $conectar = $conexion->conectarse();
+
+    $sql = "UPDATE usuarios SET usu_estado=? WHERE num_doc=?";
+    
+    $stmt = $conectar->prepare($sql);
+
+    // Tipos de parámetros: s = string, i = integer
+    $stmt->bind_param("si", $nuevoEstado, $numDoc);
 
     // Ejecutar la sentencia
     if ($stmt->execute()) {
         // Cerrar la conexión
         $stmt->close();
         $conectar->close();
-
-        // Actualizar la clave del usuario
-        $seguridad = new Seguridad();
-        $seguridad->addClaveUsuario($numDoc, $clave);
-
         return true;  // Devuelve true si la actualización fue exitosa
     } else {
         // Si hay un error en la consulta, muestra el error
-        error_log("Error al actualizar el usuario: " . $stmt->error);
+        error_log("Error al cambiar el estado del usuario: " . $stmt->error);
         return false; // Devuelve false si falló
     }
 }
+ 
 
 }
