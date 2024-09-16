@@ -115,6 +115,9 @@
 					<li>
 						<a href="../Perfil-Admin-Usuarios/cargos.php"><i class="fa-solid fa-address-book"></i> &nbsp; Cargos </a>
 					</li>
+					<li>
+						<a href="../Perfil-Operarios/nueva-tarea.php"><i class="fa-solid fa-calendar-days"></i> &nbsp; Tareas </a>
+					</li>
 				<?php endif; ?>
 
 				
