@@ -92,9 +92,16 @@ class Usuarios
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
 
-        $sql = "SELECT u.num_doc, u.t_doc, u.usu_nombres, u.usu_apellidos, u.usu_fecha_nacimiento, u.usu_sexo, u.usu_direccion, u.usu_telefono, u.usu_email, u.usu_fecha_contratacion, u.usu_estado ,t.tip_doc_descripcion
-                FROM usuarios AS u
-                INNER JOIN tipo_doc AS t ON u.t_doc = t.id_tipo_documento";
+        // $sql = "SELECT u.num_doc, u.t_doc, u.usu_nombres, u.usu_apellidos, u.usu_fecha_nacimiento, u.usu_sexo, u.usu_direccion, u.usu_telefono, u.usu_email, u.usu_fecha_contratacion, u.usu_estado ,t.tip_doc_descripcion
+        //         FROM usuarios AS u
+        //         INNER JOIN tipo_doc AS t ON u.t_doc = t.id_tipo_documento";
+
+        $sql = "SELECT td.tip_doc_descripcion, u.num_doc, u.usu_nombres, u.usu_apellidos, cu.cargos_id_cargos, GROUP_CONCAT(c.car_nombre SEPARATOR ', ') AS Cargos
+                FROM usuarios as u
+                INNER JOIN tipo_doc AS td ON u.t_doc = td.id_tipo_documento
+                INNER JOIN cargos_has_usuarios AS cu ON u.num_doc = cu.usuarios_num_doc
+                INNER JOIN cargos AS c ON cu.cargos_id_cargos = c.id_cargos
+                GROUP BY u.num_doc";
         $res = $conectar->query($sql);
         $conectar->close();
         return $res;

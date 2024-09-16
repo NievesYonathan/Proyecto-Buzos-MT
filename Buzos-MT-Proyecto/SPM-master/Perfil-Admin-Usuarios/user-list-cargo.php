@@ -81,6 +81,7 @@ include '../Componentes/Head/head.php' ?>
 									<td><?= $filaU['tip_doc_descripcion'] ?></td>
 									<td><?= $filaU['num_doc'] ?></td>
 									<td><?= $filaU['usu_nombres'] ?></td>
+									<td><?= $filaU['Cargos'] ?></td>
 									<td><button class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#addModal<?= $filaU['num_doc'] ?>">ADD</button></td>
 								</tr>
 								<!-- Modal para agregar Cargos -->
@@ -96,13 +97,12 @@ include '../Componentes/Head/head.php' ?>
 												<div class="modal-body">
 													<div class="form-check form-switch">
 														<?php
-														// Verificar que el array de cargos tiene datos antes de iterar
 														if (!empty($cargos)) {
 															foreach ($cargos as $cargo) {
 																// Evitar errores asegurándonos de que las claves existen en el array $cargo
 																if (isset($cargo['id_cargos']) && isset($cargo['car_nombre'])) {
 														?>
-																<input class="form-check-input" name="idCargo[]" value="<?= $cargo['id_cargos'] ?>" type="checkbox" id="checkbox<?= $cargo['id_cargos'] ?>">
+																<input class="form-check-input" name="idCargo[]" value="<?= $cargo['id_cargos'] ?>" type="checkbox" id="checkbox<?= $cargo['id_cargos'] ?>" <?= ($cargo['id_cargos'] == $filaU['cargos_id_cargos'] ? 'checked' : '') ?>>
 																<label class="form-check-label" for="checkbox<?= $cargo['id_cargos'] ?>"><?= $cargo['car_nombre'] ?></label>
 																<br>
 														<?php

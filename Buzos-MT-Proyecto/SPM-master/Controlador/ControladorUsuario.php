@@ -10,32 +10,32 @@ class ControladorUsuario
 {
     public function registroUsuario()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
             $numDoc = $_POST['numeroDocumento'];
             $tDoc = $_POST['tipoDocumento'];
             $usuNombres = $_POST['nombres'];
             $usuApellidos = $_POST['apellidos'];
             $usuFechaNacimiento = $_POST['fechaNacimiento'];
             $usuSexo = $_POST['sexo'];
-            $usuDireccion = $_POST['direccion'] ? null : "";
+            // $usuDireccion = $_POST[''];
             $usuTelefono = $_POST['celular'];
             $usuEmail = $_POST['correo'];
-            $usuFechaContratacion = $_POST['direccion'] ? null : "2024-09-03";
+            $usuFechaContratacion = "2024-09-03";
             // $imagPerfil = $_POST[''];
             $clave = $_POST['password'];
-            $confirmarClave = $_POST['confirm_password'];
-            $confirmarClave = $_POST['confirm_password']; // Agregamos la confirmación de la contraseña
+            $confirmarClave = $_POST['confirm_password']; $confirmarClave = $_POST['confirm_password']; // Agregamos la confirmación de la contraseña
 
             // Validar si las contraseñas coinciden
-            if ($clave !== $confirmarClave) {
-                $_SESSION['alerta'] = "Las Contraseñas No Coinciden.";
-                header("Location: ../Login-Registro/registros.php");
-                exit();
-            }
-
+        if ($clave !== $confirmarClave) {
+            $_SESSION['alerta'] = "Las Contraseñas No Coinciden.";
+            header("Location: ../Login-Registro/registros.php");
+            exit();
+        }
+        
             $controladorUsuario = new Usuarios();
-            $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuDireccion, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
-
+            $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
+        
             $_SESSION['alerta'] = "El Usuario Fue Registrado Con Éxito.";
             header("Location: ../Login-Registro/login.php");
         }
