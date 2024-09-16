@@ -218,26 +218,26 @@ class ControladorUsuario
         return $usuario;
     }
 
-public function eliminarUsuario()
-{
-    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $numDoc = $_POST['usuario_dni'];
+    public function eliminarUsuario()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $numDoc = $_POST['num_doc'];
 
-        // Cambiar el estado del usuario a inactivo
-        $controladorUsuario = new Usuarios();
-        $result = $controladorUsuario->eliminarUsuario($numDoc, 'Inactivo');
+            // Cambiar el estado del usuario a inactivo
+            $controladorUsuario = new Usuarios();
+            $result = $controladorUsuario->eliminarUsuario($numDoc);
 
-        if ($result) {
-            $_SESSION['alerta'] = "Usuario inactivado con éxito.";
-            header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=success");
-            exit();
-        } else {
-            $_SESSION['alerta'] = "Error al inactivar el usuario.";
-            header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=error");
-            exit();
+            if ($result) {
+                $_SESSION['alerta'] = "Usuario inactivado con éxito.";
+                header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=success");
+                exit();
+            } else {
+                $_SESSION['alerta'] = "Error al inactivar el usuario.";
+                header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=error");
+                exit();
+            }
         }
     }
-}
 
 
 }

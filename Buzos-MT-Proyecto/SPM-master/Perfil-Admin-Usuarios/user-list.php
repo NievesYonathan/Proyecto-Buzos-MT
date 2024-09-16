@@ -112,7 +112,7 @@ include '../Componentes/Head/head.php' ?>
 							while ($fila = $res->fetch_assoc()) {
 							?>
 								<tr class="text-center">
-									<td><?= $fila['t_doc'] ?></td>
+									<td><?= $fila['tip_doc_descripcion'] ?></td>
 									<td><?= $fila['num_doc'] ?></td>
 									<td><?= $fila['usu_nombres'] ?></td>
 									<td><?= $fila['usu_apellidos'] ?></td>
@@ -126,12 +126,12 @@ include '../Componentes/Head/head.php' ?>
 									</td>
 									<td>
 									<form action="../Controlador/ControladorUsuario.php" method="post">
-    <input type="hidden" name="accion" value="eliminar">
-    <input type="hidden" name="num_doc" value="<?= $fila['num_doc'] ?>">
-    <button class="btn btn-danger" type="submit">
-        <i class="far fa-trash-alt"></i>
-    </button>
-</form>
+										<input type="hidden" name="accion" value="eliminar">
+										<input type="hidden" name="num_doc" value="<?= $fila['num_doc'] ?>">
+										<button class="btn btn-danger" type="submit">
+											<i class="far fa-trash-alt"></i>
+										</button>
+									</form>
 
 									</td>
 								</tr>

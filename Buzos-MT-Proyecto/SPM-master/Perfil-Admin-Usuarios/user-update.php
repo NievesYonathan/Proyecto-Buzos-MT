@@ -1,11 +1,18 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../Login-Registro/login.php');
+}
+
+?>
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Actualizar Usuario</title>
-    <!-- Asegúrate de incluir tus archivos CSS aquí -->
-</head>
+<?php
+include '../Config/variable_global.php';
+
+include '../Componentes/Head/head.php' ?>
+
 <body>
     <!-- Main container -->
     <main class="full-box main-container">
@@ -31,11 +38,22 @@
                                 <div class="col-12 col-md-4">
                                     <div class="form-group">
                                         <label for="tipo_documento">Tipo documento</label>
-                                        <select class="form-control" name="tipo_documento" id="tipo_documento">
-                                            <option value="">Seleccione tipo de documento</option>
-                                            <option value="CC" <?php echo ($tipo_documento === 'CC') ? 'selected' : ''; ?>>Cédula de ciudadanía</option>
-                                            <option value="CE" <?php echo ($tipo_documento === 'CE') ? 'selected' : ''; ?>>Cédula de extranjería</option>
-                                            <option value="PPT" <?php echo ($tipo_documento === 'PPT') ? 'selected' : ''; ?>>Permiso por Protección Temporal</option>
+                                        <select class="form-select" id="tipoDocumento" name="tipoDocumento" required>
+                                            <option value=""> Tipo de documento</option>
+                                            <?php
+                                            include_once '../Modelo/Conexion.php';
+                                            $conexion = new Conexion();
+                                            $conectarse = $conexion->conectarse();
+
+                                            $sql = "SELECT * FROM tipo_doc";
+                                            $res = $conectarse->query($sql);
+                                            $conectarse->close();
+
+                                            while ($fila = mysqli_fetch_assoc($res)) { ?>
+                                                <option value="<?= $fila['id_tipo_documento'] ?>"><?= $fila['tip_doc_descripcion'] ?></option>
+                                            <?php
+                                            }
+                                            ?>
                                         </select>
                                     </div>
                                 </div>
@@ -96,7 +114,7 @@
         document.getElementById('formActualizarUsuario').addEventListener('submit', function(event) {
             var password = document.getElementById('password').value;
             var confirmPassword = document.getElementById('confirm_password').value;
-            
+
             if (password !== confirmPassword) {
                 event.preventDefault();
                 alert('Las contraseñas no coinciden');
@@ -104,4 +122,5 @@
         });
     </script>
 </body>
+
 </html>
