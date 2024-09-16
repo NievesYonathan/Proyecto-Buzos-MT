@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-09-2024 a las 18:34:00
+-- Tiempo de generación: 16-09-2024 a las 03:19:37
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.0.30
+-- Versión de PHP: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -33,7 +33,8 @@ END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerDatosSeguridad` (IN `numero_doc` INT, IN `tipo_doc` INT)   BEGIN
     -- Selecciona datos de la tabla 'seguridad' y descifra la columna 'seg_clave_hash'
-    SELECT u.num_doc, 
+    SELECT 
+           u.num_doc, 
            u.t_doc, 
            u.usu_nombres,
            u.usu_apellidos,
@@ -41,11 +42,15 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerDatosSeguridad` (IN `numero_
            u.usu_telefono,
            u.usu_email,
            s.seg_clave_hash,
-           AES_DECRYPT(s.seg_clave_hash, 'BUZOSMT') AS clave_descifrada
+           AES_DECRYPT(s.seg_clave_hash, 'BUZOSMT') AS clave_descifrada,
+           c.cargos_id_cargos,
+           car.car_nombre
     FROM usuarios AS u
     LEFT JOIN seguridad AS s ON u.num_doc = s.usu_num_doc
-    WHERE u.t_doc = tipo_doc
-      AND u.num_doc = numero_doc;
+    LEFT JOIN cargos_has_usuarios AS c ON u.num_doc = c.usuarios_num_doc
+    LEFT JOIN cargos AS car ON c.cargos_id_cargos = car.id_cargos  -- Corregido a car.id_cargos
+    WHERE u.t_doc = tipo_doc  -- Aquí deberías sustituir 'tipo_doc' por el valor correspondiente o variable
+      AND u.num_doc = numero_doc;  -- Aquí también sustituir 'numero_doc' por el valor correspondiente
 END$$
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `registrar_produccion` (IN `p_id_produccion` INT, IN `p_id_materia_prima` INT, IN `p_cantidad_usada` DECIMAL(10,2))   BEGIN
@@ -110,6 +115,17 @@ CREATE TABLE `cargos` (
   `car_nombre` varchar(40) NOT NULL COMMENT 'Atributo que identifica la el tipo de rol'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Volcado de datos para la tabla `cargos`
+--
+
+INSERT INTO `cargos` (`id_cargos`, `car_nombre`) VALUES
+(2, 'Administrador Usuario'),
+(3, 'Jefe Producción'),
+(4, 'Operario'),
+(5, 'Jefe Inventario'),
+(6, 'Proveedor');
+
 -- --------------------------------------------------------
 
 --
@@ -123,6 +139,15 @@ CREATE TABLE `cargos_has_usuarios` (
   `fecha_asignacion` datetime NOT NULL,
   `estado_asignacion` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Volcado de datos para la tabla `cargos_has_usuarios`
+--
+
+INSERT INTO `cargos_has_usuarios` (`id_usuario_cargo`, `cargos_id_cargos`, `usuarios_num_doc`, `fecha_asignacion`, `estado_asignacion`) VALUES
+(2, 3, 1022934571, '2024-09-15 12:08:06', 'Activo'),
+(6, 2, 4869681, '2024-09-15 19:51:40', 'Activo'),
+(7, 4, 6543254, '2024-09-15 19:55:51', 'Activo');
 
 -- --------------------------------------------------------
 
@@ -328,7 +353,9 @@ CREATE TABLE `seguridad` (
 --
 
 INSERT INTO `seguridad` (`id_seguridad`, `usu_num_doc`, `seg_clave_hash`) VALUES
-(6, 1022934571, 'p±ÓÐP>”TÚÑÖ±··tYƒäð¶ßœóüÙ±ânòç¦›0 ‰Œº');
+(6, 1022934571, 'p±ÓÐP>”TÚÑÖ±··tYƒäð¶ßœóüÙ±ânòç¦›0 ‰Œº'),
+(9, 6543254, 'è¾Üá÷î/2ØêÄšÇÿ'),
+(10, 4869681, 'è¾Üá÷î/2ØêÄšÇÿ');
 
 --
 -- Disparadores `seguridad`
@@ -404,8 +431,9 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`num_doc`, `t_doc`, `usu_nombres`, `usu_apellidos`, `usu_fecha_nacimiento`, `usu_sexo`, `usu_direccion`, `usu_telefono`, `usu_email`, `usu_fecha_contratacion`, `usu_estado`) VALUES
-(123456780, 1, 'yonathan', 'nieves', '1985-11-30', 'M', 'ciudad bolivar', '3006290689', 'yonathannieves@gmail.com', '2024-01-08', 'activo'),
-(1022934571, 1, 'josé', 'guerrero', '2024-09-08', 'M', 'Bogotá', '324354281', 'multygems@gmail.com', '2024-09-03', 'Activo');
+(4869681, 3, 'Yonathan', 'Nieves', '2024-09-06', 'M', 'Bogotá', '12387932', 'yonathanieves17@gmail.com', '2024-09-03', 'Activo'),
+(6543254, 1, 'Paula', 'Tovar', '2024-09-06', 'F', 'Bogotá', '12387932', 'ytrrgytrs17@gmail.com', '2024-09-03', 'Activo'),
+(1022934571, 1, 'José', 'Guerrero', '2024-09-08', 'M', 'Bogotá', '324354281', 'multygems@gmail.com', '2024-09-03', 'Activo');
 
 --
 -- Disparadores `usuarios`
@@ -585,6 +613,16 @@ CREATE TABLE `usuarios_espejo` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
+-- Volcado de datos para la tabla `usuarios_espejo`
+--
+
+INSERT INTO `usuarios_espejo` (`num_doc`, `t_doc`, `usu_nombres`, `usu_apellidos`, `usu_fecha_nacimiento`, `usu_sexo`, `usu_direccion`, `usu_telefono`, `usu_email`, `usu_fecha_contratacion`, `usu_estado`, `operacion`, `fecha_operacion`, `usuario_operacion`) VALUES
+(4869681, 1, 'Yonathan', 'Nieves', '2024-09-06', 'M', 'Bogotá', '12387932', 'yonathanieves17@gmail.com', '2024-09-03', 'Activo', 'insert', '2024-09-15', 'root@localhost'),
+(6543254, 1, 'Paula', 'Tovar', '2024-09-06', 'F', 'Bogotá', '12387932', 'ytrrgytrs17@gmail.com', '2024-09-03', 'Activo', 'insert', '2024-09-15', 'root@localhost'),
+(123456780, 1, 'Yonathan', 'Nieves', '1985-11-30', 'M', 'ciudad bolivar', '3006290689', 'yonathannieves@gmail.com', '2024-01-08', 'Activo', 'delete', '2024-09-15', 'root@localhost'),
+(1022934571, 1, 'José', 'Guerrero', '2024-09-08', 'M', 'Bogotá', '324354281', 'multygems@gmail.com', '2024-09-03', 'Activo', 'UPDATE', '2024-09-15', 'root@localhost');
+
+--
 -- Índices para tablas volcadas
 --
 
@@ -729,7 +767,13 @@ ALTER TABLE `usuarios_espejo`
 -- AUTO_INCREMENT de la tabla `cargos`
 --
 ALTER TABLE `cargos`
-  MODIFY `id_cargos` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla Rol', AUTO_INCREMENT=2;
+  MODIFY `id_cargos` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla Rol', AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT de la tabla `cargos_has_usuarios`
+--
+ALTER TABLE `cargos_has_usuarios`
+  MODIFY `id_usuario_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT de la tabla `emp_tarea`
@@ -783,7 +827,7 @@ ALTER TABLE `reg_pro_mat_prima`
 -- AUTO_INCREMENT de la tabla `seguridad`
 --
 ALTER TABLE `seguridad`
-  MODIFY `id_seguridad` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla seguridad.', AUTO_INCREMENT=7;
+  MODIFY `id_seguridad` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla seguridad.', AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT de la tabla `tarea`

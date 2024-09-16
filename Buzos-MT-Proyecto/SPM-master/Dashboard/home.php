@@ -38,7 +38,7 @@ if(!isset($_SESSION['user_id'])){
 			<div class="full-box tile-container">
 
 				<?php
-				//$perfil = $_SESSION['user_cargo'];
+				$perfil = $_SESSION['user_cargo'];
 
 				//Enlace solo visible para Jefe de Producción
 				if ($perfil == 'Jefe Producción'): ?>

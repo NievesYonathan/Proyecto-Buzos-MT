@@ -6,9 +6,9 @@
 		</a>
 
 		<?php
-		$name = $_SESSION['user_nombre'];
-		//$perfil = $_SESSION['user_cargo'];
 		include '../Config/variable_global.php';
+		$name = $_SESSION['user_nombre'];
+		$perfil = $_SESSION['user_cargo'];
 		?>
 		<figure class="full-box nav-lateral-avatar">
 			<i class="far fa-times-circle show-nav-lateral"></i>

@@ -99,8 +99,8 @@ class Usuarios
         $sql = "SELECT td.tip_doc_descripcion, u.num_doc, u.usu_nombres, u.usu_apellidos, cu.cargos_id_cargos, GROUP_CONCAT(c.car_nombre SEPARATOR ', ') AS Cargos
                 FROM usuarios as u
                 INNER JOIN tipo_doc AS td ON u.t_doc = td.id_tipo_documento
-                INNER JOIN cargos_has_usuarios AS cu ON u.num_doc = cu.usuarios_num_doc
-                INNER JOIN cargos AS c ON cu.cargos_id_cargos = c.id_cargos
+                LEFT JOIN cargos_has_usuarios AS cu ON u.num_doc = cu.usuarios_num_doc
+                LEFT JOIN cargos AS c ON cu.cargos_id_cargos = c.id_cargos
                 GROUP BY u.num_doc";
         $res = $conectar->query($sql);
         $conectar->close();
