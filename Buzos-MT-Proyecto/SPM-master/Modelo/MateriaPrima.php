@@ -9,9 +9,9 @@ class MateriaPrima{
     private $mpCantidad;
     private $mpEstado;
     private $mpFechaCompra;
-    private $mpMovimento;
 
-    public function __construct($mpId = null, $mpNombres = null, $mpDescripcion = null, $mpUnidadMedida = null, $mpCantidad = null, $mpEstado = null, $mpFechaCompra = null, $mpMovimento = null){
+
+    public function __construct($mpId = null, $mpNombres = null, $mpDescripcion = null, $mpUnidadMedida = null, $mpCantidad = null, $mpEstado = null, $mpFechaCompra = null){
         $this->mpId = $mpId;
         $this->mpNombres = $mpNombres;
         $this->mpDescripcion = $mpDescripcion;
@@ -21,12 +21,13 @@ class MateriaPrima{
         $this->mpCantidad = $mpCantidad;
         $this->mpUnidadMedida = $mpUnidadMedida;
 }
-    public function agregarMateriaPrima($mpId,$mpNombres,$mpDescripcion){
+    public function agregarMateriaPrima($mpId,$mpNombres,$mpDescripcion,$mpUnidadMedida,$mpCantidad,$mpEstado,$mpFechaCompra){
        $conexion = new Conexion();
         $conectar = $conexion->conectarse();
-        $sql = 'INSERT INTO materia_prima (mat_pri_id, mat_pri_nombre, mat_pri_descripcion) VALUES (?,?,?)';
+        $sql = 'INSERT INTO materia_prima (id_materia_prima, mat_pri_nombre, mat_pri_descripcion,mat_pri_unidad_medida,mat_pri_cantidad,mat_pri_estado,fecha_compra_mp,proveedores_id_proveedores) VALUES 
+        (?,?,?,?,?,?,?,?)';
         $stmt = $conectar->prepare($sql);
-        $stmt->bind_param('iss', $mpId, $mpNombres, $mpDescripcion);
+        $stmt->bind_param('isssissi', $mpId,$mpNombres,$mpDescripcion,$mpUnidadMedida,$mpCantidad,$mpEstado,$mpFechaCompra);
         $stmt->execute();
         $stmt->close();
         $conectar->close();
@@ -55,7 +56,7 @@ class MateriaPrima{
         $conectar = $conexion->conectarse();
         $sql = 'UPDATE materia_prima SET mat_pri_nombre = ?, mat_pri_descripcion = ?, mat_pri_cantidad = ?, mat_pri_estado = ? WHERE id_materia_prima = ?';
         $stmt = $conectar->prepare($sql);
-        $stmt->bind_param('issis', $mpNombres, $mpDescripcion, $mpCantidad, $mpEstado, $mpId);
+        $stmt->bind_param('ssisi', $mpNombres, $mpDescripcion, $mpCantidad, $mpEstado, $mpId);
         $stmt->execute();
         $stmt->close();
         $conectar->close();

@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html lang="es">
-	<?php 
+	<title>
+	<?php
+	echo $_POST['accion'].'</title>';
+	include_once '../Controlador/ControladorMateriasP.php';
 	include '../Config/variable_global.php';
 
 	include '../Componentes/Head/head.php' ?>
@@ -41,7 +44,7 @@
             
             <!--CONTENT-->
             <div class="container-fluid">
-				<form action="" class="form-neon" autocomplete="off">
+				<form action="item-update.php" class="form-neon" autocomplete="off" method="post">
 					<fieldset>
 						<legend><i class="far fa-plus-square"></i> &nbsp; Información del item</legend>
 						<div class="container-fluid">
@@ -49,20 +52,20 @@
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="item_codigo" class="bmd-label-floating">Códido</label>
-										<input type="text" pattern="[a-zA-Z0-9-]{1,45}" class="form-control" name="item_codigo" id="item_codigo" maxlength="45">
+										<input type="text" pattern="[a-zA-Z0-9-]{1,45}" class="form-control" name="matId" id="item_codigo" maxlength="45" value="<?=$_POST['matId']?>" disabled>
 									</div>
 								</div>
 								
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="item_nombre" class="bmd-label-floating">Nombre</label>
-										<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,140}" class="form-control" name="item_nombre" id="item_nombre" maxlength="140">
+										<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,140}" class="form-control" name="matNombre" id="item_nombre" maxlength="140" value="<?=$_POST['matNombre']?>" disabled>
 									</div>
 								</div>
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="item_stock" class="bmd-label-floating">Stock</label>
-										<input type="num" pattern="[0-9]{1,9}" class="form-control" name="item_stock" id="item_stock" maxlength="9">
+										<input type="num" pattern="[0-9]{1,9}" class="form-control" name="matCantidad" id="item_stock" maxlength="9"value="<?=$_POST['matCantidad']?>" disabled>
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
@@ -70,15 +73,16 @@
 										<label for="item_estado" class="bmd-label-floating">Estado</label>
 										<select class="form-control" name="item_estado" id="item_estado">
 											<option value="" selected="" disabled="">Seleccione una opción</option>
-											<option selected="" value="Habilitado">Habilitado</option>
+											<option selected="" value="<?=$_POST['matEstado']?>"><?=$_POST['matEstado']?></option>
 											<option value="Deshabilitado">Deshabilitado</option>
+											<option value="habilitado">habilitado</option>
 										</select>
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="item_detalle" class="bmd-label-floating">Detalle</label>
-										<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9()- ]{1,190}" class="form-control" name="item_detalle" id="item_detalle" maxlength="190">
+										<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9()- ]{1,190}" class="form-control" name="matDescripcion" id="item_detalle" maxlength="190" value="<?=$_POST['matDescripcion']?>">
 									</div>
 								</div>
 							</div>
@@ -86,7 +90,7 @@
 					</fieldset>
 					<br><br><br>
 					<p class="text-center" style="margin-top: 40px;">
-						<button type="submit" class="btn btn-raised btn-success btn-sm"><i class="fas fa-sync-alt"></i> &nbsp; ACTUALIZAR</button>
+						<button type="submit" class="btn btn-raised btn-success btn-sm" name="accion" value="actualizar"><i class="fas fa-sync-alt"></i> &nbsp; ACTUALIZAR</button>
 					</p>
 				</form>
 			</div>

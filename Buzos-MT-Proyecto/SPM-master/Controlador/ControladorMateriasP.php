@@ -9,26 +9,29 @@ public function consultarMateriaPrima(){
     }
 public function validarAcciones($accion){
     $MatObj = new MateriaPrima();
-    $mpId = $_POST['mpId'];
-    $mpNombres = $_POST['mpNombres'];
-    $mpDescripcion = $_POST['mpDescripcion'];
-    $mpCantidad = $_POST['mpCantidad'];
-    $mpEstado = $_POST['mpEstado'];
+    $mpId = $_POST['matId']; 
+$mpNombres = $_POST['matNombre'];
+$mpDescripcion = $_POST['matDescripcion'];
+$mpUnidadMedida = $_POST['matUnidad'];
+$mpCantidad = $_POST['matCantidad'];
+$mpEstado = $_POST['matEstado'];
+$mpFechaCompra=$_POST['matFechaCompra'];
+
         if ($accion == 'agregar') {
-             $MatObj->agregarMateriaPrima($mpId, $mpNombres, $mpDescripcion);
-             header('Location: ../Perfil-Inventario/item-list.php');
+             $MatObj->agregarMateriaPrima($mpId,$mpNombres,$mpDescripcion,$mpUnidadMedida,$mpCantidad,$mpEstado,$mpFechaCompra);
+            return header('Location: ../Perfil-Inventario/item-list.php');
         }
         if ($accion == 'actualizar') {
-            $MatObj->actualizarMateriaPrima($mpId, $mpNombres, $mpDescripcion, $mpCantidad, $mpEstado);
             header('Location: ../Perfil-Inventario/item-list.php');
+            $MatObj->actualizarMateriaPrima($mpNombres,$mpDescripcion,$mpCantidad,$mpEstado,$mpId);
+            
         }  
         if($accion== 'cambiar'){
             return $MatObj->cambiarEstado($mpEstado,$mpId);
         }
-        
     }
 }
-$MatObj = new ControladorMateriaPrima();
+$contObj = new ControladorMateriaPrima();
 if (isset($_POST['accion'])) {
     return $MatObj->validarAcciones($_POST['accion']);
 }

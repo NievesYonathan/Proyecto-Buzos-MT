@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="es">
 	<?php 
+    include_once '../Controlador/ControladorMateriasP.php';
 	include '../Config/variable_global.php';
-
 	include '../Componentes/Head/head.php' ?>
 
 <body>
@@ -39,6 +39,7 @@
                 </ul>
             </div>
             
+
             <!--CONTENT-->
            <div class="container-fluid">
 				<div class="table-responsive">
@@ -46,7 +47,6 @@
 						<thead>
 							<tr class="text-center roboto-medium">
 								<th>#</th>
-								<th>CÓDIGO</th>
 								<th>NOMBRE</th>
 								<th>STOCK</th>
 								<th>ACTUALIZAR</th>
@@ -55,98 +55,47 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center details" >
-								<td>1</td>
-								<td>012342567</td>
-								<td>NOMBRE DEL ITEM</td>
-								<td>20</td>
-								<td>
-                                    <a href="item-update.php" class="btn btn-success">
-                                        <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-                                <td>
-                                    <form action="">
-                                        <button type="button" class="btn btn-warning">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <a href="item-history.php" class="btn btn-success">
-                                    <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-							</tr>
-							<tr class="text-center details" >
-								<td>2</td>
-								<td>012342567</td>
-								<td>NOMBRE DEL ITEM</td>
-								<td>57</td>
-								<td>
-                                    <a href="item-update.php" class="btn btn-success">
-                                        <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-                                <td>
-                                    <form action="">
-                                        <button type="button" class="btn btn-warning">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <a href="item-history.php" class="btn btn-success">
-                                    <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-							</tr>
-							<tr class="text-center details" >
-								<td>3</td>
-								<td>012342567</td>
-								<td>NOMBRE DEL ITEM</td>
-								<td>81</td>
-								<td>
-                                    <a href="item-update.php" class="btn btn-success">
-                                        <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-                                <td>
-                                    <form action="">
-                                        <button type="button" class="btn btn-warning">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <a href="item-history.php" class="btn btn-success">
-                                    <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-							</tr>
-							<tr class="text-center details" >
-								<td>4</td>
-								<td>012342567</td>
-								<td>NOMBRE DEL ITEM</td>
-								<td>90</td>
-								<td>
-                                    <a href="item-update.php" class="btn btn-success">
-                                        <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-                                <td>
-                                    <form action="">
-                                        <button type="button" class="btn btn-warning">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </td>
-                                <td>
-                                    <a href="item-history.php" class="btn btn-success">
-                                    <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-							</tr>
+                        <?php
+            // Llama al método para consultar las materias y realiza el bucle para que aparezcan los items en la tabla
+            $result = $contObj->consultarMateriaPrima();
+
+            while ($item = mysqli_fetch_object($result)) {
+                ?>
+                <tr class="text-center details">
+                <td><?=$item->id_materia_prima?></td>
+                <td><?=$item->mat_pri_nombre?></td>
+                <td><?=$item->mat_pri_cantidad?></td>
+                    <td>
+                        <form action="item-update.php" method="post">
+                            <input type="hidden" name="matId" value="<?=$item->id_materia_prima?>">
+                            <input type="hidden" name="matNombre" value="<?=$item->mat_pri_nombre?>">
+                            <input type="hidden" name="matDescripcion" value="<?=$item->mat_pri_descripcion?>">
+                            <input type="hidden" name="matUnidad" value="<?=$item->mat_pri_unidad_medida?>">
+                            <input type="hidden" name="matCantidad" value="<?=$item->mat_pri_cantidad?>">
+                            <input type="hidden" name="matEstado" value="<?=$item->mat_pri_estado?>">
+                            <input type="hidden" name="matFechaCompra" value="<?=$item->fecha_compra_mp?>">
+
+                        <button type="submit" class="btn btn-success">
+                            <i class="fas fa-sync-alt"></i> 
+                        </button>
+                    </form>
+                    </td>
+                    <td>
+                        <form action="">
+                            <button type="button" class="btn btn-warning">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </form>
+                    </td>
+                    <td>
+                        <a href="item-history.php" class="btn btn-success">
+                            <i class="fas fa-sync-alt"></i> 
+                        </a>
+                    </td>
+					</tr>
+                    <?php
+            }
+            ?>
 						</tbody>
 					</table>
 				</div>
