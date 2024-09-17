@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
-	<title>
 	<?php
-	echo $_POST['accion'].'</title>';
-	include_once '../Controlador/ControladorMateriasP.php';
 	include '../Config/variable_global.php';
 
 	include '../Componentes/Head/head.php' ?>
@@ -44,7 +41,7 @@
             
             <!--CONTENT-->
             <div class="container-fluid">
-				<form action="item-update.php" class="form-neon" autocomplete="off" method="post">
+				<form action="../Controlador/ControladorMateriasP.php" class="form-neon" autocomplete="off" method="post">
 					<fieldset>
 						<legend><i class="far fa-plus-square"></i> &nbsp; Información del item</legend>
 						<div class="container-fluid">
@@ -52,26 +49,26 @@
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="item_codigo" class="bmd-label-floating">Códido</label>
-										<input type="text" pattern="[a-zA-Z0-9-]{1,45}" class="form-control" name="matId" id="item_codigo" maxlength="45" value="<?=$_POST['matId']?>" disabled>
+										<input type="text" pattern="[a-zA-Z0-9-]{1,45}" class="form-control" name="matId" id="item_codigo" maxlength="45" value="<?=$_POST['matId']?>" readonly>
 									</div>
 								</div>
 								
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="item_nombre" class="bmd-label-floating">Nombre</label>
-										<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,140}" class="form-control" name="matNombre" id="item_nombre" maxlength="140" value="<?=$_POST['matNombre']?>" disabled>
+										<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,140}" class="form-control" name="matNombre" id="item_nombre" maxlength="140" value="<?=$_POST['matNombre']?>" readonly>
 									</div>
 								</div>
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="item_stock" class="bmd-label-floating">Stock</label>
-										<input type="num" pattern="[0-9]{1,9}" class="form-control" name="matCantidad" id="item_stock" maxlength="9"value="<?=$_POST['matCantidad']?>" disabled>
+										<input type="num" pattern="[0-9]{1,9}" class="form-control" name="matCantidad" id="item_stock" maxlength="9"value="<?=$_POST['matCantidad']?>" readonly>
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="item_estado" class="bmd-label-floating">Estado</label>
-										<select class="form-control" name="item_estado" id="item_estado">
+										<select class="form-control" name="matEstado" id="item_estado">
 											<option value="" selected="" disabled="">Seleccione una opción</option>
 											<option selected="" value="<?=$_POST['matEstado']?>"><?=$_POST['matEstado']?></option>
 											<option value="Deshabilitado">Deshabilitado</option>
@@ -82,7 +79,7 @@
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="item_detalle" class="bmd-label-floating">Detalle</label>
-										<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9()- ]{1,190}" class="form-control" name="matDescripcion" id="item_detalle" maxlength="190" value="<?=$_POST['matDescripcion']?>">
+										<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9()- ]{1,190}" class="form-control" name="matDescripcion" id="item_detalle" maxlength="190" value="<?=$_POST['matDescripcion']?>" required>
 									</div>
 								</div>
 							</div>

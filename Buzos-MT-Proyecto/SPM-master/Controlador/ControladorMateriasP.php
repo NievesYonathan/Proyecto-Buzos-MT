@@ -8,30 +8,33 @@ public function consultarMateriaPrima(){
         return $result;
     }
 public function validarAcciones($accion){
-    $MatObj = new MateriaPrima();
-    $mpId = $_POST['matId']; 
-$mpNombres = $_POST['matNombre'];
-$mpDescripcion = $_POST['matDescripcion'];
-$mpUnidadMedida = $_POST['matUnidad'];
-$mpCantidad = $_POST['matCantidad'];
-$mpEstado = $_POST['matEstado'];
-$mpFechaCompra=$_POST['matFechaCompra'];
+    $MatObj = new MateriaPrima(); 
+
+    print_r($_POST);
+        $mpId = $_POST['matId'];
+        $mpNombres = $_POST['matNombre'];
+        $mpDescripcion = $_POST['matDescripcion'];
+        $mpUnidadMedida = $_POST['matUnidad'];
+        $mpCantidad = $_POST['matCantidad'];
+        $mpEstado = $_POST['matEstado'];
+        $mpFechaCompra = $_POST['matFechaCompra'];
+        $mpProveedor = $_POST['matProveedor'];
 
         if ($accion == 'agregar') {
-             $MatObj->agregarMateriaPrima($mpId,$mpNombres,$mpDescripcion,$mpUnidadMedida,$mpCantidad,$mpEstado,$mpFechaCompra);
+            $MatObj->agregarMateriaPrima($mpId, $mpNombres, $mpDescripcion, $mpUnidadMedida, $mpCantidad, $mpEstado, $mpFechaCompra, $mpProveedor);
             return header('Location: ../Perfil-Inventario/item-list.php');
         }
-        if ($accion == 'actualizar') {
-            header('Location: ../Perfil-Inventario/item-list.php');
-            $MatObj->actualizarMateriaPrima($mpNombres,$mpDescripcion,$mpCantidad,$mpEstado,$mpId);
-            
-        }  
-        if($accion== 'cambiar'){
-            return $MatObj->cambiarEstado($mpEstado,$mpId);
+         if ($accion == 'actualizar') {
+            $MatObj->actualizarMateriaPrima($mpNombres, $mpDescripcion, $mpCantidad, $mpEstado, $mpId);
+            return header('Location: ../Perfil-Inventario/item-list.php');   
+        }
+        if ($accion == 'cambiar') {
+            return $MatObj->cambiarEstado($mpEstado, $mpId);
         }
     }
 }
+
 $contObj = new ControladorMateriaPrima();
 if (isset($_POST['accion'])) {
-    return $MatObj->validarAcciones($_POST['accion']);
+    return $contObj->validarAcciones($_POST['accion']);
 }

@@ -9,6 +9,7 @@ class MateriaPrima{
     private $mpCantidad;
     private $mpEstado;
     private $mpFechaCompra;
+    private $mpProveedor;
 
 
     public function __construct($mpId = null, $mpNombres = null, $mpDescripcion = null, $mpUnidadMedida = null, $mpCantidad = null, $mpEstado = null, $mpFechaCompra = null){
@@ -21,13 +22,13 @@ class MateriaPrima{
         $this->mpCantidad = $mpCantidad;
         $this->mpUnidadMedida = $mpUnidadMedida;
 }
-    public function agregarMateriaPrima($mpId,$mpNombres,$mpDescripcion,$mpUnidadMedida,$mpCantidad,$mpEstado,$mpFechaCompra){
+    public function agregarMateriaPrima($mpId,$mpNombres,$mpDescripcion,$mpUnidadMedida,$mpCantidad,$mpEstado,$mpFechaCompra,$mpProveedor){
        $conexion = new Conexion();
         $conectar = $conexion->conectarse();
-        $sql = 'INSERT INTO materia_prima (id_materia_prima, mat_pri_nombre, mat_pri_descripcion,mat_pri_unidad_medida,mat_pri_cantidad,mat_pri_estado,fecha_compra_mp,proveedores_id_proveedores) VALUES 
+        $sql = 'INSERT INTO materia_prima (id_materia_prima,mat_pri_nombre,mat_pri_descripcion,mat_pri_unidad_medida,mat_pri_cantidad,mat_pri_estado,fecha_compra_mp,proveedores_id_proveedores) VALUES 
         (?,?,?,?,?,?,?,?)';
         $stmt = $conectar->prepare($sql);
-        $stmt->bind_param('isssissi', $mpId,$mpNombres,$mpDescripcion,$mpUnidadMedida,$mpCantidad,$mpEstado,$mpFechaCompra);
+        $stmt->bind_param('isssissi', $mpId,$mpNombres,$mpDescripcion,$mpUnidadMedida,$mpCantidad,$mpEstado,$mpFechaCompra,$mpProveedor);
         $stmt->execute();
         $stmt->close();
         $conectar->close();
@@ -57,8 +58,9 @@ class MateriaPrima{
         $sql = 'UPDATE materia_prima SET mat_pri_nombre = ?, mat_pri_descripcion = ?, mat_pri_cantidad = ?, mat_pri_estado = ? WHERE id_materia_prima = ?';
         $stmt = $conectar->prepare($sql);
         $stmt->bind_param('ssisi', $mpNombres, $mpDescripcion, $mpCantidad, $mpEstado, $mpId);
-        $stmt->execute();
+        $result = $stmt->execute();
         $stmt->close();
         $conectar->close();
+        return $result;
     }
 }

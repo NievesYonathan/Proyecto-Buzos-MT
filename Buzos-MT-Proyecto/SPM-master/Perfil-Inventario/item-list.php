@@ -56,48 +56,64 @@
 						</thead>
 						<tbody>
                         <?php
-            // Llama al método para consultar las materias y realiza el bucle para que aparezcan los items en la tabla
-            $result = $contObj->consultarMateriaPrima();
-
-            while ($item = mysqli_fetch_object($result)) {
-                ?>
-                <tr class="text-center details">
-                <td><?=$item->id_materia_prima?></td>
-                <td><?=$item->mat_pri_nombre?></td>
-                <td><?=$item->mat_pri_cantidad?></td>
-                    <td>
-                        <form action="item-update.php" method="post">
-                            <input type="hidden" name="matId" value="<?=$item->id_materia_prima?>">
-                            <input type="hidden" name="matNombre" value="<?=$item->mat_pri_nombre?>">
-                            <input type="hidden" name="matDescripcion" value="<?=$item->mat_pri_descripcion?>">
-                            <input type="hidden" name="matUnidad" value="<?=$item->mat_pri_unidad_medida?>">
-                            <input type="hidden" name="matCantidad" value="<?=$item->mat_pri_cantidad?>">
-                            <input type="hidden" name="matEstado" value="<?=$item->mat_pri_estado?>">
-                            <input type="hidden" name="matFechaCompra" value="<?=$item->fecha_compra_mp?>">
-
-                        <button type="submit" class="btn btn-success">
-                            <i class="fas fa-sync-alt"></i> 
-                        </button>
-                    </form>
-                    </td>
-                    <td>
-                        <form action="">
-                            <button type="button" class="btn btn-warning">
-                                <i class="far fa-trash-alt"></i>
-                            </button>
-                        </form>
-                    </td>
-                    <td>
-                        <a href="item-history.php" class="btn btn-success">
-                            <i class="fas fa-sync-alt"></i> 
-                        </a>
-                    </td>
-					</tr>
-                    <?php
-            }
-            ?>
+                            $result = $contObj->consultarMateriaPrima();
+                            while ($item = mysqli_fetch_object($result)) {
+                            ?>
+                                <tr class="text-center details">
+                                    <td><?=$item->id_materia_prima?></td>
+                                    <td><?=$item->mat_pri_nombre?></td>
+                                    <td><?=$item->mat_pri_cantidad?></td>
+                                    <td>
+                                        <form action="item-update.php" method="post">
+                                            <input type="hidden" name="matId" value="<?=$item->id_materia_prima?>">
+                                            <input type="hidden" name="matNombre" value="<?=$item->mat_pri_nombre?>">
+                                            <input type="hidden" name="matDescripcion" value="<?=$item->mat_pri_descripcion?>">
+                                            <input type="hidden" name="matUnidad" value="<?=$item->mat_pri_unidad_medida?>">
+                                            <input type="hidden" name="matCantidad" value="<?=$item->mat_pri_cantidad?>">
+                                            <input type="hidden" name="matEstado" value="<?=$item->mat_pri_estado?>">
+                                            <input type="hidden" name="matFechaCompra" value="<?=$item->fecha_compra_mp?>">
+                                            <button type="submit" class="btn btn-success">
+                                                <i class="fas fa-sync-alt"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form action="">
+                                            <button type="button" class="btn btn-warning">
+                                                <i class="far fa-trash-alt"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <!-- Botón para abrir el modal -->
+                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#<?=$item->id_materia_prima?>">
+                                            <i class="fas fa-sync-alt"></i>
+                                        </button>
+                                    </td>
+                                </tr>                    
+                            <!-- Modal -->
+                                <div class="modal fade" id="<?=$item->id_materia_prima?>" tabindex="-1" aria-labelledby="movimientosLabel<?=$item->id_materia_prima?>" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="movimientosLabel<?=$item->id_materia_prima?>">Movimientos de: <?=$item->mat_pri_nombre.' - '.$item->id_materia_prima?></h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button> 
+                                            </div>       <!-- Aquí puedes agregar más movimientos dinámicamente si los tienes -->
+                                        </div>
+                                    </div>
+                                </div>
+                        <?php          
+                            }   
+                        ?>            
 						</tbody>
 					</table>
+                </div>
 				</div>
 				<nav aria-label="Page navigation example">
 					<ul class="pagination justify-content-center">
