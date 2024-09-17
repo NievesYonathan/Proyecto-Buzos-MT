@@ -728,7 +728,9 @@ table form {
 	transition: all 0.3s ease-in-out;
 }
 
-
+.table-responsive{
+	overflow-x: hidden;
+}
 
 .table thead {
 	background-color: #00BFA6;
