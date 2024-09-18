@@ -761,7 +761,7 @@ table form {
 
 
 .table td {
-	padding: 12px 15px;
+	/* padding: 0; */
 	border-top: 1px solid #00BFA6;
 	/* Verde aqua */
 	font-family: 'roboto_condensed_regular', Arial, sans-serif;

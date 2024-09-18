@@ -101,7 +101,7 @@ class Usuarios
                 INNER JOIN tipo_doc AS td ON u.t_doc = td.id_tipo_documento
                 LEFT JOIN cargos_has_usuarios AS cu ON u.num_doc = cu.usuarios_num_doc
                 LEFT JOIN cargos AS c ON cu.cargos_id_cargos = c.id_cargos
-                WHERE estado_asignacion = 'Activo'
+                
                 GROUP BY u.num_doc";
         $res = $conectar->query($sql);
         $conectar->close();

@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['user_id'])){
+if (!isset($_SESSION['user_id'])) {
 	header('Location: ../Login-Registro/login.php');
 }
 
@@ -90,11 +90,11 @@ include '../Componentes/Head/head.php' ?>
 							while ($filaU = $res->fetch_assoc()) {
 							?>
 								<tr class="text-center">
-									<td><?= $filaU['tip_doc_descripcion'] ?></td>
+									<td class="my-auto"><?= $filaU['tip_doc_descripcion'] ?></td>
 									<td><?= $filaU['num_doc'] ?></td>
 									<td><?= $filaU['usu_nombres'] ?></td>
 									<td><?= $filaU['Cargos'] ?></td>
-									<td><button class="btn btn-success mt-3" data-bs-toggle="modal" data-bs-target="#addModal<?= $filaU['num_doc'] ?>">ADD</button></td>
+									<td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal<?= $filaU['num_doc'] ?>"><i class="fa-solid fa-user-plus"></i></button></td>
 								</tr>
 								<!-- Modal para agregar Cargos -->
 								<div class="modal fade" id="addModal<?= $filaU['num_doc'] ?>" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
@@ -113,13 +113,13 @@ include '../Componentes/Head/head.php' ?>
 															foreach ($cargos as $cargo) {
 																// Evitar errores asegurándonos de que las claves existen en el array $cargo
 																if (isset($cargo['id_cargos']) && isset($cargo['car_nombre'])) {
-																$cargosUsuario = explode(',', $filaU['id_cargos']);
+																	$cargosUsuario = explode(',', $filaU['id_cargos']);
 														?>
-																<input name="idCarUsuario[]" value="<?= $filaU['id_cargos'] ?>" type="hidden">
-																<input name="idCarUsuRel[]" value="<?= $filaU['id_usuario_cargo'] ?>" type="hidden">
-																<input class="form-check-input" name="idCargo[]" value="<?= $cargo['id_cargos'] ?>" type="checkbox" id="checkbox<?= $cargo['id_cargos'] ?>" <?= (in_array($cargo['id_cargos'], $cargosUsuario) ? 'checked' : '') ?>>
-																<label class="form-check-label" for="checkbox<?= $cargo['id_cargos'] ?>"><?= $cargo['car_nombre'] ?></label>
-																<br>
+																	<input name="idCarUsuario[]" value="<?= $filaU['id_cargos'] ?>" type="hidden">
+																	<input name="idCarUsuRel[]" value="<?= $filaU['id_usuario_cargo'] ?>" type="hidden">
+																	<input class="form-check-input" name="idCargo[]" value="<?= $cargo['id_cargos'] ?>" type="checkbox" id="checkbox<?= $cargo['id_cargos'] ?>" <?= (in_array($cargo['id_cargos'], $cargosUsuario) ? 'checked' : '') ?>>
+																	<label class="form-check-label" for="checkbox<?= $cargo['id_cargos'] ?>"><?= $cargo['car_nombre'] ?></label>
+																	<br>
 														<?php
 																} else {
 																	echo "Datos de cargo incompletos.";
@@ -128,7 +128,7 @@ include '../Componentes/Head/head.php' ?>
 														} else {
 															echo "No hay cargos disponibles.";
 														}
-														?>													
+														?>
 													</div>
 												</div>
 												<div class="modal-footer">
