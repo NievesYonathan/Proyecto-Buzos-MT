@@ -96,11 +96,12 @@ class Usuarios
         //         FROM usuarios AS u
         //         INNER JOIN tipo_doc AS t ON u.t_doc = t.id_tipo_documento";
 
-        $sql = "SELECT td.tip_doc_descripcion, u.t_doc, u.num_doc, u.usu_nombres, u.usu_apellidos, u.usu_fecha_nacimiento, u.usu_sexo, u.usu_direccion, u.usu_telefono, u.usu_email, u.usu_fecha_contratacion, u.usu_estado ,cu.cargos_id_cargos, GROUP_CONCAT(c.car_nombre SEPARATOR ', ') AS Cargos
+        $sql = "SELECT td.tip_doc_descripcion, u.*, cu.id_usuario_cargo, GROUP_CONCAT(cu.cargos_id_cargos SEPARATOR ', ') AS id_cargos, GROUP_CONCAT(c.car_nombre SEPARATOR ', ') AS Cargos
                 FROM usuarios as u
                 INNER JOIN tipo_doc AS td ON u.t_doc = td.id_tipo_documento
                 LEFT JOIN cargos_has_usuarios AS cu ON u.num_doc = cu.usuarios_num_doc
                 LEFT JOIN cargos AS c ON cu.cargos_id_cargos = c.id_cargos
+                WHERE estado_asignacion = 'Activo'
                 GROUP BY u.num_doc";
         $res = $conectar->query($sql);
         $conectar->close();

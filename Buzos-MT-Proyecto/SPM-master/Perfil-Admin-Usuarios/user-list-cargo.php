@@ -59,6 +59,18 @@ include '../Componentes/Head/head.php' ?>
 						<tbody>
 							<?php
 							// Consultar cargos una vez y almacenar en un array
+							include_once "../Controlador/ControladorCarUsu.php";
+
+							$objCarUsu = new ControladorCarUsu();
+							$resCarUsu = $objCarUsu->consultarCarUsuarios();
+
+							$carUsu = []; // Array para almacenar los cargos
+
+							while ($filaCarUsu = $resCarUsu->fetch_assoc()) {
+								$carUsu[] = $filaCarUsu; // Almacenar cada cargo en el array
+							}
+
+							// Consultar cargos una vez y almacenar en un array
 							include_once "../Controlador/ControladorCargo.php";
 
 							$objCargo = new ControladorCargo();
@@ -101,8 +113,11 @@ include '../Componentes/Head/head.php' ?>
 															foreach ($cargos as $cargo) {
 																// Evitar errores asegurándonos de que las claves existen en el array $cargo
 																if (isset($cargo['id_cargos']) && isset($cargo['car_nombre'])) {
+																$cargosUsuario = explode(',', $filaU['id_cargos']);
 														?>
-																<input class="form-check-input" name="idCargo[]" value="<?= $cargo['id_cargos'] ?>" type="checkbox" id="checkbox<?= $cargo['id_cargos'] ?>" <?= ($cargo['id_cargos'] == $filaU['cargos_id_cargos'] ? 'checked' : '') ?>>
+																<input name="idCarUsuario[]" value="<?= $filaU['id_cargos'] ?>" type="hidden">
+																<input name="idCarUsuRel[]" value="<?= $filaU['id_usuario_cargo'] ?>" type="hidden">
+																<input class="form-check-input" name="idCargo[]" value="<?= $cargo['id_cargos'] ?>" type="checkbox" id="checkbox<?= $cargo['id_cargos'] ?>" <?= (in_array($cargo['id_cargos'], $cargosUsuario) ? 'checked' : '') ?>>
 																<label class="form-check-label" for="checkbox<?= $cargo['id_cargos'] ?>"><?= $cargo['car_nombre'] ?></label>
 																<br>
 														<?php
