@@ -22,16 +22,17 @@ class MateriaPrima{
         $this->mpCantidad = $mpCantidad;
         $this->mpUnidadMedida = $mpUnidadMedida;
 }
-    public function agregarMateriaPrima($mpId,$mpNombres,$mpDescripcion,$mpUnidadMedida,$mpCantidad,$mpEstado,$mpFechaCompra,$mpProveedor){
+    public function agregarMateriaPrima($mpNombres,$mpDescripcion,$mpUnidadMedida,$mpCantidad,$mpEstado,$mpFechaCompra,$mpProveedor){
        $conexion = new Conexion();
         $conectar = $conexion->conectarse();
-        $sql = 'INSERT INTO materia_prima (id_materia_prima,mat_pri_nombre,mat_pri_descripcion,mat_pri_unidad_medida,mat_pri_cantidad,mat_pri_estado,fecha_compra_mp,proveedores_id_proveedores) VALUES 
-        (?,?,?,?,?,?,?,?)';
+            $sql = 'INSERT INTO materia_prima (mat_pri_nombre,mat_pri_descripcion,mat_pri_unidad_medida,mat_pri_cantidad,estado_id_estado,fecha_compra_mp,proveedores_id_proveedores) VALUES 
+            (?,?,?,?,?,?,?)';
         $stmt = $conectar->prepare($sql);
-        $stmt->bind_param('isssissi', $mpId,$mpNombres,$mpDescripcion,$mpUnidadMedida,$mpCantidad,$mpEstado,$mpFechaCompra,$mpProveedor);
-        $stmt->execute();
+        $stmt->bind_param('sssiisi',$mpNombres,$mpDescripcion,$mpUnidadMedida,$mpCantidad,$mpEstado,$mpFechaCompra,$mpProveedor);
+        $result = $stmt->execute();
         $stmt->close();
         $conectar->close();
+        return $result;
 }
     public function consultarMateriaPrima(){
         $conexion = new Conexion();
@@ -41,7 +42,7 @@ class MateriaPrima{
         $conectar->close();
         return $result;
     }
-    public function cambiarEstado($mpEstado, $mpId){
+    /*public function cambiarEstado($mpEstado, $mpId){
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
         $sql = 'UPDATE materia_prima SET mat_pri_estado = ? WHERE id_materia_prima = ?';
@@ -50,16 +51,24 @@ class MateriaPrima{
         $stmt->execute();
         $stmt->close();
         $conectar->close();
-    }
+    }*/
 
     public function actualizarMateriaPrima($mpNombres, $mpDescripcion, $mpCantidad, $mpEstado, $mpId) {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
-        $sql = 'UPDATE materia_prima SET mat_pri_nombre = ?, mat_pri_descripcion = ?, mat_pri_cantidad = ?, mat_pri_estado = ? WHERE id_materia_prima = ?';
+        $sql = 'UPDATE materia_prima SET mat_pri_nombre = ?, mat_pri_descripcion = ?, mat_pri_cantidad = ?, estado_id_estado = ? WHERE id_materia_prima = ?';
         $stmt = $conectar->prepare($sql);
-        $stmt->bind_param('ssisi', $mpNombres, $mpDescripcion, $mpCantidad, $mpEstado, $mpId);
+        $stmt->bind_param('ssiii', $mpNombres, $mpDescripcion, $mpCantidad, $mpEstado, $mpId);
         $result = $stmt->execute();
         $stmt->close();
+        $conectar->close();
+        return $result;
+    }
+    public function consultarEstados(){
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+        $sql = 'SELECT * FROM estados'; 
+        $result = $conectar->query($sql);
         $conectar->close();
         return $result;
     }

@@ -1,3 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <?php echo $_POST['accion']; 
+        ?>
+    </title>
+</head>
+<body>
+    
+</body>
+</html>
 <?php
 include_once '../Modelo/MateriaPrima.php';
 
@@ -7,11 +21,16 @@ public function consultarMateriaPrima(){
         $result = $MatObj->consultarMateriaPrima();
         return $result;
     }
+
+public function consultarEstados(){
+    $MatObj = new MateriaPrima();
+    $result = $MatObj->consultarEstados();
+    return $result;
+}
 public function validarAcciones($accion){
     $MatObj = new MateriaPrima(); 
 
-    print_r($_POST);
-        $mpId = $_POST['matId'];
+        $mpId = $_POST['matId'];    
         $mpNombres = $_POST['matNombre'];
         $mpDescripcion = $_POST['matDescripcion'];
         $mpUnidadMedida = $_POST['matUnidad'];
@@ -21,16 +40,16 @@ public function validarAcciones($accion){
         $mpProveedor = $_POST['matProveedor'];
 
         if ($accion == 'agregar') {
-            $MatObj->agregarMateriaPrima($mpId, $mpNombres, $mpDescripcion, $mpUnidadMedida, $mpCantidad, $mpEstado, $mpFechaCompra, $mpProveedor);
+            $MatObj->agregarMateriaPrima($mpNombres, $mpDescripcion, $mpUnidadMedida, $mpCantidad, $mpEstado, $mpFechaCompra, $mpProveedor);
             return header('Location: ../Perfil-Inventario/item-list.php');
         }
          if ($accion == 'actualizar') {
             $MatObj->actualizarMateriaPrima($mpNombres, $mpDescripcion, $mpCantidad, $mpEstado, $mpId);
             return header('Location: ../Perfil-Inventario/item-list.php');   
         }
-        if ($accion == 'cambiar') {
-            return $MatObj->cambiarEstado($mpEstado, $mpId);
-        }
+        //if ($accion == 'cambiar') {
+          //  return $MatObj->cambiarEstado($mpEstado, $mpId);
+        //}
     }
 }
 

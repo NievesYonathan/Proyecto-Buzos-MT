@@ -1,6 +1,13 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+	header('Location: ../login-registro/login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 	<?php
+	include_once '../Controlador/ControladorMateriasP.php';	
 	include '../Config/variable_global.php';
 
 	include '../Componentes/Head/head.php' ?>
@@ -70,9 +77,13 @@
 										<label for="item_estado" class="bmd-label-floating">Estado</label>
 										<select class="form-control" name="matEstado" id="item_estado">
 											<option value="" selected="" disabled="">Seleccione una opción</option>
-											<option selected="" value="<?=$_POST['matEstado']?>"><?=$_POST['matEstado']?></option>
-											<option value="Deshabilitado">Deshabilitado</option>
-											<option value="habilitado">habilitado</option>
+											<?php
+											//echo '<option selected="" >'.$_POST['estado_id_estado'].'</option>';
+												$estados = $contObj->consultarEstados();
+												while ($estado = mysqli_fetch_object($estados)) {
+													echo '<option value="'.$estado->idEstado.'">'.$estado->nombreEstado.'</option>';
+												}
+											?>
 										</select>
 									</div>
 								</div>

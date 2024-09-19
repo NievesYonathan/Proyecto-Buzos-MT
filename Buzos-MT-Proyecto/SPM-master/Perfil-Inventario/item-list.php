@@ -1,3 +1,9 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+	header('Location: ../login-registro/login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 	<?php 
@@ -70,7 +76,7 @@
                                             <input type="hidden" name="matDescripcion" value="<?=$item->mat_pri_descripcion?>">
                                             <input type="hidden" name="matUnidad" value="<?=$item->mat_pri_unidad_medida?>">
                                             <input type="hidden" name="matCantidad" value="<?=$item->mat_pri_cantidad?>">
-                                            <input type="hidden" name="matEstado" value="<?=$item->mat_pri_estado?>">
+                                            <input type="hidden" name="matEstado" value="<?=$item->estado_id_estado?>">
                                             <input type="hidden" name="matFechaCompra" value="<?=$item->fecha_compra_mp?>">
                                             <button type="submit" class="btn btn-success">
                                                 <i class="fas fa-sync-alt"></i>
