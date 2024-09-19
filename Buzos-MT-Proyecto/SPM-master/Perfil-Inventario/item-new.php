@@ -1,12 +1,13 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-	header('Location: ../login-registro/login.php');
-}
+//session_start();
+//if (!isset($_SESSION['user_id'])) {
+//7	header('Location: ../login-registro/login.php');
+//}
 ?>
 <!DOCTYPE html>
 <html lang="es">
 	<?php 
+
 	include_once '../Controlador/ControladorMateriasP.php';
 	include '../Config/variable_global.php';
 
@@ -85,7 +86,6 @@ if (!isset($_SESSION['user_id'])) {
 										<select class="form-control" name="matEstado" id="matEstado">
 											<option value="" selected="" disabled="">Seleccione una opción</option>
 											<?php
-												
 												$result = $contObj->consultarEstados();
 												while ($estado = mysqli_fetch_object($result)) {
 													echo '<option value="'.$estado->idEstado.'">'.$estado->nombreEstado.'</option>';
@@ -103,7 +103,15 @@ if (!isset($_SESSION['user_id'])) {
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="matProveedor" class="bmd-label-floating">Proveedor</label>
-										<input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,140}" class="form-control" name="matProveedor" id="matProveedor" maxlength="140">
+										<select class="form-control" name="matProveedor" id="matProveedor">
+											<option value="" selected="" disabled="">Seleccione una opción</option>
+											<?php
+											
+											$result = $ProObj->mostrarProveedor();
+												while ($proveedor = mysqli_fetch_object($result)) {
+														echo '<option value="'.$proveedor->num_doc.'">'.$proveedor->usu_nombres.'</option>';
+													} ?>
+										</select>
 									</div>
 								</div>
 							</div>

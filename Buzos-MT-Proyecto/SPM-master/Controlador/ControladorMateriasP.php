@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?php echo $_POST['accion']; 
-        ?>
-    </title>
-</head>
-<body>
-    
-</body>
-</html>
-<?php
+<?php 
 include_once '../Modelo/MateriaPrima.php';
+include_once "../Modelo/Usuarios.php";
+
+ // Mejor usar require_once para evitar problemas de inclusión múltiple
+
+class ControladorProveedor  {
+    public function mostrarProveedor() {
+        $Proveedor = new Proveedor();
+        $result = $Proveedor->mostrarProveedor();
+        return $result;
+    }
+}
 
 class ControladorMateriaPrima{
 public function consultarMateriaPrima(){
@@ -29,7 +26,6 @@ public function consultarEstados(){
 }
 public function validarAcciones($accion){
     $MatObj = new MateriaPrima(); 
-
         $mpId = $_POST['matId'];    
         $mpNombres = $_POST['matNombre'];
         $mpDescripcion = $_POST['matDescripcion'];
@@ -47,13 +43,12 @@ public function validarAcciones($accion){
             $MatObj->actualizarMateriaPrima($mpNombres, $mpDescripcion, $mpCantidad, $mpEstado, $mpId);
             return header('Location: ../Perfil-Inventario/item-list.php');   
         }
-        //if ($accion == 'cambiar') {
-          //  return $MatObj->cambiarEstado($mpEstado, $mpId);
-        //}
+        
     }
 }
 
 $contObj = new ControladorMateriaPrima();
+$ProObj = new ControladorProveedor();
 if (isset($_POST['accion'])) {
     return $contObj->validarAcciones($_POST['accion']);
 }
