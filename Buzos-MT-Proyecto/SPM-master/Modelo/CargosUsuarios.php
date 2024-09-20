@@ -34,23 +34,50 @@ class CargosUsuarios {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
 
-        $sql = "SELECT * FROM cargos_has_usuarios WHERE $numDoc";
+        $sql = "SELECT cargos_id_cargos FROM cargos_has_usuarios WHERE usuarios_num_doc = $numDoc";
         $res = $conectar->query($sql);
         $conectar->close();
 
         return $res;
     }
 
-    public function desactivarCargo($cargosDesac)
+    public function desactivarCargo($cargosDesac, $idUsuario)
     {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
          
         $estado = "Inactivo";
 
-        $sql = "UPDATE cargos_has_usuarios SET estado_asignacion = ? WHERE id_usuario_cargo = ?";
+        $sql = "UPDATE cargos_has_usuarios SET estado_asignacion = ? WHERE cargos_id_cargos = ? AND usuarios_num_doc = ?";
         $stmt = $conectar->prepare($sql);
-        $stmt->bind_param('si', $estado, $cargosDesac);
+        $stmt->bind_param('sii', $estado, $cargosDesac, $idUsuario);
+        $stmt->execute();
+        $stmt->close();
+        $conectar->close();
+    }
+
+    public function estadoCargo($idCargo, $idUsuario)
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+        
+        $sql = "SELECT estado_asignacion FROM cargos_has_usuarios WHERE usuarios_num_doc = $idUsuario AND cargos_id_cargos = $idCargo";
+        $res = $conectar->query($sql);
+        $conectar->close();
+
+        return $res;
+    }
+
+    public function activarCargo($idCargo, $idUsuario)
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+         
+        $estado = "Activo";
+
+        $sql = "UPDATE cargos_has_usuarios SET estado_asignacion = ? WHERE cargos_id_cargos = ? AND usuarios_num_doc = ?";
+        $stmt = $conectar->prepare($sql);
+        $stmt->bind_param('sii', $estado, $idCargo, $idUsuario);
         $stmt->execute();
         $stmt->close();
         $conectar->close();

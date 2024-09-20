@@ -67,8 +67,6 @@ class ControladorCarUsu
         $idCargoSelec = isset($_POST['idCargo']) ? $_POST['idCargo'] : [];
         $idUsuario = $_POST['numDoc'];
 
-        $objCarUsu = new CargosUsuarios();
-
         // Obtener los cargos actualmente asociados al usuario desde la base de datos
         $objCarUsu = new CargosUsuarios();
         $res = $objCarUsu->selectCarUsuarioDoc($idUsuario);
@@ -82,23 +80,41 @@ class ControladorCarUsu
         $nuevosCargos = array_diff($idCargoSelec, $idCarUsuarioExis);
 
         // Determinar los cargos desmarcados (que estaban asociados y ahora no están seleccionados)
+        $cargosActualesBD = array_column($cargosActualesBD, 'cargos_id_cargos'); //Método para convertir en array plano.
         $cargosDesactivar = array_diff($cargosActualesBD, $idCargoSelec);
 
-        // **Asociar nuevos cargos**
+        // Asociar nuevos cargos
         if (!empty($nuevosCargos)) {
-            date_default_timezone_set('America/Bogota');
-            $fechaAsignacion = date('Y-m-d H:i:s');
-            $estado = "Activo";
 
             foreach ($nuevosCargos as $idCargo) {
                 // Evitar duplicados asegurándote de que solo agregas cargos nuevos
-                if (!in_array($idCargo, $cargosActualesBD)) {
+                if (in_array($idCargo, $cargosActualesBD)) {
+                    $resE = $objCarUsu->estadoCargo($idCargo, $idUsuario);
+ 
+                    $estadoCargoBD = [];
+                    while ($filaE = $resE->fetch_assoc()){
+                        $estadoCargoBD[] = $filaE;
+                    }
+            
+                    $estadoCargo = array_column($estadoCargoBD, 'estado_asignacion'); //Método para convertir en array plano.
+
+                    foreach ($estadoCargo AS $estado){
+                        var_dump($estado);
+                        if($estado == "Inactivo"){
+                            $objCarUsu->activarCargo($idCargo, $idUsuario);
+                        }
+                    }
+                }else{
+                    date_default_timezone_set('America/Bogota');
+                    $fechaAsignacion = date('Y-m-d H:i:s');
+                    $estado = "Activo";
+        
                     $objCarUsu->addRelaUsuarioCargo($idCargo, $idUsuario, $fechaAsignacion, $estado);
                 }
             }
         }
 
-        // **Desactivar cargos desmarcados**
+        // Desactivar cargos desmarcados
         if (!empty($cargosDesactivar)) {
             foreach ($cargosDesactivar as $idCargoDesactivar) {
                 $objCarUsu->desactivarCargo($idCargoDesactivar, $idUsuario);

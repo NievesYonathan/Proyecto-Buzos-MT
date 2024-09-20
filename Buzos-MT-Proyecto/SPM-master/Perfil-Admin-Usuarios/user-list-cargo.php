@@ -94,6 +94,18 @@ include '../Componentes/Head/head.php' ?>
 									<td><?= $filaU['num_doc'] ?></td>
 									<td><?= $filaU['usu_nombres'] ?></td>
 									<td><?= $filaU['Cargos'] ?></td>
+									<?php
+									// Separar los cargos y estados en arrays
+									// $cargosU = explode(',', $filaU['Cargos']);
+									// $cargosEstado = explode(',', $filaU['estadoCargo']);
+
+									// // Recorremos los estados y solo imprimimos los cargos cuyo estado sea "Activo"
+									// for ($i = 0; $i < count($cargosEstado); $i++) {
+									// 	if (trim($cargosEstado[$i]) == "Activo") {
+									// 		echo "<td>" . $cargosU[$i] . "</td>";
+									// 	}
+									// }
+									?>
 									<td><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addModal<?= $filaU['num_doc'] ?>"><i class="fa-solid fa-user-plus"></i></button></td>
 								</tr>
 								<!-- Modal para agregar Cargos -->
