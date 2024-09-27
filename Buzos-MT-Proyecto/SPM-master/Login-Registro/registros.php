@@ -21,7 +21,7 @@ session_start();
 <body>
     <section>
         <div class="full-boxx nav-lateral-content">
-		<a href="login.php" class="btn btn-secondary" id="btn-reversas">
+		<a href="../Home-Page-MT/V-3/index.html" class="btn btn-secondary" id="btn-reversas">
 			<i class="fa fa-arrow-left"></i>
 		</a>
         <div class="color"></div>
