@@ -118,7 +118,7 @@ include '../Componentes/Head/head.php' ?>
 									<td><?= $fila['usu_apellidos'] ?></td>
 									<td><?= $fila['usu_telefono'] ?></td>
 									<td><?= $fila['usu_email'] ?></td>
-									<td><?= $fila['usu_estado'] ?></td>
+									<td><?= $fila['estado_usuario'] ?></td>
 									<td>
 										<button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal<?= $fila['num_doc'] ?>">
 											<i class="fa-solid fa-user-pen"></i>

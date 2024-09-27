@@ -88,24 +88,30 @@ class Usuarios
     }
 
     public function mostrarUsuarios()
-    {
-        $conexion = new Conexion();
-        $conectar = $conexion->conectarse();
+{
+    $conexion = new Conexion();
+    $conectar = $conexion->conectarse();
 
-        // $sql = "SELECT u.num_doc, u.t_doc, u.usu_nombres, u.usu_apellidos, u.usu_fecha_nacimiento, u.usu_sexo, u.usu_direccion, u.usu_telefono, u.usu_email, u.usu_fecha_contratacion, u.usu_estado ,t.tip_doc_descripcion
-        //         FROM usuarios AS u
-        //         INNER JOIN tipo_doc AS t ON u.t_doc = t.id_tipo_documento";
+    // Agregamos la unión con la tabla estado para obtener el nombre del estado
+    $sql = "SELECT td.tip_doc_descripcion, u.*, cu.id_usuario_cargo, 
+                GROUP_CONCAT(cu.cargos_id_cargos SEPARATOR ', ') AS id_cargos, 
+                GROUP_CONCAT(cu.estado_asignacion SEPARATOR ', ') AS estadoCargo, 
+                GROUP_CONCAT(c.car_nombre SEPARATOR ', ') AS Cargos,
+                e.nombre_estado AS estado_usuario
+            FROM usuarios AS u
+            INNER JOIN tipo_doc AS td ON u.t_doc = td.id_tipo_documento
+            LEFT JOIN cargos_has_usuarios AS cu ON u.num_doc = cu.usuarios_num_doc AND cu.estado_asignacion = 1
+            LEFT JOIN cargos AS c ON cu.cargos_id_cargos = c.id_cargos
+            LEFT JOIN estados AS e ON u.usu_estado = e.id_estados   
+            GROUP BY u.num_doc";
 
-        $sql = "SELECT td.tip_doc_descripcion, u.*, cu.id_usuario_cargo, GROUP_CONCAT(cu.cargos_id_cargos SEPARATOR ', ') AS id_cargos, GROUP_CONCAT(cu.estado_asignacion SEPARATOR ', ') AS estadoCargo, GROUP_CONCAT(c.car_nombre SEPARATOR ', ') AS Cargos
-                FROM usuarios as u
-                INNER JOIN tipo_doc AS td ON u.t_doc = td.id_tipo_documento
-                LEFT JOIN cargos_has_usuarios AS cu ON u.num_doc = cu.usuarios_num_doc AND cu.estado_asignacion = 1
-                LEFT JOIN cargos AS c ON cu.cargos_id_cargos = c.id_cargos
-                GROUP BY u.num_doc";
-        $res = $conectar->query($sql);
-        $conectar->close();
-        return $res;
-    }
+    $res = $conectar->query($sql);
+
+    $conectar->close();
+    return $res;
+}
+
+    
 
 
     public function obtenerUsuarioPornumDoc($numDoc)
