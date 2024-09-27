@@ -54,7 +54,7 @@ class ControladorUsuario
             $usuTelefono = $_POST['celular'];
             $usuEmail = $_POST['correo'];
             $usuFechaContratacion = $_POST['direccion'];
-            // $imagPerfil = $_POST[''];
+            $imagPerfil = " ";
             $clave = $_POST['password'];
             $confirmarClave = $_POST['confirm_password']; // Agregamos la confirmación de la contraseña
 
@@ -66,7 +66,7 @@ class ControladorUsuario
             }
 
             $controladorUsuario = new Usuarios();
-            $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuDireccion, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
+            $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuDireccion, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave, $imagPerfil);
 
             $_SESSION['alerta'] = "El Usuario Fue Registrado Con Éxito.";
             header("Location: ../Perfil-Admin-Usuarios/user-list.php");        }

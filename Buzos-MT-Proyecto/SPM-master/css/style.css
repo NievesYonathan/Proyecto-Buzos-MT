@@ -429,11 +429,6 @@ table form {
 	padding: 20px 25px;
 }
 
-.pro-btns-resumen {
-	display: block;
-	width: 40%;
-}
-
 .pro-btns {
 	display: flex;
 }
@@ -450,6 +445,7 @@ table form {
 .pro-resumen {
 	width: 100%;
 	margin-top: 3em;
+	margin-right: 30px;
 	border: 2px solid #4b4b4b;
 	border-radius: 3px;
 }
@@ -484,32 +480,6 @@ table form {
 	width: 60%;
 }
 
-.calendario ol {
-	list-style: none;
-	display: grid;
-	grid-template-columns: repeat(7, 1fr);
-	padding-left: 2em;
-	margin-right: 2em;
-}
-
-.calendario ol li {
-	padding: 8px;
-}
-
-.fisrt-day {
-	grid-column-start: 5;
-	background-color: #333;
-	margin-top: 2px;
-	border-radius: 60%;
-	color: #FFF;
-}
-
-.day-name {
-	background-color: #333;
-	color: #F5F5F5;
-	font-weight: bold;
-	text-align: center;
-}
 
 #btn-reversa {
 	margin-top: 15px;

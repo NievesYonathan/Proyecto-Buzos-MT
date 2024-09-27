@@ -237,7 +237,7 @@ include '../Componentes/Head/head.php' ?>
 																<div class="col-12 col-md-6">
 																	<div class="form-group">
 																		<label for="usuario_estado" class="bmd-label-floating">Estado</label>
-																		<input type="text" class="form-control" name="usuario_estado" id="usuario_estado" maxlength="70" value="<?php echo $fila['usu_estado'] ?>">
+																		<input type="number" class="form-control" name="usuario_estado" id="usuario_estado" maxlength="70" value="<?php echo $fila['usu_estado'] ?>">
 																	</div>
 																</div>
 															</div>

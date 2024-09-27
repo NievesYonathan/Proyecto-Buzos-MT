@@ -34,20 +34,20 @@ class Usuarios
         $this->imagPerfil = $imagPerfil;
     }
 
-    public function crearUsuario($numDoc = null, $tDoc = null, $usuNombres = null, $usuApellidos = null, $usuFechaNacimiento = null, $usuSexo = null, $usuTelefono = null, $usuFechaContratacion = null, $usuEmail = null, $clave = null)
+    public function crearUsuario($numDoc = null, $tDoc = null, $usuNombres = null, $usuApellidos = null, $usuFechaNacimiento = null, $usuSexo = null, $usuTelefono = null, $usuFechaContratacion = null, $usuEmail = null, $clave = null, $img = null)
     {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
 
-        $usuEstado = "Activo";
+        $usuEstado = 1;
         $usuDireccion = "Bogotá";
         // $usuFechaContratacion = "2024-09-03";
 
-        $sql = "INSERT INTO usuarios (num_doc,t_doc,usu_nombres,usu_apellidos,usu_fecha_nacimiento,usu_sexo,usu_direccion,usu_telefono,usu_email,usu_fecha_contratacion,usu_estado)
-                VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO usuarios (num_doc,t_doc,usu_nombres,usu_apellidos,usu_fecha_nacimiento,usu_sexo,usu_direccion,usu_telefono,usu_email,usu_fecha_contratacion,usu_estado, imag_perfil)
+                VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $conectar->prepare($sql);
-        $stmt->bind_param("iisssssssss", $numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuDireccion, $usuTelefono, $usuEmail, $usuFechaContratacion, $usuEstado);
+        $stmt->bind_param("iissssssssis", $numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuDireccion, $usuTelefono, $usuEmail, $usuFechaContratacion, $usuEstado, $img);
         $stmt->execute();
         $stmt->close();
         $conectar->close();
@@ -99,7 +99,7 @@ class Usuarios
         $sql = "SELECT td.tip_doc_descripcion, u.*, cu.id_usuario_cargo, GROUP_CONCAT(cu.cargos_id_cargos SEPARATOR ', ') AS id_cargos, GROUP_CONCAT(cu.estado_asignacion SEPARATOR ', ') AS estadoCargo, GROUP_CONCAT(c.car_nombre SEPARATOR ', ') AS Cargos
                 FROM usuarios as u
                 INNER JOIN tipo_doc AS td ON u.t_doc = td.id_tipo_documento
-                LEFT JOIN cargos_has_usuarios AS cu ON u.num_doc = cu.usuarios_num_doc AND cu.estado_asignacion = 'Activo'
+                LEFT JOIN cargos_has_usuarios AS cu ON u.num_doc = cu.usuarios_num_doc AND cu.estado_asignacion = 1
                 LEFT JOIN cargos AS c ON cu.cargos_id_cargos = c.id_cargos
                 GROUP BY u.num_doc";
         $res = $conectar->query($sql);
@@ -166,7 +166,7 @@ public function eliminarUsuario($num_doc) {
     $conectar = $conexion->conectarse();
     
     // Consulta para eliminar o actualizar el estado del usuario
-    $sql = "UPDATE usuarios SET usu_estado = 'Inactivo' WHERE num_doc = ?";
+    $sql = "UPDATE usuarios SET usu_estado = 2 WHERE num_doc = ?";
     
     $stmt = $conectar->prepare($sql);
     $stmt->bind_param("i", $num_doc);

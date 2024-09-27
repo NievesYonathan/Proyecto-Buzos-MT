@@ -42,7 +42,7 @@ if(!isset($_SESSION['user_id'])){
 
 				//Enlace solo visible para Jefe de Producción
 				if ($perfil == 'Jefe Producción'): ?>
-					<a href="client-new.html" class="tile">
+					<a href="../Perfil-Produccion/vista-produccion.php" class="tile">
 						<div class="tile-tittle">Producción</div>
 						<div class="tile-icon">
 							<i class="fa-solid fa-industry"></i>

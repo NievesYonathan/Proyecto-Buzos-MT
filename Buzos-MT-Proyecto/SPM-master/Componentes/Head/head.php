@@ -31,4 +31,14 @@
 
 	<!-- Icono -->
 	<link rel="icon" href="../assets/img/icon.png" sizes="32x32" type="image/png">
+
+	<style>
+    /* Ocultar el formulario por defecto */
+    #productionForm {
+      display: none;
+      border: 1px solid #ccc;
+      padding: 20px;
+      margin-top: 20px;
+    }
+  </style>
 </head>

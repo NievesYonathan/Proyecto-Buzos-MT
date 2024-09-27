@@ -100,14 +100,14 @@ class ControladorCarUsu
 
                     foreach ($estadoCargo AS $estado){
                         var_dump($estado);
-                        if($estado == "Inactivo"){
+                        if($estado == 2){
                             $objCarUsu->activarCargo($idCargo, $idUsuario);
                         }
                     }
                 }else{
                     date_default_timezone_set('America/Bogota');
                     $fechaAsignacion = date('Y-m-d H:i:s');
-                    $estado = "Activo";
+                    $estado = 1;
         
                     $objCarUsu->addRelaUsuarioCargo($idCargo, $idUsuario, $fechaAsignacion, $estado);
                 }

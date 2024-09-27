@@ -46,7 +46,7 @@ class CargosUsuarios {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
          
-        $estado = "Inactivo";
+        $estado = 2;
 
         $sql = "UPDATE cargos_has_usuarios SET estado_asignacion = ? WHERE cargos_id_cargos = ? AND usuarios_num_doc = ?";
         $stmt = $conectar->prepare($sql);
@@ -73,7 +73,7 @@ class CargosUsuarios {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
          
-        $estado = "Activo";
+        $estado = 1;
 
         $sql = "UPDATE cargos_has_usuarios SET estado_asignacion = ? WHERE cargos_id_cargos = ? AND usuarios_num_doc = ?";
         $stmt = $conectar->prepare($sql);
