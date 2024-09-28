@@ -19,6 +19,11 @@
     <span class="glow"></span>
     <span class="contact-btn-content">Registrarme</span>
   </button>
+  <button class="contact-btns" onclick="window.location.href='../../Login-Registro/login.php'">
+    <span class="glows"></span>
+    <span class="contact-btn-contents">Iniciar Sesión</span>
+  </button>
+  
 
   <div class="spotlight">
     <div></div>

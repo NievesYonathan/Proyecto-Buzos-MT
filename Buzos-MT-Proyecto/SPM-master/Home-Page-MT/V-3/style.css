@@ -15,6 +15,7 @@ body {
     --_size: min(var(--_factor), 80vw);
 }
 
+
 body.gold .header h2 ,
 body.gold p,
 body.gold > * > * :not(.contact-btn):not(.cards-container *):not(.cards-container):not(.wrapper *):not(.wrapper )  {
@@ -114,7 +115,7 @@ body.gold .header > div.mid-spot {
 }
 
 button.contact-btn {
-    position: absolute; left: min(46em, 60vw); right: 0; margin: 0 auto;
+    position: absolute; left: min(50em, 60vw); right: 0; margin: 0 auto;
     width: 8em; height: 2.4em;
     cursor: pointer;
     border-radius: 20em;
@@ -1064,5 +1065,148 @@ p {
 
     .footer-content {
         flex-direction: column;
+    }
+}
+
+
+
+
+
+
+button.contact-btns {
+    position: absolute; left: min(106em, 23vw); right: 0; margin: 0 auto;
+    width: 8em; height: 2.4em;
+    cursor: pointer;
+    border-radius: 20em;
+    border: none;
+    transition: background 0.5s, transform 0.5s;
+    
+    border: 1px solid #c2ccff33;
+    opacity: 1;
+    padding-top: 0.3em;
+
+    background: #121521;
+    color: #9dc3f7;
+    white-space:nowrap;
+}
+button.contact-btns::before {
+    content: ''; display: block; position:absolute; left: 0; top:0; border-radius: 20em;
+    width: 100%; height: 100%;
+    background: #c2ccff91 radial-gradient(farthest-side at 50% 100%, #c2ccff, transparent);
+    opacity: 0.1;
+    transition: all 0.4s ease-in-out;
+}
+button.contact-btns:hover::before {
+    background: #c2ccff1e radial-gradient(farthest-side at 50% 100%, #c2ccff, transparent);
+    opacity: 0.3;
+}
+.contact-btns .glows {
+    --border-width: 1px;
+    --loop-cycle: 24s;
+    position: absolute;
+    inset: calc(var(--border-width)* -1);
+    border-radius: 50px;
+    border: var(--border-width) solid transparent;
+    -webkit-mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+    mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+    -webkit-mask-clip: padding-box, border-box;
+    mask-clip: padding-box, border-box;
+    -webkit-mask-composite: source-in, xor;
+    mask-composite: intersect;
+    pointer-events: none;
+}
+button.contact-btns:hover .glows {
+    --loop-cycle: 2s;
+}
+.contact-btns .glows::after, .contact-btsn .glows::before {
+    content: "";
+    height: 100%;
+    offset-anchor: 100% 50%;
+    background: radial-gradient(circle at 50% 50%, hsla(0, 0%, 100%, 0.75), transparent 50%), radial-gradient(circle at 50% 50%, #c2ccff 50%, transparent);
+    opacity: 0.4;
+    offset-path: rect(0 100% 100% 0 round 33px);
+    position: absolute;
+    display: inline-block;
+    -webkit-animation: loop 4s linear infinite;
+    animation: loop var(--loop-cycle) linear infinite;
+    aspect-ratio: 1 / 1;
+    transition: opacity 1s ease-in-out;
+}
+.contact-btns .glows::before {
+    animation-delay: calc( var(--loop-cycle) / -2 );
+}
+@keyframes loop {
+    100% {
+        offset-distance: 100%;
+    }    
+}
+.contact-btn-contents {
+    background: linear-gradient(0deg, #d8ecf8, #98c0ef);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.2em;
+    line-height: 142%;
+}
+button.contact-btns:hover .glows::after, button.contact-btns:hover .glows::before {
+    opacity: 0.6;
+}
+@keyframes btn-rot {
+    0% { rotate: 0deg; }
+    100% { rotate: 360deg; } 
+}
+
+
+
+/* Estilo base para ambos botones */
+.contact-btn, .contact-btns {
+    width: 100%;
+    max-width: 200px; /* Tamaño máximo del botón */
+    height: 2.4em;
+    margin: 0.5em;
+    cursor: pointer;
+    border-radius: 20em;
+    border: none;
+    background: #121521;
+    color: #9dc3f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: background 0.5s, transform 0.5s;
+    transform: translateX(4em); /* Mueve los botones a la derecha */
+}
+
+.contact-btn .glow, .contact-btns .glows {
+    position: absolute;
+    inset: 0;
+    border-radius: 50px;
+    border: 1px solid transparent;
+}
+
+.contact-btn-content, .contact-btn-contents {
+    background: linear-gradient(0deg, #d8ecf8, #98c0ef);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.2em;
+    line-height: 142%;
+}
+
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .contact-btn, .contact-btns {
+        width: 80%; /* Ocupa más espacio en pantallas pequeñas */
+        max-width: none;
+    }
+    
+    .button-container {
+        gap: 1em; /* Reduce el espacio entre los botones en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-btn, .contact-btns {
+        width: 100%; /* Ocupa todo el ancho disponible en pantallas muy pequeñas */
+        font-size: 0.9em; /* Reduce el tamaño de la fuente */
     }
 }
