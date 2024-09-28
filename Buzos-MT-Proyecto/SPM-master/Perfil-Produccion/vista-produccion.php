@@ -357,7 +357,7 @@ include '../Componentes/Head/head.php' ?>
 
 					<div class="col-sm-6 col-md-6 col-lg-7">
 						<div id="calendar"></div>
-						<!-- Modal de Bootstrap -->
+						<!-- Modal de Calendario - Producción -->
 						<div class="modal fade" id="productionModal" tabindex="-1" role="dialog" aria-labelledby="productionModalLabel" aria-hidden="true">
 							<div class="modal-dialog" role="document">
 								<div class="modal-content">
@@ -372,14 +372,6 @@ include '../Componentes/Head/head.php' ?>
 											<div class="form-group">
 												<label for="productionDate">Fecha de Producción:</label>
 												<input type="text" class="form-control" id="productionDate" name="productionDate" readonly>
-											</div>
-											<div class="form-group">
-												<label for="task">Tarea de Producción:</label>
-												<input type="text" class="form-control" id="task" name="task">
-											</div>
-											<div class="form-group">
-												<label for="quantity">Cantidad:</label>
-												<input type="number" class="form-control" id="quantity" name="quantity">
 											</div>
 											<button type="submit" class="btn btn-primary">Registrar</button>
 										</form>
@@ -396,25 +388,7 @@ include '../Componentes/Head/head.php' ?>
 	<!--===Include JavaScript files======-->
 	<?php include '../Componentes/Script/script.php' ?>
 	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
-	<script>
-		document.addEventListener('DOMContentLoaded', function() {
-			var calendarEl = document.getElementById('calendar');
-			var calendar = new FullCalendar.Calendar(calendarEl, {
-				initialView: 'dayGridMonth',
-				height: 500,
-				expandRows: true,
-				handleWindowResize: true,
-				dateClick: function(info) {
-					// Mostrar el modal cuando se hace clic en un día
-					$('#productionModal').modal('show');
-
-					// Rellenar el campo de fecha con la fecha seleccionada
-					document.getElementById('productionDate').value = info.dateStr;
-				}
-			});
-			calendar.render();
-		});
-	</script>
+	<script src="../js/calendear.js"></script>
 </body>
 
 </html>
