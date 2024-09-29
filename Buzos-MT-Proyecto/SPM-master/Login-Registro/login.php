@@ -1,10 +1,20 @@
 <?php
 session_start();
-if(isset($_SESSION['login_errors'])) {
-    foreach($_SESSION['login_errors'] as $error) {
+
+// Manejo de errores de inicio de sesión antes de cualquier redirección
+if (isset($_SESSION['login_errors'])) {
+    foreach ($_SESSION['login_errors'] as $error) {
         echo "<p class='error'>$error</p>";
     }
+    // Limpiar los errores de la sesión después de mostrarlos
     unset($_SESSION['login_errors']);
+}
+
+// Verificar si ya hay una sesión activa
+if (isset($_SESSION['user_id'])) {
+    // Si hay una sesión activa, redirigir al home (dashboard)
+    header('Location: ../Dashboard/home.php');
+    exit;
 }
 ?>
 

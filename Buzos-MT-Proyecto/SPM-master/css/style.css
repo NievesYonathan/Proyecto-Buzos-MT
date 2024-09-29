@@ -745,5 +745,13 @@ table form {
 	/* Verde más claro */
 }
 
-
 /*---------------------------- FIN ESTILOS TABLAS  -------------------------------*/
+
+/* Poner en mayúscula la primera letra del mes. */
+.fc-toolbar-title::first-letter,  .fc-scrollgrid-sync-inner a::first-letter{
+    text-transform: uppercase;
+}
+
+.fc-scrollgrid-sync-inner a{
+	color: #0f3443;
+}

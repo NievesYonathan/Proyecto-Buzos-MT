@@ -1,7 +1,8 @@
 <?php
 include 'Conexion.php';
 
-class MateriaPrima{
+class MateriaPrima
+{
     private $mpId;
     private $mpNombres;
     private $mpDescripcion;
@@ -12,7 +13,8 @@ class MateriaPrima{
     private $mpProveedor;
 
 
-    public function __construct($mpId = null, $mpNombres = null, $mpDescripcion = null, $mpUnidadMedida = null, $mpCantidad = null, $mpEstado = null, $mpFechaCompra = null){
+    public function __construct($mpId = null, $mpNombres = null, $mpDescripcion = null, $mpUnidadMedida = null, $mpCantidad = null, $mpEstado = null, $mpFechaCompra = null)
+    {
         $this->mpId = $mpId;
         $this->mpNombres = $mpNombres;
         $this->mpDescripcion = $mpDescripcion;
@@ -21,20 +23,22 @@ class MateriaPrima{
         $this->mpEstado = $mpEstado;
         $this->mpCantidad = $mpCantidad;
         $this->mpUnidadMedida = $mpUnidadMedida;
-}
-    public function agregarMateriaPrima($mpNombres,$mpDescripcion,$mpUnidadMedida,$mpCantidad,$mpEstado,$mpFechaCompra,$mpProveedor){
-       $conexion = new Conexion();
+    }
+    public function agregarMateriaPrima($mpNombres, $mpDescripcion, $mpUnidadMedida, $mpCantidad, $mpEstado, $mpFechaCompra, $mpProveedor)
+    {
+        $conexion = new Conexion();
         $conectar = $conexion->conectarse();
-            $sql = 'INSERT INTO materia_prima (mat_pri_nombre,mat_pri_descripcion,mat_pri_unidad_medida,mat_pri_cantidad,estado_id_estado,fecha_compra_mp,proveedores_id_proveedores) VALUES 
+        $sql = 'INSERT INTO materia_prima (mat_pri_nombre,mat_pri_descripcion,mat_pri_unidad_medida,mat_pri_cantidad,estado_id_estado,fecha_compra_mp,proveedores_id_proveedores) VALUES 
             (?,?,?,?,?,?,?)';
         $stmt = $conectar->prepare($sql);
-        $stmt->bind_param('sssiisi',$mpNombres,$mpDescripcion,$mpUnidadMedida,$mpCantidad,$mpEstado,$mpFechaCompra,$mpProveedor);
+        $stmt->bind_param('sssiisi', $mpNombres, $mpDescripcion, $mpUnidadMedida, $mpCantidad, $mpEstado, $mpFechaCompra, $mpProveedor);
         $result = $stmt->execute();
         $stmt->close();
         $conectar->close();
         return $result;
-}
-    public function consultarMateriaPrima(){
+    }
+    public function consultarMateriaPrima()
+    {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
         $sql = 'SELECT * FROM materia_prima';
@@ -53,7 +57,8 @@ class MateriaPrima{
         $conectar->close();
     }*/
 
-    public function actualizarMateriaPrima($mpNombres, $mpDescripcion, $mpCantidad, $mpEstado, $mpId) {
+    public function actualizarMateriaPrima($mpNombres, $mpDescripcion, $mpCantidad, $mpEstado, $mpId)
+    {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
         $sql = 'UPDATE materia_prima SET mat_pri_nombre = ?, mat_pri_descripcion = ?, mat_pri_cantidad = ?, estado_id_estado = ? WHERE id_materia_prima = ?';
@@ -64,10 +69,11 @@ class MateriaPrima{
         $conectar->close();
         return $result;
     }
-    public function consultarEstados(){
+    public function consultarEstados()
+    {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
-        $sql = 'SELECT * FROM estados'; 
+        $sql = 'SELECT * FROM estados';
         $result = $conectar->query($sql);
         $conectar->close();
         return $result;

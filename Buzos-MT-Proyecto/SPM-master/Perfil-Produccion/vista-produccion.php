@@ -358,27 +358,199 @@ include '../Componentes/Head/head.php' ?>
 					<div class="col-sm-6 col-md-6 col-lg-7">
 						<div id="calendar"></div>
 						<!-- Modal de Calendario - Producción -->
-						<div class="modal fade" id="productionModal" tabindex="-1" role="dialog" aria-labelledby="productionModalLabel" aria-hidden="true">
-							<div class="modal-dialog" role="document">
+						<div class="modal fade" id="productionModal" tabindex="-1" role="dialog" data-bs-backdrop="static">
+							<div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered" role="document">
 								<div class="modal-content">
+
 									<div class="modal-header">
-										<h5 class="modal-title" id="productionModalLabel">Registrar Producción</h5>
-										<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-											<span aria-hidden="true">&times;</span>
-										</button>
+										<h5 class="modal-title">Gestionar Producción:</h5>
+										<button class="btn-close" data-bs-dismiss="modal"></button>
 									</div>
+
 									<div class="modal-body">
-										<form id="productionForm">
-											<div class="form-group">
-												<label for="productionDate">Fecha de Producción:</label>
-												<input type="text" class="form-control" id="productionDate" name="productionDate" readonly>
-											</div>
-											<button type="submit" class="btn btn-primary">Registrar</button>
+										<form action="" method="GET" class="form-neon" autocomplete="off">
+											<fieldset>
+												<legend><i class="fas fa-industry"></i> &nbsp; Información de la producción</legend>
+												<div class="container-fluid">
+													<div class="row">
+														<div class="col-12 col-md-4">
+															<div class="form-group">
+																<label for="produccion_nombre" class="bmd-label-floating">Nombre de la Producción</label>
+																<input type="text" class="form-control border border-dark" name="produccion_nombre" id="produccion_nombre" maxlength="50" required>
+															</div>
+														</div>
+
+														<div class="col-12 col-md-4">
+															<div class="form-group">
+																<label for="produccion_fecha_inicio" class="bmd-label-floating">Fecha de Inicio</label>
+																<input type="date" class="form-control border border-dark" name="produccion_fecha_inicio" id="productionDate" required>
+															</div>
+														</div>
+
+														<div class="col-12 col-md-4">
+															<div class="form-group">
+																<label for="produccion_fecha_fin" class="bmd-label-floating">Fecha de Finalización</label>
+																<input type="date" class="form-control border border-dark" name="produccion_fecha_fin" id="produccion_fecha_fin" required>
+															</div>
+														</div>
+													</div>
+													<div class="row mt-3">
+														<div class="col-12 col-md-6">
+															<div class="form-group">
+																<label for="produccion_cantidad" class="bmd-label-floating">Cantidad de Producción</label>
+																<input type="number" class="form-control border border-dark" name="produccion_cantidad" id="produccion_cantidad" maxlength="50" required>
+															</div>
+														</div>
+
+														<div class="col-12 col-md-6">
+															<div class="form-group">
+																<label for="produccion_etapa" class="bmd-label-floating">Etapa</label>
+																<select class="form-control border border-dark" id="produccion_etapa" name="produccion_etapa" required>
+																	<?php
+																	include_once '../Modelo/Conexion.php';
+																	$conexion = new Conexion();
+																	$conectarse = $conexion->conectarse();
+
+																	$sql = "SELECT * FROM etapas";
+																	$res = $conectarse->query($sql);
+																	$conectarse->close();
+
+																	while ($fila = mysqli_fetch_assoc($res)) { ?>
+																		<option value="<?= $fila['id_etapas'] ?>"><?= $fila['eta_nombre'] ?></option>
+																	<?php
+																	}
+																	?>
+																</select>
+															</div>
+														</div>
+													</div>
+												</div>
+											</fieldset>
+
+											<br><br>
+
+											<fieldset>
+												<legend><i class="fas fa-pallet fa-fw"></i> &nbsp; Detalles de Materia Prima</legend>
+												<div class="container-fluid">
+													<div class="row mt-3" id="mtPrima-container">
+														<div class="col-12 col-md-6">
+															<div class="form-group">
+																<label for="produccion_mtPrima" class="bmd-label-floating">Materia Prima</label>
+																<select class="form-control border border-dark" id="produccion_mtPrima1" name="produccion_mtPrima[]" required>
+																	<?php
+																	include_once '../Modelo/Conexion.php';
+																	$conexion = new Conexion();
+																	$conectarse = $conexion->conectarse();
+
+																	$sql = "SELECT * FROM materia_prima";
+																	$res = $conectarse->query($sql);
+																	$conectarse->close();
+
+																	while ($fila = mysqli_fetch_assoc($res)) { ?>
+																		<option value="<?= $fila['id_materia_prima'] ?>"><?= $fila['mat_pri_nombre'] ?></option>
+																	<?php
+																	}
+																	?>
+																</select>
+															</div>
+														</div>
+
+														<div class="col-12 col-md-6">
+															<div class="form-group">
+																<label for="mtPrima_cantidad" class="bmd-label-floating">Cantidad</label>
+																<input type="number" class="form-control border border-dark" name="mtPrima_cantidad" id="mtPrima_cantidad1" maxlength="50" required>
+															</div>
+														</div>
+														<div class="col-12">
+															<button type="button" id="addMtPrimaBtn" class="btn btn-info mt-3">Agregar otra Materia Prima</button>
+														</div>
+
+													</div>
+												</div>
+											</fieldset>
+
+											<br><br>
+
+											<fieldset>
+												<legend><i class="fas fa-tasks"></i> &nbsp; Detalles de la Tarea</legend>
+												<div class="container-fluid">
+													<div class="row" id="tarea-container">
+														<div class="col-12 col-md-4 mb-2">
+															<div class="form-group">
+																<select class="form-control border border-dark" id="produccion_tarea1" name="produccion_tarea[]" required>
+																	<option value="">Tarea</option>
+																	<?php
+																	include_once '../Modelo/Conexion.php';
+																	$conexion = new Conexion();
+																	$conectarse = $conexion->conectarse();
+
+																	$sql = "SELECT * FROM tarea";
+																	$res = $conectarse->query($sql);
+																	$conectarse->close();
+
+																	while ($fila = mysqli_fetch_assoc($res)) { ?>
+																		<option value="<?= $fila['id_tarea'] ?>"><?= $fila['tar_nombre'] ?></option>
+																	<?php
+																	}
+																	?>
+																</select>
+															</div>
+														</div>
+
+														<div class="col-12 col-md-4" id="resp-container">
+															<div class="form-group">
+																<select class="form-control border border-dark" id="produccion_responsable1" name="produccion_responsable" required>
+																	<option value="">Responsable</option>
+																	<?php
+																	include_once '../Modelo/Conexion.php';
+																	$conexion = new Conexion();
+																	$conectarse = $conexion->conectarse();
+
+																	$sql = "SELECT * FROM usuarios AS u
+																			LEFT JOIN cargos_has_usuarios AS cu ON cu.usuarios_num_doc = u.num_doc 
+																			WHERE cargos_id_cargos = 3";
+																	$res = $conectarse->query($sql);
+																	$conectarse->close();
+
+																	while ($fila = mysqli_fetch_assoc($res)) { ?>
+																		<option value="<?= $fila['num_doc'] ?>"><?= $fila['usu_nombres'] . ' ' . $fila['usu_apellidos'] ?></option>
+																	<?php
+																	}
+																	?>
+																</select>
+															</div>
+														</div>
+														<div class="col-12 col-md-4" id="fEntrega-container">
+															<div class="form-group">
+																<input type="text" class="form-control border border-dark" name="produccion_fecha_entrega" id="produccion_fecha_entrega1" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text';" placeholder="Fecha de Entrega" required>
+
+																<!-- <input type="date" class="form-control border border-dark" name="produccion_fecha_entrega" id="produccion_fecha_entrega1" onfocus="this.type='date'" onblur="this.type='text'" placeholder="Fecha de Entrega" required> -->
+															</div>
+														</div>
+														<div class="col-12">
+															<button type="button" id="addTareaBtn" class="btn btn-info mt-3">Agregar otra tarea</button>
+														</div>
+													</div>
+												</div>
+											</fieldset>
+
+											<p class="text-center" style="margin-top: 40px;">
+												<button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
+												&nbsp; &nbsp;
+												<button type="submit" class="btn btn-raised btn-success btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
+											</p>
 										</form>
+
+									</div>
+
+									<div class="modal-footer">
+										<button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+
 									</div>
 								</div>
 							</div>
 						</div>
+						<!-- Fin Model Producción -->
 					</div>
 				</div>
 			</div>
@@ -387,7 +559,7 @@ include '../Componentes/Head/head.php' ?>
 
 	<!--===Include JavaScript files======-->
 	<?php include '../Componentes/Script/script.php' ?>
-	<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
+	<!-- <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script> -->
 	<script src="../js/calendear.js"></script>
 </body>
 
