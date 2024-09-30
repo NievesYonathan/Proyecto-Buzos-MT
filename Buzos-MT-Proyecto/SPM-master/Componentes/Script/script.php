@@ -1,5 +1,5 @@
 	<!-- jQuery V3.4.1 -->
-	<!-- <script src="../js/jquery-3.4.1.min.js"></script> -->
+	<script src="../js/jquery-3.4.1.min.js"></script>
 
 	<!-- popper -->
 	<!-- <script src="../js/popper.min.js"></script> -->
