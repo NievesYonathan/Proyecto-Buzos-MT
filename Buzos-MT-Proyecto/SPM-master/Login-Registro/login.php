@@ -38,7 +38,7 @@ if (isset($_SESSION['user_id'])) {
 <body>
     <section>
         <div class="full-box nav-lateral-content">
-		<a href="registros.php" class="btn btn-secondary" id="btn-reversa">
+		<a href="../Home-Page-MT/V-3/index.php" class="btn btn-secondary" id="btn-reversa">
 			<i class="fa fa-arrow-left"></i>
 		</a>
         <div class="color"></div>

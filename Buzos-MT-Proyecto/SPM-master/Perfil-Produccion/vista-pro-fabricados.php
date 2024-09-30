@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+	header('Location: ../Login-Registro/login.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 	<?php 
@@ -28,7 +36,7 @@
 
 				<div class="product-list">
 					<div class="product-item">
-						<img src="https://lh5.googleusercontent.com/proxy/qSbTXu5kBnkHZvxBc4fhU1Kktwp1fUcrVFklTH2NUaIUIhfKOyxVhKMPIUxODR77A-ZDMH2huxyrPifk4rLoy-zprigwgZ0CnQriaumBm0bpFjUlphotjuZ4PWsc2G-LBOSJDQNznsi9r_o1rVhK6Jh0k6liF3c" alt="Producto" class="product-image">
+						<img src="../assets/img/producto.jpg" alt="Producto" class="product-image">
 						<div class="product-info">
 							<h3 class="product-name">Buzos unixes</h3>
 							<p class="product-quantity">Cantidad de Producción: 500 unidades</p>
