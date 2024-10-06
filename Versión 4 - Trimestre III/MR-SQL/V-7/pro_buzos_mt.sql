@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-09-2024 a las 02:57:42
+-- Tiempo de generación: 06-10-2024 a las 02:22:25
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.0.30
 
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Base de datos: `pro_buzos_mt_respaldo`
+-- Base de datos: `pro_buzos_mt1`
 --
 
 DELIMITER $$
@@ -190,9 +190,12 @@ INSERT INTO `cargos_has_usuarios` (`id_usuario_cargo`, `cargos_id_cargos`, `usua
 (7, 1, 6543254, '2024-09-15 19:55:51', 2),
 (9, 4, 1022934571, '2024-09-16 16:11:01', 2),
 (64, 5, 1022934571, '2024-09-19 07:15:36', 1),
-(69, 3, 852258, '2024-09-20 14:12:46', 1),
+(69, 3, 852258, '2024-09-20 14:12:46', 2),
 (70, 1, 4869681, '2024-09-24 01:14:34', 1),
-(71, 3, 6543254, '2024-09-23 18:55:34', 1);
+(71, 3, 6543254, '2024-09-23 18:55:34', 1),
+(72, 3, 1022922370, '2024-09-30 06:53:07', 1),
+(73, 2, 852258, '2024-09-30 06:55:15', 1),
+(74, 2, 1140916757, '2024-09-30 06:59:27', 1);
 
 -- --------------------------------------------------------
 
@@ -299,6 +302,17 @@ INSERT INTO `materia_prima` (`id_materia_prima`, `mat_pri_nombre`, `mat_pri_desc
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `motivos`
+--
+
+CREATE TABLE `motivos` (
+  `id_motivo` int(11) NOT NULL,
+  `categoria_motivo` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `produccion`
 --
 
@@ -387,23 +401,25 @@ INSERT INTO `reg_pro_mat_prima` (`id_registro`, `reg_pmp_cantidad_usada`, `reg_p
 CREATE TABLE `salida_productos` (
   `id_salida_productos` int(11) NOT NULL,
   `sal_pro_cantidad` int(11) NOT NULL,
-  `sal_pro_motivo` varchar(60) NOT NULL,
+  `sal_pro_motivo` varchar(400) NOT NULL,
   `sal_pro_fecha` datetime NOT NULL,
   `sal_pro_destino` varchar(45) NOT NULL,
-  `id_reg_prod_fabricados` int(11) NOT NULL
+  `id_reg_prod_fabricados` int(11) NOT NULL,
+  `id_motivo` int(11) DEFAULT NULL,
+  `id_usuario` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `salida_productos`
 --
 
-INSERT INTO `salida_productos` (`id_salida_productos`, `sal_pro_cantidad`, `sal_pro_motivo`, `sal_pro_fecha`, `sal_pro_destino`, `id_reg_prod_fabricados`) VALUES
-(1, 150, 'Venta al por mayor', '2024-09-10 00:00:00', 'Distribuidor A', 1),
-(2, 120, 'Venta directa', '2024-09-11 00:00:00', 'Tienda B', 2),
-(3, 90, 'Envío a sucursal', '2024-09-12 00:00:00', 'Sucursal C', 3),
-(4, 200, 'Donación', '2024-09-13 00:00:00', 'Organización D', 4),
-(5, 180, 'Venta online', '2024-09-14 00:00:00', 'Cliente E', 5),
-(6, 100, 'Transferencia interna', '2024-09-15 00:00:00', 'Almacén F', 6);
+INSERT INTO `salida_productos` (`id_salida_productos`, `sal_pro_cantidad`, `sal_pro_motivo`, `sal_pro_fecha`, `sal_pro_destino`, `id_reg_prod_fabricados`, `id_motivo`, `id_usuario`) VALUES
+(1, 150, 'Venta al por mayor', '2024-09-10 00:00:00', 'Distribuidor A', 1, NULL, NULL),
+(2, 120, 'Venta directa', '2024-09-11 00:00:00', 'Tienda B', 2, NULL, NULL),
+(3, 90, 'Envío a sucursal', '2024-09-12 00:00:00', 'Sucursal C', 3, NULL, NULL),
+(4, 200, 'Donación', '2024-09-13 00:00:00', 'Organización D', 4, NULL, NULL),
+(5, 180, 'Venta online', '2024-09-14 00:00:00', 'Cliente E', 5, NULL, NULL),
+(6, 100, 'Transferencia interna', '2024-09-15 00:00:00', 'Almacén F', 6, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -425,7 +441,10 @@ INSERT INTO `seguridad` (`id_seguridad`, `usu_num_doc`, `seg_clave_hash`) VALUES
 (9, 1022934571, 'l*¯l8³3æù»¢*o¶¥—!gs#«øx)øÔ±~÷Á›q¦F”I„Ê]“·!¾6±'),
 (10, 6543254, '1èúÎ¾f™1<©ÚËe“¾[Y¡N,>õÅÖFƒ¿'),
 (12, 852258, '1èúÎ¾f™1<©ÚËe“¾[Y¡N,>õÅÖFƒ¿'),
-(13, 4869681, 'è¾Üá÷î/2ØêÄšÇÿ');
+(13, 4869681, 'è¾Üá÷î/2ØêÄšÇÿ'),
+(14, 1022922370, '“;ªN	¿:âC\0É\Z\Z™O0ézÞÃ	\\úrÍâf$'),
+(15, 1140916757, 'XP^Y1lvb„õì‹'),
+(16, 1022948788, 'è¾Üá÷î/2ØêÄšÇÿ');
 
 --
 -- Disparadores `seguridad`
@@ -512,10 +531,13 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`num_doc`, `t_doc`, `usu_nombres`, `usu_apellidos`, `usu_fecha_nacimiento`, `usu_sexo`, `usu_direccion`, `usu_telefono`, `usu_email`, `usu_fecha_contratacion`, `usu_estado`, `imag_perfil`) VALUES
-(852258, 2, 'Juana', 'Maria', '2024-09-05', 'F', 'Bogotá', '12387932', 'tovar@gmail.com', '2024-09-03', 1, NULL),
+(852258, 2, 'Juana M', 'Maria', '2024-09-05', 'F', 'Bogotá', '12387932', 'tovar@gmail.com', '2024-09-03', 2, NULL),
 (4869681, 1, 'Yonathan', 'Nieves', '2004-10-15', 'F', 'Bogotá', '12387932', 'yonathanieves17@gmail.com', '2024-09-03', 1, NULL),
 (6543254, 1, 'Paula', 'Tovar', '2024-09-06', 'F', 'Bogotá', '12387932', 'ytrrgytrs17@gmail.com', '2024-09-03', 1, NULL),
-(1022934571, 2, 'José', 'Guerrero', '2024-09-08', 'M', 'Bogotá', '324354281', 'multygems@gmail.com', '2024-09-03', 1, NULL);
+(1022922370, 2, 'andres', 'ramirez', '2006-10-16', 'M', 'Bogotá', '213213123', 'ajskajs@qssaasa.com', '2024-10-03', 2, '123456789'),
+(1022934571, 2, 'José', 'Guerrero', '2024-09-08', 'M', 'Bogotá', '324354281', 'multygems@gmail.com', '2024-09-03', 1, NULL),
+(1022948788, 3, 'Harold Nicolas', 'Gomez Rojas', '2007-01-31', 'M', 'Bogotá', '3224481728', 'haroldgomez31del2007@hotmail.com', '2024-09-03', 1, NULL),
+(1140916757, 2, 'Camilo', 'moreno', '2023-11-01', 'M', 'Bogotá', '3052446589', 'milo.moreno@gmail.com', '2024-09-03', 1, NULL);
 
 --
 -- Disparadores `usuarios`
@@ -701,10 +723,13 @@ CREATE TABLE `usuarios_espejo` (
 
 INSERT INTO `usuarios_espejo` (`num_doc`, `t_doc`, `usu_nombres`, `usu_apellidos`, `usu_fecha_nacimiento`, `usu_sexo`, `usu_direccion`, `usu_telefono`, `usu_email`, `usu_fecha_contratacion`, `usu_estado`, `imag_perfil`, `operacion`, `fecha_operacion`, `usuario_operacion`) VALUES
 (321654, 1, 'mARIO', 'PLy', '2024-09-06', 'M', 'Muuu', '32164552', 'fgdfgfd@gmail.com', '2024-09-05', 1, '', 'delete', '2024-09-23', 'root@localhost'),
-(852258, 1, 'Juana', 'Maria', '2024-09-05', 'F', 'Bogotá', '12387932', 'tovar@gmail.com', '2024-09-03', 1, '', 'UPDATE', '2024-09-23', 'root@localhost'),
+(852258, 1, 'Juana M', 'Maria', '2024-09-05', 'F', 'Bogotá', '12387932', 'tovar@gmail.com', '2024-09-03', 2, '', 'UPDATE', '2024-09-30', 'root@localhost'),
 (4869681, 3, 'Yonathan', 'Nieves', '2004-10-15', 'F', 'Bogotá', '12387932', 'yonathanieves17@gmail.com', '2024-09-03', 1, '', 'insert', '2024-09-23', 'root@localhost'),
 (6543254, 1, 'Paula', 'Tovar', '2024-09-06', 'F', 'Bogotá', '12387932', 'ytrrgytrs17@gmail.com', '2024-09-03', 1, '', 'insert', '2024-09-23', 'root@localhost'),
-(1022934571, 1, 'José', 'Guerrero', '2024-09-08', 'M', 'Bogotá', '324354281', 'multygems@gmail.com', '2024-09-03', 1, '', 'insert', '2024-09-23', 'root@localhost');
+(1022922370, 2, 'andres', 'ramirez', '2006-10-16', 'M', 'Bogotá', '213213123', 'ajskajs@qssaasa.com', '2024-10-03', 2, '', 'UPDATE', '2024-10-05', 'root@localhost'),
+(1022934571, 1, 'José', 'Guerrero', '2024-09-08', 'M', 'Bogotá', '324354281', 'multygems@gmail.com', '2024-09-03', 1, '', 'insert', '2024-09-23', 'root@localhost'),
+(1022948788, 3, 'Harold Nicolas', 'Gomez Rojas', '2007-01-31', 'M', 'Bogotá', '3224481728', 'haroldgomez31del2007@hotmail.com', '2024-09-03', 1, '', 'insert', '2024-09-30', 'root@localhost'),
+(1140916757, 2, 'Camilo', 'moreno', '2023-11-01', 'M', 'Bogotá', '3052446589', 'milo.moreno@gmail.com', '2024-09-03', 1, '', 'UPDATE', '2024-09-30', 'root@localhost');
 
 --
 -- Índices para tablas volcadas
@@ -756,6 +781,12 @@ ALTER TABLE `materia_prima`
   ADD KEY `fk_estado_idx` (`mat_pri_estado`);
 
 --
+-- Indices de la tabla `motivos`
+--
+ALTER TABLE `motivos`
+  ADD PRIMARY KEY (`id_motivo`);
+
+--
 -- Indices de la tabla `produccion`
 --
 ALTER TABLE `produccion`
@@ -782,7 +813,9 @@ ALTER TABLE `reg_pro_mat_prima`
 --
 ALTER TABLE `salida_productos`
   ADD PRIMARY KEY (`id_salida_productos`),
-  ADD KEY `fk_salida_productos_reg_pro_fabricados1_idx` (`id_reg_prod_fabricados`);
+  ADD KEY `fk_salida_productos_reg_pro_fabricados1_idx` (`id_reg_prod_fabricados`),
+  ADD KEY `fk_motivo` (`id_motivo`),
+  ADD KEY `fk_usuario` (`id_usuario`);
 
 --
 -- Indices de la tabla `seguridad`
@@ -834,7 +867,7 @@ ALTER TABLE `cargos`
 -- AUTO_INCREMENT de la tabla `cargos_has_usuarios`
 --
 ALTER TABLE `cargos_has_usuarios`
-  MODIFY `id_usuario_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=72;
+  MODIFY `id_usuario_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
 
 --
 -- AUTO_INCREMENT de la tabla `emp_tarea`
@@ -861,6 +894,12 @@ ALTER TABLE `materia_prima`
   MODIFY `id_materia_prima` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla materia prima', AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT de la tabla `motivos`
+--
+ALTER TABLE `motivos`
+  MODIFY `id_motivo` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT de la tabla `produccion`
 --
 ALTER TABLE `produccion`
@@ -882,7 +921,7 @@ ALTER TABLE `reg_pro_mat_prima`
 -- AUTO_INCREMENT de la tabla `seguridad`
 --
 ALTER TABLE `seguridad`
-  MODIFY `id_seguridad` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla seguridad.', AUTO_INCREMENT=14;
+  MODIFY `id_seguridad` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador unico de la tabla seguridad.', AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `tarea`
@@ -947,7 +986,9 @@ ALTER TABLE `reg_pro_mat_prima`
 -- Filtros para la tabla `salida_productos`
 --
 ALTER TABLE `salida_productos`
-  ADD CONSTRAINT `fk_salida_productos_reg_pro_fabricados1` FOREIGN KEY (`id_reg_prod_fabricados`) REFERENCES `reg_pro_fabricados` (`id_reg_prod_fabricados`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_motivo` FOREIGN KEY (`id_motivo`) REFERENCES `motivos` (`id_motivo`),
+  ADD CONSTRAINT `fk_salida_productos_reg_pro_fabricados1` FOREIGN KEY (`id_reg_prod_fabricados`) REFERENCES `reg_pro_fabricados` (`id_reg_prod_fabricados`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuarios` (`num_doc`);
 
 --
 -- Filtros para la tabla `seguridad`
