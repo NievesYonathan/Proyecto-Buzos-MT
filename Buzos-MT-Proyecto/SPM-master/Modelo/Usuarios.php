@@ -88,12 +88,12 @@ class Usuarios
     }
 
     public function mostrarUsuarios()
-{
-    $conexion = new Conexion();
-    $conectar = $conexion->conectarse();
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
 
-    // Agregamos la unión con la tabla estado para obtener el nombre del estado
-    $sql = "SELECT td.tip_doc_descripcion, u.*, cu.id_usuario_cargo, 
+        // Agregamos la unión con la tabla estado para obtener el nombre del estado
+        $sql = "SELECT td.tip_doc_descripcion, u.*, cu.id_usuario_cargo, 
                 GROUP_CONCAT(cu.cargos_id_cargos SEPARATOR ', ') AS id_cargos, 
                 GROUP_CONCAT(cu.estado_asignacion SEPARATOR ', ') AS estadoCargo, 
                 GROUP_CONCAT(c.car_nombre SEPARATOR ', ') AS Cargos,
@@ -105,14 +105,11 @@ class Usuarios
             LEFT JOIN estados AS e ON u.usu_estado = e.id_estados   
             GROUP BY u.num_doc";
 
-    $res = $conectar->query($sql);
+        $res = $conectar->query($sql);
 
-    $conectar->close();
-    return $res;
-}
-
-    
-
+        $conectar->close();
+        return $res;
+    }
 
     public function obtenerUsuarioPornumDoc($numDoc)
     {
@@ -127,69 +124,77 @@ class Usuarios
         return $result->fetch_assoc();
     }
 
-    public function actualizarUsuario($tipo_documento, $numDoc, $nombre, $apellido, $fechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $estado, $clave)
-{
-    $conexion = new Conexion();
-    $conectar = $conexion->conectarse();
+    public function obtenerUsuarioOperario()
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
 
-    $sql = "UPDATE usuarios SET t_doc=?, usu_nombres=?, usu_apellidos=?, usu_fecha_nacimiento=?, usu_sexo=?, usu_direccion=?, usu_telefono=?, usu_email=?, usu_fecha_contratacion=?, usu_estado=? WHERE num_doc=?";
-    
-    $stmt = $conectar->prepare($sql);
-
-    if (!$stmt) {
-        error_log("Error en la preparación de la consulta: " . $conectar->error);
-        return false;
+        $sql = "SELECT * FROM usuarios AS u
+                LEFT JOIN cargos_has_usuarios AS cu ON cu.usuarios_num_doc = u.num_doc 
+                WHERE cargos_id_cargos = 3";
+        $res = $conectar->query($sql);
+        $conectar->close();
+        return $res;
     }
 
-    $stmt->bind_param("sssssssssss", $tipo_documento, $nombre, $apellido, $fechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $estado, $numDoc);
+    public function actualizarUsuario($tipo_documento, $numDoc, $nombre, $apellido, $fechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $estado, $clave)
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
 
-    $result = $stmt->execute();
-    if (!$result) {
-        error_log("Error al ejecutar la consulta: " . $stmt->error);
+        $sql = "UPDATE usuarios SET t_doc=?, usu_nombres=?, usu_apellidos=?, usu_fecha_nacimiento=?, usu_sexo=?, usu_direccion=?, usu_telefono=?, usu_email=?, usu_fecha_contratacion=?, usu_estado=? WHERE num_doc=?";
+
+        $stmt = $conectar->prepare($sql);
+
+        if (!$stmt) {
+            error_log("Error en la preparación de la consulta: " . $conectar->error);
+            return false;
+        }
+
+        $stmt->bind_param("sssssssssss", $tipo_documento, $nombre, $apellido, $fechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $estado, $numDoc);
+
+        $result = $stmt->execute();
+        if (!$result) {
+            error_log("Error al ejecutar la consulta: " . $stmt->error);
+            $stmt->close();
+            $conectar->close();
+            return false;
+        }
+
+        $rowsAffected = $stmt->affected_rows;
+        $stmt->close();
+
+        if ($clave) {
+            $seguridad = new Seguridad();
+            $claveActualizada = $seguridad->addClaveUsuario($numDoc, $clave);
+            if (!$claveActualizada) {
+                error_log("Error al actualizar la clave del usuario");
+            }
+        }
+
+        $conectar->close();
+
+        return $rowsAffected > 0 || $claveActualizada;
+    }
+
+    public function eliminarUsuario($num_doc)
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+
+        // Consulta para eliminar o actualizar el estado del usuario
+        $sql = "UPDATE usuarios SET usu_estado = 2 WHERE num_doc = ?";
+
+        $stmt = $conectar->prepare($sql);
+        $stmt->bind_param("i", $num_doc);
+        $resultado = $stmt->execute();
+
         $stmt->close();
         $conectar->close();
-        return false;
+
+        return $resultado;
     }
 
-    $rowsAffected = $stmt->affected_rows;
-    $stmt->close();
-
-    if ($clave) {
-        $seguridad = new Seguridad();
-        $claveActualizada = $seguridad->addClaveUsuario($numDoc, $clave);
-        if (!$claveActualizada) {
-            error_log("Error al actualizar la clave del usuario");
-        }
-    }
-
-    $conectar->close();
-
-    return $rowsAffected > 0 || $claveActualizada;
-}
-
-public function eliminarUsuario($num_doc) {
-    $conexion = new Conexion();
-    $conectar = $conexion->conectarse();
-    
-    // Consulta para eliminar o actualizar el estado del usuario
-    $sql = "UPDATE usuarios SET usu_estado = 2 WHERE num_doc = ?";
-    
-    $stmt = $conectar->prepare($sql);
-    $stmt->bind_param("i", $num_doc);
-    $resultado = $stmt->execute();
-    
-    $stmt->close();
-    $conectar->close();
-    
-    return $resultado;
-}
-
- 
-
-}
-
-class Proveedor
-{
     public function mostrarProveedor()
     {
         $conexion = new Conexion();
@@ -197,11 +202,13 @@ class Proveedor
 
         // Consulta SQL para obtener los usuarios cuyo cargo es proveedor
         $sql = "SELECT u.num_doc, u.t_doc, u.usu_nombres, u.usu_apellidos, u.usu_direccion, u.usu_telefono, u.usu_email, u.usu_fecha_contratacion, 
-                       u.usu_estado
+                       u.usu_estado,
+                e.nombre_estado AS estado_usuario
                 FROM usuarios AS u
                 INNER JOIN tipo_doc AS t ON u.t_doc = t.id_tipo_documento
                 INNER JOIN cargos_has_usuarios AS cu ON u.num_doc = cu.usuarios_num_doc
                 INNER JOIN cargos AS c ON cu.cargos_id_cargos = c.id_cargos
+                LEFT JOIN estados AS e ON u.usu_estado = e.id_estados
                 WHERE c.car_nombre = 'proveedor'";
 
         $res = $conectar->query($sql);
@@ -211,3 +218,25 @@ class Proveedor
     }
 }
 
+// class Proveedor
+// {
+//     public function mostrarProveedor()
+//     {
+//         $conexion = new Conexion();
+//         $conectar = $conexion->conectarse();
+
+//         // Consulta SQL para obtener los usuarios cuyo cargo es proveedor
+//         $sql = "SELECT u.num_doc, u.t_doc, u.usu_nombres, u.usu_apellidos, u.usu_direccion, u.usu_telefono, u.usu_email, u.usu_fecha_contratacion, 
+//                        u.usu_estado
+//                 FROM usuarios AS u
+//                 INNER JOIN tipo_doc AS t ON u.t_doc = t.id_tipo_documento
+//                 INNER JOIN cargos_has_usuarios AS cu ON u.num_doc = cu.usuarios_num_doc
+//                 INNER JOIN cargos AS c ON cu.cargos_id_cargos = c.id_cargos
+//                 WHERE c.car_nombre = 'proveedor'";
+
+//         $res = $conectar->query($sql);
+//         $conectar->close();
+
+//         return $res;
+//     }
+// }

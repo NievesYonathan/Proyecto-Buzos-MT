@@ -368,7 +368,7 @@ include '../Componentes/Head/head.php' ?>
 									</div>
 
 									<div class="modal-body">
-										<form action="" method="GET" class="form-neon" autocomplete="off">
+										<form action="../Controlador/ControladorProduccion.php" method="POST" class="form-neon" autocomplete="off">
 											<fieldset>
 												<legend><i class="fas fa-industry"></i> &nbsp; Información de la producción</legend>
 												<div class="container-fluid">
