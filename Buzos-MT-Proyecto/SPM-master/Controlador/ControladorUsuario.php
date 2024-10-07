@@ -10,8 +10,7 @@ class ControladorUsuario
 {
     public function registroUsuario()
     {
-        if ($_SERVER['REQUEST_METHOD'] == 'POST')
-        {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $numDoc = $_POST['numeroDocumento'];
             $tDoc = $_POST['tipoDocumento'];
             $usuNombres = $_POST['nombres'];
@@ -24,18 +23,19 @@ class ControladorUsuario
             $usuFechaContratacion = "2024-09-03";
             // $imagPerfil = $_POST[''];
             $clave = $_POST['password'];
-            $confirmarClave = $_POST['confirm_password']; $confirmarClave = $_POST['confirm_password']; // Agregamos la confirmación de la contraseña
+            $confirmarClave = $_POST['confirm_password'];
+            $confirmarClave = $_POST['confirm_password']; // Agregamos la confirmación de la contraseña
 
             // Validar si las contraseñas coinciden
-        if ($clave !== $confirmarClave) {
-            $_SESSION['alerta'] = "Las Contraseñas No Coinciden.";
-            header("Location: ../Login-Registro/registros.php");
-            exit();
-        }
-        
+            if ($clave !== $confirmarClave) {
+                $_SESSION['alerta'] = "Las Contraseñas No Coinciden.";
+                header("Location: ../Login-Registro/registros.php");
+                exit();
+            }
+
             $controladorUsuario = new Usuarios();
             $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
-        
+
             $_SESSION['alerta'] = "El Usuario Fue Registrado Con Éxito.";
             header("Location: ../Login-Registro/login.php");
         }
@@ -69,7 +69,8 @@ class ControladorUsuario
             $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuDireccion, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave, $imagPerfil);
 
             $_SESSION['alerta'] = "El Usuario Fue Registrado Con Éxito.";
-            header("Location: ../Perfil-Admin-Usuarios/user-list.php");        }
+            header("Location: ../Perfil-Admin-Usuarios/user-list.php");
+        }
     }
 
     public function iniciarSesion()
@@ -144,6 +145,13 @@ class ControladorUsuario
         return $res;
     }
 
+    public function obtenerUsuarioOperario()
+    {
+        $controladorUsuario = new Usuarios();
+        $res = $controladorUsuario->obtenerUsuarioOperario();
+        return $res;
+    }
+
 
     // public function compararAcciones()
     // {
@@ -159,62 +167,62 @@ class ControladorUsuario
     // }
 
 
-        public function actualizarUsuario()
-        {
-            if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-                $numDoc = $_POST['usuario_dni'];
-                
-                // Obtener los datos actuales del usuario
-                $usuarioActual = $this->obtenerUsuarioPorNumDoc($numDoc);
-                
-                if (!$usuarioActual) {
-                    $_SESSION['alerta'] = "Usuario no encontrado.";
-                    header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=error");
-                    exit();
-                }
-        
-                // Actualizar solo los campos que se han modificado
-                $tipo_documento = $_POST['tipo_documento'] ?? $usuarioActual['t_doc'];
-                $nombre = $_POST['usuario_nombre'] ?? $usuarioActual['usu_nombres'];
-                $apellido = $_POST['usuario_apellido'] ?? $usuarioActual['usu_apellidos'];
-                $fechaNacimiento = $_POST['usuario_fecha_nacimiento'] ?? $usuarioActual['usu_fecha_nacimiento'];
-                $sexo = $_POST['usuario_sexo'] ?? $usuarioActual['usu_sexo'];
-                $direccion = $_POST['usuario_direccion'] ?? $usuarioActual['usu_direccion'];
-                $telefono = $_POST['usuario_telefono'] ?? $usuarioActual['usu_telefono'];
-                $email = $_POST['usuario_email'] ?? $usuarioActual['usu_email'];
-                $fecha_contratacion = $_POST['usu_fecha_contratacion'] ?? $usuarioActual['usu_fecha_contratacion'];
-                $estado = $_POST['usuario_estado'] ?? $usuarioActual['usu_estado'];
-                $clave = !empty($_POST['password']) ? $_POST['password'] : null;
-        
-                $controladorUsuario = new Usuarios();
-                $result = $controladorUsuario->actualizarUsuario($tipo_documento, $numDoc, $nombre, $apellido, $fechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $estado, $clave);
-        
-                if ($result) {
-                    $_SESSION['alerta'] = "Usuario actualizado con éxito.";
-                    header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=success");
-                } else {
-                    $_SESSION['alerta'] = "Error al actualizar el usuario.";
-                    header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=error");
-                }
+    public function actualizarUsuario()
+    {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $numDoc = $_POST['usuario_dni'];
+
+            // Obtener los datos actuales del usuario
+            $usuarioActual = $this->obtenerUsuarioPorNumDoc($numDoc);
+
+            if (!$usuarioActual) {
+                $_SESSION['alerta'] = "Usuario no encontrado.";
+                header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=error");
                 exit();
             }
+
+            // Actualizar solo los campos que se han modificado
+            $tipo_documento = $_POST['tipo_documento'] ?? $usuarioActual['t_doc'];
+            $nombre = $_POST['usuario_nombre'] ?? $usuarioActual['usu_nombres'];
+            $apellido = $_POST['usuario_apellido'] ?? $usuarioActual['usu_apellidos'];
+            $fechaNacimiento = $_POST['usuario_fecha_nacimiento'] ?? $usuarioActual['usu_fecha_nacimiento'];
+            $sexo = $_POST['usuario_sexo'] ?? $usuarioActual['usu_sexo'];
+            $direccion = $_POST['usuario_direccion'] ?? $usuarioActual['usu_direccion'];
+            $telefono = $_POST['usuario_telefono'] ?? $usuarioActual['usu_telefono'];
+            $email = $_POST['usuario_email'] ?? $usuarioActual['usu_email'];
+            $fecha_contratacion = $_POST['usu_fecha_contratacion'] ?? $usuarioActual['usu_fecha_contratacion'];
+            $estado = $_POST['usuario_estado'] ?? $usuarioActual['usu_estado'];
+            $clave = !empty($_POST['password']) ? $_POST['password'] : null;
+
+            $controladorUsuario = new Usuarios();
+            $result = $controladorUsuario->actualizarUsuario($tipo_documento, $numDoc, $nombre, $apellido, $fechaNacimiento, $sexo, $direccion, $telefono, $email, $fecha_contratacion, $estado, $clave);
+
+            if ($result) {
+                $_SESSION['alerta'] = "Usuario actualizado con éxito.";
+                header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=success");
+            } else {
+                $_SESSION['alerta'] = "Error al actualizar el usuario.";
+                header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=error");
+            }
+            exit();
         }
-    
+    }
+
     private function obtenerUsuarioPorNumDoc($numDoc)
     {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
-        
+
         $sql = "SELECT * FROM usuarios WHERE num_doc = ?";
         $stmt = $conectar->prepare($sql);
         $stmt->bind_param("s", $numDoc);
         $stmt->execute();
         $resultado = $stmt->get_result();
         $usuario = $resultado->fetch_assoc();
-        
+
         $stmt->close();
         $conectar->close();
-        
+
         return $usuario;
     }
 
@@ -239,18 +247,23 @@ class ControladorUsuario
         }
     }
 
-
-}
-
-class ControladorProveedor
-{
     public function mostrarProveedor()
     {
-        $modeloProveedor = new Proveedor(); // Asegúrate de usar el nombre correcto del modelo
+        $modeloProveedor = new Usuarios(); // Asegúrate de usar el nombre correcto del modelo
         $res = $modeloProveedor->mostrarProveedor();
         return $res;
     }
 }
+
+// class ControladorProveedor
+// {
+//     public function mostrarProveedor()
+//     {
+//         $modeloProveedor = new Proveedor(); // Asegúrate de usar el nombre correcto del modelo
+//         $res = $modeloProveedor->mostrarProveedor();
+//         return $res;
+//     }
+// }
 
 
 
@@ -274,21 +287,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
     if (isset($_POST['accion']) && $_POST['accion'] == 'eliminar') {
         $num_doc = $_POST['num_doc'];
-        
+
         // Crear instancia del modelo y llamar a la función de eliminación
         $ControladorUsuario = new ControladorUsuario();
         $resultado = $ControladorUsuario->eliminarUsuario($num_doc);
-        
+
         if ($resultado) {
             $_SESSION['alerta'] = 'Usuario eliminado exitosamente.';
         } else {
             $_SESSION['alerta'] = 'Error al eliminar el usuario.';
         }
-        
+
         header('Location: user-list.php');
         exit();
     }
 }
-
-
-

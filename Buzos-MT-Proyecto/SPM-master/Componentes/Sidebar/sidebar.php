@@ -115,6 +115,11 @@
 					<li>
 						<a href="../Perfil-Admin-Usuarios/cargos.php"><i class="fa-solid fa-address-book"></i> &nbsp; Cargos </a>
 					</li>
+				<?php endif; ?>
+				
+				<?php 
+				//Enlace solo visible para Admin de Usuario
+				if ($perfil == 'Jefe Producción'): ?>
 					<li>
 						<a href="../Perfil-Operarios/nueva-tarea.php"><i class="fa-solid fa-calendar-days"></i> &nbsp; Tareas </a>
 					</li>
