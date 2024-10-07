@@ -114,7 +114,7 @@ if(isset($_SESSION['alerta'])) {
                         </div>
                         <p class="forget"><a href="registros.php">No Tengo Un Usuario</a></p>
                         <br>
-                        <p class="forget"><a href="not-password.php">Olvide Mi Contraseña</a></p>
+                        <p class="forget"><a href="recuperar_contraseña.php">Olvide Mi Contraseña</a></p>
                     </form>
                 </div>
             </div>
