@@ -3,6 +3,9 @@
 require '../Modelo/Conexion.php';
 require '../Modelo/ModeloUsuario.php';
 
+// Iniciar la sesión
+session_start();
+
 // Crear una instancia de la conexión
 $conexion = new Conexion();
 $db = $conexion->conectarse();
@@ -26,9 +29,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         // Limpiar el token de recuperación
         $modelUsuario->limpiarTokenRecuperacion($usuario['usu_num_doc']);
 
-        echo "La contraseña ha sido actualizada correctamente.";
+        // Guardar el mensaje en la sesión y redirigir
+        $_SESSION['mensajes'] = "La contraseña ha sido actualizada correctamente.";
+        header('Location: ../Login-Registro/login.php');
+        exit();
     } else {
-        echo "El token es inválido o ha expirado.";
+        // Guardar el mensaje de error en la sesión y redirigir
+        $_SESSION['mensajes'] = "El token es inválido o ha expirado.";
+        header('Location: ../Login-Registro/login.php');
+        exit();
     }
 }
+
 
