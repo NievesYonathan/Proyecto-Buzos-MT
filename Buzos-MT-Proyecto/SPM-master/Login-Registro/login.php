@@ -16,6 +16,10 @@ if (isset($_SESSION['user_id'])) {
     header('Location: ../Dashboard/home.php');
     exit;
 }
+// Verificar si hay un mensaje de la sesión
+if (isset($_SESSION['mensajes'])) {
+    // El mensaje se mostrará en el cuerpo del HTML como una alerta de Bootstrap
+}
 ?>
 
 <!DOCTYPE html>
@@ -36,6 +40,35 @@ if (isset($_SESSION['user_id'])) {
 
 </head>
 <body>
+
+<!-- Inicio Alerta PHP -->
+<?php
+if(isset($_SESSION['mensajes'])) {
+    ?>
+    <div id="alerta" class="alert alert-info" role="alert" 
+         style="position: fixed; top: 20px; left: 20px; padding: 15px; 
+                border: 1px solid #12464c; border-radius: 8px; 
+                background-color: #12464c; color: white; z-index: 9999;">
+        <?php echo $_SESSION['mensajes']; ?>
+    </div>
+
+    <script>
+        // Mover la alerta al principio del <body>
+        var alerta = document.getElementById("mensajes");
+        document.body.insertBefore(alerta, document.body.firstChild);
+
+        // Ocultar la alerta después de 4 segundos
+        setTimeout(function() {
+            alerta.style.display = 'none';
+        }, 4000); // 4000 milisegundos = 4 segundos
+    </script>
+    <?php 
+    unset($_SESSION['mensajes']);  
+}
+?>
+<!-- Fin Alerta PHP -->
+
+
     <section>
         <div class="full-box nav-lateral-content">
 		<a href="../Home-Page-MT/V-3/index.php" class="btn btn-secondary" id="btn-reversa">
@@ -51,7 +84,6 @@ if (isset($_SESSION['user_id'])) {
             <div class="square" style="--i:3;"></div>
             <div class="square" style="--i:4;"></div>
             <div class="container">
-
 
                  <!-- Inicio Alerta PHP -->
                  <?php
@@ -72,15 +104,13 @@ if(isset($_SESSION['alerta'])) {
         // Ocultar la alerta después de 4 segundos
         setTimeout(function() {
             alerta.style.display = 'none';
-        }, 4000); // 4000 milisegundos = 4 segundos
+        }, 5000); // 4000 milisegundos = 4 segundos
     </script>
     <?php 
     unset($_SESSION['alerta']);  
 }
 ?>
 <!-- Fin Alerta PHP -->
-
-
                 <div class="form">
                     <form class="form" method="POST" action="../Controlador/ControladorUsuario.php">
                         <h2>Iniciar Sesión</h2>
