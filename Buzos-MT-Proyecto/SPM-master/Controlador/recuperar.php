@@ -13,6 +13,9 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
+// Iniciar la sesión
+session_start();
+
 // Crear una instancia de la conexión
 $conexion = new Conexion();
 $db = $conexion->conectarse();
@@ -30,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if ($usuario) {
         // Generar un token de recuperación y guardarlo
-        $token = bin2hex(random_bytes(4));
+        $token = bin2hex(random_bytes(3));
         $expiracion = date('Y-m-d H:i:s', strtotime('+1 hour'));  // Expira en 1 hora
 
         $modelUsuario->guardarTokenRecuperacion($usuario['num_doc'], $token, $expiracion);
@@ -39,25 +42,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $mail = new PHPMailer(true);
 
         try {
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER;
             // Configuración del servidor
             $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com';  // Cambia esto al servidor SMTP que uses
+            $mail->Host       = 'smtp.gmail.com';  
             $mail->SMTPAuth   = true;
-            $mail->Username   = 'multygems.v@gmail.com';  // Cambia esto a tu correo
-            $mail->Password   = 'bkao prll sskf rwse';  // Cambia esto a tu contraseña
+            $mail->Username   = 'multygems.v@gmail.com';  
+            $mail->Password   = 'bkao prll sskf rwse';  
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port       = 587;
-            
-
-
-            $mail->SMTPOptions = array(
-                'ssl' => array(
-                    'verify_peer' => false,
-                    'verify_peer_name' => false,
-                    'allow_self_signed' => true
-                )
-            );
 
             // Destinatarios
             $mail->setFrom('multygems.v@gmail.com', 'Buzos Mayte');  // Cambia esto
@@ -65,15 +57,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             // Contenido
             $mail->isHTML(true);
-            $mail->Subject = 'Código de recuperación de contraseña';
-            $mail->Body    = "Su código de recuperación es: <b>$token</b>";
+            $mail->Subject = 'Codigo de recuperación de contrasena';
+            $mail->Body    = "Su código de recuperacion es: <b>$token</b>";
 
             $mail->send();
-            echo "Se ha enviado un correo con el código de recuperación.";
+
+            // Guardar mensaje en la sesión y redirigir
+            $_SESSION['alerta'] = "Se ha enviado un correo con el código de recuperación.";
+            header('Location: ../Login-Registro/actualizar_contraseña.php');
+              // Importante para detener el script después de la redirección
         } catch (Exception $e) {
-            echo "No se pudo enviar el mensaje. Error de Mailer: {$mail->ErrorInfo}";
+            $_SESSION['alerta'] = "No se pudo enviar el mensaje. Error de Mailer: {$mail->ErrorInfo}";
+            header('Location: ../Login-Registro/recuperar_contraseña.php');
         }
     } else {
-        echo "Este correo no está registrado.";
+        $_SESSION['alerta'] = "Este correo no está registrado.";
+        header('Location: ../Login-Registro/recuperar_contraseña.php');
     }
 }
+     
