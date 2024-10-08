@@ -2,7 +2,8 @@
 
 include_once "Conexion.php";
 
-class TipoDocumento{
+class TipoDocumento
+{
     private $tipoDocumento;
 
     public function agrgarTipoDoc($tipoDocumento)
@@ -19,5 +20,17 @@ class TipoDocumento{
         $stmt->execute();
         $stmt->close();
         $conetar->close();
+    }
+
+    public function consultarTipoDoc()
+    {
+        $conexion = new Conexion();
+        $conectarse = $conexion->conectarse();
+
+        $sql = "SELECT * FROM tipo_doc";
+        $res = $conectarse->query($sql);
+        $conectarse->close();
+
+        return $res;
     }
 }

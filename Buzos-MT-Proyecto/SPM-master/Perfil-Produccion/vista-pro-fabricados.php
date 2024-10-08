@@ -90,7 +90,7 @@ include '../Componentes/Head/head.php' ?>
 								<p class="product-status">Etapa: <?= $fila['eta_nombre'] ?></p>
 								<p class="product-material">Material: <?= $fila['reg_pf_material'] ?></p>
 								<div class="product-actions">
-									<button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#updateModal<?= $fila['id_produccion'] ?>">Ver Detalles</button>
+									<button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#updateModal<?= $fila['id_produccion'] ?>">Editar</button>
 								</div>
 							</div>
 						</div>
@@ -121,14 +121,14 @@ include '../Componentes/Head/head.php' ?>
 													<div class="col-12 col-md-4">
 														<div class="form-group">
 															<label for="produccion_fecha_inicio" class="bmd-label-floating">Fecha de Inicio</label>
-															<input type="date" class="form-control border border-dark" name="produccion_fecha_inicio" id="productionDate" value="<?= $fila['pro_fecha_inicio'] ?>" required>
+															<input type="date" class="form-control border border-dark" name="produccion_fecha_inicio" id="productionDate" value="<?= date('Y-m-d', strtotime($fila['pro_fecha_inicio'])) ?>" required>
 														</div>
 													</div>
 
 													<div class="col-12 col-md-4">
 														<div class="form-group">
 															<label for="produccion_fecha_fin" class="bmd-label-floating">Fecha de Finalización</label>
-															<input type="date" class="form-control border border-dark" name="produccion_fecha_fin" id="produccion_fecha_fin" value="<?= $fila['pro_fecha_fin'] ?>" required>
+															<input type="date" class="form-control border border-dark" name="produccion_fecha_fin" id="produccion_fecha_fin" value="<?= date('Y-m-d', strtotime($fila['pro_fecha_fin'])) ?>" required>
 														</div>
 													</div>
 												</div>
@@ -146,7 +146,7 @@ include '../Componentes/Head/head.php' ?>
 															<select class="form-control border border-dark" id="produccion_etapa" name="produccion_etapa" required>
 																<?php
 																foreach ($etapas as $estapa) { ?>
-																	<option value="<?= $estapa['id_etapas'] ?>" <?= ($fila['pro_etapa'] == $fila['t_doc'] ? 'selected' : '') ?>><?= $estapa['eta_nombre'] ?></option>
+																	<option value="<?= $estapa['id_etapas'] ?>" <?= ($fila['pro_etapa'] == $estapa['id_etapas'] ? 'selected' : '') ?>><?= $estapa['eta_nombre'] ?></option>
 																<?php
 																}
 																?>
@@ -169,7 +169,7 @@ include '../Componentes/Head/head.php' ?>
 															<select class="form-control border border-dark" id="produccion_mtPrima1" name="produccion_mtPrima[]" required>
 																<?php
 																foreach($materiaPri AS $materia) { ?>
-																	<option value="<?= $materia['id_materia_prima'] ?>"><?= $materia['mat_pri_nombre'] ?></option>
+																	<option value="<?= $materia['id_materia_prima'] ?>" <?= ($fila['id_materia_prima'] == $materia['id_materia_prima'] ? 'selected' : '') ?>><?= $materia['mat_pri_nombre'] ?></option>
 																<?php
 																}
 																?>
@@ -180,7 +180,7 @@ include '../Componentes/Head/head.php' ?>
 													<div class="col-12 col-md-6">
 														<div class="form-group">
 															<label for="mtPrima_cantidad" class="bmd-label-floating">Cantidad</label>
-															<input type="number" class="form-control border border-dark" name="mtPrima_cantidad" id="mtPrima_cantidad1" maxlength="50" required>
+															<input type="number" class="form-control border border-dark" name="mtPrima_cantidad" id="mtPrima_cantidad1" maxlength="50" value="<?= $fila['reg_pmp_cantidad_usada'] ?>" required>
 														</div>
 													</div>
 													<div class="col-12">
@@ -203,7 +203,7 @@ include '../Componentes/Head/head.php' ?>
 																<option value="">Tarea</option>
 																<?php
 																foreach ($tarea AS $filaT) { ?>
-																	<option value="<?= $filaT['id_tarea'] ?>"><?= $filaT['tar_nombre'] ?></option>
+																	<option value="<?= $filaT['id_tarea'] ?>" <?= ($filaT['id_tarea'] == $fila['tarea_id_tarea'] ? 'selected' : '') ?>><?= $filaT['tar_nombre'] ?></option>
 																<?php
 																}
 																?>
@@ -226,9 +226,8 @@ include '../Componentes/Head/head.php' ?>
 													</div>
 													<div class="col-12 col-md-4" id="fEntrega-container">
 														<div class="form-group">
-															<input type="text" class="form-control border border-dark" name="produccion_fecha_entrega" id="produccion_fecha_entrega1" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text';" placeholder="Fecha de Entrega" required>
-
-															<!-- <input type="date" class="form-control border border-dark" name="produccion_fecha_entrega" id="produccion_fecha_entrega1" onfocus="this.type='date'" onblur="this.type='text'" placeholder="Fecha de Entrega" required> -->
+															<label for="produccion_fecha_entrega1"><?php var_dump(['emp_tar_fecha_entrega']); ?></label>
+															<input type="date" class="form-control border border-dark" name="produccion_fecha_entrega" id="produccion_fecha_entrega1" value="<?= $fila['emp_tar_fecha_entrega'] ?>" required>
 														</div>
 													</div>
 													<div class="col-12">

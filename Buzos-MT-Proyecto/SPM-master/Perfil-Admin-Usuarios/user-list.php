@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if(!isset($_SESSION['user_id'])){
+if (!isset($_SESSION['user_id'])) {
 	header('Location: ../Login-Registro/login.php');
 }
 
@@ -104,9 +104,22 @@ include '../Componentes/Head/head.php' ?>
 								$tipoDoc[] =  $filaT;
 							}
 							//----
+							$conexion = new Conexion();
+							$conectarse = $conexion->conectarse();
+
+							$sql = "SELECT * FROM estados";
+							$resE = $conectarse->query($sql);
+							$conectarse->close();
+
+							$estados = [];
+
+							while ($filaE = $resE->fetch_assoc()) {
+								$estados[] =  $filaE;
+							}
+							//----
 							include_once "../Controlador/ControladorUsuario.php";
 
-							$objConUsuario = new ControladorUsuario ();
+							$objConUsuario = new ControladorUsuario();
 							$res = $objConUsuario->mostrarUsuarios();
 
 							while ($fila = $res->fetch_assoc()) {
@@ -125,13 +138,13 @@ include '../Componentes/Head/head.php' ?>
 										</button>
 									</td>
 									<td>
-									<form action="../Controlador/ControladorUsuario.php" method="post">
-										<input type="hidden" name="accion" value="eliminar">
-										<input type="hidden" name="num_doc" value="<?= $fila['num_doc'] ?>">
-										<button class="btn btn-danger" type="submit">
-											<i class="far fa-trash-alt"></i>
-										</button>
-									</form>
+										<form action="../Controlador/ControladorUsuario.php" method="post">
+											<input type="hidden" name="accion" value="eliminar">
+											<input type="hidden" name="num_doc" value="<?= $fila['num_doc'] ?>">
+											<button class="btn btn-danger" type="submit">
+												<i class="far fa-trash-alt"></i>
+											</button>
+										</form>
 
 									</td>
 								</tr>
@@ -153,7 +166,7 @@ include '../Componentes/Head/head.php' ?>
 																<div class="col-12 col-md-4">
 																	<div class="form-group">
 																		<label for="tipo_documento" class="bmd-label-floating">Tipo documento</label>
-																		<select  class="form-select" aria-label="Default select example" id="tipoDocumento" name="tipoDocumento" required>
+																		<select class="form-select" aria-label="Default select example" id="tipoDocumento" name="tipoDocumento" required>
 																			<option value=""> Tipo de documento</option>
 																			<?php
 																			foreach ($tipoDoc as $filaT) { ?>
@@ -237,7 +250,14 @@ include '../Componentes/Head/head.php' ?>
 																<div class="col-12 col-md-6">
 																	<div class="form-group">
 																		<label for="usuario_estado" class="bmd-label-floating">Estado</label>
-																		<input type="number" class="form-control" name="usuario_estado" id="usuario_estado" maxlength="70" value="<?php echo $fila['usu_estado'] ?>">
+																		<select class="form-select" aria-label="Default select example" id="usuario_estado" name="usuario_estado" required>
+																		<?php
+																		foreach ($estados as $filaEs) { ?>
+																			<option value="<?= $filaEs['id_estados'] ?>" <?= ($filaEs['id_estados'] == $fila['usu_estado'] ? 'selected' : '') ?>><?= $filaEs['nombre_estado'] ?></option>
+																		<?php
+																		}
+																		?>
+																		</select>
 																	</div>
 																</div>
 															</div>
@@ -245,7 +265,7 @@ include '../Componentes/Head/head.php' ?>
 													</fieldset>
 											</div>
 											<div class="modal-footer">
-													<button class="btn btn-success" type="submit" name="Accion" value="Actualizar">Actualizar</button>
+												<button class="btn btn-success" type="submit" name="Accion" value="Actualizar">Actualizar</button>
 												</form>
 
 											</div>

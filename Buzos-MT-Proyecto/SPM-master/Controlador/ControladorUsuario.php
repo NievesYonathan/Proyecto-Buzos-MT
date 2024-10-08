@@ -199,10 +199,16 @@ class ControladorUsuario
 
             if ($result) {
                 $_SESSION['alerta'] = "Usuario actualizado con éxito.";
-                header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=success");
+                // Redirigir a la misma vista
+                $redirectUrl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '../Perfil-Admin-Usuarios/user-list.php';
+                header("Location: $redirectUrl?status=success");
+                exit();
             } else {
                 $_SESSION['alerta'] = "Error al actualizar el usuario.";
-                header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=error");
+                // Redirigir a la misma vista
+                $redirectUrl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '../Perfil-Admin-Usuarios/user-list.php';
+                header("Location: $redirectUrl?status=error");
+                exit();
             }
             exit();
         }
@@ -237,11 +243,15 @@ class ControladorUsuario
 
             if ($result) {
                 $_SESSION['alerta'] = "Usuario inactivado con éxito.";
-                header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=success");
+                // Redirigir a la misma vista
+                $redirectUrl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '../Perfil-Admin-Usuarios/user-list.php';
+                header("Location: $redirectUrl?status=success");
                 exit();
             } else {
                 $_SESSION['alerta'] = "Error al inactivar el usuario.";
-                header("Location: ../Perfil-Admin-Usuarios/user-list.php?status=error");
+                // Redirigir a la misma vista
+                $redirectUrl = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '../Perfil-Admin-Usuarios/user-list.php';
+                header("Location: $redirectUrl?status=error");
                 exit();
             }
         }
