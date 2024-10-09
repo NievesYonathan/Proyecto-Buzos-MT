@@ -1,8 +1,8 @@
 <?php
-//session_start();
-//if (!isset($_SESSION['user_id'])) {
-//7	header('Location: ../login-registro/login.php');
-//}
+session_start();
+if (!isset($_SESSION['user_id'])) {
+header('Location: ../login-registro/login.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -10,8 +10,8 @@
 
 	include_once '../Controlador/ControladorMateriasP.php';
 	include '../Config/variable_global.php';
-
-	include '../Componentes/Head/head.php' ?>
+	include '../Componentes/Head/head.php';
+	 ?>
 
 <body>
 	
@@ -88,7 +88,7 @@
 											<?php
 												$result = $contObj->consultarEstados();
 												while ($estado = mysqli_fetch_object($result)) {
-													echo '<option value="'.$estado->idEstado.'">'.$estado->nombreEstado.'</option>';
+													echo '<option value="'.$estado->id_estados.'">'.$estado->nombre_estado.'</option>';
 												}
 											?>
 										</select>

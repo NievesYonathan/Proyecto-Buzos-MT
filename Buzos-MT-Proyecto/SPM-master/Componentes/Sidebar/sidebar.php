@@ -48,22 +48,22 @@
 						<a href="#" class="nav-btn-submenu"><i class="fas fa-pallet fa-fw"></i> &nbsp; Materia Prima <i class="fas fa-chevron-down"></i></a>
 						<ul>
 							<li>
-								<a href="../Gestion_materias_primas/item-new.php"><i class="fas fa-plus fa-fw"></i> &nbsp; Agregar item</a>
+								<a href="../Perfil-Inventario/item-new.php"><i class="fas fa-plus fa-fw"></i> &nbsp; Agregar item</a>
 							</li>
 							<li>
-								<a href="../Gestion_materias_primas/item-list.php"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de items</a>
+								<a href="../Perfil-Inventario/item-list.php"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de items</a>
 							</li>
 							<li>
-								<a href="../Gestion_materias_primas/item-search.php"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar item</a>
+								<a href="../Perfil-Inventario/item-search.php"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar item</a>
 							</li>
 							<li>
-								<a href="../Gestion_materias_primas/item-detail.php"><i class="fa-solid fa-info-circle"></i> &nbsp; Detalles item</a>
+								<a href="../Perfil-Inventario/item-detail.php"><i class="fa-solid fa-info-circle"></i> &nbsp; Detalles item</a>
 							</li>
 							<li>
-								<a href="../Gestion_materias_primas/item-history.php"><i class="fa-solid fa-clock-rotate-left"></i> &nbsp; Historial</a>
+								<a href="../Perfil-Inventario/item-history.php"><i class="fa-solid fa-clock-rotate-left"></i> &nbsp; Historial</a>
 							</li>
 							<li>
-								<a href="../Gestion_materias_primas/item-update.php"><i class="fa-solid fa-pen-to-square"></i> &nbsp; Actualizar</a>
+								<a href="../Perfil-Inventario/item-update.php"><i class="fa-solid fa-pen-to-square"></i> &nbsp; Actualizar</a>
 							</li>
 						</ul>
 					</li>
@@ -115,11 +115,6 @@
 					<li>
 						<a href="../Perfil-Admin-Usuarios/cargos.php"><i class="fa-solid fa-address-book"></i> &nbsp; Cargos </a>
 					</li>
-				<?php endif; ?>
-				
-				<?php 
-				//Enlace solo visible para Admin de Usuario
-				if ($perfil == 'Jefe Producción'): ?>
 					<li>
 						<a href="../Perfil-Operarios/nueva-tarea.php"><i class="fa-solid fa-calendar-days"></i> &nbsp; Tareas </a>
 					</li>

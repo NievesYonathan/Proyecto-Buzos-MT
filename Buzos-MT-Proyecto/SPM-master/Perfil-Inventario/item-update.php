@@ -9,7 +9,6 @@ if (!isset($_SESSION['user_id'])) {
 	<?php
 	include_once '../Controlador/ControladorMateriasP.php';	
 	include '../Config/variable_global.php';
-
 	include '../Componentes/Head/head.php' ?>
 
 <body>
@@ -28,9 +27,6 @@ if (!isset($_SESSION['user_id'])) {
                 <h3 class="text-left">
                     <i class="fas fa-sync-alt fa-fw"></i> &nbsp; ACTUALIZAR ITEM
                 </h3>
-                <p class="text-justify">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eaque laudantium necessitatibus eius iure adipisci modi distinctio. Earum repellat iste et aut, ullam, animi similique sed soluta tempore cum quis corporis!
-                </p>
             </div>
             <div class="container-fluid">
                 <ul class="full-box list-unstyled page-nav-tabs">
@@ -69,19 +65,19 @@ if (!isset($_SESSION['user_id'])) {
 								<div class="col-12 col-md-4">
 									<div class="form-group">
 										<label for="item_stock" class="bmd-label-floating">Stock</label>
-										<input type="num" pattern="[0-9]{1,9}" class="form-control" name="matCantidad" id="item_stock" maxlength="9"value="<?=$_POST['matCantidad']?>" readonly>
+										<input type="num" pattern="[0-9]{1,9}" class="form-control" name="matCantidad" id="item_stock" maxlength="9"value="<?=$_POST['matCantidad']?>">
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="item_estado" class="bmd-label-floating">Estado</label>
 										<select class="form-control" name="matEstado" id="item_estado">
-											<option value="" selected="" disabled="">Seleccione una opción</option>
+											<option value=""  disabled="">Seleccione una opción</option>
 											<?php
-											//echo '<option selected="" >'.$_POST['estado_id_estado'].'</option>';
+												echo '<option selected="" >'.$_POST['estado_id_estado'].'</option>';
 												$estados = $contObj->consultarEstados();
 												while ($estado = mysqli_fetch_object($estados)) {
-													echo '<option value="'.$estado->idEstado.'">'.$estado->nombreEstado.'</option>';
+													echo '<option value="'.$estado->id_estados.'">'.$estado->nombre_estado.'</option>';
 												}
 											?>
 										</select>
