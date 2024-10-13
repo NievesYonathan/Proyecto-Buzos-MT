@@ -9,10 +9,9 @@ if (!isset($_SESSION['user_id'])) {
 	<?php
 	include_once '../Controlador/ControladorMateriasP.php';	
 	include '../Config/variable_global.php';
-	include '../Componentes/Head/head.php' ?>
+	include '../Componentes/Head/head.php' ;?>
 
 <body>
-	
 	<!-- Main container -->
 	<main class="full-box main-container">
 		<!-- Nav lateral -->
@@ -71,16 +70,28 @@ if (!isset($_SESSION['user_id'])) {
 								<div class="col-12 col-md-6">
 									<div class="form-group">
 										<label for="item_estado" class="bmd-label-floating">Estado</label>
-										<select class="form-control" name="matEstado" id="item_estado">
-											<option value=""  disabled="">Seleccione una opción</option>
-											<?php
-												echo '<option selected="" >'.$_POST['estado_id_estado'].'</option>';
-												$estados = $contObj->consultarEstados();
-												while ($estado = mysqli_fetch_object($estados)) {
-													echo '<option value="'.$estado->id_estados.'">'.$estado->nombre_estado.'</option>';
-												}
-											?>
-										</select>
+										<select class="form-control" name="matEstado" id="item_estado" required>
+    <option value="" disabled selected>Seleccione una opción</option>
+    
+    <?php
+    // Obtener el estado actual de la materia prima
+    $estadoMatPri = $contObj->consultarEstadoMatPri($_POST['matId']); 
+    $estadoActual = mysqli_fetch_object($estadoMatPri);
+    
+    // Mostrar el estado actual como una opción seleccionada, pero deshabilitada
+    echo '<option value="'.$estadoActual->id.'" selected>'.$estadoActual->estado.'</option>';
+
+    // Obtener el resto de los estados, excluyendo el estado actual
+    $estados = $contObj->consultarEstados();
+    while ($estado = mysqli_fetch_object($estados)) {
+        // Si el estado no es el actual, lo mostramos como opción seleccionable
+        if ($estado->id_estados != $estadoActual->id) {
+            echo '<option value="'.$estado->id_estados.'">'.$estado->nombre_estado.'</option>';
+        }
+    }
+    ?>
+</select>
+
 									</div>
 								</div>
 								<div class="col-12 col-md-6">

@@ -46,6 +46,15 @@ class MateriaPrima
         $conectar->close();
         return $result;
     }
+    public function consultarEstadoMatPri($mpId)
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+        $sql = "SELECT m.mat_pri_estado AS id, e.nombre_estado AS estado FROM materia_prima m JOIN estados e ON m.mat_pri_estado = e.id_estados WHERE m.id_materia_prima = '$mpId'";
+        $result = mysqli_query($conectar, $sql);
+        $conectar->close();
+        return $result;
+    }
     /*public function cambiarEstado($mpEstado, $mpId){
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
@@ -61,7 +70,7 @@ class MateriaPrima
     {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
-        $sql = 'UPDATE materia_prima SET mat_pri_nombre = ?, mat_pri_descripcion = ?, mat_pri_cantidad = ?, estado_id_estado = ? WHERE id_materia_prima = ?';
+        $sql = 'UPDATE materia_prima SET mat_pri_nombre = ?, mat_pri_descripcion = ?, mat_pri_cantidad = ?, mat_pri_estado = ? WHERE id_materia_prima = ?';
         $stmt = $conectar->prepare($sql);
         $stmt->bind_param('ssiii', $mpNombres, $mpDescripcion, $mpCantidad, $mpEstado, $mpId);
         $result = $stmt->execute();
@@ -73,7 +82,7 @@ class MateriaPrima
     {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
-        $sql = 'SELECT * FROM estados';
+        $sql = "SELECT nombre_estado,id_estados FROM estados WHERE Tipo_estado = 'general'";
         $result = $conectar->query($sql);
         $conectar->close();
         return $result;

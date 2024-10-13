@@ -6,9 +6,9 @@ include_once "../Modelo/Usuarios.php";
  // Mejor usar require_once para evitar problemas de inclusión múltiple
 
 class ControladorProveedor  {
-    public function mostrarProveedor() {
-        $Proveedor = new Proveedor();
-        $result = $Proveedor->mostrarProveedor();
+   public function mostrarProveedor() {
+      $Proveedor = new Proveedor();
+    $result = $Proveedor->mostrarProveedor();
      return $result;
     }
 }
@@ -21,8 +21,13 @@ public function consultarMateriaPrima(){
     }
 
 public function consultarEstados(){
-    $ObjEstado = new Estado();
-    $result = $ObjEstado->ConsultarEstados();
+    $MatObj = new MateriaPrima();
+    $result = $MatObj->ConsultarEstados();
+    return $result;
+}
+public function consultarEstadoMatPri($mpId){
+    $MatObj = new MateriaPrima();
+    $result = $MatObj->consultarEstadoMatPri($mpId);
     return $result;
 }
 public function validarAcciones($accion){
@@ -38,11 +43,11 @@ public function validarAcciones($accion){
 
         if ($accion == 'agregar') {
             $MatObj->agregarMateriaPrima($mpNombres, $mpDescripcion, $mpUnidadMedida, $mpCantidad, $mpEstado, $mpFechaCompra, $mpProveedor);
-            return header('Location: ../Perfil-Inventario/item-list.php');
+             header('Location: ../Perfil-Inventario/item-list.php');
         }
          if ($accion == 'actualizar') {
             $MatObj->actualizarMateriaPrima($mpNombres, $mpDescripcion, $mpCantidad, $mpEstado, $mpId);
-            return header('Location: ../Perfil-Inventario/item-list.php');   
+             header('Location: ../Perfil-Inventario/item-list.php');   
         }
         
     }
