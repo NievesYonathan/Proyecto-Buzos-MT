@@ -1,17 +1,72 @@
 <?php
 session_start();
+include_once '../Config/variable_global.php';
+include_once '../Componentes/Head/head.php';
+include_once '../Modelo/ModeloTarea.php';
 
-if(!isset($_SESSION['user_id'])){
-	header('Location: ../Login-Registro/login.php');
+$conexion = new Conexion();
+$conexion = $conexion->conectarse();
+
+// Obtener estados, operarios y producciones
+$modelo = new ModeloTarea();
+$estados = $modelo->obtenerEstados();
+$operarios = $modelo->obtenerOperarios();
+$producciones = $modelo->obtenerProducciones();
+
+// Consulta para obtener las tareas asignadas
+$query = "
+    SELECT t.id_tarea, t.tar_nombre, t.tar_descripcion, t.tar_estado, e.nombre_estado,
+    emp.emp_tar_fecha_asignacion, emp.emp_tar_fecha_entrega
+    FROM emp_tarea emp
+    JOIN tarea t ON emp.tarea_id_tarea = t.id_tarea
+    LEFT JOIN estados e ON t.tar_estado = e.id_estados
+    WHERE emp.empleados_num_doc = ?";
+
+$stmt = $conexion->prepare($query);
+if (!$stmt) {
+    die('Error en la preparación de la consulta: ' . mysqli_error($conexion));
 }
+
+$stmt->bind_param("i", $_SESSION['user_id']);
+$stmt->execute();
+$resultado = $stmt->get_result();
+
+if (!$resultado) {
+    die('Error en la consulta: ' . mysqli_error($conexion));
+}
+
+$tareas = $resultado->fetch_all(MYSQLI_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="es">
-    <?php 
-    include '../Config/variable_global.php';
-    include '../Componentes/Head/head.php'; ?>
-
+<head>
+    <title>Tareas Asignadas</title>
+</head>
 <body>
+    <!-- Inicio Alerta PHP -->
+    <?php
+    if (isset($_SESSION['alerta'])) {
+    ?>
+        <div id="alerta" class="alert alert-info" role="alert"
+            style="position: fixed; top: 20px; left: 20px; padding: 15px;
+                    border: 1px solid #12464c; border-radius: 8px;
+                    background-color: #12464c; color: white; z-index: 9999;">
+            <?php echo $_SESSION['alerta']; ?>
+        </div>
+
+        <script>
+            var alerta = document.getElementById("alerta");
+            document.body.insertBefore(alerta, document.body.firstChild);
+            setTimeout(function() {
+                alerta.style.display = 'none';
+            }, 4000);
+        </script>
+    <?php
+        unset($_SESSION['alerta']);
+    }
+    ?>
+    <!-- Fin Alerta PHP -->
 
     <!-- Nav lateral -->
     <?php include '../Componentes/Sidebar/sidebar.php'; ?>
@@ -28,226 +83,88 @@ if(!isset($_SESSION['user_id'])){
             </h3>
         </div>
 
-        
-
         <!-- Content -->
-<div class="container-fluid">
-    <div class="table-responsive">
-        <table class="table table-dark table-sm">
-            <thead>
-                <tr class="text-center roboto-medium">
-                    <th>#</th>
-                    <th>Nombre de la Tarea</th>
-                    <th>Descripción</th>
-                    <th>Estado</th>
-                    <th>Plazo de Entrega</th>
-                    <th>Actualizar</th>
-					<th>Visualizar la produccion</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr class="text-center">
-                    <td>1</td>
-                    <td>Revisión de Documentos</td>
-                    <td>Revisar la documentación entregada.</td>
-                    <td>En Progreso</td>
-                    <td>2024-09-15</td>
-                    <td>
-                        <button type="button" class="btn btn-success" 
-                                data-toggle="modal" 
-                                data-target="#modalTarea" 
-                                data-tarea="Revisión de Documentos"
-                                data-descripcion="Revisar la documentación entregada." 
-                                data-estado="En Progreso"
-                                data-plazo="2024-09-15">
-                            <i class="fas fa-sync-alt"></i>
-                        </button>
-                    </td>
-					<td>
-							<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#detalleProduccion"><i class="fa-solid fa-industry"></i></button>
-					</td>
-					<!-- Modal-Detalles-Producción -->
-					<div class="modal fade" id="detalleProduccion" tabindex="-1" role="dialog" data-bs-backdrop="static">
-						<div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
-							<div class="modal-content">
+        <div class="container-fluid">
+            <div class="table-responsive">
+                <table class="table table-dark table-sm">
+                    <thead>
+                        <tr class="text-center roboto-medium">
+                            <th>#</th>
+                            <th>Nombre de la Tarea</th>
+                            <th>Descripción</th>
+                            <th>Estado</th>
+                            <th>Fecha de Asignación</th>
+                            <th>Fecha de Entrega</th>
+                            <th>Actualizar Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (empty($tareas)): ?>
+                            <tr>
+                                <td colspan="7" class="text-center">No hay tareas asignadas.</td>
+                            </tr>
+                        <?php else: ?>
+                            <?php foreach ($tareas as $row): ?>
+                                <tr class="text-center">
+                                    <td><?php echo $row['id_tarea']; ?></td>
+                                    <td><?php echo $row['tar_nombre']; ?></td>
+                                    <td><?php echo $row['tar_descripcion']; ?></td>
+                                    <td><?php echo $row['nombre_estado']; ?></td>
+                                    <td><?php echo $row['emp_tar_fecha_asignacion']; ?></td>
+                                    <td><?php echo $row['emp_tar_fecha_entrega']; ?></td>
+                                    <td>
+                                        <button class="btn btn-warning" data-toggle="modal" data-target="#modalActualizarEstado<?php echo $row['id_tarea']; ?>">
+                                            <i class="fas fa-edit"></i> Actualizar
+                                        </button>
+                                    </td>
+                                </tr>
 
-								<div class="modal-header">
-									<h5 class="modal-title">Detalles de Producción:</h5>
-									<button class="btn-close" data-bs-dismiss="modal"></button>
-								</div>
-								
-								<div class="modal-body">
-									<div class="container-fluid">
-										<div class="row">
-											<div class="col-12">
-												<h6><strong>1. Nombre de la Producción:</strong></h6>
-												<p id="nombreProduccion">Buzos Amarillos de Algodón</p>
-											</div>
-											<div class="col-12">
-												<h6><strong>2. Código de Producción:</strong></h6>
-												<p id="codigoProduccion">PROD-00123</p>
-											</div>
-											<div class="col-12 col-md-6">
-												<h6><strong>3. Fecha de Inicio:</strong></h6>
-												<p id="fechaInicio">01/08/2024</p>
-											</div>
-											<div class="col-12 col-md-6">
-												<h6><strong>4. Fecha Estimada de Finalización:</strong></h6>
-												<p id="fechaEstimadaFinalizacion">15/08/2024</p>
-											</div>
-											<div class="col-12">
-												<h6><strong>5. Etapas de Producción:</strong></h6>
-												<ul id="etapasProduccion">
-													<li>Corte de tela</li>
-													<li>Costura</li>
-													<li>Revisión de calidad</li>
-												</ul>
-											</div>
-											<div class="col-12">
-												<h6><strong>6. Estado Actual:</strong></h6>
-												<p id="estadoActual">2 - Armado de los patrones</p>
-											</div>
-											<div class="col-12 col-md-6">
-												<h6><strong>7. Cantidad Total a Producir:</strong></h6>
-												<p id="cantidadTotal">500 unidades</p>
-											</div>
-											<div class="col-12 col-md-6">
-												<h6><strong>8. Cantidad Producida:</strong></h6>
-												<p id="cantidadProducida">250 unidades</p>
-											</div>
-											<div class="col-12">
-												<h6><strong>9. Responsables:</strong></h6>
-												<ul id="responsables">
-													<li>Juan Pérez - Corte de tela</li>
-													<li>María García - Costura</li>
-													<li>Carlos López - Revisión de calidad</li>
-												</ul>
-											</div>
-											<div class="col-12">
-												<h6><strong>10. Materiales Usados:</strong></h6>
-												<p id="materialesUsados">Algodón 100%, Hilo de poliéster</p>
-											</div>
-											<div class="col-12">
-												<h6><strong>11. Recursos Asignados:</strong></h6>
-												<p id="recursosAsignados">Máquina de coser industrial, Mesa de corte, Personal de costura</p>
-											</div>
-											<div class="col-12">
-												<h6><strong>12. Comentarios o Notas:</strong></h6>
-												<p id="comentariosNotas">Ajustar las costuras laterales para mayor durabilidad.</p>
-											</div>
-											<div class="col-12">
-												<h6><strong>13. Historial de Cambios:</strong></h6>
-												<ul id="historialCambios">
-													<li>05/08/2024: Cambio de proveedor de hilo</li>
-													<li>07/08/2024: Ajuste en las medidas del patrón</li>
-												</ul>
-											</div>
-											<div class="col-12">
-												<h6><strong>14. Prioridad:</strong></h6>
-												<p id="prioridad">Alta</p>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="modal-footer">
-									<button class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button> 
-								</div>
-							</div>
-						</div>
-					</div>
-                </tr>
-                <tr class="text-center">
-                    <td>2</td>
-                    <td>Entrega de Reporte</td>
-                    <td>Preparar y entregar el reporte de actividades.</td>
-                    <td>Completada</td>
-                    <td>2024-09-10</td>
-                    <td>
-                        <button type="button" class="btn btn-success" 
-                                data-toggle="modal" 
-                                data-target="#modalTarea" 
-                                data-tarea="Entrega de Reporte"
-                                data-descripcion="Preparar y entregar el reporte de actividades." 
-                                data-estado="Completada"
-                                data-plazo="2024-09-10">
-                            <i class="fas fa-sync-alt"></i>
-                        </button>
-                    </td>
-					<td>
-							<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#detalleProduccion"><i class="fa-solid fa-industry"></i></button>
-					</td>
-                </tr>
-                <tr class="text-center">
-                    <td>3</td>
-                    <td>Auditoría de Calidad</td>
-                    <td>Verificar la calidad del producto.</td>
-                    <td>Pendiente</td>
-                    <td>2024-09-20</td>
-                    <td>
-                        <button type="button" class="btn btn-success" 
-                                data-toggle="modal" 
-                                data-target="#modalTarea" 
-                                data-tarea="Auditoría de Calidad"
-                                data-descripcion="Verificar la calidad del producto." 
-                                data-estado="Pendiente"
-                                data-plazo="2024-09-20">
-                            <i class="fas fa-sync-alt"></i>
-                        </button>
-                    </td>
-					<td>
-							<button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#detalleProduccion"><i class="fa-solid fa-industry"></i></button>
-					</td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-<!-- Modal único -->
-<div class="modal fade" id="modalTarea" tabindex="-1" aria-labelledby="modalTareaLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalTareaLabel">Actualizar Tarea</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <form id="formTarea">
-                    <div class="form-group">
-                        <label for="estadoTarea">Estado</label>
-                        <select class="form-control" id="estadoTarea">
-                            <option>En Progreso</option>
-                            <option>Completada</option>
-                            <option>Pendiente</option>
-                        </select>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
-                <button type="button" class="btn btn-success">Guardar cambios</button>
+                                <!-- Modal para actualizar estado -->
+                                <div class="modal fade" id="modalActualizarEstado<?php echo $row['id_tarea']; ?>" tabindex="-1" role="dialog" aria-labelledby="modalLabelEstado<?php echo $row['id_tarea']; ?>" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalLabelEstado<?php echo $row['id_tarea']; ?>">Actualizar Estado de Tarea</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <form method="POST" action="../Controlador/ControladorTarea.php">
+                                                <input type="hidden" name="accion" value="actualizarEstado">
+                                                <input type="hidden" name="id_tarea" value="<?php echo $row['id_tarea']; ?>">
+                                                <div class="modal-body">
+                                                    <div class="form-group">
+                                                        <label for="estadoTarea">Estado</label>
+                                                        <select class="form-control" name="estadoTarea" required>
+                                                            <?php foreach ($estados as $estado): ?>
+                                                                <option value="<?php echo $estado['id_estados']; ?>" <?php echo $estado['id_estados'] == $row['tar_estado'] ? 'selected' : ''; ?>>
+                                                                    <?php echo $estado['nombre_estado']; ?>
+                                                                </option>
+                                                            <?php endforeach; ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                                    <button type="submit" class="btn btn-primary">Actualizar Estado</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
-</div>
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item disabled">
-                        <a class="page-link" href="#" tabindex="-1">Previous</a>
-                    </li>
-                    <li class="page-item"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item">
-                        <a class="page-link" href="#">Next</a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
 
-    </section>
-		<!--===Include JavaScript files======-->
-		<?php include '../Componentes/Script/script.php' ?>
-</body>
+        <!-- Include JavaScript files -->
+        <?php include '../Componentes/Script/script.php'; ?>
+    </body>
 </html>
+
+<?php
+$stmt->close();
+mysqli_close($conexion);
+?>
