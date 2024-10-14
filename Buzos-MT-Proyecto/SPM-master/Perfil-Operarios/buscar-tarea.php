@@ -2,16 +2,31 @@
 session_start();
 include '../Config/variable_global.php';
 include '../Componentes/Head/head.php';
+include '../Modelo/ModeloTarea.php';
 
-// Obtener la búsqueda desde la solicitud
+$modelo = new ModeloTarea();
+
 $busqueda = isset($_GET['busqueda']) ? $_GET['busqueda'] : '';
-$resultado = isset($resultado) ? $resultado : null;
+$resultado = null;
+
+if ($busqueda) {
+
+    if (is_numeric($busqueda)) {
+        $_SESSION['alerta'] = "Por favor, busca por el nombre de la tarea, no por el ID.";
+    } else {
+        $resultado = $modelo->buscarTarea($busqueda);
+        if ($resultado && $resultado->num_rows === 0) {
+            $_SESSION['alerta'] = "No se encontraron resultados para '$busqueda'.";
+        } else {
+            $_SESSION['alerta'] = "Búsqueda realizada para '$busqueda'.";
+        }
+    }
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <body>
-    <!-- Main container -->
     <main class="full-box main-container">
         <!-- Nav lateral -->
         <?php include '../Componentes/Sidebar/sidebar.php'; ?>
@@ -27,7 +42,21 @@ $resultado = isset($resultado) ? $resultado : null;
                     <i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR TAREA.
                 </h3>
             </div>
-            
+
+            <!-- Inicio Alerta PHP -->
+            <?php if (isset($_SESSION['alerta'])): ?>
+                <div class="alert alert-info" role="alert" style="position: fixed; top: 20px; left: 20px; padding: 15px; border: 1px solid #12464c; border-radius: 8px; background-color: #12464c; color: white; z-index: 9999;">
+                    <?php echo $_SESSION['alerta']; ?>
+                </div>
+                <script>
+                    setTimeout(function() {
+                        document.querySelector('.alert').style.display = 'none';
+                    }, 4000);
+                </script>
+                <?php unset($_SESSION['alerta']); ?>
+            <?php endif; ?>
+            <!-- Fin Alerta PHP -->
+
             <div class="container-fluid">
                 <ul class="full-box list-unstyled page-nav-tabs">
                     <li><a href="nueva-tarea.php"><i class="fas fa-plus fa-fw"></i> &nbsp; NUEVA TAREA</a></li>
@@ -35,10 +64,10 @@ $resultado = isset($resultado) ? $resultado : null;
                     <li><a class="active" href="buscar-tarea.php"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR TAREA</a></li>
                 </ul>
             </div>
-            
+
             <!-- Content -->
             <div class="container-fluid">
-                <form class="form-neon" method="GET" action="ControladorTarea.php">
+                <form class="form-neon" method="GET" action="buscar-tarea.php">
                     <div class="container-fluid">
                         <div class="row justify-content-md-center">
                             <div class="col-12 col-md-6">
@@ -76,8 +105,8 @@ $resultado = isset($resultado) ? $resultado : null;
                                         <td class="text-center"><?php echo htmlspecialchars($row['id_tarea']); ?></td>
                                         <td><?php echo htmlspecialchars($row['tar_nombre']); ?></td>
                                         <td><?php echo htmlspecialchars($row['tar_descripcion']); ?></td>
-                                        <td class="text-center"><?php echo htmlspecialchars($row['Plazo_Ent_tar']); ?></td>
-                                        <td><?php echo htmlspecialchars($row['tar_estado']); ?></td>
+                                        <td class="text-center"><?php echo htmlspecialchars($row['fecha_entrega']); ?></td>
+                                        <td><?php echo htmlspecialchars($row['nombre_estado']); ?></td>
                                     </tr>
                                 <?php } ?>
                             <?php } else { ?>
@@ -88,7 +117,6 @@ $resultado = isset($resultado) ? $resultado : null;
                         </tbody>
                     </table>
                 </div>
-                <!-- Paginación (opcional) -->
                 <nav aria-label="Page navigation example">
                     <ul class="pagination justify-content-center">
                         <li class="page-item disabled">
