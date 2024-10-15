@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Servidor: 127.0.0.1
--- Tiempo de generación: 14-10-2024 a las 01:04:24
+-- Servidor: localhost
+-- Tiempo de generación: 15-10-2024 a las 04:21:30
 -- Versión del servidor: 10.4.32-MariaDB
--- Versión de PHP: 8.2.12
+-- Versión de PHP: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -195,7 +195,8 @@ INSERT INTO `cargos_has_usuarios` (`id_usuario_cargo`, `cargos_id_cargos`, `usua
 (71, 3, 6543254, '2024-09-23 18:55:34', 1),
 (72, 3, 1022922370, '2024-09-30 06:53:07', 1),
 (73, 2, 852258, '2024-09-30 06:55:15', 1),
-(74, 2, 1140916757, '2024-09-30 06:59:27', 1);
+(74, 2, 1140916757, '2024-09-30 06:59:27', 1),
+(75, 4, 1022948788, '2024-10-14 22:10:29', 1);
 
 -- --------------------------------------------------------
 
@@ -229,22 +230,23 @@ INSERT INTO `emp_tarea` (`id_empleado_tarea`, `empleados_num_doc`, `tarea_id_tar
 
 CREATE TABLE `estados` (
   `id_estados` int(11) NOT NULL,
-  `nombre_estado` varchar(45) NOT NULL
+  `nombre_estado` varchar(45) NOT NULL,
+  `Tipo_estado` varchar(25) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Volcado de datos para la tabla `estados`
 --
 
-INSERT INTO `estados` (`id_estados`, `nombre_estado`) VALUES
-(1, 'Activo'),
-(2, 'Inactivo'),
-(3, 'Iniciado'),
-(4, 'En progreso'),
-(5, 'Completado'),
-(6, 'Pendiente'),
-(7, 'Cancelado'),
-(8, 'Revisado');
+INSERT INTO `estados` (`id_estados`, `nombre_estado`, `Tipo_estado`) VALUES
+(1, 'Activo', 'General'),
+(2, 'Inactivo', 'General'),
+(3, 'Iniciado', 'Tarea'),
+(4, 'En progreso', 'Tarea'),
+(5, 'Completado', 'Tarea'),
+(6, 'Pendiente', 'Tarea'),
+(7, 'Cancelado', 'Tarea'),
+(8, 'Revisado', 'Tarea');
 
 -- --------------------------------------------------------
 
@@ -292,7 +294,7 @@ CREATE TABLE `materia_prima` (
 --
 
 INSERT INTO `materia_prima` (`id_materia_prima`, `mat_pri_nombre`, `mat_pri_descripcion`, `mat_pri_unidad_medida`, `mat_pri_cantidad`, `mat_pri_estado`, `fecha_compra_mp`, `proveedores_id_proveedores`) VALUES
-(1, 'Tela', 'Tela de algodón', 'metros', 100, 2, '2024-07-10', 1022934571),
+(1, 'Tela', 'Tela de algodón', 'metros', 100, 1, '2024-07-10', 1022934571),
 (2, 'Hilo', 'Hilo de poliéster', 'rollos', 200, 2, '2024-07-12', 1022934571),
 (3, 'Botones', 'Botones de plástico', 'cajas', 50, 2, '2024-07-15', 1022934571),
 (4, 'Cremalleras', 'Cremalleras de metal', 'unidades', 150, 1, '2024-07-18', 1022934571),
@@ -878,7 +880,7 @@ ALTER TABLE `cargos`
 -- AUTO_INCREMENT de la tabla `cargos_has_usuarios`
 --
 ALTER TABLE `cargos_has_usuarios`
-  MODIFY `id_usuario_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `id_usuario_cargo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT de la tabla `emp_tarea`

@@ -1,10 +1,15 @@
-<!DOCTYPE html>
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+	header('Location: ../login-registro/login.php');
+}
+?><!DOCTYPE html>
 <html lang="es">
-	<?php 
+	<?php
+	include_once '../Controlador/ControladorMateriasP.php'; 
 	include '../Config/variable_global.php';
-
 	include '../Componentes/Head/head.php' ?>
-
+	
 <body>
 	
 	<!-- Main container -->
@@ -21,9 +26,6 @@
                 <h3 class="text-left">
                     <i class="fas fa-clipboard-list fa-fw"></i> &nbsp; DETALLES DE PRODUCTO
                 </h3>
-                <p class="text-justify">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum delectus eos enim numquam fugit optio accusantium, aperiam eius facere architecto facilis quibusdam asperiores veniam omnis saepe est et, quod obcaecati.
-                </p>
             </div>
             <div class="container-fluid">
                 <ul class="full-box list-unstyled page-nav-tabs">
@@ -46,21 +48,26 @@
 						<thead>
 							<tr class="text-center roboto-medium">
 								<th>#</th>
-								<th>CÓDIGO</th>
 								<th>NOMBRE</th>
 								<th>STOCK</th>
 								<th>DESCRIPCIÒN</th>
+								<th>UNIDAD DE MEDIDA</th>
 								<th>ESTADO</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center" >
-								<td>1</td>
-								<td>012342567</td>
-								<td>NOMBRE DEL ITEM</td>
-								<td>20</td>
-								<td>Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic non similique cum sapiente amet alias a vero debitis sunt veritatis, placeat minima dolores obcaecati quod ab fugit laudantium reprehenderit excepturi.</td>
-                                <td>Habilitado</td>
+							<tr class="text-center">		
+								<td><?=$_POST['matId']?></td>
+								<td><?=$_POST['matNombre']?></td>
+								<td><?=$_POST['matCantidad']?></td>
+								<td><?=$_POST['matDescripcion']?></td>
+                                <td><?=$_POST['matUnidad']?></td>
+								<?php
+								$estadoMatPri = $contObj->consultarEstadoMatPri($_POST['matId']); 
+								$estadoActual = mysqli_fetch_object($estadoMatPri);
+								?>
+								<td><?=$estadoActual->estado?></td>
+								
 							</tr>
 						</tbody>
 					</table>

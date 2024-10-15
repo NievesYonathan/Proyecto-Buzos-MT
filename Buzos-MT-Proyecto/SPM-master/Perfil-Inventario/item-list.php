@@ -8,7 +8,6 @@ if (!isset($_SESSION['user_id'])) {
 <html lang="es">
 	<?php 
     include_once '../Controlador/ControladorMateriasP.php';
-	include '../Config/variable_global.php';
 	include '../Componentes/Head/head.php' ?>
 
 <body>
@@ -27,9 +26,6 @@ if (!isset($_SESSION['user_id'])) {
                 <h3 class="text-left">
                     <i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE ITEMS
                 </h3>
-                <p class="text-justify">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum delectus eos enim numquam fugit optio accusantium, aperiam eius facere architecto facilis quibusdam asperiores veniam omnis saepe est et, quod obcaecati.
-                </p>
             </div>
             <div class="container-fluid">
                 <ul class="full-box list-unstyled page-nav-tabs">
@@ -62,26 +58,32 @@ if (!isset($_SESSION['user_id'])) {
 						</thead>
 						<tbody>
                         <?php
-                            $result = $contObj->consultarMateriaPrima();
-                            while ($item = mysqli_fetch_object($result)) {
-                            ?>
-                                <tr class="text-center details">
-                                    <td><?=$item->id_materia_prima?></td>
-                                    <td><?=$item->mat_pri_nombre?></td>
-                                    <td><?=$item->mat_pri_cantidad?></td>
-                                    <td>
-                                        <form action="item-update.php" method="POST">
-                                            <input type="hidden" name="matId" value="<?=$item->id_materia_prima?>">
-                                            <input type="hidden" name="matNombre" value="<?=$item->mat_pri_nombre?>">
-                                            <input type="hidden" name="matDescripcion" value="<?=$item->mat_pri_descripcion?>">
-                                            <input type="hidden" name="matUnidad" value="<?=$item->mat_pri_unidad_medida?>">
-                                            <input type="hidden" name="matCantidad" value="<?=$item->mat_pri_cantidad?>">
-                                            <input type="hidden" name="matEstado" value="<?=$item->mat_pri_estado?>">
-                                            <input type="hidden" name="matFechaCompra" value="<?=$item->fecha_compra_mp?>">
-                                            <button type="submit" class="btn btn-success">
-                                                <i class="fas fa-sync-alt"></i>
-                                            </button>
-                                        </form>
+    $result = $contObj->consultarMateriaPrima();
+    while ($item = mysqli_fetch_object($result)) {
+?>
+    <tr class="text-center details" style="cursor:pointer" onclick="document.getElementById('Detalles<?=$item->id_materia_prima?>').submit();">
+        <td><?=$item->id_materia_prima?></td>
+        <td><?=$item->mat_pri_nombre?></td>
+        <td><?=$item->mat_pri_cantidad?></td>
+        <td>
+            <form action="item-update.php" method="post">
+                <input type="hidden" name="matId" value="<?=$item->id_materia_prima?>">
+                <input type="hidden" name="matNombre" value="<?=$item->mat_pri_nombre?>">
+                <input type="hidden" name="matDescripcion" value="<?=$item->mat_pri_descripcion?>">
+                <input type="hidden" name="matCantidad" value="<?=$item->mat_pri_cantidad?>">
+                <input type="hidden" name="matEstado" value="<?=$item->mat_pri_estado?>">
+                <button type="submit" class="btn btn-success">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </form>
+            <form action="item-detail.php" id="Detalles<?=$item->id_materia_prima?>" method="post">
+                <input type="hidden" name="matId" value="<?=$item->id_materia_prima?>">
+                <input type="hidden" name="matNombre" value="<?=$item->mat_pri_nombre?>">
+                <input type="hidden" name="matDescripcion" value="<?=$item->mat_pri_descripcion?>">
+                <input type="hidden" name="matUnidad" value="<?=$item->mat_pri_unidad_medida?>">
+                <input type="hidden" name="matCantidad" value="<?=$item->mat_pri_cantidad?>">
+                <input type="hidden" name="matEstado" value="<?=$item->mat_pri_estado?>">
+            </form>
                                     </td>
                                     <td>
                                         <form action="">

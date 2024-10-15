@@ -8,9 +8,7 @@ if (!isset($_SESSION['user_id'])) {
 <html lang="es">
 	<?php
 	include_once '../Controlador/ControladorMateriasP.php';	
-	include '../Config/variable_global.php';
 	include '../Componentes/Head/head.php' ;?>
-
 <body>
 	<!-- Main container -->
 	<main class="full-box main-container">
@@ -91,7 +89,6 @@ if (!isset($_SESSION['user_id'])) {
     }
     ?>
 </select>
-
 									</div>
 								</div>
 								<div class="col-12 col-md-6">
