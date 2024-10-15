@@ -16,4 +16,17 @@ class Produccion {
         $conectar->close();
         return $id_produccion;
     }
+
+    public function editarProduccion($id_produccion, $pNombre, $fFin, $pCantidad, $pEtapa)
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+
+        $sql = 'UPDATE produccion SET pro_nombre = ?, pro_fecha_fin = ?, pro_cantidad = ?, pro_etapa = ? WHERE id_produccion = ?';
+        $stmt = $conectar->prepare($sql);
+        $stmt->bind_param('ssiii', $pNombre, $fFin, $pCantidad, $pEtapa, $id_produccion);
+        $stmt->execute();
+        $stmt->close();
+        $conectar->close();
+    }
 }

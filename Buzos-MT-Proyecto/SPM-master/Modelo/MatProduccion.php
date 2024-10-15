@@ -16,4 +16,19 @@ class MatProduccion{
         $stmt->execute();
         $conectar->close();
     }
+
+    public function editMatProduccion($cantidadMP, $idMateriPrima, $idProduccion, $idRegistro){
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+
+        $sql = "UPDATE reg_pro_mat_prima SET reg_pmp_cantidad_usada = ?, reg_pmp_fecha_registro = ?, id_pro_materia_prima = ? WHERE id_produccion = ? AND id_registro = ?";
+
+        $fechaAsig = date('Y-m-d');
+
+        $stmt = $conectar->prepare($sql);
+        $stmt->bind_param('isiii', $cantidadMP, $fechaAsig, $idMateriPrima, $idProduccion, $idRegistro);
+        $stmt->execute();
+        $conectar->close();
+    }
+
 }

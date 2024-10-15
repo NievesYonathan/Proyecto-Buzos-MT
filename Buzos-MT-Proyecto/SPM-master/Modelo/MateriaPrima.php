@@ -46,6 +46,24 @@ class MateriaPrima
         $conectar->close();
         return $result;
     }
+
+    public function consultarMateriasPrimas($id_produccion)
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+        $sql = 'SELECT p.id_produccion, GROUP_CONCAT(rMP.id_registro) AS idRegistro, GROUP_CONCAT(rMP.id_pro_materia_prima) AS id_materiaPrima, GROUP_CONCAT(rMP.reg_pmp_cantidad_usada) AS cantidadUsada 
+FROM produccion p 
+INNER JOIN reg_pro_mat_prima rMP ON p.id_produccion = rMP.id_produccion WHERE p.id_produccion = ?
+GROUP BY p.id_produccion';
+        $stmt = $conectar->prepare($sql);
+        $stmt->bind_param('i', $id_produccion);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $conectar->close();
+        return $result;
+    }
+
     public function consultarEstadoMatPri($mpId)
     {
         $conexion = new Conexion();

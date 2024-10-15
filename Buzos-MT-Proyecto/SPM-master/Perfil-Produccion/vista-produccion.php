@@ -458,7 +458,7 @@ include '../Componentes/Head/head.php' ?>
 														<div class="col-12 col-md-6">
 															<div class="form-group">
 																<label for="mtPrima_cantidad" class="bmd-label-floating">Cantidad</label>
-																<input type="number" class="form-control border border-dark" name="mtPrima_cantidad" id="mtPrima_cantidad1" maxlength="50" required>
+																<input type="number" class="form-control border border-dark" name="mtPrima_cantidad[]" id="mtPrima_cantidad1" maxlength="50" required>
 															</div>
 														</div>
 														<div class="col-12">
@@ -499,7 +499,7 @@ include '../Componentes/Head/head.php' ?>
 
 														<div class="col-12 col-md-4" id="resp-container">
 															<div class="form-group">
-																<select class="form-control border border-dark" id="produccion_responsable1" name="produccion_responsable" required>
+																<select class="form-control border border-dark" id="produccion_responsable1" name="produccion_responsable[]" required>
 																	<option value="">Responsable</option>
 																	<?php
 																	include_once '../Modelo/Conexion.php';
@@ -522,7 +522,7 @@ include '../Componentes/Head/head.php' ?>
 														</div>
 														<div class="col-12 col-md-4" id="fEntrega-container">
 															<div class="form-group">
-																<input type="text" class="form-control border border-dark" name="produccion_fecha_entrega" id="produccion_fecha_entrega1" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text';" placeholder="Fecha de Entrega" required>
+																<input type="text" class="form-control border border-dark" name="produccion_fecha_entrega[]" id="produccion_fecha_entrega1" onfocus="(this.type='date')" onblur="if(!this.value) this.type='text';" placeholder="Fecha de Entrega" required>
 
 																<!-- <input type="date" class="form-control border border-dark" name="produccion_fecha_entrega" id="produccion_fecha_entrega1" onfocus="this.type='date'" onblur="this.type='text'" placeholder="Fecha de Entrega" required> -->
 															</div>
@@ -561,6 +561,7 @@ include '../Componentes/Head/head.php' ?>
 	<?php include '../Componentes/Script/script.php' ?>
 	<!-- <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script> -->
 	<script src="../js/calendear.js"></script>
+	<script src="../js/duplicarInputs.js"></script>
 </body>
 
 </html>

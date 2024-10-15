@@ -46,7 +46,13 @@ if(!isset($_SESSION['user_id'])){
 						<div class="tile-tittle">Producción</div>
 						<div class="tile-icon">
 							<i class="fa-solid fa-industry"></i>
-							<!-- <p>5 Registrados</p> -->
+						</div>
+					</a>
+					
+					<a href="../Perfil-Produccion/vista-pro-fabricados.php" class="tile">
+						<div class="tile-tittle">Producción</div>
+						<div class="tile-icon">
+							<i class="fa-solid fa-shirt"></i>
 						</div>
 					</a>
 				<?php endif; ?>

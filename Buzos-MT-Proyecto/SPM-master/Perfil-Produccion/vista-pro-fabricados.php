@@ -42,20 +42,24 @@ include '../Componentes/Head/head.php' ?>
 				while ($filaE = $resE->fetch_assoc()) {
 					$etapas[] = $filaE;
 				}
-				
+
 				include_once "../Controlador/ControladorMateriasP.php";
-				$objEta = new ControladorMateriaPrima();
+				$objMP = new ControladorMateriaPrima();
 				$materiaPri = [];
-				$resM = $objEta->consultarMateriaPrima();
+				$resM = $objMP->consultarMateriaPrima();
 				while ($filaM = $resM->fetch_assoc()) {
 					$materiaPri[] = $filaM;
 				}
 
+				include_once "../Controlador/ControladorEmpTarea.php";
+				$objT = new ControladorEmpTarea();
+
+
 				// Se debe corregir el controlador de Tarea
 				include_once '../Modelo/Conexion.php';
 				$conexion = new Conexion();
-				$conectarse = $conexion->conectarse();		
-		
+				$conectarse = $conexion->conectarse();
+
 				$sql = "SELECT * FROM tarea";
 				$resT = $conectarse->query($sql);
 				$conectarse->close();
@@ -71,7 +75,7 @@ include '../Componentes/Head/head.php' ?>
 				$operario = [];
 				$resU = $objUsu->obtenerUsuarioOperario();
 				while ($filaU = $resU->fetch_assoc()) {
-					$operario[] = $filaU;
+					$operarioTarea[] = $filaU;
 				}
 
 				include_once "../Controlador/ControladorProFabricados.php";
@@ -101,12 +105,13 @@ include '../Componentes/Head/head.php' ?>
 							<div class="modal-content">
 
 								<div class="modal-header">
-									<h5 class="modal-title">Gestionar Producción | <?= $fila['id_produccion'] ?></h5>
+									<h5 class="modal-title">Gestionar Producción | <?= $fila['pro_nombre'] ?></h5>
 									<button class="btn-close" data-bs-dismiss="modal"></button>
 								</div>
 
 								<div class="modal-body">
-									<form action="../Controlador/ControladorProduccion.php" method="POST" class="form-neon" autocomplete="off">
+									<form action="../Controlador/ControladorProduccion.php" method="post" class="form-neon" autocomplete="off">
+										<input type="hidden" name="id_produccion" value="<?= $fila['id_produccion'] ?>">
 										<fieldset>
 											<legend><i class="fas fa-industry"></i> &nbsp; Información de la producción</legend>
 											<div class="container-fluid">
@@ -121,7 +126,7 @@ include '../Componentes/Head/head.php' ?>
 													<div class="col-12 col-md-4">
 														<div class="form-group">
 															<label for="produccion_fecha_inicio" class="bmd-label-floating">Fecha de Inicio</label>
-															<input type="date" class="form-control border border-dark" name="produccion_fecha_inicio" id="productionDate" value="<?= date('Y-m-d', strtotime($fila['pro_fecha_inicio'])) ?>" required>
+															<input type="date" class="form-control border border-dark" name="produccion_fecha_inicio" id="productionDate" value="<?= date('Y-m-d', strtotime($fila['pro_fecha_inicio'])) ?>" disabled>
 														</div>
 													</div>
 
@@ -135,7 +140,7 @@ include '../Componentes/Head/head.php' ?>
 												<div class="row mt-3">
 													<div class="col-12 col-md-6">
 														<div class="form-group">
-															<label for="produccion_cantidad" class="bmd-label-floating">Cantidad de Producción</label>
+															<label for="produccion_cantidad" class="bmd-label-floating">Cantidad Produccida</label>
 															<input type="number" class="form-control border border-dark" name="produccion_cantidad" id="produccion_cantidad" maxlength="50" value="<?= $fila['pro_cantidad'] ?>" required>
 														</div>
 													</div>
@@ -163,26 +168,50 @@ include '../Componentes/Head/head.php' ?>
 											<legend><i class="fas fa-pallet fa-fw"></i> &nbsp; Detalles de Materia Prima</legend>
 											<div class="container-fluid">
 												<div class="row mt-3" id="mtPrima-container">
-													<div class="col-12 col-md-6">
-														<div class="form-group">
-															<label for="produccion_mtPrima" class="bmd-label-floating">Materia Prima</label>
-															<select class="form-control border border-dark" id="produccion_mtPrima1" name="produccion_mtPrima[]" required>
-																<?php
-																foreach($materiaPri AS $materia) { ?>
-																	<option value="<?= $materia['id_materia_prima'] ?>" <?= ($fila['id_materia_prima'] == $materia['id_materia_prima'] ? 'selected' : '') ?>><?= $materia['mat_pri_nombre'] ?></option>
-																<?php
-																}
-																?>
-															</select>
-														</div>
-													</div>
+													<?php
+													$result = $objMP->consultarMateriasPrimas($fila['id_produccion']);
+													// Obtener la fila de resultados
+													if ($fila = $result->fetch_assoc()) {
+														// Convertir los resultados concatenados en arrays
+														$idRegistrosMP = explode(',', $fila['idRegistro']);
+														$idMateriasPrimas = explode(',', $fila['id_materiaPrima']);
+														$cantidadesUsadas = explode(',', $fila['cantidadUsada']);
 
-													<div class="col-12 col-md-6">
-														<div class="form-group">
-															<label for="mtPrima_cantidad" class="bmd-label-floating">Cantidad</label>
-															<input type="number" class="form-control border border-dark" name="mtPrima_cantidad" id="mtPrima_cantidad1" maxlength="50" value="<?= $fila['reg_pmp_cantidad_usada'] ?>" required>
-														</div>
-													</div>
+														// Comprobar que ambos arrays tienen la misma longitud
+														if (count($idMateriasPrimas) == count($cantidadesUsadas)) {
+															// Iterar sobre las materias primas y mostrar los divs correspondientes
+															for ($i = 0; $i < count($idMateriasPrimas); $i++) {
+																// Obtener los valores actuales
+																$idRegistroMP = $idRegistrosMP[$i];
+																$idMateriaPrima = $idMateriasPrimas[$i];
+																$cantidadUsada = $cantidadesUsadas[$i];
+													?>
+																<div class="col-12 col-md-6">
+																	<div class="form-group">
+																		<label for="produccion_mtPrima" class="bmd-label-floating">Materia Prima</label>
+																		<input type="hidden" name="idRegistroMP[]" value="<?= $idRegistroMP ?>">
+																		<select class="form-control border border-dark" id="produccion_mtPrima1" name="produccion_mtPrima[]" required>
+																			<?php foreach ($materiaPri as $materia) { ?>
+																				<option value="">Seleccionar</option>
+																				<option value="<?= $materia['id_materia_prima'] ?>" <?= ($materia['id_materia_prima'] == $idMateriaPrima ? 'selected' : '') ?>>
+																					<?= $materia['mat_pri_nombre'] ?>
+																				</option>
+																			<?php } ?>
+																		</select>
+																	</div>
+																</div>
+
+																<div class="col-12 col-md-6">
+																	<div class="form-group">
+																		<label for="mtPrima_cantidad" class="bmd-label-floating">Cantidad</label>
+																		<input type="number" class="form-control border border-dark" name="mtPrima_cantidad[]" id="mtPrima_cantidad1" maxlength="50" value="<?= $cantidadUsada ?>" required>
+																	</div>
+																</div>
+													<?php
+															}
+														}
+													}
+													?>
 													<div class="col-12">
 														<button type="button" id="addMtPrimaBtn" class="btn btn-info mt-3">Agregar otra Materia Prima</button>
 													</div>
@@ -192,44 +221,74 @@ include '../Componentes/Head/head.php' ?>
 										</fieldset>
 
 										<br><br>
-
+										<?php
+										// $resultT = $objT->tareasProduccion($fila['id_produccion']);
+										// var_dump($resultT);
+										?>
 										<fieldset>
 											<legend><i class="fas fa-tasks"></i> &nbsp; Detalles de la Tarea</legend>
 											<div class="container-fluid">
 												<div class="row" id="tarea-container">
-													<div class="col-12 col-md-4 mb-2">
-														<div class="form-group">
-															<select class="form-control border border-dark" id="produccion_tarea1" name="produccion_tarea[]" required>
-																<option value="">Tarea</option>
-																<?php
-																foreach ($tarea AS $filaT) { ?>
-																	<option value="<?= $filaT['id_tarea'] ?>" <?= ($filaT['id_tarea'] == $fila['tarea_id_tarea'] ? 'selected' : '') ?>><?= $filaT['tar_nombre'] ?></option>
-																<?php
-																}
-																?>
-															</select>
-														</div>
-													</div>
+													<?php
+													$resultT = $objT->tareasProduccion($fila['id_produccion']);
+													// Obtener la fila de resultados
+													if ($filaTa = $resultT->fetch_assoc()) {
+														// Convertir los resultados concatenados en arrays
+														$idRegistrosET = explode(',', $filaTa['idEmpTarea']);
+														$idTareas = explode(',', $filaTa['id_tarea']);
+														$operarios = explode(',', $filaTa['operario']);
 
-													<div class="col-12 col-md-4" id="resp-container">
-														<div class="form-group">
-															<select class="form-control border border-dark" id="produccion_responsable1" name="produccion_responsable" required>
-																<option value="">Responsable</option>
-																<?php
-																foreach($operario AS $fila) { ?>
-																	<option value="<?= $fila['num_doc'] ?>"><?= $fila['usu_nombres'] . ' ' . $fila['usu_apellidos'] ?></option>
-																<?php
-																}
-																?>
-															</select>
-														</div>
-													</div>
-													<div class="col-12 col-md-4" id="fEntrega-container">
-														<div class="form-group">
-															<label for="produccion_fecha_entrega1"><?php var_dump(['emp_tar_fecha_entrega']); ?></label>
-															<input type="date" class="form-control border border-dark" name="produccion_fecha_entrega" id="produccion_fecha_entrega1" value="<?= $fila['emp_tar_fecha_entrega'] ?>" required>
-														</div>
-													</div>
+														// Comprobar que ambos arrays tienen la misma longitud
+														if (count($idTareas) == count($operarios)) {
+															// Iterar sobre las materias primas y mostrar los divs correspondientes
+															for ($i = 0; $i < count($idTareas); $i++) {
+																// Obtener los valores actuales
+																$idRegistroET = $idRegistrosET[$i];
+																$idTarea = $idTareas[$i];
+																$operario = $operarios[$i];
+													?>
+																<div class="col-12 col-md-4 mb-2">
+																	<div class="form-group">
+																		<input type="hidden" name="idRegistroET[]" value="<?= $idRegistroET ?>">
+																		<select class="form-control border border-dark" id="produccion_tarea1" name="produccion_tarea[]" required>
+																			<option value="">Tarea</option>
+																			<?php
+																			foreach ($tarea as $filaT) { ?>
+																				<option value="<?= $filaT['id_tarea'] ?>" <?= ($filaT['id_tarea'] == $idTarea ? 'selected' : '') ?>><?= $filaT['tar_nombre'] ?></option>
+																			<?php
+																			}
+																			?>
+																		</select>
+																	</div>
+																</div>
+
+																<div class="col-12 col-md-4 mb-2" id="resp-container">
+																	<div class="form-group">
+																		<select class="form-control border border-dark" id="produccion_responsable1" name="produccion_responsable[]" required>
+																			<option value="">Responsable</option>
+																			<?php
+																			foreach ($operarioTarea as $fila) { ?>
+																				<option value="<?= $fila['num_doc'] ?>" <?= ($fila['num_doc'] == $operario ? 'selected' : '') ?>><?= $fila['usu_nombres'] . ' ' . $fila['usu_apellidos'] ?></option>
+																			<?php
+																			}
+																			?>
+																		</select>
+																	</div>
+																</div>
+
+																<div class="col-12 col-md-4 mb-2" id="fEntrega-container">
+																	<div class="form-group">
+																		<input type="date" class="form-control border border-dark" name="produccion_fecha_entrega[]" id="produccion_fecha_entrega1" value="<?= $filaTa['emp_tar_fecha_entrega'] ?>" required>
+																	</div>
+																</div>
+
+																<hr>
+
+													<?php
+															}
+														}
+													}
+													?>
 													<div class="col-12">
 														<button type="button" id="addTareaBtn" class="btn btn-info mt-3">Agregar otra tarea</button>
 													</div>
@@ -240,7 +299,7 @@ include '../Componentes/Head/head.php' ?>
 										<p class="text-center" style="margin-top: 40px;">
 											<button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
 											&nbsp; &nbsp;
-											<button type="submit" class="btn btn-raised btn-success btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
+											<button type="submit" name="btn-editar" value="editar" class="btn btn-raised btn-success btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
 										</p>
 									</form>
 
@@ -266,7 +325,7 @@ include '../Componentes/Head/head.php' ?>
 
 	<!--===Include JavaScript files======-->
 	<?php include '../Componentes/Script/script.php' ?>
-
+	<script src="../js/duplicarInputs.js"></script>
 </body>
 
 </html>

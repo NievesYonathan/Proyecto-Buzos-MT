@@ -144,7 +144,7 @@ section {
 .form {
     position: relative;
     width: 100%;
-    padding: 40px;
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
