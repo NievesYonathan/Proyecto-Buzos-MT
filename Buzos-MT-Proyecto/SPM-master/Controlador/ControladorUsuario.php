@@ -115,16 +115,6 @@ class ControladorUsuario
             // Si la validación pasa, intentar iniciar sesión
             $controladorUsuario = new Usuarios();
             $resultado = $controladorUsuario->iniciarSesion($numDoc, $tDoc, $clave);
-            // $fila = $resultado->fetch_assoc();
-
-            // var_dump($fila);
-
-            // $numDoc = $fila['num_doc'];
-            // $cargo = $fila['car_nombre'];
-
-            // $_SESSION['user_id'] = $numDoc; // Almacenar ID de usuario en la sesión
-            // $_SESSION['user_cargo'] = $cargo;
-
             if ($resultado && $resultado->num_rows > 0) {
                 // Inicio de sesión exitoso
                 header("Location: ../Dashboard/home.php");

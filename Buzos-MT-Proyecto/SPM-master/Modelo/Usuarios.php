@@ -63,27 +63,27 @@ class Usuarios
         $conectar = $conexion->conectarse();
 
         $stmt = $conectar->prepare("CALL ObtenerDatosSeguridad(?, ?)");
-        $stmt->bind_param("is", $numDoc, $tDoc);
+        $stmt->bind_param("ii", $numDoc, $tDoc);
         $stmt->execute();
         $res = $stmt->get_result();
         $stmt->close();
         $conectar->close();
 
-        $fila = $res->fetch_assoc();
+        if ($res && $res->num_rows > 0){
+            $fila = $res->fetch_assoc();
+            //var_dump($fila);
 
-        $descifrada = $fila['clave_descifrada'];
+            $descifrada = $fila['clave_descifrada'];
+      
+            if ($descifrada === $clave) { 
+                $_SESSION['user_id'] = $fila['num_doc'];
+                $_SESSION['user_cargo'] = $fila['car_nombre'];
+                $_SESSION['user_nombre'] = $fila['usu_nombres'];
 
-        $numDoc = $fila['num_doc'];
-        $cargo = $fila['car_nombre'];
-        $nombre = $fila['usu_nombres'];
-
-        $_SESSION['user_id'] = $numDoc; // Almacenar ID de usuario en la sesión
-        $_SESSION['user_cargo'] = $cargo;
-        $_SESSION['user_nombre'] = $nombre;
-
-
-        if ($descifrada == $clave) {
-            return $res;
+                return $res;
+            } else {
+                return false;
+            }
         }
     }
 
@@ -106,6 +106,7 @@ class Usuarios
             GROUP BY u.num_doc";
 
         $res = $conectar->query($sql);
+        
 
         $conectar->close();
         return $res;
