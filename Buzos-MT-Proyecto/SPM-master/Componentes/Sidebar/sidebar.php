@@ -151,6 +151,9 @@
 							</li>
 							<li>
 								<a href="../Informes/info-Rec.Humanos.php"><i class="fa-solid fa-users"></i> &nbsp; RR.HH</a>
+							</li>
+							<li>
+								<a href="../Informes/reporte_inventario.php"><i class="fa-solid fa-users"></i> &nbsp; Reporte Inventario</a>
 							</li>						
 						</ul>
 					</li>
