@@ -1,8 +1,10 @@
 <?php
 include_once 'Conexion.php';
 
-class Produccion {
-    public function agregarProduccion($pNombre, $fInicio, $fFin, $pCantidad, $pEtapa){
+class Produccion
+{
+    public function agregarProduccion($pNombre, $fInicio, $fFin, $pCantidad, $pEtapa)
+    {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
 

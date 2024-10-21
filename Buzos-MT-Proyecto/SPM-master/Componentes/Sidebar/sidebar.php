@@ -14,12 +14,12 @@
 			<i class="far fa-times-circle show-nav-lateral"></i>
 			<img src="../assets/avatar/Avatar.png" class="img-fluid" alt="Avatar">
 			<figcaption class="roboto-medium text-name">
-				<?=$name?> <br><small class="roboto-condensed-light"><?=$perfil?></small>
+				<?= $name ?> <br><small class="roboto-condensed-light"><?= $perfil ?></small>
 			</figcaption>
 		</figure>
 
 		<div class="full-box nav-lateral-bar"></div> <!-- Barra roja de división -->
-		
+
 		<nav class="full-box nav-lateral-menu">
 			<ul>
 				<li>
@@ -41,7 +41,7 @@
 					</ul>
 				</li> -->
 
-				<?php 
+				<?php
 				//Enlace solo visible para Admin de Inventario
 				if ($perfil == 'Jefe Inventario'): ?>
 					<li>
@@ -87,7 +87,7 @@
 					</ul>
 				</li> -->
 
-				<?php 
+				<?php
 				//Enlace solo visible para Admin de Usuario
 				if ($perfil == 'Administrador Usuario'): ?>
 					<li>
@@ -109,7 +109,7 @@
 					</li>
 				<?php endif; ?>
 
-				<?php 
+				<?php
 				//Enlace solo visible para Admin de Usuario
 				if ($perfil == 'Administrador Usuario'): ?>
 					<li>
@@ -120,8 +120,8 @@
 					</li>
 				<?php endif; ?>
 
-				
-				<?php 
+
+				<?php
 				//Enlace solo visible para Jefe de Producción
 				if ($perfil == 'Jefe Producción'): ?>
 					<li>
@@ -136,8 +136,8 @@
 						</ul>
 					</li>
 				<?php endif; ?>
-				
-				<?php 
+
+				<?php
 				//Enlace solo visible para Jefe de Producción | Administrador de Usuarios | Administrador de Inventario
 				if ($perfil == 'Jefe Producción' || $perfil == 'Administrador Usuario' || $perfil == 'Jefe Inventario'): ?>
 					<li>
@@ -149,21 +149,26 @@
 							<li>
 								<a href="../Informes/info-produccion.php"><i class="fa-solid fa-industry"></i> &nbsp; Producción</a>
 							</li>
-							<li>
-								<a href="../Informes/info-Rec.Humanos.php"><i class="fa-solid fa-users"></i> &nbsp; RR.HH</a>
-							</li>
+							<?php
+							if ($perfil == 'Administrador Usuario') { ?>
+								<li>
+									<a href="../Informes/info-Rec.Humanos.php"><i class="fa-solid fa-users"></i> &nbsp; RR.HH</a>
+								</li>
+							<?php
+							}
+							?>
 							<li>
 								<a href="../Informes/reporte_inventario.php"><i class="fa-solid fa-users"></i> &nbsp; Reporte Inventario</a>
-							</li>						
+							</li>
 						</ul>
 					</li>
 				<?php endif; ?>
-				
+
 				<li>
 					<a href="../Perfil-Admin-Usuarios/user-update.php"><i class="fa-solid fa-gear"></i> &nbsp; Configuración</a>
 				</li>
 
-				<?php 
+				<?php
 				//Enlace solo visible para Operarios
 				if ($perfil == 'Operario'): ?>
 					<li><a href="../Perfil-Operarios/vista-tar-asignadas.php"><i class="fa-brands fa-stack-exchange"></i> &nbsp; Mis Tareas</a></li>

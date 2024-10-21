@@ -14,7 +14,7 @@ if (!isset($datosInventario)) {
     error_log("La variable datosInventario no está definida en reporte_inventario.php");
     $datosInventario = [];
 }
-require_once '../error_log.php';
+require_once '../../error_log.php';
 ?>
 
 <!DOCTYPE html>
@@ -137,6 +137,7 @@ include '../Componentes/Head/head.php';
                     console.log('No hay datos para generar la gráfica');
                 <?php endif; ?>
             </script>
+            <?php include '../Componentes/Script/script.php' ?>
 </body>
 
 </html>
