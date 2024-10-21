@@ -28,7 +28,7 @@ class MateriaPrima
     {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
-        $sql = 'INSERT INTO materia_prima (mat_pri_nombre,mat_pri_descripcion,mat_pri_unidad_medida,mat_pri_cantidad,estado_id_estado,fecha_compra_mp,proveedores_id_proveedores) VALUES 
+        $sql = 'INSERT INTO materia_prima (mat_pri_nombre,mat_pri_descripcion,mat_pri_unidad_medida,mat_pri_cantidad,mat_pri_estado,fecha_compra_mp,proveedores_id_proveedores) VALUES 
             (?,?,?,?,?,?,?)';
         $stmt = $conectar->prepare($sql);
         $stmt->bind_param('sssiisi', $mpNombres, $mpDescripcion, $mpUnidadMedida, $mpCantidad, $mpEstado, $mpFechaCompra, $mpProveedor);
