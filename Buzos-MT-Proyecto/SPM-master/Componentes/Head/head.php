@@ -26,4 +26,7 @@
 	<!-- Icono -->
 	<link rel="icon" href="../assets/img/icon.png" sizes="32x32" type="image/png">
 
+	<!-- Graficos con CHART.JS-->
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 </head>
