@@ -1,17 +1,27 @@
-<?php
+<?php 
 session_start();
-
 if (!isset($_SESSION['user_id'])) {
     header('Location: ../Login-Registro/login.php');
+    exit();
 }
+$user_id = $_SESSION['user_id'];
 
-?>
-<!DOCTYPE html>
-<html lang="es">
-<?php
+// Aquí asumo que ya tienes la lógica para obtener los datos del usuario
+include_once '../Modelo/Conexion.php';
+$conexion = new Conexion();
+$conectarse = $conexion->conectarse();
+
+$sql = "SELECT * FROM usuarios WHERE num_doc = ?";
+$stmt = $conectarse->prepare($sql);
+$stmt->bind_param("s", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$usuario = $result->fetch_assoc();
+$stmt->close();
+
 include '../Config/variable_global.php';
-
-include '../Componentes/Head/head.php' ?>
+include '../Componentes/Head/head.php';
+?>
 
 <body>
     <!-- Main container -->
@@ -34,23 +44,16 @@ include '../Componentes/Head/head.php' ?>
                     <fieldset>
                         <legend><i class="far fa-address-card"></i> &nbsp; Información personal</legend>
                         <div class="container-fluid">
-                            <div class="row">
-                                <div class="col-12 col-md-4">
+                        <div class="row">
+                                <div class="col-12 col-md-6">
                                     <div class="form-group">
-                                        <label for="tipo_documento">Tipo documento</label>
-                                        <select class="form-select" id="tipoDocumento" name="tipoDocumento" required>
-                                            <option value=""> Tipo de documento</option>
+                                        <label for="tipo_documento">Tipo documento:</label>
+                                        <select class="form-select" id="tipoDocumento" name="tipoDocumento" disabled>
                                             <?php
-                                            include_once '../Modelo/Conexion.php';
-                                            $conexion = new Conexion();
-                                            $conectarse = $conexion->conectarse();
-
                                             $sql = "SELECT * FROM tipo_doc";
                                             $res = $conectarse->query($sql);
-                                            $conectarse->close();
-
                                             while ($fila = mysqli_fetch_assoc($res)) { ?>
-                                                <option value="<?= $fila['id_tipo_documento'] ?>"><?= $fila['tip_doc_descripcion'] ?></option>
+                                                <option value="<?= $fila['id_tipo_documento'] ?>" <?= ($fila['id_tipo_documento'] == $usuario['t_doc'] ? 'selected' : '') ?>><?= $fila['tip_doc_descripcion'] ?></option>
                                             <?php
                                             }
                                             ?>
@@ -58,31 +61,56 @@ include '../Componentes/Head/head.php' ?>
                                     </div>
                                 </div>
 
+                                <div class="col-12 col-md-6">
+                                    <div class="form-group">
+                                        <label for="usuario_dni">Número de documento:</label>
+                                        <input type="text" class="form-control" name="usuario_dni" id="usuario_dni" value="<?php echo htmlspecialchars($usuario['num_doc']); ?>" readonly>
+                                    </div>
+                                </div>
+                                <br>
                                 <div class="col-12 col-md-4">
                                     <div class="form-group">
-                                        <label for="usuario_dni">Número de documento</label>
-                                        <input type="text" class="form-control" name="usuario_dni" id="usuario_dni" value="<?php echo htmlspecialchars($num_doc); ?>" readonly>
+                                        <label for="usuario_nombre">Nombres:</label>
+                                        <input type="text" class="form-control" name="usuario_nombre" id="usuario_nombre" value="<?php echo htmlspecialchars($usuario['usu_nombres']); ?>" maxlength="35">
                                     </div>
                                 </div>
 
                                 <div class="col-12 col-md-4">
                                     <div class="form-group">
-                                        <label for="usuario_nombre">Nombres</label>
-                                        <input type="text" class="form-control" name="usuario_nombre" id="usuario_nombre" value="<?php echo htmlspecialchars($nombre); ?>" maxlength="35">
+                                        <label for="usuario_apellido">Apellidos:</label>
+                                        <input type="text" class="form-control" name="usuario_apellido" id="usuario_apellido" value="<?php echo htmlspecialchars($usuario['usu_apellidos']); ?>" maxlength="35">
                                     </div>
                                 </div>
 
-                                <!-- Repite este patrón para los demás campos, quitando el atributo 'required' -->
+                                <div class="col-12 col-md-4">
+                                    <div class="form-group">
+                                        <label for="usuario_telefono">Teléfono:</label>
+                                        <input type="text" class="form-control" name="usuario_telefono" id="usuario_telefono" value="<?php echo htmlspecialchars($usuario['usu_telefono']); ?>" maxlength="15">
+                                    </div>
+                                </div>
 
+                                <div class="col-12 col-md-4">
+                                    <div class="form-group">
+                                        <label for="usuario_email">Email:</label>
+                                        <input type="email" class="form-control" name="usuario_email" id="usuario_email" value="<?php echo htmlspecialchars($usuario['usu_email']); ?>" maxlength="70">
+                                    </div>
+                                </div>
+
+                                <div class="col-12 col-md-4">
+                                    <div class="form-group">
+                                        <label for="Sexo">Sexo:</label>
+                                        <input type="text" class="form-control" name="usuario_sexo" id="usuario_sexo" value="<?php echo htmlspecialchars($usuario['usu_sexo']); ?>" maxlength="70">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </fieldset>
-                    <br><br><br>
+                    <br>
+
                     <fieldset>
                         <legend><i class="fas fa-user-lock"></i> &nbsp; Información de la cuenta</legend>
                         <div class="container-fluid">
                             <div class="row">
-                                <!-- Campos de información de la cuenta -->
                                 <div class="col-12 col-md-6">
                                     <div class="form-group">
                                         <label for="password">Nueva Contraseña (dejar en blanco si no desea cambiarla):</label>
@@ -98,6 +126,7 @@ include '../Componentes/Head/head.php' ?>
                             </div>
                         </div>
                     </fieldset>
+                    
                     <p class="text-center" style="margin-top: 40px;">
                         <button type="submit" class="btn btn-raised btn-success btn-sm">
                             <i class="fas fa-sync-alt"></i> &nbsp; ACTUALIZAR
@@ -122,5 +151,4 @@ include '../Componentes/Head/head.php' ?>
         });
     </script>
 </body>
-
 </html>
