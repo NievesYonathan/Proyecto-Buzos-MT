@@ -91,10 +91,10 @@ session_start();
                                         <input type="text" id="numeroDocumento" name="numeroDocumento" placeholder="Número de Documento" requiered maxlength="10" required pattern="\d+{1,10}" title="Solo se permiten números">
                                     </div>
                                     <div class="inputBox">
-                                        <input type="text" id="nombres" name="nombres" placeholder="Nombres" value="<?= $_SESSION['user_first_name'] ?>" required pattern="[A-Za-zÁ-ÿ\s]+" title="Solo se permiten letras y espacios">
+                                        <input type="text" id="nombres" name="nombres" placeholder="Nombres" value="<?= isset($_SESSION['user_first_name']) ? $_SESSION['user_first_name'] : '' ?>" required pattern="[A-Za-zÁ-ÿ\s]+" title="Solo se permiten letras y espacios">
                                     </div>
                                     <div class="inputBox">
-                                        <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" value="<?= $_SESSION['user_last_name'] ?>" required pattern="[A-Za-zÁ-ÿ\s]+" title="Solo se permiten letras y espacios">
+                                        <input type="text" id="apellidos" name="apellidos" placeholder="Apellidos" value="<?= isset($_SESSION['user_last_name']) ? $_SESSION['user_last_name'] : '' ?>" required pattern="[A-Za-zÁ-ÿ\s]+" title="Solo se permiten letras y espacios">
                                     </div>
                                     <?php
                                     if (!isset($_SESSION['user_email_address'])) {
@@ -119,7 +119,7 @@ session_start();
                                         <input type="number" id="celular" name="celular" placeholder="Teléfono Celular" requiered maxlength="10" required pattern="\d+{1,10}" title="Solo se permiten números">
                                     </div>
                                     <div class="inputBox">
-                                        <input type="email" id="correo" name="correo" placeholder="Correo Electrónico" value="<?= $_SESSION['user_email_address'] ?>" required>
+                                        <input type="email" id="correo" name="correo" placeholder="Correo Electrónico" value="<?= isset($_SESSION['user_email_address']) ? $_SESSION['user_email_address'] : '' ?>" required>
                                     </div>
 
                                     <div class="inputBox">
