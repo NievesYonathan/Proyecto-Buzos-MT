@@ -56,6 +56,27 @@ class Usuarios
         $seguridad->addClaveUsuario($numDoc, $clave);
     }
 
+    public function crearUsuarioGmail($numDoc = null, $tDoc = null, $usuNombres = null, $usuApellidos = null, $usuFechaNacimiento = null, $usuSexo = null, $usuTelefono = null, $usuFechaContratacion = null, $usuEmail = null, $img = null)
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+
+        $usuEstado = 1;
+        $registroEmail = 1;
+        $usuDireccion = "Bogotá";
+        // $usuFechaContratacion = "2024-09-03";
+
+        $sql = "INSERT INTO usuarios (num_doc,t_doc,usu_nombres,usu_apellidos,usu_fecha_nacimiento,usu_sexo,usu_direccion,usu_telefono,usu_email,usu_fecha_contratacion,usu_estado, imag_perfil, registro_gmail)
+                VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $stmt = $conectar->prepare($sql);
+        $stmt->bind_param("iissssssssisi", $numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuDireccion, $usuTelefono, $usuEmail, $usuFechaContratacion, $usuEstado, $img, $registroEmail);
+        $stmt->execute();
+        $stmt->close();
+        $conectar->close();
+
+    }
+
 
     public function iniciarSesion($numDoc = null, $tDoc = null, $clave = null)
     {
@@ -69,13 +90,13 @@ class Usuarios
         $stmt->close();
         $conectar->close();
 
-        if ($res && $res->num_rows > 0){
+        if ($res && $res->num_rows > 0) {
             $fila = $res->fetch_assoc();
             //var_dump($fila);
 
             $descifrada = $fila['clave_descifrada'];
-      
-            if ($descifrada === $clave) { 
+
+            if ($descifrada === $clave) {
                 $_SESSION['user_id'] = $fila['num_doc'];
                 $_SESSION['user_cargo'] = $fila['car_nombre'];
                 $_SESSION['user_nombre'] = $fila['usu_nombres'];
@@ -84,6 +105,28 @@ class Usuarios
             } else {
                 return false;
             }
+        }
+    }
+
+    public function iniciarSesionGmail($gmail = null)
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+
+        $stmt = $conectar->prepare("CALL ObtenerDatosSeguridadGmail(?)");
+        $stmt->bind_param("s", $gmail);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        $stmt->close();
+        $conectar->close();
+
+        if ($res && $res->num_rows > 0) {
+            $fila = $res->fetch_assoc();
+            $_SESSION['user_id'] = $fila['num_doc'];
+            $_SESSION['user_cargo'] = $fila['car_nombre'];
+            $_SESSION['user_nombre'] = $fila['usu_nombres'];
+
+            return $res;
         }
     }
 
@@ -106,7 +149,7 @@ class Usuarios
             GROUP BY u.num_doc";
 
         $res = $conectar->query($sql);
-        
+
 
         $conectar->close();
         return $res;
@@ -123,6 +166,19 @@ class Usuarios
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_assoc();
+    }
+
+    public function obtenerUsuarioPorGmail($gmail)
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+
+        $sql = "SELECT * FROM usuarios WHERE usu_email = ?";
+        $stmt = $conectar->prepare($sql);
+        $stmt->bind_param("s", $gmail);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        return $result;
     }
 
     public function obtenerUsuarioOperario()
@@ -220,22 +276,22 @@ class Usuarios
 }
 
 class Proveedor
- {
-     public function mostrarProveedor()
-     {
-         $conexion = new Conexion();
-         $conectar = $conexion->conectarse();
+{
+    public function mostrarProveedor()
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
 
-         // Consulta SQL para obtener los usuarios cuyo cargo es proveedor
-           $sql = "SELECT u.num_doc, u.t_doc, u.usu_nombres, u.usu_apellidos, u.usu_direccion, u.usu_telefono, u.usu_email, u.usu_fecha_contratacion, 
+        // Consulta SQL para obtener los usuarios cuyo cargo es proveedor
+        $sql = "SELECT u.num_doc, u.t_doc, u.usu_nombres, u.usu_apellidos, u.usu_direccion, u.usu_telefono, u.usu_email, u.usu_fecha_contratacion, 
                       u.usu_estado
                  FROM usuarios AS u
                  INNER JOIN tipo_doc AS t ON u.t_doc = t.id_tipo_documento
                  INNER JOIN cargos_has_usuarios AS cu ON u.num_doc = cu.usuarios_num_doc
                  INNER JOIN cargos AS c ON cu.cargos_id_cargos = c.id_cargos
                  WHERE c.car_nombre = 'proveedor'";
-         $res = $conectar->query($sql);
-         $conectar->close();
-         return $res;
-     }
- }
+        $res = $conectar->query($sql);
+        $conectar->close();
+        return $res;
+    }
+}

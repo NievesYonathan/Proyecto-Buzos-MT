@@ -20,8 +20,7 @@ $googleClientSecret = getenv('GOOGLE_CLIENT_SECRET');
 $google_client->setClientSecret($googleClientSecret);
 
 //Set the OAuth 2.0 Redirect URI
-$googleRedirectURI = getenv('GOOGLE_REDIRECT_URI');
-$google_client->setRedirectUri($googleRedirectURI);
+$google_client->setRedirectUri('http://localhost/Proyectos/Proyecto-Buzos-MT/Buzos-MT-Proyecto/SPM-master/Controlador/ControladorUsuario.php');
 
 // to get the email and profile 
 $google_client->addScope('email');

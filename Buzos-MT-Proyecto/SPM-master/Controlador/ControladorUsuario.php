@@ -1,9 +1,66 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-include_once "../Modelo/Usuarios.php";
+//Include Configuration File
+include('../Login-Registro/config.php');
 
+$login_button = '';
+
+
+if (isset($_GET["code"])) {
+
+    $token = $google_client->fetchAccessTokenWithAuthCode($_GET["code"]);
+
+
+    if (!isset($token['error'])) {
+
+        $google_client->setAccessToken($token['access_token']);
+
+
+        $_SESSION['access_token'] = $token['access_token'];
+
+
+        $google_service = new Google_Service_Oauth2($google_client);
+
+
+        $data = $google_service->userinfo->get();
+
+
+        if (!empty($data['given_name'])) {
+            $_SESSION['user_first_name'] = $data['given_name'];
+        }
+
+        if (!empty($data['family_name'])) {
+            $_SESSION['user_last_name'] = $data['family_name'];
+        }
+
+        if (!empty($data['email'])) {
+            $_SESSION['user_email_address'] = $data['email'];
+        }
+
+        if (!empty($data['gender'])) {
+            $_SESSION['user_gender'] = $data['gender'];
+        }
+
+        if (!empty($data['picture'])) {
+            $_SESSION['user_image'] = $data['picture'];
+        }
+    }
+}
+
+
+
+// Verificar si el usuario ya está registrado en la base de datos
+include_once "../Modelo/Usuarios.php";
+$usuRegistro = new Usuarios();
+$usuario = $usuRegistro->obtenerUsuarioPorGmail($_SESSION['user_email_address']);
+
+if ($usuario->num_rows > 0) {  // Asume que 'obtenerUsuarioPorGmail' retorna datos de usuario si existe
+    $controlador = new ControladorUsuario();
+    $controlador->iniciarSesionGmail($_SESSION['user_email_address']);
+} else {
+    // Si el usuario no está registrado, redirigir o manejar el caso de nuevo registro
+    // Ejemplo: Redirigir a una página de registro
+    header("Location: ../Login-Registro/registros.php");
+}
 
 
 class ControladorUsuario
@@ -22,9 +79,9 @@ class ControladorUsuario
             $usuEmail = $_POST['correo'];
             $usuFechaContratacion = "2024-09-03";
             // $imagPerfil = $_POST[''];
-            $clave = $_POST['password'];
-            $confirmarClave = $_POST['confirm_password'];
-            $confirmarClave = $_POST['confirm_password']; // Agregamos la confirmación de la contraseña
+            $clave = $_POST['password'] ?? null;
+            $confirmarClave = $_POST['confirm_password'] ?? null;
+            $confirmarClave = $_POST['confirm_password'] ?? null;
 
             // Validar si las contraseñas coinciden
             if ($clave !== $confirmarClave) {
@@ -34,7 +91,11 @@ class ControladorUsuario
             }
 
             $controladorUsuario = new Usuarios();
-            $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
+            if(!isset($_SESSION['user_email_address'])){
+                $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
+            } else {
+                $controladorUsuario->crearUsuarioGmail($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuTelefono, $usuFechaContratacion, $usuEmail);
+            }
 
             $_SESSION['alerta'] = "El Usuario Fue Registrado Con Éxito.";
             header("Location: ../Login-Registro/login.php");
@@ -126,6 +187,17 @@ class ControladorUsuario
                 exit();
             }
         }
+    }
+
+    public function iniciarSesionGmail($gmail)
+    {
+        $controladorUsuario = new Usuarios();
+        $res = $controladorUsuario->iniciarSesionGmail($gmail);
+        if ($res && $res->num_rows > 0) {
+            // Inicio de sesión exitoso
+            header("Location: ../Dashboard/home.php");
+            exit();
+        }    
     }
 
     public function mostrarUsuarios()
