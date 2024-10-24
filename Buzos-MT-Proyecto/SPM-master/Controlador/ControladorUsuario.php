@@ -51,16 +51,21 @@ if (isset($_GET["code"])) {
 // Verificar si el usuario ya está registrado en la base de datos
 include_once "../Modelo/Usuarios.php";
 $usuRegistro = new Usuarios();
-$usuario = $usuRegistro->obtenerUsuarioPorGmail($_SESSION['user_email_address']);
+if (isset($_GET["code"])) {
+    if ($_SESSION['user_email_address']) {
+        $usuario = $usuRegistro->obtenerUsuarioPorGmail($_SESSION['user_email_address']);
 
-if ($usuario->num_rows > 0) {  // Asume que 'obtenerUsuarioPorGmail' retorna datos de usuario si existe
-    $controlador = new ControladorUsuario();
-    $controlador->iniciarSesionGmail($_SESSION['user_email_address']);
-} else {
-    // Si el usuario no está registrado, redirigir o manejar el caso de nuevo registro
-    // Ejemplo: Redirigir a una página de registro
-    header("Location: ../Login-Registro/registros.php");
+        if ($usuario->num_rows > 0) {  // Asume que 'obtenerUsuarioPorGmail' retorna datos de usuario si existe
+            $controlador = new ControladorUsuario();
+            $controlador->iniciarSesionGmail($_SESSION['user_email_address']);
+        } else {
+            // Si el usuario no está registrado, redirigir o manejar el caso de nuevo registro
+            // Ejemplo: Redirigir a una página de registro
+            header("Location: ../Login-Registro/registros.php");
+        }
+    }
 }
+
 
 
 class ControladorUsuario
@@ -91,7 +96,7 @@ class ControladorUsuario
             }
 
             $controladorUsuario = new Usuarios();
-            if(!isset($_SESSION['user_email_address'])){
+            if (!isset($_SESSION['user_email_address'])) {
                 $controladorUsuario->crearUsuario($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuTelefono, $usuFechaContratacion, $usuEmail, $clave);
             } else {
                 $controladorUsuario->crearUsuarioGmail($numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuTelefono, $usuFechaContratacion, $usuEmail);
@@ -197,7 +202,7 @@ class ControladorUsuario
             // Inicio de sesión exitoso
             header("Location: ../Dashboard/home.php");
             exit();
-        }    
+        }
     }
 
     public function mostrarUsuarios()

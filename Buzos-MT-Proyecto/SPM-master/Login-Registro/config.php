@@ -1,7 +1,9 @@
 <?php
 
 //start session on web page
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 
 //config.php
 
