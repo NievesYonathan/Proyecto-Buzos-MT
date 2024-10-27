@@ -58,7 +58,7 @@ if(!isset($_SESSION['user_id'])){
 				<?php endif; ?>
 
 				<?php 
-				//Enlace solo visible para Jefe de Producción
+				//Enlace solo visible para Jefe de Inventario
 				if ($perfil == 'Jefe Inventario'): ?>
 					<a href="../Perfil-Inventario/item-list.php" class="tile">
 						<div class="tile-tittle">Materia Prima</div>
@@ -78,12 +78,24 @@ if(!isset($_SESSION['user_id'])){
 				</a> -->
 
 				<?php 
-				//Enlace solo visible para Jefe de Producción
+				//Enlace solo visible para Administrador de usuario
 				if ($perfil == 'Administrador Usuario'): ?>
 					<a href="../Perfil-Admin-Usuarios/user-list.php" class="tile">
 						<div class="tile-tittle">Usuarios</div>
 						<div class="tile-icon">
 							<i class="fa-solid fa-user fa-fw"></i>
+							<!-- <p>50 Registrados</p> -->
+						</div>
+					</a>
+				<?php endif; ?>
+
+				<?php 
+				//Enlace solo visible para Administrador de usuario
+				if ($perfil == 'Administrador Usuario'): ?>
+					<a href="../Perfil-Operarios/nueva-tarea.php" class="tile">
+						<div class="tile-tittle">Tareas</div>
+						<div class="tile-icon">
+						<i class="fa-solid fa-calendar-days"></i>
 							<!-- <p>50 Registrados</p> -->
 						</div>
 					</a>
@@ -108,6 +120,18 @@ if(!isset($_SESSION['user_id'])){
 						</div>
 					</a>
 				<?php endif; ?>
+
+				<?php
+				//Enlace solo visible para Operario
+				if ($perfil == 'Operario'): ?>
+					<a href="../Perfil-Operarios/vista-tar-asignadas.php" class="tile">
+						<div class="tile-tittle">Mis Tareas</div>
+						<div class="tile-icon">
+						<i class="fa-brands fa-stack-exchange"></i>
+						</div>
+					</a>
+				<?php endif; ?>
+
 			</div>
 		</section>
 	</main>
