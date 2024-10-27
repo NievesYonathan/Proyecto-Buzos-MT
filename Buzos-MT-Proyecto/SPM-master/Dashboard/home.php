@@ -50,21 +50,16 @@ if(!isset($_SESSION['user_id'])){
 					</a>
 					
 					<a href="../Perfil-Produccion/vista-pro-fabricados.php" class="tile">
-						<div class="tile-tittle">Producción</div>
+						<div class="tile-tittle">Detalles de Producción</div>
 						<div class="tile-icon">
 							<i class="fa-solid fa-shirt"></i>
 						</div>
 					</a>
-				<?php endif; ?>
 
-				<?php 
-				//Enlace solo visible para Jefe de Producción
-				if ($perfil == 'Jefe Producción'): ?>
 					<a href="../Informes/info-produccion.php" class="tile">
 						<div class="tile-tittle">Informes</div>
 						<div class="tile-icon">
 							<i class="fa-solid fa-file-circle-plus"></i>
-							<!-- <p>5 Registrados</p> -->
 						</div>
 					</a>
 				<?php endif; ?>
@@ -77,18 +72,9 @@ if(!isset($_SESSION['user_id'])){
 						<div class="tile-tittle">Materia Prima</div>
 						<div class="tile-icon">
 							<i class="fas fa-pallet fa-fw"></i>
-							<!-- <p>9 Registrados</p> -->
 						</div>
 					</a>
 				<?php endif; ?>
-
-				<!-- <a href="reservation-list.html" class="tile">
-					<div class="tile-tittle">Prestamos</div>
-					<div class="tile-icon">
-						<i class="fas fa-file-invoice-dollar fa-fw"></i>
-						<p>10 Registrados</p>
-					</div>
-				</a> -->
 
 				<?php 
 				//Enlace solo visible para Administrador de usuario
@@ -97,30 +83,16 @@ if(!isset($_SESSION['user_id'])){
 						<div class="tile-tittle">Usuarios</div>
 						<div class="tile-icon">
 							<i class="fa-solid fa-user fa-fw"></i>
-							<!-- <p>50 Registrados</p> -->
 						</div>
 					</a>
-				<?php endif; ?>
-
-				<?php 
-				//Enlace solo visible para Administrador de usuario
-				if ($perfil == 'Administrador Usuario'): ?>
+					
 					<a href="../Perfil-Operarios/nueva-tarea.php" class="tile">
 						<div class="tile-tittle">Tareas</div>
 						<div class="tile-icon">
 						<i class="fa-solid fa-calendar-days"></i>
-							<!-- <p>50 Registrados</p> -->
 						</div>
 					</a>
 				<?php endif; ?>
-
-				<!-- <a href="company.html" class="tile">
-					<div class="tile-tittle">Empresa</div>
-					<div class="tile-icon">
-						<i class="fas fa-store-alt fa-fw"></i>
-						<p>1 Registrada</p>
-					</div>
-				</a> -->
 
 				<?php
 				//Enlace solo visible para Operario

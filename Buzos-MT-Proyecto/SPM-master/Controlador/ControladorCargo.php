@@ -30,7 +30,7 @@ class ControladorCargo
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $controlador = new ControladorCargo();
-    if($_POST['Accion'] = "Actualizar"){
+    if($_POST['Accion'] === "Actualizar"){
         $id = $_POST['id'];
         $car_nombre =$_POST['car_nombre'];
         $controlador->setCargo($id, $car_nombre);

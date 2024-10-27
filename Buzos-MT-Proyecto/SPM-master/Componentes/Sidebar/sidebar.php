@@ -106,7 +106,10 @@
 								<a href="../Perfil-Admin-Usuarios/user-search.php"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar usuario</a>
 							</li>
 							<li>
-								<a href="../Perfil-Admin-Usuarios/tipoDocumentos.php"><i class="fa-solid fa-truck"></i> &nbsp; Tipos de Documentos</a>
+								<a href="../Perfil-Admin-Usuarios/tipoDocumentos.php"><i class="fa-brands fa-dochub"></i> &nbsp; Tipos de Documentos</a>
+							</li>
+							<li>
+								<a href="../Perfil-Admin-Usuarios/vistaEstados.php"><i class="fa-solid fa-e"></i> &nbsp; Estados</a>
 							</li>
 						</ul>
 					</li>

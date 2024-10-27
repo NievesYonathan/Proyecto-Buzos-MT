@@ -22,6 +22,20 @@ class TipoDocumento
         $conetar->close();
     }
 
+    public function setTipoDoc($id, $tipoDocumento)
+    {
+        $conexion = new Conexion();
+        $conetar = $conexion->conectarse();
+
+        $sql = "UPDATE tipo_doc SET tip_doc_descripcion = ? WHERE id_tipo_documento = ?";
+
+        $stmt = $conetar->prepare($sql);
+        $stmt->bind_param("si", $tipoDocumento, $id);
+        $stmt->execute();
+        $stmt->close();
+        $conetar->close();
+    }
+
     public function consultarTipoDoc()
     {
         $conexion = new Conexion();
