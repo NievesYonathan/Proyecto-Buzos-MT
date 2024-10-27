@@ -105,6 +105,9 @@
 							<li>
 								<a href="../Perfil-Admin-Usuarios/user-search.php"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar usuario</a>
 							</li>
+							<li>
+								<a href="../Perfil-Admin-Usuarios/tipoDocumentos.php"><i class="fa-solid fa-truck"></i> &nbsp; Tipos de Documentos</a>
+							</li>
 						</ul>
 					</li>
 				<?php endif; ?>
@@ -114,9 +117,6 @@
 				if ($perfil == 'Administrador Usuario'): ?>
 					<li>
 						<a href="../Perfil-Admin-Usuarios/cargos.php"><i class="fa-solid fa-address-book"></i> &nbsp; Cargos </a>
-					</li>
-					<li>
-						<a href="../Perfil-Operarios/nueva-tarea.php"><i class="fa-solid fa-calendar-days"></i> &nbsp; Tareas </a>
 					</li>
 				<?php endif; ?>
 
@@ -134,6 +134,9 @@
 								<a href="../Perfil-Produccion/vista-pro-fabricados.php" style="font-size: 15px"><i class="fa-solid fa-shirt"></i> &nbsp; Gestion Productos Fabricados</a>
 							</li>
 						</ul>
+					</li>
+					<li>
+						<a href="../Perfil-Operarios/nueva-tarea.php"><i class="fa-solid fa-calendar-days"></i> &nbsp; Tareas </a>
 					</li>
 				<?php endif; ?>
 

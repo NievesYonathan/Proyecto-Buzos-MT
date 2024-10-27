@@ -35,4 +35,16 @@ class Cargo
         $conectar->close();
         return $res;
     }
+
+    public function setCargos($id, $carNombre)
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+        $sql = "UPDATE cargos SET car_nombre = ? WHERE id_cargos = ?";
+        $stmt = $conectar->prepare($sql);
+        $stmt->bind_param("si", $carNombre, $id);
+        $stmt->execute();
+        $stmt->close();
+        $conectar->close();
+    }
 }

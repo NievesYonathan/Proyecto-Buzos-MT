@@ -67,7 +67,7 @@ class Usuarios
         // $usuFechaContratacion = "2024-09-03";
 
         $sql = "INSERT INTO usuarios (num_doc,t_doc,usu_nombres,usu_apellidos,usu_fecha_nacimiento,usu_sexo,usu_direccion,usu_telefono,usu_email,usu_fecha_contratacion,usu_estado, imag_perfil, registro_gmail)
-                VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                VALUE (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $conectar->prepare($sql);
         $stmt->bind_param("iissssssssisi", $numDoc, $tDoc, $usuNombres, $usuApellidos, $usuFechaNacimiento, $usuSexo, $usuDireccion, $usuTelefono, $usuEmail, $usuFechaContratacion, $usuEstado, $img, $registroEmail);
