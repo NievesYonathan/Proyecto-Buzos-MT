@@ -164,15 +164,17 @@
 					</li>
 				<?php endif; ?>
 
-				<li>
-					<a href="../Perfil-Admin-Usuarios/user-update.php"><i class="fa-solid fa-gear"></i> &nbsp; Configuración</a>
-				</li>
-
 				<?php
 				//Enlace solo visible para Operarios
 				if ($perfil == 'Operario'): ?>
 					<li><a href="../Perfil-Operarios/vista-tar-asignadas.php"><i class="fa-brands fa-stack-exchange"></i> &nbsp; Mis Tareas</a></li>
 				<?php endif; ?>
+				
+				<li>
+					<a href="../Perfil-Admin-Usuarios/user-update.php"><i class="fa-solid fa-gear"></i> &nbsp; Configuración</a>
+				</li>
+
+				
 			</ul>
 		</nav>
 	</div>
