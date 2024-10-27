@@ -48,12 +48,13 @@ include '../Componentes/Head/head.php';
                     <table class="table table-dark table-sm">
                         <thead>
                             <tr class="text-center roboto-medium">
-                                <th class="clickable-col" data-col="activos">EMPLEADOS ACTIVOS</th>
-                                <th class="clickable-col" data-col="cargos">EMPLEADOS CON CARGO</th>
-                                <th class="clickable-col" data-col="inactivos">USUARIOS INACTIVOS</th>
+                                <th >EMPLEADOS ACTIVOS</th>
+                                <th >EMPLEADOS CON CARGO</th>
+                                <th >USUARIOS INACTIVOS</th>
                             </tr>
                         </thead>
                         <tbody>
+
                             <?php
                             include_once '../Modelo/Conexion.php';
                             include_once "../Controlador/ControladorUsuario.php";
@@ -92,6 +93,11 @@ include '../Componentes/Head/head.php';
                                 <td><?= $conCargo['total_con_cargo'] ?></td>
                                 <td><?= $inactivos['total_inactivos'] ?></td>
                             </tr>
+                            <tr class="text-center roboto-medium">
+<td><button class="clickable-col btn btn-info btn-sm" data-col="activos">Ver Activos</button></td>
+    <td><button class="clickable-col btn btn-info btn-sm" data-col="cargos" >Ver Con Cargo</button></td>
+    <td><button class="clickable-col btn btn-info btn-sm" data-col="inactivos" >Ver Inactivos</button></td>
+</tr>
                         </tbody>
                     </table>
                 </div>
@@ -107,13 +113,13 @@ include '../Componentes/Head/head.php';
 
 <!-- Modal -->
 <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-dialog modal-xl" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="userModalLabel">Detalles de Usuarios</h5>
             </div>
             <div class="modal-body">
-                <div class="table-responsive" style="max-height: 60vh; overflow-y: auto; overflow-x: auto;">
+                <div class="table-responsive" style="max-height: auto;">
                     <table class="table table-dark table-sm">
                         <thead>
                             <tr class="text-center roboto-medium">
@@ -153,7 +159,7 @@ include '../Componentes/Head/head.php';
         if (column === 'activos') {
             query = "SELECT u.num_doc, u.usu_nombres, u.usu_apellidos, u.usu_telefono, u.usu_email, t.tip_doc_descripcion as tipo_doc FROM usuarios u INNER JOIN tipo_doc t ON u.t_doc = t.id_tipo_documento WHERE u.usu_estado = '1'";
         } else if (column === 'cargos') {
-            query = "SELECT u.num_doc, u.usu_nombres, u.usu_apellidos, u.usu_telefono, u.usu_email, t.tip_doc_descripcion as tipo_doc, c.car_nombre as cargo FROM usuarios u INNER JOIN tipo_doc t ON u.t_doc = t.id_tipo_documento LEFT JOIN cargos_has_usuarios cu ON u.num_doc = cu.usuarios_num_doc LEFT JOIN cargos c ON cu.cargos_id_cargos = c.id_cargos";
+    query = "SELECT u.num_doc, u.usu_nombres, u.usu_apellidos, u.usu_telefono, u.usu_email, t.tip_doc_descripcion AS tipo_doc, GROUP_CONCAT(c.car_nombre SEPARATOR ', ') AS cargo FROM usuarios u INNER JOIN tipo_doc t ON u.t_doc = t.id_tipo_documento LEFT JOIN cargos_has_usuarios cu ON u.num_doc = cu.usuarios_num_doc LEFT JOIN cargos c ON cu.cargos_id_cargos = c.id_cargos GROUP BY u.num_doc, u.usu_nombres, u.usu_apellidos, u.usu_telefono, u.usu_email, t.tip_doc_descripcion";
         } else if (column === 'inactivos') {
             query = "SELECT u.num_doc, u.usu_nombres, u.usu_apellidos, u.usu_telefono, u.usu_email, t.tip_doc_descripcion as tipo_doc FROM usuarios u INNER JOIN tipo_doc t ON u.t_doc = t.id_tipo_documento WHERE u.usu_estado = '2'";
         }

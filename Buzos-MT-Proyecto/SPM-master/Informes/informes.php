@@ -1,3 +1,11 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['user_id'])) {
+	header('Location: ../Login-Registro/login.php');
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 	<?php 
@@ -21,9 +29,6 @@
                 <h3 class="text-left">
                     <i class="fas fa-clipboard-list fa-fw"></i> &nbsp; INFORMES Y REPORTES
                 </h3>
-                <p class="text-justify">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Harum delectus eos enim numquam fugit optio accusantium, aperiam eius facere architecto facilis quibusdam asperiores veniam omnis saepe est et, quod obcaecati.
-                </p>
             </div>
             <div class="container-fluid">
                 <ul class="full-box list-unstyled page-nav-tabs">

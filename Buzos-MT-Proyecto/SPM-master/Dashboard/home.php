@@ -58,6 +58,19 @@ if(!isset($_SESSION['user_id'])){
 				<?php endif; ?>
 
 				<?php 
+				//Enlace solo visible para Jefe de Producción
+				if ($perfil == 'Jefe Producción'): ?>
+					<a href="../Informes/info-produccion.php" class="tile">
+						<div class="tile-tittle">Informes</div>
+						<div class="tile-icon">
+							<i class="fa-solid fa-file-circle-plus"></i>
+							<!-- <p>5 Registrados</p> -->
+						</div>
+					</a>
+				<?php endif; ?>
+
+
+				<?php 
 				//Enlace solo visible para Jefe de Inventario
 				if ($perfil == 'Jefe Inventario'): ?>
 					<a href="../Perfil-Inventario/item-list.php" class="tile">
@@ -108,18 +121,6 @@ if(!isset($_SESSION['user_id'])){
 						<p>1 Registrada</p>
 					</div>
 				</a> -->
-
-								<?php 
-				//Enlace solo visible para Jefe de Producción
-				if ($perfil == 'Jefe Producción'): ?>
-					<a href="client-new.html" class="tile">
-						<div class="tile-tittle">Informes</div>
-						<div class="tile-icon">
-							<i class="fa-solid fa-file-circle-plus"></i>
-							<!-- <p>5 Registrados</p> -->
-						</div>
-					</a>
-				<?php endif; ?>
 
 				<?php
 				//Enlace solo visible para Operario
