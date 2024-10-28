@@ -31,4 +31,19 @@ class MatProduccion{
         $conectar->close();
     }
 
+    public function getMatProduccionId($idProduccion)
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+
+        $sql = "SELECT id_pro_materia_prima FROM reg_pro_mat_prima WHERE id_produccion = ?";
+        $stmt = $conectar->prepare($sql);
+        $stmt->bind_param('i', $idProduccion);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $stmt->close();
+        $conectar->close();
+        return $result;
+    }
+
 }

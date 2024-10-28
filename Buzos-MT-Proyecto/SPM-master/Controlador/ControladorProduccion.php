@@ -2,7 +2,6 @@
 include_once "../Modelo/Produccion.php";
 include_once "../Modelo/EmpTarea.php";
 include_once "../Modelo/MatProduccion.php";
-
 class ControladorProduccion
 {
     public function addProduccion()
@@ -66,6 +65,25 @@ class ControladorProduccion
         $newPro->editarProduccion($id_produccion, $pNombre, $fFin, $pCantidad, $pEtapa);
 
         $newMatPro = new MatProduccion();
+        $idMateriasPrirmas = $newMatPro->getMatProduccionId($id_produccion);
+
+        // Transformar el resultado en un array de IDs
+        $existingMatPrimaIds = [];
+        while ($row = $idMateriasPrirmas->fetch_assoc()) {
+            $existingMatPrimaIds[] = $row['id_pro_materia_prima'];
+        }
+
+        // Encontrar los nuevos IDs de materias primas que no están en la base de datos
+        $newMateriasPrima = array_diff($idMateriPrima, $existingMatPrimaIds);
+
+        // Llamar a la función de añadir materia prima para cada nuevo ID
+        foreach ($newMateriasPrima as $newMateria) {
+            $index = array_search($newMateria, $idMateriPrima);
+            $cantidad = $cantidadMP[$index];
+            $newMatPro->addMatProduccion($cantidad, $newMateria, $id_produccion);
+        }
+
+        // Actualizar las materias primas existentes
         for ($i = 0; $i < count($idRegistrosMP); $i++) {
             $idRegistro = $idRegistrosMP[$i];
             $MateriPrima = $idMateriPrima[$i];
@@ -74,26 +92,54 @@ class ControladorProduccion
         }
 
         $newEmpTarea = new EmpTarea();
+        $idMateriasTareas = $newEmpTarea->tareasProduccionId($id_produccion);
+
+        // Transformar el resultado en un array de IDs
+        $existingTareas = [];
+        while ($row = $idMateriasTareas->fetch_assoc()) {
+            // Separar los IDs por comas y agregar cada uno al array
+            $tareasSeparadas = explode(',', $row['idEmpTarea']); // Cambia 'id_empleado_tarea' por el campo correcto
+            $existingTareas = array_merge($existingTareas, $tareasSeparadas); // Combina con el array existente
+        }
+        var_dump($idMateriasTareas);
+        echo "<br>";
+        var_dump($existingTareas);
+        echo "<br>";
+        // Encontrar los nuevos IDs de materias primas que no están en la base de datos
+        $newTareas = array_diff($tareaId, $existingTareas);
+        var_dump($newTareas);
+
+// Llamar a la función de añadir tarea para cada nuevo ID
+foreach ($newTareas as $newTarea) {
+    $index = array_search($newTarea, $tareaId);
+    $numDoc = $numDocs[$index]; // Suponiendo que el numDoc está en el mismo índice que la tarea
+    $fEntrega = $fEntregas[$index]; // Suponiendo que la fecha de entrega está en el mismo índice
+    $fAsignacion = date('Y-m-d'); // Asignar la fecha actual como fecha de asignación
+    $idEstado = 3; // O el estado que corresponda
+
+    // Agregar la nueva tarea
+    $newEmpTarea->addTareaProd($numDoc, $newTarea, $fAsignacion, $fEntrega, $idEstado, $id_produccion);
+}
+        // Actualizar las materias primas existentes
         for ($i = 0; $i < count($idRegistrosET); $i++) {
             $idRegistroET = $idRegistrosET[$i];
             $tarea = $tareaId[$i];
             $numDoc = $numDocs[$i];
             $fEntrega = $fEntregas[$i];
-            // Imprimir cada valor de fEntrega
-            echo "Iteración $i: numDoc = $numDoc, tarea = $tarea, fEntrega = $fEntrega, idProduccion = $id_produccion, idEmpTarea = $idRegistroET<br>";
-            $newEmpTarea->editarTareaProd($numDoc, $tarea, $fEntrega, $id_produccion, $idRegistroET);
+
+            $newEmpTarea->editarTareaProd($numDoc, $tarea, $fEntrega, $idRegistroET);
         }
 
         // Redirigir al final del proceso
-        header("Location: ../Perfil-Produccion/vista-pro-fabricados.php");
-        exit();
+        //header("Location: ../Perfil-Produccion/vista-pro-fabricados.php");
+        //exit();
     }
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $controlador = new ControladorProduccion();
 
-    if (isset($_POST['btn-editar']) and $_POST['btn-editar'] === "editar") {
+    if (isset($_POST['btn-produccion']) and $_POST['btn-produccion'] === "editar") {
         $controlador->editProduccion();
     } else {
         $controlador->addProduccion();

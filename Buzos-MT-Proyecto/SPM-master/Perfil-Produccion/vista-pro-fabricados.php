@@ -110,7 +110,7 @@ include '../Componentes/Head/head.php' ?>
 								</div>
 
 								<div class="modal-body">
-									<form action="../Controlador/ControladorProduccion.php" method="post" class="form-neon" autocomplete="off">
+									<form action="../Controlador/ControladorProduccion.php" method="POST" class="form-neon" autocomplete="off">
 										<input type="hidden" name="id_produccion" value="<?= $fila['id_produccion'] ?>">
 										<fieldset>
 											<legend><i class="fas fa-industry"></i> &nbsp; Información de la producción</legend>
@@ -237,6 +237,7 @@ include '../Componentes/Head/head.php' ?>
 														$idRegistrosET = explode(',', $filaTa['idEmpTarea']);
 														$idTareas = explode(',', $filaTa['id_tarea']);
 														$operarios = explode(',', $filaTa['operario']);
+														$fechaEntrega = explode(',', $filaTa['fecha_entrega']);
 
 														// Comprobar que ambos arrays tienen la misma longitud
 														if (count($idTareas) == count($operarios)) {
@@ -246,6 +247,7 @@ include '../Componentes/Head/head.php' ?>
 																$idRegistroET = $idRegistrosET[$i];
 																$idTarea = $idTareas[$i];
 																$operario = $operarios[$i];
+																$fecha = isset($fechaEntrega[$i]) ? $fechaEntrega[$i] : '';
 													?>
 																<div class="col-12 col-md-4 mb-2">
 																	<div class="form-group">
@@ -278,7 +280,7 @@ include '../Componentes/Head/head.php' ?>
 
 																<div class="col-12 col-md-4 mb-2" id="fEntrega-container">
 																	<div class="form-group">
-																		<input type="date" class="form-control border border-dark" name="produccion_fecha_entrega[]" id="produccion_fecha_entrega1" value="<?= $filaTa['emp_tar_fecha_entrega'] ?>" required>
+																		<input type="date" class="form-control border border-dark" name="produccion_fecha_entrega[]" id="produccion_fecha_entrega1" value="<?= $fecha ?>" required>
 																	</div>
 																</div>
 
@@ -299,7 +301,7 @@ include '../Componentes/Head/head.php' ?>
 										<p class="text-center" style="margin-top: 40px;">
 											<button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
 											&nbsp; &nbsp;
-											<button type="submit" name="btn-editar" value="editar" class="btn btn-raised btn-success btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
+											<button type="submit" name="btn-produccion" value="editar" class="btn btn-raised btn-success btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
 										</p>
 									</form>
 

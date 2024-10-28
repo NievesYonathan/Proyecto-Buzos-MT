@@ -537,7 +537,7 @@ include '../Componentes/Head/head.php' ?>
 											<p class="text-center" style="margin-top: 40px;">
 												<button type="reset" class="btn btn-raised btn-secondary btn-sm"><i class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
 												&nbsp; &nbsp;
-												<button type="submit" class="btn btn-raised btn-success btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
+												<button type="submit" name="btn-produccion" value="agregar" class="btn btn-raised btn-success btn-sm"><i class="far fa-save"></i> &nbsp; GUARDAR</button>
 											</p>
 										</form>
 
