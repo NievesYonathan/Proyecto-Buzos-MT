@@ -98,16 +98,12 @@ class ControladorProduccion
         $existingTareas = [];
         while ($row = $idMateriasTareas->fetch_assoc()) {
             // Separar los IDs por comas y agregar cada uno al array
-            $tareasSeparadas = explode(',', $row['idEmpTarea']); // Cambia 'id_empleado_tarea' por el campo correcto
-            $existingTareas = array_merge($existingTareas, $tareasSeparadas); // Combina con el array existente
+            //$tareasSeparadas = explode(',', $row['tarea_id_tarea']); // Cambia 'id_empleado_tarea' por el campo correcto
+            $existingTareas[] = $row['tarea_id_tarea']; // Combina con el array existente
         }
-        var_dump($idMateriasTareas);
-        echo "<br>";
-        var_dump($existingTareas);
-        echo "<br>";
+
         // Encontrar los nuevos IDs de materias primas que no están en la base de datos
         $newTareas = array_diff($tareaId, $existingTareas);
-        var_dump($newTareas);
 
 // Llamar a la función de añadir tarea para cada nuevo ID
 foreach ($newTareas as $newTarea) {
@@ -131,7 +127,7 @@ foreach ($newTareas as $newTarea) {
         }
 
         // Redirigir al final del proceso
-        //header("Location: ../Perfil-Produccion/vista-pro-fabricados.php");
+        header("Location: ../Perfil-Produccion/vista-pro-fabricados.php");
         //exit();
     }
 }

@@ -52,9 +52,8 @@ class EmpTarea
     {
         $conexion = new Conexion();
         $conectar = $conexion->conectarse();
-        $sql = 'SELECT GROUP_CONCAT(eT.id_empleado_tarea) AS idEmpTarea FROM produccion p 
-        INNER JOIN emp_tarea eT ON p.id_produccion = eT.produccion_id_produccion WHERE p.id_produccion = ?
-        GROUP BY p.id_produccion';
+        $sql = 'SELECT eT.tarea_id_tarea FROM  emp_tarea eT
+        INNER JOIN produccion p ON p.id_produccion = eT.produccion_id_produccion WHERE p.id_produccion = ?';
         $stmt = $conectar->prepare($sql);
         $stmt->bind_param('i', $id_produccion);
         $stmt->execute();
