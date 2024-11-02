@@ -48,6 +48,7 @@ if (isset($_GET["code"])) {
 
 
 
+
 // Verificar si el usuario ya está registrado en la base de datos
 include_once "../Modelo/Usuarios.php";
 $usuRegistro = new Usuarios();
@@ -106,6 +107,7 @@ class ControladorUsuario
             header("Location: ../Login-Registro/login.php");
         }
     }
+
 
     public function insertarUsuario()
     {
@@ -323,13 +325,19 @@ class ControladorUsuario
             }
         }
     }
-
+    
     public function mostrarProveedor()
     {
         $modeloProveedor = new Usuarios(); // Asegúrate de usar el nombre correcto del modelo
         $res = $modeloProveedor->mostrarProveedor();
         return $res;
     }
+    
+    public function buscarUsuario($search) {
+        $usuario = new Usuarios(); // Crear una instancia de Usuarios
+        return $usuario->buscarUsuario($search); // Llamar al método buscarUsuario del modelo Usuarios
+    }    
+
 }
 
 // class ControladorProveedor
@@ -343,25 +351,30 @@ class ControladorUsuario
 // }
 
 
-
-//Si se envían datos por POST, actualizar el usuario
+// Si se envían datos por POST, actualizar el usuario
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $controlador = new ControladorUsuario();
-    if ($_POST['Accion'] == "Registrar") {
-        $controlador->registroUsuario();
+    if (isset($_POST['Accion'])) { // Asegúrate de que la clave 'Accion' esté definida
+        if ($_POST['Accion'] == "Registrar") {
+            $controlador->registroUsuario();
+        }
+        if ($_POST['Accion'] == "IniciarSesion") {
+            $controlador->iniciarSesion();
+        }
+        if ($_POST['Accion'] == "Actualizar") {
+            $controlador->actualizarUsuario();
+        }
+        if ($_POST['Accion'] == "Guardar") {
+            $controlador->insertarUsuario();
+        }
+        if ($_POST['Accion'] == "CambiarEstado") {
+            $controlador->eliminarUsuario();
+        }
+        if ($_POST['Accion'] == "Buscar") { // Agregado: acción para buscar usuarios
+            $controlador->buscarUsuario();
+        }
     }
-    if ($_POST['Accion'] == "IniciarSesion") {
-        $controlador->iniciarSesion();
-    }
-    if ($_POST['Accion'] == "Actualizar") {
-        $controlador->actualizarUsuario();
-    }
-    if ($_POST['Accion'] == "Guardar") {
-        $controlador->insertarUsuario();
-    }
-    if ($_POST['Accion'] == "CambiarEstado") {
-        $controlador->eliminarUsuario();
-    }
+    
     if (isset($_POST['accion']) && $_POST['accion'] == 'eliminar') {
         $num_doc = $_POST['num_doc'];
 
@@ -379,3 +392,4 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         exit();
     }
 }
+

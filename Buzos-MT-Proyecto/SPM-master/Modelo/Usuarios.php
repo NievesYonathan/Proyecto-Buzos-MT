@@ -18,6 +18,7 @@ class Usuarios
     private $usuEstado;
     private $imagPerfil;
 
+    
     public function Usuarios($numDoc = null, $tDoc = null, $usuNombres = null, $usuApellidos = null, $usuFechaNacimiento = null, $usuSexo = null, $usuDireccion = null, $usuTelefono = null, $usuEmail = null, $usuFechaContratacion = null, $usuEstado = null, $imagPerfil = null)
     {
         $this->numDoc = $numDoc;
@@ -251,6 +252,31 @@ class Usuarios
 
         return $resultado;
     }
+    public function buscarUsuario($search) {
+    $conexion = new Conexion(); // Asegúrate de que tu conexión esté establecida correctamente
+    $conectar = $conexion->conectarse();
+    $sql = "
+        SELECT u.num_doc, u.t_doc, u.usu_nombres, u.usu_apellidos, u.usu_fecha_nacimiento, u.usu_sexo, u.usu_direccion, u.usu_telefono, u.usu_email, u.usu_fecha_contratacion, e.nombre_estado AS estado_nombre
+FROM 
+    usuarios u
+JOIN 
+    estados e ON u.usu_estado = e.id_estados
+WHERE 
+    u.usu_nombres LIKE '%$search%' 
+    OR u.usu_apellidos LIKE '%$search%' 
+    OR u.num_doc LIKE '%$search%'
+    ";
+
+    // Agrega esta línea para depurar
+    echo $search; // Muestra la consulta que se está ejecutando
+
+    $result = mysqli_query($conectar, $sql);
+    $conectar->close();
+    return $result;
+}
+
+    
+    
 
     public function mostrarProveedor()
     {
