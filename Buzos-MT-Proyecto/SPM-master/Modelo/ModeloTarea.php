@@ -23,6 +23,48 @@ class ModeloTarea {
         return $stmtEmpTarea->execute();
     }
 
+    public function insertarTarea($tarNombre, $descripcion, $tarEstado) {
+        // Obtén la conexión desde la clase Conexion
+        $conexion = (new Conexion())->conectarse();  // Asegúrate de que getConexion() devuelve la conexión mysqli
+        
+        if ($conexion) {
+            $sql = "INSERT INTO tarea (tar_nombre, tar_descripcion, tar_estado) VALUES (?, ?, ?)";
+            $stmt = $conexion->prepare($sql);
+            
+            if ($stmt) {
+                $stmt->bind_param("ssi", $tarNombre, $descripcion, $tarEstado);
+                $stmt->execute();
+                $stmt->close();
+            } else {
+                echo "Error al preparar la consulta: " . $conexion->error;
+            }
+
+            $conexion->close();
+        } else {
+            echo "Error al obtener la conexión";
+        }
+    }
+    
+
+    public function getTareas()
+    {
+        $conexion = new Conexion();
+        $conectar = $conexion->conectarse();
+        $sql = "SELECT * FROM tarea";
+        $res = $conectar->query($sql);
+        $conectar->close();
+        return $res;
+    }
+
+    public function setTareas($id, $nombre, $descripcion, $estado)
+    {
+        $conexion = (new Conexion())->conectarse(); 
+        $stmt = $conexion->prepare("UPDATE tarea SET tar_nombre = ?, tar_descripcion = ?, tar_estado = ? WHERE id_tarea = ?");
+        $stmt->bind_param("ssii", $nombre, $descripcion, $estado, $id);
+        $stmt->execute();
+        $stmt->close();
+    }
+
     public function obtenerEstados() {
         $sql = "SELECT id_estados, nombre_estado FROM estados WHERE id_estados NOT IN (1, 2)";
         $result = $this->conexion->query($sql);

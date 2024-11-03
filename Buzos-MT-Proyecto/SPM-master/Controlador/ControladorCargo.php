@@ -10,7 +10,7 @@ class ControladorCargo
         $controladorCargo = new Cargo();
         $controladorCargo->crearCargo($carNombre);
 
-        header("Location: ../Perfil-Admin-Usuarios/cargos.php");
+        header("Location: ../Perfil-Operarios/nueva-tarea.php");
     }
 
     public function getCargo()
