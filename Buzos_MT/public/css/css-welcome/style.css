@@ -1,0 +1,1212 @@
+@import url('https://fonts.cdnfonts.com/css/hubot-sans');
+*{ box-sizing: border-box; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; scroll-behavior: smooth;}
+html, body { height: 100%; }
+
+html::-webkit-scrollbar { display: none; }
+html { -ms-overflow-style: none; scrollbar-width: none; }
+
+body {
+    margin: 0;
+    font-family: Untitled Sans, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Open Sans, Helvetica Neue, sans-serif;
+    background: #05060f linear-gradient(0deg,rgba(216,236,248,.06),rgba(152,192,239,.06));
+
+    font-size: max(calc(var(--_size) * 0.03), 10px);
+    --_factor: min(600px, 80vh);
+    --_size: min(var(--_factor), 80vw);
+}
+
+
+body.gold .header h2 ,
+body.gold p,
+body.gold > * > * :not(.contact-btn):not(.cards-container *):not(.cards-container):not(.wrapper *):not(.wrapper )  {
+    filter: invert(58%) sepia(11%) saturate(934%) hue-rotate(118deg) brightness(90%) contrast(86%);    
+}
+body.gold .header h2 a{
+    filter: hue-rotate(0deg);
+}
+body.gold canvas {
+    filter: drop-shadow(2em 4em 0px  #6b9080) drop-shadow(-8em -14em 0px  #6b9080);
+}
+body.gold .header .spotlight :not(.chuchu) {
+    filter: invert(58%) sepia(11%) saturate(934%) hue-rotate(118deg) brightness(90%) contrast(86%);
+}
+body.gold .mountains > div {
+    box-shadow: 
+    -1em -0.2em 0.4em -1.1em #c2ccff,
+    inset 0em 0em 0em 2px  #6b9080,
+    inset 0.2em 0.3em 0.2em -0.2em #c2ccff,
+    inset 10.2em 10.3em 2em -10em #0f34432f;
+}
+
+body.gold .content-section,
+body.gold .content-section ::before,
+body.gold .content-section ::after{
+    filter: invert(58%) sepia(11%) saturate(934%) hue-rotate(118deg) brightness(90%) contrast(86%);
+}
+
+h2 {
+    font-family: 'Hubot-Sans', sans-serif;
+}
+h2, p {
+    margin: 0; padding: 0;
+}
+h2 a {
+    text-decoration: none;
+    color: unset;
+}
+
+.header {
+    display: flex; width: 100%;
+    justify-content: center;
+    color: #bad6f7;
+    padding: 2em;
+    position: absolute;
+    top: 0; left: 0; right: 0; margin: 0 auto;
+
+    opacity: 0;
+    translate: 0 -1em;
+    animation: load 2s ease-in 2s forwards, up 1.4s ease-out 2s forwards;
+}
+.header > :nth-child(1) {
+    font-size: 1em;
+    position: absolute; left: 0; right: 29em; margin: 0.2em auto;
+    width: fit-content;
+}
+.header > :nth-child(2) {
+    position: absolute; left: 0; right: 0; margin: 0 auto;
+    width: fit-content;
+}
+.header > h2{
+    opacity: 0.5;
+    cursor: pointer;
+    transition: opacity 0.04s ease-in-out;
+}
+.header > h2:hover {
+    opacity: 1;
+    text-shadow: 0 2px 16px rgb(252, 252, 252);
+    width: fit-content;
+}
+
+.header > div.mid-spot {
+    width: 1.8em; height: 1.8em;
+    border-radius: 50%;
+    background: black;
+    box-shadow: 0 0 1em 0 #98c0ef;
+    cursor: pointer;
+    transition: box-shadow 1s ease-in-out;
+}
+.header > div.mid-spot:hover {
+    box-shadow: -0.3em 0.1em 0.2em 0  #6b9080;
+}
+body.gold .header > div.mid-spot:hover {
+    box-shadow: -0.3em 0.1em 0.2em 0 #98c0ef;
+}
+
+body.gold .header > div.mid-spot {
+    box-shadow: 0 0 1em 0  #ffffff;
+}
+
+.header > :nth-child(2):hover ~ .spotlight {
+    animation: colorize 10s linear infinite;
+}
+@keyframes colorize {
+    0%{filter: hue-rotate(0deg); }
+    100% {filter: hue-rotate(-380deg);}
+}
+
+button.contact-btn {
+    position: absolute; left: min(50em, 60vw); right: 0; margin: 0 auto;
+    width: 8em; height: 2.4em;
+    cursor: pointer;
+    border-radius: 20em;
+    border: none;
+    transition: background 0.5s, transform 0.5s;
+    
+    border: 1px solid #c2ccff33;
+    opacity: 1;
+    padding-top: 0.3em;
+
+    background: #121521;
+    color: #9dc3f7;
+    white-space:nowrap;
+}
+button.contact-btn::before {
+    content: ''; display: block; position:absolute; left: 0; top:0; border-radius: 20em;
+    width: 100%; height: 100%;
+    background: #c2ccff91 radial-gradient(farthest-side at 50% 100%, #c2ccff, transparent);
+    opacity: 0.1;
+    transition: all 0.4s ease-in-out;
+}
+button.contact-btn:hover::before {
+    background: #c2ccff1e radial-gradient(farthest-side at 50% 100%, #c2ccff, transparent);
+    opacity: 0.3;
+}
+.contact-btn .glow {
+    --border-width: 1px;
+    --loop-cycle: 24s;
+    position: absolute;
+    inset: calc(var(--border-width)* -1);
+    border-radius: 50px;
+    border: var(--border-width) solid transparent;
+    -webkit-mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+    mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+    -webkit-mask-clip: padding-box, border-box;
+    mask-clip: padding-box, border-box;
+    -webkit-mask-composite: source-in, xor;
+    mask-composite: intersect;
+    pointer-events: none;
+}
+button.contact-btn:hover .glow {
+    --loop-cycle: 2s;
+}
+.contact-btn .glow::after, .contact-btn .glow::before {
+    content: "";
+    height: 100%;
+    offset-anchor: 100% 50%;
+    background: radial-gradient(circle at 50% 50%, hsla(0, 0%, 100%, 0.75), transparent 50%), radial-gradient(circle at 50% 50%, #c2ccff 50%, transparent);
+    opacity: 0.4;
+    offset-path: rect(0 100% 100% 0 round 33px);
+    position: absolute;
+    display: inline-block;
+    -webkit-animation: loop 4s linear infinite;
+    animation: loop var(--loop-cycle) linear infinite;
+    aspect-ratio: 1 / 1;
+    transition: opacity 1s ease-in-out;
+}
+.contact-btn .glow::before {
+    animation-delay: calc( var(--loop-cycle) / -2 );
+}
+@keyframes loop {
+    100% {
+        offset-distance: 100%;
+    }    
+}
+.contact-btn-content {
+    background: linear-gradient(0deg, #d8ecf8, #98c0ef);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.2em;
+    line-height: 142%;
+}
+button.contact-btn:hover .glow::after, button.contact-btn:hover .glow::before {
+    opacity: 0.6;
+}
+@keyframes btn-rot {
+    0% { rotate: 0deg; }
+    100% { rotate: 360deg; } 
+}
+
+.header .spotlight {
+    pointer-events: none;
+    position: absolute; left: 0; right: 0; top:0; margin: 0 auto;
+    transition: filter 1s ease-in-out;
+
+    height: 42em; width: 100%;
+    overflow: hidden;
+}
+.header .spotlight > div {
+    border-radius: 0 0 50% 50%;
+    position: absolute; left: 0; right: 0; margin: 0 auto; 
+    top: 3em;
+    width: 30em; height: max(42em, 86vh);
+    background-image: conic-gradient(from 0deg at 50% -5%, transparent 45%, rgba(124, 145, 182, .3) 49%, rgba(124, 145, 182, .5) 50%, rgba(124, 145, 182, .3) 51%, transparent 55%);
+    transform-origin: 50% 0;
+    filter: blur(15px) opacity(0.5);
+    z-index: -1;
+    animation: load 2s ease-in-out forwards, loadrot 2s ease-in-out forwards, spotlight 21s ease-in-out infinite reverse;
+}
+.header .spotlight > div:nth-child(1){ 
+    rotate: 20deg;
+    animation: load 2s ease-in-out forwards, loadrot 2s ease-in-out forwards, spotlight 17s ease-in-out infinite;
+}
+.header .spotlight > div:nth-child(2){ 
+    rotate: -20deg;
+    animation: load 2s ease-in-out forwards, loadrot 2s ease-in-out forwards, spotlight 14s ease-in-out infinite;
+}
+@keyframes loadrot {
+    0% { rotate: 0deg; scale: 0;}
+    100% { scale: 1;}
+}
+@keyframes spotlight {
+    0% {
+        transform: rotateZ(0deg) scale(1);
+        filter: blur(15px) opacity(0.5);
+    }
+    20% {
+        transform: rotateZ(-1deg) scale(1.2);
+        filter: blur(16px) opacity(0.6);
+    }    
+    40% {
+        transform: rotateZ(2deg) scale(1.3);
+        filter: blur(14px) opacity(0.4);
+    }    
+    60% {
+        transform: rotateZ(-2deg) scale(1.2);
+        filter: blur(15px) opacity(0.6);
+    }    
+    80% {
+        transform: rotateZ(1deg) scale(1.1);
+        filter: blur(13px) opacity(0.4);
+    }    
+    100% {
+        transform: rotateZ(0deg) scale(1);
+        filter: blur(15px) opacity(0.5);
+    }    
+}
+
+canvas#particleCanvas {
+    position: absolute; pointer-events: none;
+    animation: load 0.4s ease-in-out forwards;
+    z-index: 1;
+    width: 100%;
+}
+
+p {
+    font-size: 1.5em;
+}
+
+.hero {
+    width: 100%;
+    height: 100%;
+    max-height: 140px;
+    position: absolute; top: 16em;
+}
+
+.heroT {
+    position: absolute; left: 0; right: 0; margin: auto;
+    height: 20em;
+    padding-top: 2em;
+    translate: 0 -1.6em;
+    opacity: 0;
+    animation: load 2s ease-in-out 0.6s forwards;
+}
+@keyframes load {  
+    0% { opacity: 0;}    
+    100% { opacity: 1;}    
+}
+.heroT > h2 {
+    position: absolute;left: 0; right: 0; margin: auto;
+    width: fit-content;
+    
+    font-size: 7em;
+    font-weight: 600;
+    color: #9dc3f7;
+    background:
+    radial-gradient( 2em 2em at 50% 50%,
+        transparent calc(var(--p) - 2em),
+        #fff calc(var(--p) - 1em), 
+        #fff calc(var(--p) - 0.4em), 
+        transparent var(--p) 
+    ),
+    linear-gradient(0deg, #bad1f1 30%, #9dc3f7 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 16px rgba(174,207,242,.24);
+
+    --p:0%;
+    transition:--p 3s linear;
+    
+    animation: pulse 10s linear 1.2s infinite;
+}
+
+.heroT h2:nth-child(2) {
+    background:
+    radial-gradient( 2em 2em at 50% 50%,
+        transparent calc(var(--p) - 2em),
+        transparent calc(var(--p) - 1em),
+        #000000 calc(var(--p) - 1em), 
+        #000000 calc(var(--p) - 0.4em), 
+        transparent calc(var(--p) - 0.4em), 
+        transparent var(--p) 
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: blur(16px) opacity(0.4);
+}
+@keyframes pulse { 
+    0% { --p:0%; }
+    50% { --p:300%;}
+    100% { --p:300%;}
+}
+@property --p {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 0%;
+}
+
+.heroP {
+    font-size: 1.2em;
+    position: absolute; left: 0; right: 0; top: 20.6em; margin: auto;
+    height: fit-content; width: fit-content; text-align: center;
+    opacity: 0;
+    translate: 0 1em;
+    animation: load 2s ease-out 2s forwards, up 1.4s ease-out 2s forwards;
+    color: #d8ecf8;
+    text-shadow: 0 2px 16px rgba(174,207,242,.24);
+    background: linear-gradient(0deg, #d8ecf8 0, #98c0ef 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+@keyframes up {      
+    100% { translate: 0; }    
+}
+
+.heroSubP {
+    position: absolute; left: 0; right: 0; top: 13em; margin: auto;
+    height: fit-content;
+    opacity: 0;
+    translate: 0 -1em;
+    animation: load3 2s ease-in 0s forwards, up 1.4s ease-out 0s forwards;
+}
+@keyframes load3 {  
+    0% { opacity: 0;}    
+    100% { opacity: 0.7;}    
+}
+.heroSubP p {
+    font-size: 1em;
+    position: relative; width: fit-content; margin: auto;
+    color: #d8ecf8;
+    text-shadow: 0 2px 16px rgba(174,207,242,.24);
+    background: linear-gradient(0deg, #d8ecf8 0, #98c0ef 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.heroSubP p::before,
+.heroSubP p::after {
+    position: absolute; top: 60%; 
+    display: block; content: '';
+    width: 5em; height: 1px;
+    opacity: 0;
+    animation: load2 1.4s ease-in-out 0s forwards, up 1.4s ease-out 0s forwards;
+}
+@keyframes load2 {  
+    0% { opacity: 0;}    
+    100% { opacity: 0.3;}    
+}
+.heroSubP p::before{
+    background: linear-gradient( -90deg, #9dc3f7 0%, transparent 100%);
+    right: 120%;
+    translate: -5em 0;
+}
+.heroSubP p::after {
+    background: linear-gradient( 90deg, #9dc3f7 0%, transparent 100%);
+    left: 120%;
+    translate: 5em 0;
+}
+
+.accent-lines {
+    pointer-events: none;
+    position: absolute; top: 0; left: 0; right: 0;
+    width: 100%; height: 42em;
+    z-index: -2;
+    --accent-lines-clr: rgba(186, 215, 247, .18);
+}
+.accent-lines > div {
+    position: absolute; top: 0; right: 0; left: 0; margin: auto;
+    height: 100%; width: 100%;
+}
+.accent-lines > div:nth-child(1) > div{
+    position: absolute; top: 0; right: 0; left: 0; margin: auto;
+    width: 100%; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--accent-lines-clr), transparent);
+    opacity: 0; scale: 0;
+    animation: accentload 2s ease-out 2.4s forwards;
+}
+.accent-lines > div:nth-child(1) > div:nth-child(1){ top: 6em; }
+.accent-lines > div:nth-child(1) > div:nth-child(2){ top: 11em; }
+.accent-lines > div:nth-child(1) > div:nth-child(3){ top: 16em; }
+.accent-lines > div:nth-child(1) > div:nth-child(4){ top: 24em; }
+.accent-lines > div:nth-child(1) > div:nth-child(5){ top: 29em; }
+.accent-lines > div:nth-child(2) > div{
+    position: absolute; top: 0; right: 0; left: 0; margin: auto;
+    width: 1px; height: 100%;
+    background: var(--accent-lines-clr);
+}
+@keyframes accentload {
+    0% {
+        opacity: 0; scale: 0;
+    }
+    100% {
+        opacity: 1; scale: 1;
+    }
+}
+
+.accent-lines > div:nth-child(2) > div {
+    opacity: 0; scale: 0;
+    animation: accentload 2s ease-out 2s forwards;
+}
+.accent-lines > div:nth-child(2) > div:nth-child(1){ left: 24em; }
+.accent-lines > div:nth-child(2) > div:nth-child(2){ left: 34em; }
+.accent-lines > div:nth-child(2) > div:nth-child(3){ right: 24em; }
+.accent-lines > div:nth-child(2) > div:nth-child(4){ right: 34em; }
+
+.accent-lines > div:nth-child(1) > div::before, 
+.accent-lines > div:nth-child(1) > div::after { 
+    content: ''; display: none; position: absolute;
+    width: 0.2em; height: 0.2em; border-radius: 1em;
+    background: #9dc3f7;
+    left: 0; right: 0; margin: auto;
+    translate: 0 -1px;
+
+    opacity: 0; scale: 0;
+    animation: accentload 2s ease-out 4.4s forwards;
+}
+
+.accent-lines > div:nth-child(1) > div:nth-child(3)::before{ display: block; left: 24em; }
+.accent-lines > div:nth-child(1) > div:nth-child(3)::after{ display: block; right: 24em; }
+.accent-lines > div:nth-child(1) > div:nth-child(4)::before{ display: block; left: 24em; }
+.accent-lines > div:nth-child(1) > div:nth-child(4)::after{ display: block; right: 24em; }
+.accent-lines > div:nth-child(1) > div:nth-child(5)::before{ display: block; left: 24em; }
+.accent-lines > div:nth-child(1) > div:nth-child(5)::after{ display: block; right: 24em; }
+
+.accent-lines > div:nth-child(1) > div:nth-child(2)::before,
+.accent-lines > div:nth-child(1) > div:nth-child(2)::after{ 
+    display: block; width: 5em; height: 1px; border-radius: 0; opacity: 0.12;
+}
+.accent-lines > div:nth-child(1) > div:nth-child(2)::before{
+    right: 24em; rotate: 45deg; translate: -2.5em 2.5em;
+}
+.accent-lines > div:nth-child(1) > div:nth-child(2)::after{
+    right: 24em; rotate: -45deg; translate: -2.5em 2.5em;
+}
+.accent-lines > div:nth-child(1) > div:nth-child(1)::before,
+.accent-lines > div:nth-child(1) > div:nth-child(1)::after{ 
+    display: block; width: 5em; height: 1px; border-radius: 0; opacity: 0.12;
+}
+.accent-lines > div:nth-child(1) > div:nth-child(1)::before{
+    left: 24em; rotate: 45deg; translate: 2.5em 7.5em;
+}
+.accent-lines > div:nth-child(1) > div:nth-child(1)::after{
+    left: 24em; rotate: -45deg; translate: 2.5em 7.5em;
+}
+
+.accent-lines > div:nth-child(1) > div:nth-child(2)::before,
+.accent-lines > div:nth-child(1) > div:nth-child(2)::after {
+    opacity: 0; scale: 0;
+    animation: accentload2 2s ease-out 2.4s forwards;
+}
+.accent-lines > div:nth-child(1) > div:nth-child(1)::before,
+.accent-lines > div:nth-child(1) > div:nth-child(1)::after {
+    opacity: 0; scale: 0;
+    animation: accentload3 2s ease-out 2.4s forwards;
+} 
+@keyframes accentload2 {
+    0% {
+        opacity: 0; scale: 0; transform: rotate(360deg);
+    }
+    50% { scale: 0; }
+    100% {
+        opacity: 0.12; scale: 1; transform: rotate(0deg);
+    }
+}
+@keyframes accentload3 {
+    0% {
+        opacity: 0; scale: 0; transform: rotate(-360deg);
+    }
+    50% { scale: 0; }
+    100% {
+        opacity: 0.12; scale: 1; transform: rotate(0deg);
+    }
+}
+
+.mountains {
+    position: absolute; left: 0; right: 0; top: 31em; margin: auto;
+    width: 100%; height: 10em;
+    pointer-events: none;
+}
+.mountains::before {
+    content: ''; display: block;
+    width: 100%; height: 500%;
+    position: absolute; top: 0%;
+    background: linear-gradient(90deg, #121521 0%, transparent 50%);
+    background: linear-gradient(0deg, #121521 80%, transparent 90%);
+    z-index: 2;
+}
+.mountains > div {
+    box-shadow: 
+    -1em -0.2em 0.4em -1.1em #c2ccff,
+    inset 0em 0em 0em 2px #c2ccff,
+    inset 0.2em 0.3em 0.2em -0.2em #c2ccff,
+    inset 10.2em 10.3em 2em -10em #d4e6ff2f;
+    background: #121521;
+    z-index: 1;
+    filter: brightness(0.8);
+    position: absolute; left: 0; right: 0; margin: auto;
+    width: 20em; height: 20em;
+    rotate: 45deg;
+}
+.mountains > div:nth-child(1) {
+    bottom: -240%; 
+    translate: -6em 2em;
+    animation: mountainload1 2s ease-out 2.4s forwards;
+}
+.mountains > div:nth-child(2) {
+    bottom: -240%;
+    translate: -2em 0em;
+    width: 14em; height: 20em;
+    animation: mountainload2 2s ease-out 2.2s forwards;
+}
+.mountains > div:nth-child(3) {
+    bottom: -240%; 
+    translate: 6em 3em;
+    animation: mountainload1 2s ease-out 2s forwards;
+}
+@keyframes mountainload1 {
+    0% { bottom: -240%; }
+    100% { bottom: -140%; }
+}
+@keyframes mountainload2 {
+    0% { bottom: -240%; }
+    100% { bottom: -108%; }
+}
+.mountains > div::before {
+    content: ''; display: block;
+    background: repeating-radial-gradient( at 100% 100%, transparent 0%, #c2ccff22 2px, transparent 4px);
+    width: 12em; height: 12em;
+    position: absolute;
+    left: 0; top: 0;
+    border-bottom-right-radius: 100%;
+}
+
+.hero-spacer {
+    height: 40em;
+    pointer-events: none;
+}
+
+.content-section {
+    position: relative;
+    z-index: 1112;
+    color: #fff;
+    width: 100%;
+    text-align: center;
+    padding: 16em 0 12em 0;
+    overflow: hidden;
+}
+
+.content-section p.subt {
+    color: #d8ecf8be;
+    font-size: 0.8em;
+    font-weight: 200;
+    position: relative;
+    width: fit-content;
+    margin: auto;
+}
+.content-section h3 {
+    margin: 0.4em 0 0.6em 0;
+    font-size: 2.3em;
+    font-weight: 600;
+    color: #d8ecf8;
+    text-shadow: 0 2px 16px rgba(174,207,242,.24);
+    background: linear-gradient(0deg, #d8ecf8 0, #98c0ef 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.content-section p.subp {
+    color: #d8ecf8be;
+    font-size: 1em;
+    font-weight: 400;
+    max-width: 26em;
+    margin: auto;
+}
+
+.content-section p.subt::before,
+.content-section p.subt::after {
+    position: absolute; top: 60%; 
+    display: block; content: '';
+    width: 5em; height: 1px;
+    opacity: 0.5;
+}
+.content-section p.subt::before{
+    background: linear-gradient( -90deg, #9dc3f7 0%, transparent 100%);
+    right: 120%;
+    top: 50%;
+}
+.content-section p.subt::after {
+    background: linear-gradient( 90deg, #9dc3f7 0%, transparent 100%);
+    left: 120%;
+    top: 50%;
+}
+
+.content-section .content-acc {
+    position: absolute;
+    left: 0; right: 0; top: 25%; margin: auto;
+    display: flex; justify-content: center;
+}
+.content-section .content-acc div{
+    width: 10em; height: 10em;
+    border-radius: 50%;
+    box-shadow: 
+    -1em -0.2em 0.4em -1.1em #c2ccff,
+    inset 0em 0em 0em 2px #c2ccff,
+    inset 0.2em 0.3em 0.2em -0.2em #c2ccff,
+    inset -1.2em 2.3em 2em -0.5em #d4e6ff2f;
+    background: #121521;
+    z-index: 1;
+    filter: brightness(0.8);
+    background: repeating-radial-gradient( at 50% 50%, transparent 0%, #c2ccff22 2px, transparent 4px);
+    translate: -18em;
+}
+.content-section .content-acc div:nth-child(2){
+    translate: 18em 12em;
+    border-radius: 2em;
+    box-shadow: 
+    -1em -0.2em 0.4em -1.1em #c2ccff,
+    inset 0em 0em 0em 2px #c2ccff,
+    inset 0.2em 0.3em 0.2em -0.2em #c2ccff,
+    inset 10.8em 11.3em 2em -10.5em #d4e6ff2f;
+}
+
+
+
+
+
+
+
+
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,800;1,800&display=swap');
+
+
+
+.header-title {
+    width: 100%;
+    text-align: center;
+    margin-bottom: -50px;
+}
+
+.header-title h2 {
+    position: flex;left: 0; right: 0; margin: auto;
+    width: fit-content;
+    
+    font-size: 7em;
+    font-weight: 600;
+    color: #9dc3f7;
+    background:
+    radial-gradient( 2em 2em at 50% 50%,
+        transparent calc(var(--p) - 2em),
+        #fff calc(var(--p) - 1em), 
+        #fff calc(var(--p) - 0.4em), 
+        transparent var(--p) 
+    ),
+    linear-gradient(0deg, #bad1f1 30%, #9dc3f7 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 2px 16px rgba(174,207,242,.24);
+
+    --p:0%;
+    transition:--p 3s linear;
+    
+    animation: pulse 10s linear 1.2s infinite;
+}
+
+.header-title h2:nth-child(2) {
+    background:
+    radial-gradient( 2em 2em at 50% 50%,
+        transparent calc(var(--p) - 2em),
+        transparent calc(var(--p) - 1em),
+        #fff calc(var(--p) - 1em), 
+        #fff calc(var(--p) - 0.4em), 
+        transparent calc(var(--p) - 0.4em), 
+        transparent var(--p) 
+    );
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: blur(16px) opacity(0.4);
+}
+@keyframes pulse { 
+    0% { --p:0%; }
+    50% { --p:300%;}
+    100% { --p:300%;}
+}
+@property --p {
+    syntax: '<percentage>';
+    inherits: false;
+    initial-value: 0%;
+}
+.cards-container {
+    display: flex;
+    height: 70vh;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 50px;
+}
+
+.chuchu {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    color: white;
+    transition: 0.3s ease-in-out;
+}
+
+.card {
+    width: 340px;
+    height: 460px;
+    border-radius: 12px;
+    transform-style: preserve-3d;
+}
+
+.card.blue {
+    background: linear-gradient(135deg, #17191a, #051820);
+}
+.card.purple {
+    background: linear-gradient(135deg, #f21111, #870909);
+}
+.card.green {
+    background: linear-gradient(135deg, #11f211, #2d8709);
+}
+.card.white {
+    background: linear-gradient(135deg, #db8421, #cc5c00);
+}
+
+.card .product {
+    height: 85%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    position: relative;
+    transform-style: preserve-3d;
+}
+.product .number {
+    font-size: 80px;
+    line-height: 80px;
+    font-style: italic;
+    opacity: 0.25;
+}
+.product .sneakers {
+    font-size: 35px;
+    line-height: 35px;
+    font-style: italic;
+    opacity: 0.7;
+}
+.product img {
+    height: 280px;
+    position: absolute;
+    top: 60%;
+    left: 70%;
+    transform: translate3d(-35%, -45%, 0);
+    pointer-events: none;
+}
+.product .price {
+    background: rgba(255, 255, 255, 0.15);
+    margin-top: auto;
+    margin-left: auto;
+    margin-right: -20px;
+    padding: 5px 20px;
+    border-radius: 99px 0 0 99px;
+}
+
+.card .title {
+    height: 15%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0 0 12px 12px;
+    transform-style: preserve-3d;
+}
+.card.blue .title {
+    background: #17191a;
+}
+.card.purple .title {
+    background: #e31a1a;
+}
+.card.green .title {
+    background: #11f211;
+}
+.card.card.white .title{
+    background: #db8421 ;
+}
+
+.card:hover .product img {
+    transform: translate3d(-90%, -40%, 10px);
+}
+.card:hover .product .number {
+    transform: translateZ(40px);
+    opacity: 1;
+}
+.card:hover .product .sneakers {
+    transform: translateZ(40px);
+    opacity: 0.85;
+}
+.card:hover .product .price {
+    transform: translateZ(20px);
+}
+.card:hover .title h2 {
+    transform: translateZ(20px);
+}                                         
+            
+
+
+
+
+  .wrapper {
+    display: inline-flex;
+    list-style: none;
+    justify-content: center;
+    padding-top: 40px;
+  }
+  
+  .wrapper .icon {
+    position: relative;
+    background: #fff;
+    border-radius: 50%;
+    margin: 10px;
+    width: 50px;
+    height: 50px;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  }
+  
+  .wrapper .tooltip {
+    position: absolute;
+    top: 0;
+    font-size: 14px;
+    background: #fff;
+    color: #070707;
+    padding: 5px 8px;
+    border-radius: 5px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.3s ease;
+  }
+  
+  .wrapper .tooltip::before {
+    position: absolute;
+    content: "";
+    height: 8px;
+    width: 8px;
+    background: #fff;
+    bottom: -3px;
+    left: 50%;
+    transform: translate(-50%) rotate(45deg);
+  }
+  
+  .wrapper .icon:hover .tooltip {
+    top: -45px;
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
+  .wrapper .facebook:hover, .wrapper .facebook:hover .tooltip, .wrapper .facebook:hover .tooltip::before {
+    background: #1877f2;
+    color: #fff;
+  }
+  
+  .wrapper .whatsapp:hover, .wrapper .whatsapp:hover .tooltip, .wrapper .whatsapp:hover .tooltip::before {
+    background: #25d366;
+    color: #fff;
+  }
+  
+  .wrapper .instagram:hover, .wrapper .instagram:hover .tooltip, .wrapper .instagram:hover .tooltip::before {
+    background: #e4405f;
+    color: #fff;
+  }
+
+
+  .site-footer {
+    margin-top: auto;
+    background: #0c0e17;
+    color: #9dc3f7;
+    padding: 2em 2em;
+    position: relative;
+    z-index: 1112;
+    width: 100%;
+}
+
+
+.footer-content {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-section {
+  margin-bottom: 2em;
+  min-width: 200px;
+}
+
+.footer-section h4 {
+  color: #d8ecf8;
+  margin-bottom: 1em;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin-bottom: 0.5em;
+}
+
+.footer-section a {
+  color: #98c0ef;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: #d8ecf8;
+}
+
+.social-icons {
+  display: flex;
+  gap: 1em;
+}
+
+.social-icon {
+  width: 2em;
+  height: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1c2030;
+  border-radius: 50%;
+  transition: background 0.3s ease;
+}
+
+.social-icon:hover {
+  background: #2a3040;
+}
+
+.footer-bottom {
+  text-align: center;
+  padding-top: 2em;
+  margin-top: 2em;
+  border-top: 1px solid #1c2030;
+}
+
+
+
+@media (max-width: 768px) {
+    h2 {
+        font-size: 3em;
+        text-align: center;
+    }
+    
+    .heroT h2 {
+        font-size: 4em;
+    }
+
+    .header-title h2 {
+        font-size: 3.5em;
+    }
+
+    .heroP, .heroSubP p {
+        font-size: 1em;
+    }
+
+    .cards-container {
+        flex-direction: column;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .card .title h2 {
+        font-size: 2.2em; /* Reduce el tamaño del título en dispositivos pequeños */
+        white-space: normal; /* Permite que el texto se ajuste en varias líneas si es necesario */
+        text-align: center; /* Alinea el texto en el centro */
+        padding: 0 10px; /* Añade un pequeño padding para evitar que el texto toque los bordes */
+    }
+
+    .cards-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px 0; /* Añade espacio arriba y abajo del contenedor de tarjetas */
+        height: auto;
+    }
+
+    .card {
+        width: 90%;
+        max-width: 340px;
+        margin: 40px 0; /* Añade espacio entre las tarjetas y otros elementos */
+    }
+
+    /* Añade espacio entre las secciones de arriba y abajo */
+    .chuchu {
+        margin-top: 200px;
+        margin-bottom: 50px;
+    }
+}
+
+
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        padding: 3em;
+    }
+
+    .hero {
+        max-height: 100px;
+    }
+
+    .content-section {
+        padding: 8em 1em;
+    }
+
+    .footer-content {
+        flex-direction: column;
+    }
+}
+
+
+
+
+
+
+button.contact-btns {
+    position: absolute; left: min(106em, 23vw); right: 0; margin: 0 auto;
+    width: 8em; height: 2.4em;
+    cursor: pointer;
+    border-radius: 20em;
+    border: none;
+    transition: background 0.5s, transform 0.5s;
+    
+    border: 1px solid #c2ccff33;
+    opacity: 1;
+    padding-top: 0.3em;
+
+    background: #121521;
+    color: #9dc3f7;
+    white-space:nowrap;
+}
+button.contact-btns::before {
+    content: ''; display: block; position:absolute; left: 0; top:0; border-radius: 20em;
+    width: 100%; height: 100%;
+    background: #c2ccff91 radial-gradient(farthest-side at 50% 100%, #c2ccff, transparent);
+    opacity: 0.1;
+    transition: all 0.4s ease-in-out;
+}
+button.contact-btns:hover::before {
+    background: #c2ccff1e radial-gradient(farthest-side at 50% 100%, #c2ccff, transparent);
+    opacity: 0.3;
+}
+.contact-btns .glows {
+    --border-width: 1px;
+    --loop-cycle: 24s;
+    position: absolute;
+    inset: calc(var(--border-width)* -1);
+    border-radius: 50px;
+    border: var(--border-width) solid transparent;
+    -webkit-mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+    mask: linear-gradient(transparent, transparent), linear-gradient(white, white);
+    -webkit-mask-clip: padding-box, border-box;
+    mask-clip: padding-box, border-box;
+    -webkit-mask-composite: source-in, xor;
+    mask-composite: intersect;
+    pointer-events: none;
+}
+button.contact-btns:hover .glows {
+    --loop-cycle: 2s;
+}
+.contact-btns .glows::after, .contact-btsn .glows::before {
+    content: "";
+    height: 100%;
+    offset-anchor: 100% 50%;
+    background: radial-gradient(circle at 50% 50%, hsla(0, 0%, 100%, 0.75), transparent 50%), radial-gradient(circle at 50% 50%, #c2ccff 50%, transparent);
+    opacity: 0.4;
+    offset-path: rect(0 100% 100% 0 round 33px);
+    position: absolute;
+    display: inline-block;
+    -webkit-animation: loop 4s linear infinite;
+    animation: loop var(--loop-cycle) linear infinite;
+    aspect-ratio: 1 / 1;
+    transition: opacity 1s ease-in-out;
+}
+.contact-btns .glows::before {
+    animation-delay: calc( var(--loop-cycle) / -2 );
+}
+@keyframes loop {
+    100% {
+        offset-distance: 100%;
+    }    
+}
+.contact-btn-contents {
+    background: linear-gradient(0deg, #d8ecf8, #98c0ef);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.2em;
+    line-height: 142%;
+}
+button.contact-btns:hover .glows::after, button.contact-btns:hover .glows::before {
+    opacity: 0.6;
+}
+@keyframes btn-rot {
+    0% { rotate: 0deg; }
+    100% { rotate: 360deg; } 
+}
+
+
+
+/* Estilo base para ambos botones */
+.contact-btn, .contact-btns {
+    width: 100%;
+    max-width: 200px; /* Tamaño máximo del botón */
+    height: 2.4em;
+    margin: 0.5em;
+    cursor: pointer;
+    border-radius: 20em;
+    border: none;
+    background: #121521;
+    color: #9dc3f7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    transition: background 0.5s, transform 0.5s;
+    transform: translateX(4em); /* Mueve los botones a la derecha */
+}
+
+.contact-btn .glow, .contact-btns .glows {
+    position: absolute;
+    inset: 0;
+    border-radius: 50px;
+    border: 1px solid transparent;
+}
+
+.contact-btn-content, .contact-btn-contents {
+    background: linear-gradient(0deg, #d8ecf8, #98c0ef);
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 1.2em;
+    line-height: 142%;
+}
+
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .contact-btn, .contact-btns {
+        width: 80%; /* Ocupa más espacio en pantallas pequeñas */
+        max-width: none;
+    }
+    
+    .button-container {
+        gap: 1em; /* Reduce el espacio entre los botones en pantallas pequeñas */
+    }
+}
+
+@media (max-width: 480px) {
+    .contact-btn, .contact-btns {
+        width: 100%; /* Ocupa todo el ancho disponible en pantallas muy pequeñas */
+        font-size: 0.9em; /* Reduce el tamaño de la fuente */
+    }
+}

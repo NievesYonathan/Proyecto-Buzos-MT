@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -11,37 +10,46 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    // Especifica la tabla asociada con el modelo
+    protected $table = 'usuarios';
+
+     // Define la clave primaria
+     protected $primaryKey = 'num_doc';
+
+    // Atributos que son asignables en masa
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'num_doc',
+        't_doc',
+        'usu_nombres',
+        'usu_apellidos',
+        'usu_fecha_nacimiento',
+        'usu_sexo',
+        'usu_direccion',
+        'usu_telefono',
+        'usu_email',
+        'usu_fecha_contratacion',
+        'usu_estado',
+        'imag_perfil',
+        'registro_gmail',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
+    // Atributos que deben estar ocultos para la serialización
     protected $hidden = [
-        'password',
         'remember_token',
     ];
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    // Atributos que deben ser lanzados a tipos específicos
+    protected $casts = [
+        'usu_fecha_nacimiento' => 'date',
+        'usu_fecha_contratacion' => 'date',
+    ];
+
+    // Relación con el modelo Seguridad
+    public function seguridad()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasOne(Seguridad::class, 'usu_num_doc', 'num_doc');
     }
+
+    public $timestamps = false; // Deshabilitar timestamps
+
 }
