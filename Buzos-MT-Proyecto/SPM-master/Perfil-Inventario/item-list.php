@@ -52,8 +52,6 @@ if (!isset($_SESSION['user_id'])) {
 								<th>NOMBRE</th>
 								<th>STOCK</th>
 								<th>ACTUALIZAR</th>
-								<th>ELIMINAR</th>
-                                <th>MOVIMIENTOS</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -84,19 +82,6 @@ if (!isset($_SESSION['user_id'])) {
                 <input type="hidden" name="matCantidad" value="<?=$item->mat_pri_cantidad?>">
                 <input type="hidden" name="matEstado" value="<?=$item->mat_pri_estado?>">
             </form>
-                                    </td>
-                                    <td>
-                                        <form action="">
-                                            <button type="button" class="btn btn-warning">
-                                                <i class="far fa-trash-alt"></i>
-                                            </button>
-                                        </form>
-                                    </td>
-                                    <td>
-                                        <!-- Botón para abrir el modal -->
-                                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#<?=$item->id_materia_prima?>">
-                                            <i class="fas fa-sync-alt"></i>
-                                        </button>
                                     </td>
                                 </tr>                    
                             <!-- Modal -->

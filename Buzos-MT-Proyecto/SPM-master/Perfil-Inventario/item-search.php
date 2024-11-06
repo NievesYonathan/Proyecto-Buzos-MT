@@ -1,8 +1,14 @@
+<?php
+session_start();
+if (!isset($_SESSION['user_id'])) {
+header('Location: ../login-registro/login.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="es">
 	<?php 
+    include_once '../Controlador/ControladorMateriasP.php';
 	include '../Config/variable_global.php';
-
 	include '../Componentes/Head/head.php' ?>
 
 <body>
@@ -38,13 +44,13 @@
             
             <!--CONTENT-->
             <div class="container-fluid">
-                <form class="form-neon" action="">
+                <form class="form-neon" action="item-search.php" method="post">
                     <div class="container-fluid">
                         <div class="row justify-content-md-center">
                             <div class="col-12 col-md-6">
                                 <div class="form-group">
                                     <label for="inputSearch" class="bmd-label-floating">¿Qué item estas buscando?</label>
-                                    <input type="text" class="form-control" name="busqueda-" id="inputSearch" maxlength="30">
+                                    <input type="text" class="form-control" name="busqueda" id="inputSearch" maxlength="30">
                                 </div>
                             </div>
                             <div class="col-12">
@@ -52,26 +58,27 @@
                                     <button type="submit" class="btn btn-raised btn-info"><i class="fas fa-search"></i> &nbsp; BUSCAR</button>
                                 </p>
                             </div>
+                            <div class="col-12">
+                                <p class="text-center">
+                                <button type="submit" class="btn btn-raised btn-danger" value="eliminarBusqueda"><i class="far fa-trash-alt"></i> &nbsp; ELIMINAR BÚSQUEDA</button>
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </form>
             </div>
 
-            
             <div class="container-fluid">
-                <form action="">
-                    <input type="hidden" name="eliminar-busqueda" value="eliminar">
+                <form action="../Controlador/ControladorMateriasP.php" method="Post">
                     <div class="container-fluid">
                         <div class="row justify-content-md-center">
                             <div class="col-12 col-md-6">
-                                <p class="text-center" style="font-size: 20px;">
-                                    Resultados de la busqueda <strong>“Buscar”</strong>
-                                </p>
-                            </div>
-                            <div class="col-12">
-                                <p class="text-center" style="margin-top: 20px;">
-                                    <button type="submit" class="btn btn-raised btn-danger"><i class="far fa-trash-alt"></i> &nbsp; ELIMINAR BÚSQUEDA</button>
-                                </p>
+                                    <?php if(!empty($_POST['eliminarBusqueda'])){
+                                        echo '<p class="text-center" style="font-size: 20px;">
+                                        Los resultados a tu busqueda <strong>"'.$_POST['busqueda'].'"</strong>
+                                        </p>';
+                                    }
+                                    ?>
                             </div>
                         </div>
                     </div>
@@ -83,88 +90,30 @@
 				<div class="table-responsive">
 					<table class="table table-dark table-sm">
 						<thead>
-							<tr class="text-center roboto-medium">
+							<tr class="text-center roboto-medium"> 
 								<th>#</th>
-								<th>CÓDIGO</th>
 								<th>NOMBRE</th>
 								<th>STOCK</th>
 								<th>ACTUALIZAR</th>
-								<th>ELIMINAR</th>
 							</tr>
 						</thead>
 						<tbody>
+                            <?php
+                            $result = $contObj->buscarMateriaPri();
+                            while ($item = mysqli_fetch_object($result)){ ?>
 							<tr class="text-center" >
-								<td>1</td>
-								<td>012342567</td>
-								<td>NOMBRE DEL ITEM</td>
-								<td>20</td>
+                                <td><?=$item->id_materia_prima?></td>
+                                <td><?=$item->mat_pri_nombre?></td>
+                                <td><?=$item->mat_pri_cantidad?></td>
 								<td>
                                     <a href="item-update.php" class="btn btn-success">
                                         <i class="fas fa-sync-alt"></i> 
                                     </a>
                                 </td>
-                                <td>
-                                    <form action="">
-                                        <button type="button" class="btn btn-warning">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </td>
 							</tr>
-							<tr class="text-center" >
-								<td>2</td>
-								<td>012342567</td>
-								<td>NOMBRE DEL ITEM</td>
-								<td>57</td>
-								<td>
-                                    <a href="item-update.php" class="btn btn-success">
-                                        <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-                                <td>
-                                    <form action="">
-                                        <button type="button" class="btn btn-warning">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </td>
-							</tr>
-							<tr class="text-center" >
-								<td>3</td>
-								<td>012342567</td>
-								<td>NOMBRE DEL ITEM</td>
-								<td>81</td>
-								<td>
-                                    <a href="item-update.php" class="btn btn-success">
-                                        <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-                                <td>
-                                    <form action="">
-                                        <button type="button" class="btn btn-warning">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </td>
-							</tr>
-							<tr class="text-center" >
-								<td>4</td>
-								<td>012342567</td>
-								<td>NOMBRE DEL ITEM</td>
-								<td>90</td>
-								<td>
-                                    <a href="item-update.php" class="btn btn-success">
-                                        <i class="fas fa-sync-alt"></i> 
-                                    </a>
-                                </td>
-                                <td>
-                                    <form action="">
-                                        <button type="button" class="btn btn-warning">
-                                            <i class="far fa-trash-alt"></i>
-                                        </button>
-                                    </form>
-                                </td>
-							</tr>
+                            <?php
+                            }
+                            ?>
 						</tbody>
 					</table>
 				</div>

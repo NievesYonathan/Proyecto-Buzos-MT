@@ -105,4 +105,12 @@ GROUP BY p.id_produccion';
         $conectar->close();
         return $result;
     }
+    public function BuscarMatPri($busqueda){
+        $conexion = new Conexion;
+        $conectar = $conexion->conectarse();
+        $sql = "SELECT * FROM materia_prima WHERE mat_pri_nombre like '$busqueda%'";
+        $result = $conectar->query($sql);
+        $conectar->close();
+        return $result;
+    }
 }

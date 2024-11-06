@@ -7,7 +7,6 @@ if (!isset($_SESSION['user_id'])) {
 <html lang="es">
 	<?php
 	include_once '../Controlador/ControladorMateriasP.php'; 
-	include '../Config/variable_global.php';
 	include '../Componentes/Head/head.php' ?>
 	
 <body>

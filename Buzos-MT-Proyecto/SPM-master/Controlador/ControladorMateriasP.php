@@ -54,7 +54,7 @@ class ControladorMateriaPrima
         $mpEstado = $_POST['matEstado'];
         $mpFechaCompra = $_POST['matFechaCompra'];
         $mpProveedor = $_POST['matProveedor'];
-
+        
         if ($accion == 'agregar') {
             $MatObj->agregarMateriaPrima($mpNombres, $mpDescripcion, $mpUnidadMedida, $mpCantidad, $mpEstado, $mpFechaCompra, $mpProveedor);
             header('Location: ../Perfil-Inventario/item-list.php');
@@ -63,6 +63,14 @@ class ControladorMateriaPrima
             $MatObj->actualizarMateriaPrima($mpNombres, $mpDescripcion, $mpCantidad, $mpEstado, $mpId);
             header('Location: ../Perfil-Inventario/item-list.php');
         }
+    }
+    public function buscarMateriaPri(){
+        if(!isset($_POST['busqueda'])){
+            $_POST['busqueda'] = '';
+        }
+        $MatObj = new MateriaPrima();
+        $result = $MatObj->BuscarMatPri($_POST['busqueda']);
+            return $result;
     }
 }
 
