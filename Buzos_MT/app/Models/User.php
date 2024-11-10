@@ -13,8 +13,8 @@ class User extends Authenticatable
     // Especifica la tabla asociada con el modelo
     protected $table = 'usuarios';
 
-     // Define la clave primaria
-     protected $primaryKey = 'num_doc';
+    // Define la clave primaria
+    protected $primaryKey = 'num_doc';
 
     // Atributos que son asignables en masa
     protected $fillable = [
@@ -48,6 +48,11 @@ class User extends Authenticatable
     public function seguridad()
     {
         return $this->hasOne(Seguridad::class, 'usu_num_doc', 'num_doc');
+    }
+
+    public function cargos()
+    {
+        return $this->belongsToMany(Cargo::class, 'cargos_has_usuarios', 'usuarios_num_doc', 'cargos_id_cargos');
     }
 
     public $timestamps = false; // Deshabilitar timestamps

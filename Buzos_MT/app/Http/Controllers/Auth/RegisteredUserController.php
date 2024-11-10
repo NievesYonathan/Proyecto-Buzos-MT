@@ -63,7 +63,7 @@ class RegisteredUserController extends Controller
 
         // Crear el registro en la tabla seguridad
         Seguridad::create([
-            'usu_num_doc' => $user->num_doc,
+            'usu_num_doc' => $request->num_doc,
             'seg_clave_hash' => Hash::make($request->password),
         ]);
 
