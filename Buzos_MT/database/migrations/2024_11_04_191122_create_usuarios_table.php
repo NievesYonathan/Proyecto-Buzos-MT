@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('usu_email', 50)->comment('Atributo que identifica el correo del Usuario');
             $table->date('usu_fecha_contratacion')->comment('Atributo que identifica el la fecha de contracion del Usuario');
             $table->integer('usu_estado')->index('fk_estados_idx')->comment('Atributo que identifica el estado del Usuario');
-            $table->string('imag_perfil', 45)->nullable();
+            $table->string('imag_perfil', 255)->nullable();
             $table->integer('registro_gmail')->nullable();
         });
     }

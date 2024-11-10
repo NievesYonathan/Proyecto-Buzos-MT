@@ -22,8 +22,8 @@
     <!-- Card de Producción -->
     <div class="row">
         @if ($perfil === 'Jefe Producción')
-            <div class="col-sm-12 col-md-4 tile-container">
-                <a href="#" class="tile">
+            <div class="col-sm-12 col-md-3 tile-container">
+                <a href="{{ route('produccion') }}" class="tile">
                     <div class="tile-tittle">Producción</div>
                     <div class="tile-icon">
                         <i class="fa-solid fa-industry"></i>
@@ -31,7 +31,7 @@
                 </a>
             </div>
 
-            <div class="col-sm-12 col-md-4 tile-container">
+            <div class="col-sm-12 col-md-3 tile-container">
                 <a href="#" class="tile">
                     <div class="tile-tittle">Detalles de Producción</div>
                     <div class="tile-icon">
@@ -40,7 +40,7 @@
                 </a>
             </div>
 
-            <div class="col-sm-12 col-md-4 tile-container">
+            <div class="col-sm-12 col-md-3 tile-container">
                 <a href="#" class="tile">
                     <div class="tile-tittle">Tareas</div>
                     <div class="tile-icon">
@@ -49,7 +49,7 @@
                 </a>
             </div>
 
-            <div class="col-sm-12 col-md-4 tile-container">
+            <div class="col-sm-12 col-md-3 tile-container">
                 <a href="#" class="tile">
                     <div class="tile-tittle">Informes</div>
                     <div class="tile-icon">

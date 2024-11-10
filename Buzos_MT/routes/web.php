@@ -17,4 +17,9 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+// Rutas de 'Perfil de Producción'
+Route::get('/produccion', function () {
+    return view('Perfil_Produccion.produccion');
+})->name('produccion');
+
 require __DIR__.'/auth.php';
