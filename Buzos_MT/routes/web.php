@@ -22,4 +22,8 @@ Route::get('/produccion', function () {
     return view('Perfil_Produccion.produccion');
 })->name('produccion');
 
+Route::get('/productos-fabricados', function(){
+    return view('Perfil_Produccion.pro_fabricados');
+})->name('pro_fabricados');
+
 require __DIR__.'/auth.php';

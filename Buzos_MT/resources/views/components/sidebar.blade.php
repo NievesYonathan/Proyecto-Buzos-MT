@@ -58,8 +58,8 @@
                     <li>
                         <a href="#" class="nav-btn-submenu"><i class="fa-solid fa-industry"></i> &nbsp; Producción  <i class="fas fa-chevron-down"></i></a>
                         <ul>
-                            <li><a href="#"><i class="fa-solid fa-industry"></i> &nbsp; Gestion de Producción</a></li>
-                            <li><a href="#" style="font-size: 13px"><i class="fa-solid fa-shirt"></i> &nbsp; Gestion Productos Fabricados</a></li>
+                            <li><a href="{{ route('produccion') }}"><i class="fa-solid fa-industry"></i> &nbsp; Gestion de Producción</a></li>
+                            <li><a href="{{ route('pro_fabricados') }}" style="font-size: 13px"><i class="fa-solid fa-shirt"></i> &nbsp; Gestion Productos Fabricados</a></li>
                         </ul>
                     </li>
                     <li><a href="#"><i class="fa-solid fa-calendar-days"></i> &nbsp; Tareas </a></li>

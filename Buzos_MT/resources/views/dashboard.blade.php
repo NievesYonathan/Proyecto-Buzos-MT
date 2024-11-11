@@ -32,7 +32,7 @@
             </div>
 
             <div class="col-sm-12 col-md-3 tile-container">
-                <a href="#" class="tile">
+                <a href="{{ route('pro_fabricados') }}" class="tile">
                     <div class="tile-tittle">Detalles de Producción</div>
                     <div class="tile-icon">
                         <i class="fa-solid fa-shirt"></i>
