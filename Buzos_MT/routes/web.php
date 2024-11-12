@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\produccionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -22,8 +23,6 @@ Route::get('/produccion', function () {
     return view('Perfil_Produccion.produccion');
 })->name('produccion');
 
-Route::get('/productos-fabricados', function(){
-    return view('Perfil_Produccion.pro_fabricados');
-})->name('pro_fabricados');
+Route::get('/productos-fabricados', [produccionController::class, 'index'])->name('pro_fabricados');
 
 require __DIR__.'/auth.php';

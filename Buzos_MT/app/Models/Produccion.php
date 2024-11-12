@@ -21,5 +21,31 @@ class Produccion extends Model
         'pro_etapa'
     ];
 
+// Produccion.php
+protected $casts = [
+    'pro_fecha_inicio' => 'datetime',
+    'pro_fecha_fin' => 'datetime',
+];
+
     public $timestamps = false;
+
+    public function etapa ()
+    {
+        return $this->belongsTo(Etapas::class, 'pro_etapa', 'id_etapas');
+    }
+
+    public function regProFabricados ()
+    {
+        return $this->hasMany(RegProFabricado::class, 'produccion_id_produccion', 'id_produccion');
+    }
+
+    public function materiaPrima ()
+    {
+        return $this->belongsToMany(MateriaPrima::class, 'reg_pro_mat_prima', 'id_produccion', 'id_pro_materia_prima')->withPivot('reg_pmp_cantidad_usada');
+    }
+
+    public function tareas ()
+    {
+        return $this->belongsToMany(Tarea::class, 'emp_tarea', 'produccion_id_produccion', 'tarea_id_tarea')->withPivot('emp_tar_fecha_entrega', 'empleados_num_doc');
+    }
 }

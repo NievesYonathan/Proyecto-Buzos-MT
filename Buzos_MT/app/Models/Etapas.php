@@ -19,4 +19,9 @@ class Etapas extends Model
     ];
 
     public $timestamps = false;
+
+    public function produccion()
+    {
+        return $this->hasMany(Produccion::class, 'pro_etapa', 'id_etapas');
+    }
 }

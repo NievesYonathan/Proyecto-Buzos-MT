@@ -25,4 +25,9 @@ class RegProFabricado extends Model
     ];
 
     public $timestamps = false;
+
+    public function produccion ()
+    {
+        return $this->belongsTo(Produccion::class, 'produccion_id_produccion', 'id_produccion');
+    }
 }
