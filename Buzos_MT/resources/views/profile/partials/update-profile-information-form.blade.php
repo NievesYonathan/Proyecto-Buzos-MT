@@ -74,7 +74,7 @@
             <div class="mt-1 mb-2">
                 @if ($user->imag_perfil)
                     <img src="{{ asset('storage/' . $user->imag_perfil) }}" alt="Profile Image"
-                        class="w-24 h-24 rounded-full object-cover">
+                        class="img-user w-24 h-24 rounded-full object-cover">
                 @else
                     <p>{{ __('No profile image uploaded.') }}</p>
                 @endif

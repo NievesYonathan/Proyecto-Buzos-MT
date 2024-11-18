@@ -23,6 +23,8 @@ Route::get('/produccion', function () {
     return view('Perfil_Produccion.produccion');
 })->name('produccion');
 
+Route::put('/produccion/{id}', [produccionController::class, 'update'])->name('update_produccion');
+
 Route::get('/productos-fabricados', [produccionController::class, 'index'])->name('pro_fabricados');
 
 require __DIR__.'/auth.php';

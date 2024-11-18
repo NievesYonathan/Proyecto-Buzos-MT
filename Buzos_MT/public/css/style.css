@@ -759,3 +759,7 @@ table form {
 .fc-scrollgrid-sync-inner a{
 	color: #0f3443;
 }
+
+.img-user {
+	height: 12rem;
+}
