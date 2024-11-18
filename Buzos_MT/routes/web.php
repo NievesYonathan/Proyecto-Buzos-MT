@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\produccionController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\TipoDocController;
+use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +21,28 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+
+//rutas de 'perfil-admin-usuario'
+Route::get('/usuarios', [UserController::class, 'index'])->name('user-list');
+Route::get('/user/new', [UserController::class, 'create'])->name('user-new');
+Route::post('/usuarios/{num_doc}/update', [UserController::class, 'update'])->name('user-update');
+Route::post('/usuarios/{num_doc}/delete', [UserController::class, 'destroy'])->name('user-delete');
+Route::get('/usuarios/buscar', [UserController::class, 'buscar'])->name('user-search');
+Route::get('/tipo-documentos', [TipoDocController::class, 'index'])->name('tipoDocumentos');
+Route::post('/tipo-documentos', [TipoDocController::class, 'store'])->name('tipoDocumentos');
+Route::put('/tipo-documentos/{id}', [TipoDocController::class, 'update'])->name('tipoDocumentos');
+Route::get('/estados', [EstadoController::class, 'index'])->name('vistaEstados');
+Route::post('/estados', [EstadoController::class, 'store'])->name('estado.store');
+Route::put('/estados/{id}', [EstadoController::class, 'update'])->name('estado.update');
+Route::get('/usuario/actualizar', [UserController::class, 'mostrarFormulario'])->name('usuario.formulario');
+Route::post('/usuario/actualizar', [UserController::class, 'actualizar'])->name('usuario.actualizar');
+
+
+
+
+
+
+
 // Rutas de 'Perfil de Producción'
 Route::get('/produccion', function () {
     return view('Perfil_Produccion.produccion');
@@ -25,4 +50,4 @@ Route::get('/produccion', function () {
 
 Route::get('/productos-fabricados', [produccionController::class, 'index'])->name('pro_fabricados');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

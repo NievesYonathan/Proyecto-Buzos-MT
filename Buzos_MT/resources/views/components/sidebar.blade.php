@@ -43,12 +43,12 @@
                     <li>
                         <a href="#" class="nav-btn-submenu"><i class="fa-solid fa-user fa-fw"></i> &nbsp; Usuarios <i class="fas fa-chevron-down"></i></a>
                         <ul>
-                            <li><a href="#"><i class="fas fa-plus fa-fw"></i> &nbsp; Nuevo usuario</a></li>
-                            <li><a href="#"><i class="fa-solid fa-user-tie"></i> &nbsp; Empleados</a></li>
+                            <li><a href="{{ route('user-new') }}"><i class="fas fa-plus fa-fw"></i> &nbsp; Nuevo usuario</a></li>
+                            <li><a href="{{ route('user-list') }}"><i class="fa-solid fa-user-tie"></i> &nbsp; Empleados</a></li>
                             <li><a href="#"><i class="fa-solid fa-truck"></i> &nbsp; Proveedores</a></li>
-                            <li><a href="#"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar usuario</a></li>
+                            <li><a href="{{ route('user-search') }}"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar usuario</a></li>
                             <li><a href="#"><i class="fa-brands fa-dochub"></i> &nbsp; Tipos de Documentos</a></li>
-                            <li><a href="#"><i class="fa-solid fa-e"></i> &nbsp; Estados</a></li>
+                            <li><a href="{{ route('vistaEstados') }}"><i class="fa-solid fa-e"></i> &nbsp; Estados</a></li>
                         </ul>
                     </li>
                     <li><a href="#"><i class="fa-solid fa-address-book"></i> &nbsp; Cargos </a></li>
