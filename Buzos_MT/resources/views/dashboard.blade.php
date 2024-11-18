@@ -58,7 +58,7 @@
                 </a>
             </div>
         @endif
-
+        
         @if ($perfil === 'Jefe Inventario')
             <div class="col-sm-12 col-md-4 tile-container">
                 <a href="#" class="tile">
@@ -70,10 +70,20 @@
             </div>
         @endif
 
+         <!-- Card de administrador usuario -->
         @if ($perfil === 'Administrador Usuario')
             <div class="col-sm-12 col-md-4 tile-container">
-                <a href="#" class="tile">
+                <a href="{{ route('user-list') }}" class="tile">
                     <div class="tile-tittle">Usuarios</div>
+                    <div class="tile-icon">
+                        <i class="fa-solid fa-user fa-fw"></i>
+                    </div>
+                </a>
+            </div>
+
+            <div class="col-sm-12 col-md-4 tile-container">
+                <a href="#" class="tile">
+                    <div class="tile-tittle">tareas</div>
                     <div class="tile-icon">
                         <i class="fa-solid fa-user fa-fw"></i>
                     </div>

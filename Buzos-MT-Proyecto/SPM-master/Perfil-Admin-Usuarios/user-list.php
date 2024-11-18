@@ -251,12 +251,12 @@ include '../Componentes/Head/head.php' ?>
 																	<div class="form-group">
 																		<label for="usuario_estado" class="bmd-label-floating">Estado</label>
 																		<select class="form-select" aria-label="Default select example" id="usuario_estado" name="usuario_estado" required>
-																		<?php
-																		foreach ($estados as $filaEs) { ?>
-																			<option value="<?= $filaEs['id_estados'] ?>" <?= ($filaEs['id_estados'] == $fila['usu_estado'] ? 'selected' : '') ?>><?= $filaEs['nombre_estado'] ?></option>
-																		<?php
-																		}
-																		?>
+																			<?php
+																			foreach ($estados as $filaEs) { ?>
+																				<option value="<?= $filaEs['id_estados'] ?>" <?= ($filaEs['id_estados'] == $fila['usu_estado'] ? 'selected' : '') ?>><?= $filaEs['nombre_estado'] ?></option>
+																			<?php
+																			}
+																			?>
 																		</select>
 																	</div>
 																</div>
