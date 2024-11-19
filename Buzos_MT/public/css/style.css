@@ -763,3 +763,48 @@ table form {
 .img-user {
 	height: 12rem;
 }
+
+.image-container {
+    position: relative;
+    width: 150px; /* Ajusta el tamaño según lo necesites */
+    height: 150px;
+    overflow: hidden;
+    border-radius: 10px; /* Bordes redondeados opcionales */
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.3s ease;
+}
+
+/* .image-container .hover-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    cursor: pointer;
+} */
+
+/* .image-container:hover .hover-overlay {
+    opacity: 1;
+}
+
+.image-container:hover img {
+    filter: brightness(50%); 
+}
+
+.hover-overlay label {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+} */

@@ -18,7 +18,8 @@ class Produccion extends Model
         'pro_fecha_inicio',
         'pro_fecha_fin',
         'pro_cantidad',
-        'pro_etapa'
+        'pro_etapa',
+        'pro_img'
     ];
 
 // Produccion.php

@@ -4,9 +4,16 @@
             @foreach ($producciones as $produccion)
                 <div class="product-list mb-4 col-12">
                     <div class="product-item">
-                        <img src="../assets/img/producto.jpg" alt="Producto" class="product-image">
+                        <div class="image-container">
+                            <img src="{{ asset('storage/' . $produccion->pro_img) }}" alt="Producto" class="product-image">
+                            <div class="hover-overlay">
+                                <label for="imageInput">Actualizar imagen</label>
+                            </div>
+
+                        </div>
                         <div class="product-info">
-                            <h3 class="product-name"> {{ $produccion->pro_nombre }} {{ $produccion->id_produccion }}</h3>
+                            <h3 class="product-name"> {{ $produccion->pro_nombre }} {{ $produccion->id_produccion }}
+                            </h3>
                             <p class="product-quantity">Cantidad de Producción: {{ $produccion->pro_cantidad }}</p>
                             <p class="product-dates">Fecha de Inicio:
                                 {{ $produccion->pro_fecha_inicio->format('Y-m-d') }}
@@ -25,7 +32,8 @@
                 </div>
 
                 <!-- Modal-Ediciòn -->
-                <div class="modal fade" id="updateModal{{ $produccion->id_produccion }}" tabindex="-1" role="dialog" data-bs-backdrop="static">
+                <div class="modal fade" id="updateModal{{ $produccion->id_produccion }}" tabindex="-1" role="dialog"
+                    data-bs-backdrop="static">
                     <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -34,7 +42,29 @@
                             </div>
 
                             <div class="modal-body">
-                                <form action="{{ route('update_produccion', $produccion->id_produccion)}}" method="POST" class="form-neon" autocomplete="off">
+                                <form method="post" action="{{ route('uploadImageBuzos') }}" class="mt-6 space-y-6"
+                                    enctype="multipart/form-data">
+                                    @csrf
+                                    @method('patch')
+
+                                    <!-- Input oculto para el id_reg_prod_fabricados -->
+                                    <input type="hidden" name="id_produccion" value="{{ $produccion->id_produccion }}">
+                                    <fieldset>
+                                        <div class="row mb-6">
+                                            <div class="col-6">
+                                                <input type="file" name="pro_img" id="imageInput" accept="image/*">
+                                            </div>
+                                            <div class="col-6">
+                                                <div class="flex items-center gap-4">
+                                                    <x-primary-button>{{ __('Update Image') }}</x-primary-button>
+                                                </div>            
+                                            </div>
+                                        </div>
+                                    </fieldset>
+                                </form>
+
+                                <form action="{{ route('update_produccion', $produccion->id_produccion) }}"
+                                    method="POST" class="form-neon" autocomplete="off">
                                     @csrf
                                     @method('PUT')
 
@@ -112,7 +142,8 @@
                                         <div class="container-fluid">
                                             <div class="row mt-3" id="mtPrima-container">
                                                 @foreach ($produccion->materiasPrimas as $materiaPrima)
-                                                    <input type="hidden" name="idRegistroMP[]" value="{{ $materiaPrima->pivot->id_registro }}">
+                                                    <input type="hidden" name="idRegistroMP[]"
+                                                        value="{{ $materiaPrima->pivot->id_registro }}">
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
                                                             <label for="produccion_mtPrima"
@@ -155,10 +186,13 @@
                                         <div class="container-fluid">
                                             <div class="row" id="tarea-container">
                                                 @foreach ($produccion->tareas as $tarea)
-                                                    <input type="hidden" name="idRegistroET[]" value="{{ $tarea->pivot->id_empleado_tarea }}">
+                                                    <input type="hidden" name="idRegistroET[]"
+                                                        value="{{ $tarea->pivot->id_empleado_tarea }}">
                                                     <div class="col-12 col-md-4 mb-2">
                                                         <div class="form-group">
-                                                            <select class="form-control border border-dark" id="produccion_tarea1" name="produccion_tarea[]" required>
+                                                            <select class="form-control border border-dark"
+                                                                id="produccion_tarea1" name="produccion_tarea[]"
+                                                                required>
                                                                 @foreach ($todasTareas as $tareas)
                                                                     <option value="{{ $tareas->id_tarea }}"
                                                                         @if ($tarea->id_tarea === $tareas->id_tarea) selected @endif>
@@ -171,11 +205,14 @@
 
                                                     <div class="col-12 col-md-4 mb-2" id="resp-container">
                                                         <div class="form-group">
-                                                            <select class="form-control border border-dark" id="produccion_responsable1" name="produccion_responsable[]" required>
+                                                            <select class="form-control border border-dark"
+                                                                id="produccion_responsable1"
+                                                                name="produccion_responsable[]" required>
                                                                 @foreach ($operarios as $operario)
                                                                     <option value="{{ $operario->num_doc }}"
                                                                         @if ($operario->num_doc === $tarea->pivot->empleados_num_doc) selected @endif>
-                                                                        {{ $operario->usu_nombres }} {{ $operario->usu_apellidos }}
+                                                                        {{ $operario->usu_nombres }}
+                                                                        {{ $operario->usu_apellidos }}
                                                                     </option>
                                                                 @endforeach
                                                             </select>

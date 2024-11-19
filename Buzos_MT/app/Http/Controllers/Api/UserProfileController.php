@@ -34,7 +34,7 @@ class UserProfileController extends Controller
             $user->imag_perfil = $path; // Aquí asignamos el nuevo valor
             $user->save(); // Guardar los cambios
     
-            return response()->json(['message' => 'Perfil actualizado con éxito']);
+            return redirect()->route('profile.edit')->with('success', 'Imagen actualizada con éxito.');
         } else {
             return response()->json(['error' => 'Usuario no encontrado'], 404);
         }

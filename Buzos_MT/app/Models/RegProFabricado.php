@@ -21,7 +21,6 @@ class RegProFabricado extends Model
         'reg_pf_material',
         'reg_pf_tipo_prenda',
         'produccion_id_produccion',
-        'pro_img'
     ];
 
     public $timestamps = false;

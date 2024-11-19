@@ -67,7 +67,7 @@
 
                 <!-- Agrega más secciones para otros perfiles como 'Jefe Producción' y 'Operario' según tu lógica -->
 
-                <li><a href="#"><i class="fa-solid fa-gear"></i> &nbsp; Configuración</a></li>
+                <li><a href="{{ route('profile.edit') }}"><i class="fa-solid fa-gear"></i> &nbsp; Configuración</a></li>
             </ul>
         </nav>
     </div>
