@@ -93,7 +93,7 @@
                                                     <div class="col-12 col-md-4">
                                                         <div class="form-group">
                                                             <label for="usuario_dni" class="bmd-label-floating">Numero de documento</label>
-                                                            <input type="number" pattern="[0-9-]{1,20}" class="form-control" name="usuario_dni" id="usuario_dni" value="{{ old('usuario_dni', $usuario->usuario_dni) }}">
+                                                            <input type="number" pattern="[0-9-]{1,20}" class="form-control" name="usuario_dni" id="usuario_dni" value="{{ $usuario->num_doc }}">
                                                         </div>
                                                     </div>
 

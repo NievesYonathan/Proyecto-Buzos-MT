@@ -7,6 +7,8 @@ use App\Models\TipoDoc;
 use App\Models\Estado;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Auth;
+
 
 class UserController extends Controller
 {
@@ -108,7 +110,7 @@ class UserController extends Controller
 
     public function mostrarFormulario()
     {
-        $usuario = User::where('num_doc', auth()->user()->num_doc)->first();
+        $usuario = User::where('num_doc', Auth::user()->num_doc)->first();
         $tiposDocumento = TipoDoc::all();
 
         return view('actualizar-usuario', compact('usuario', 'tiposDocumento'));
@@ -124,7 +126,7 @@ class UserController extends Controller
             'password' => 'nullable|min:8|confirmed',
         ]);
 
-        $usuario = User::where('num_doc', auth()->user()->num_doc)->first();
+        $usuario = User::where('num_doc', Auth::user()->num_doc)->first();
         $usuario->nombres = $request->input('usu_nombres');
         $usuario->apellidos = $request->input('usu_apellidos');
         $usuario->telefono = $request->input('usu_telefono');
