@@ -61,35 +61,38 @@ class produccionController extends Controller
             'produccion_fecha_fin' => 'required|date|after_or_equal:produccion_fecha_inicio',
             'produccion_cantidad' => 'required|integer|min:1',
             'produccion_etapa' => 'required|string|max:50',
-            'produccion_mtPrima.*' => 'required|integer|exists:materia_primas,id',
+            'produccion_mtPrima.*' => 'required|integer|exists:materia_prima,id_materia_prima',
             'mtPrima_cantidad.*' => 'required|integer|min:1',
-            'produccion_tarea.*' => 'required|integer|exists:tareas,id',
-            'produccion_responsable.*' => 'required|integer|exists:users,id',
+            'produccion_tarea.*' => 'required|integer|exists:tarea,id_tarea',
+            'produccion_responsable.*' => 'required|integer|exists:usuarios,num_doc',
             'produccion_fecha_entrega.*' => 'required|date|after_or_equal:produccion_fecha_inicio',
         ]);
 
         // Crear Producción
         $produccion = Produccion::create([
-            'nombre' => $request->produccion_nombre,
-            'fecha_inicio' => $request->produccion_fecha_inicio,
-            'fecha_fin' => $request->produccion_fecha_fin,
-            'cantidad' => $request->produccion_cantidad,
-            'etapa' => $request->produccion_etapa,
+            'pro_nombre' => $request->produccion_nombre,
+            'pro_fecha_inicio' => $request->produccion_fecha_inicio,
+            'pro_fecha_fin' => $request->produccion_fecha_fin,
+            'pro_cantidad' => $request->produccion_cantidad,
+            'pro_etapa' => $request->produccion_etapa,
         ]);
 
         // Asociar Materia Prima
         foreach ($request->produccion_mtPrima as $key => $materiaPrimaId) {
             $produccion->materiasPrimas()->attach($materiaPrimaId, [
-                'cantidad' => $request->mtPrima_cantidad[$key],
+                'reg_pmp_cantidad_usada' => $request->mtPrima_cantidad[$key],
+                'reg_pmp_fecha_registro' => now()
             ]);
         }
 
         // Asociar Tareas
         foreach ($request->produccion_tarea as $key => $tareaId) {
-            $produccion->tareas()->create([
-                'tarea_id' => $tareaId,
-                'responsable_id' => $request->produccion_responsable[$key],
-                'fecha_entrega' => $request->produccion_fecha_entrega[$key],
+            $produccion->tareas()->attach($tareaId, [
+                'id_empleado_tarea' => $key, // O el identificador correspondiente
+                'emp_tar_fecha_asignacion' => now(),
+                'emp_tar_fecha_entrega' => $request->produccion_fecha_entrega[$key],
+                'empleados_num_doc' => $request->produccion_responsable[$key],
+                'emp_tar_estado_tarea' => 1,
             ]);
         }
 

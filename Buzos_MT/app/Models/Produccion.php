@@ -22,11 +22,10 @@ class Produccion extends Model
         'pro_img'
     ];
 
-// Produccion.php
-protected $casts = [
-    'pro_fecha_inicio' => 'datetime',
-    'pro_fecha_fin' => 'datetime',
-];
+    protected $casts = [
+        'pro_fecha_inicio' => 'datetime',
+        'pro_fecha_fin' => 'datetime',
+    ];
 
     public $timestamps = false;
 

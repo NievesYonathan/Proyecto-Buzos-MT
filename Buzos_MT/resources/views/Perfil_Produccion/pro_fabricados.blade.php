@@ -2,7 +2,7 @@
     <div class="container my-5">
         <div class="row">
             @foreach ($producciones as $produccion)
-                <div class="product-list mb-4 col-12">
+                <div class="product-list mb-4 col-6">
                     <div class="product-item">
                         <div class="image-container">
                             <img src="{{ asset('storage/' . $produccion->pro_img) }}" alt="Producto" class="product-image">

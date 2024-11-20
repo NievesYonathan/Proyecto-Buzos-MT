@@ -27,6 +27,6 @@ class MateriaPrima extends Model
 
     public function produccion ()
     {
-        return $this->belongsToMany(Produccion::class, 'reg_pro_mat_prima', 'id_produccion', 'id_pro_materia_prima')->withPivot('reg_pmp_cantidad_usada');
+        return $this->belongsToMany(Produccion::class, 'reg_pro_mat_prima', 'id_pro_materia_prima', 'id_produccion')->withPivot('reg_pmp_cantidad_usada');
     }
 }
