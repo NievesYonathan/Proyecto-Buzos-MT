@@ -382,8 +382,8 @@
                             </div>
 
                             <div class="modal-body">
-                                <form action="../Controlador/ControladorProduccion.php" method="POST"
-                                    class="form-neon" autocomplete="off">
+                                <form action="{{ route('nuevo-producto') }}" method="POST" class="form-neon" autocomplete="off">
+                                    @csrf
                                     <fieldset>
                                         <legend><i class="fas fa-industry"></i> &nbsp; Información de la producción
                                         </legend>
@@ -436,7 +436,9 @@
                                                             class="bmd-label-floating">Etapa</label>
                                                         <select class="form-control border border-dark"
                                                             id="produccion_etapa" name="produccion_etapa" required>
-                                                            <option value=""></option>
+                                                            @foreach ($etapas as $etapa)
+                                                            <option value="{{ $etapa->id_etapas }}">{{ $etapa->eta_nombre }}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
@@ -458,7 +460,9 @@
                                                         <select class="form-control border border-dark"
                                                             id="produccion_mtPrima1" name="produccion_mtPrima[]"
                                                             required>
-                                                            <option value=""></option>
+                                                            @foreach ($materiasPrimas as $materiaPrima)
+                                                            <option value="{{ $materiaPrima->id_materia_prima }}">{{ $materiaPrima->mat_pri_nombre }}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
@@ -492,6 +496,9 @@
                                                         <select class="form-control border border-dark"
                                                             id="produccion_tarea1" name="produccion_tarea[]" required>
                                                             <option value="">Tarea</option>
+                                                            @foreach ($tareas as $tarea)
+                                                            <option value="{{ $tarea->id_tarea }}">{{ $tarea->tar_nombre }}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
@@ -502,6 +509,10 @@
                                                             id="produccion_responsable1"
                                                             name="produccion_responsable[]" required>
                                                             <option value="">Responsable</option>
+                                                            @foreach ($operarios as $operario)
+                                                            <option value="{{ $operario->num_doc }}">{{ $operario->usu_nombres }}</option>
+                                                            @endforeach
+
                                                         </select>
                                                     </div>
                                                 </div>

@@ -44,12 +44,9 @@ Route::post('/usuario/actualizar', [UserController::class, 'actualizar'])->name(
 
 
 // Rutas de 'Perfil de Producción'
-Route::get('/produccion', function () {
-    return view('Perfil_Produccion.produccion');
-})->name('produccion');
-
+Route::get('/produccion', [produccionController::class, 'indexTwo'])->name('produccion');
 Route::put('/produccion/{id}', [produccionController::class, 'update'])->name('update_produccion');
-
 Route::get('/productos-fabricados', [produccionController::class, 'index'])->name('pro_fabricados');
+Route::post('/productos-formulario', [produccionController::class, 'store'])->name('nuevo-producto');
 
 require __DIR__ . '/auth.php';
