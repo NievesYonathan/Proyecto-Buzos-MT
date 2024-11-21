@@ -125,8 +125,12 @@
                                                             class="bmd-label-floating">Etapa</label>
                                                         <select class="form-control border border-dark"
                                                             id="produccion_etapa" name="produccion_etapa" required>
-                                                            <option value="{{ $produccion->etapa->id_etapas }}">
-                                                                {{ $produccion->etapa->eta_nombre }}</option>
+                                                            @foreach ($etapas as $etapa)
+                                                                <option value="{{ $etapa->id_etapas }}"
+                                                                    @if ($etapa->id_etapas === $produccion->etapa->id_etapas) selected @endif>
+                                                                    {{ $etapa->eta_nombre }}
+                                                                </option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
                                                 </div>
@@ -151,8 +155,12 @@
                                                             <select class="form-control border border-dark"
                                                                 id="produccion_mtPrima1" name="produccion_mtPrima[]"
                                                                 required>
-                                                                <option value="{{ $materiaPrima->id_materia_prima }}">
-                                                                    {{ $materiaPrima->mat_pri_nombre }}</option>
+                                                                @foreach ($materiasPrimas1 as $materiaPrima1)
+                                                                    <option value="{{ $materiaPrima1->id_materia_prima }}"
+                                                                    @if ($materiaPrima1->id_materia_prima === $materiaPrima->id_materia_prima) selected @endif>
+                                                                        {{ $materiaPrima1->mat_pri_nombre }}
+                                                                    </option>
+                                                                @endforeach
                                                             </select>
                                                         </div>
                                                     </div>
