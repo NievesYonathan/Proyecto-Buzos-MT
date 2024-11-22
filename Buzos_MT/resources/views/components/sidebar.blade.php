@@ -5,8 +5,8 @@
         </a>
 
         @php
-            $name = auth()->user()->usu_nombres;
-            $perfil = auth()->user()->cargos()->first()->car_nombre;
+        $name = auth()->user()->usu_nombres;
+        $perfil = auth()->user()->cargos()->first()->car_nombre;
         @endphp
 
         <figure class="full-box nav-lateral-avatar">
@@ -26,43 +26,43 @@
                 </li>
 
                 @if($perfil === 'Jefe Inventario')
-                    <li>
-                        <a href="#" class="nav-btn-submenu"><i class="fas fa-pallet fa-fw"></i> &nbsp; Materia Prima <i class="fas fa-chevron-down"></i></a>
-                        <ul>
-                            <li><a href="#"><i class="fas fa-plus fa-fw"></i> &nbsp; Agregar item</a></li>
-                            <li><a href="#"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de items</a></li>
-                            <li><a href="#"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar item</a></li>
-                            <li><a href="#"><i class="fa-solid fa-info-circle"></i> &nbsp; Detalles item</a></li>
-                            <li><a href="#"><i class="fa-solid fa-clock-rotate-left"></i> &nbsp; Historial</a></li>
-                            <li><a href="#"><i class="fa-solid fa-pen-to-square"></i> &nbsp; Actualizar</a></li>
-                        </ul>
-                    </li>
+                <li>
+                    <a href="#" class="nav-btn-submenu"><i class="fas fa-pallet fa-fw"></i> &nbsp; Materia Prima <i class="fas fa-chevron-down"></i></a>
+                    <ul>
+                        <li><a href="#"><i class="fas fa-plus fa-fw"></i> &nbsp; Agregar item</a></li>
+                        <li><a href="#"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de items</a></li>
+                        <li><a href="#"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar item</a></li>
+                        <li><a href="#"><i class="fa-solid fa-info-circle"></i> &nbsp; Detalles item</a></li>
+                        <li><a href="#"><i class="fa-solid fa-clock-rotate-left"></i> &nbsp; Historial</a></li>
+                        <li><a href="#"><i class="fa-solid fa-pen-to-square"></i> &nbsp; Actualizar</a></li>
+                    </ul>
+                </li>
                 @endif
 
                 @if($perfil === 'Administrador Usuario')
-                    <li>
-                        <a href="#" class="nav-btn-submenu"><i class="fa-solid fa-user fa-fw"></i> &nbsp; Usuarios <i class="fas fa-chevron-down"></i></a>
-                        <ul>
-                            <li><a href="{{ route('user-new') }}"><i class="fas fa-plus fa-fw"></i> &nbsp; Nuevo usuario</a></li>
-                            <li><a href="{{ route('user-list') }}"><i class="fa-solid fa-user-tie"></i> &nbsp; Empleados</a></li>
-                            <li><a href="#"><i class="fa-solid fa-truck"></i> &nbsp; Proveedores</a></li>
-                            <li><a href="{{ route('user-search') }}"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar usuario</a></li>
-                            <li><a href="#"><i class="fa-brands fa-dochub"></i> &nbsp; Tipos de Documentos</a></li>
-                            <li><a href="{{ route('vistaEstados') }}"><i class="fa-solid fa-e"></i> &nbsp; Estados</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#"><i class="fa-solid fa-address-book"></i> &nbsp; Cargos </a></li>
+                <li>
+                    <a href="#" class="nav-btn-submenu"><i class="fa-solid fa-user fa-fw"></i> &nbsp; Usuarios <i class="fas fa-chevron-down"></i></a>
+                    <ul>
+                        <li><a href="{{ route('user-new') }}"><i class="fas fa-plus fa-fw"></i> &nbsp; Nuevo usuario</a></li>
+                        <li><a href="{{ route('user-list') }}"><i class="fa-solid fa-user-tie"></i> &nbsp; Empleados</a></li>
+                        <li><a href="#"><i class="fa-solid fa-truck"></i> &nbsp; Proveedores</a></li>
+                        <li><a href="{{ route('user-search') }}"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar usuario</a></li>
+                        <li><a href="#"><i class="fa-brands fa-dochub"></i> &nbsp; Tipos de Documentos</a></li>
+                        <li><a href="{{ route('vistaEstados') }}"><i class="fa-solid fa-e"></i> &nbsp; Estados</a></li>
+                    </ul>
+                </li>
+                <li><a href="#"><i class="fa-solid fa-address-book"></i> &nbsp; Cargos </a></li>
                 @endif
 
                 @if($perfil === 'Jefe Producción')
-                    <li>
-                        <a href="#" class="nav-btn-submenu"><i class="fa-solid fa-industry"></i> &nbsp; Producción  <i class="fas fa-chevron-down"></i></a>
-                        <ul>
-                            <li><a href="{{ route('produccion') }}"><i class="fa-solid fa-industry"></i> &nbsp; Gestion de Producción</a></li>
-                            <li><a href="{{ route('pro_fabricados') }}" style="font-size: 13px"><i class="fa-solid fa-shirt"></i> &nbsp; Gestion Productos Fabricados</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#"><i class="fa-solid fa-calendar-days"></i> &nbsp; Tareas </a></li>
+                <li>
+                    <a href="#" class="nav-btn-submenu"><i class="fa-solid fa-industry"></i> &nbsp; Producción <i class="fas fa-chevron-down"></i></a>
+                    <ul>
+                        <li><a href="{{ route('produccion') }}"><i class="fa-solid fa-industry"></i> &nbsp; Gestion de Producción</a></li>
+                        <li><a href="{{ route('pro_fabricados') }}" style="font-size: 13px"><i class="fa-solid fa-shirt"></i> &nbsp; Gestion Productos Fabricados</a></li>
+                    </ul>
+                </li>
+                <li><a href="{{ route('pro_tareas') }}"><i class="fa-solid fa-calendar-days"></i> &nbsp; Tareas </a></li>
                 @endif
 
                 <!-- Agrega más secciones para otros perfiles como 'Jefe Producción' y 'Operario' según tu lógica -->

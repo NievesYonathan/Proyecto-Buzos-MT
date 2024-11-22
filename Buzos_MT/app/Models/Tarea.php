@@ -25,4 +25,9 @@ class Tarea extends Model
     {
         return $this->belongsToMany(Produccion::class, 'emp_tarea', 'tarea_id_tarea', 'produccion_id_produccion')->withPivot('emp_tar_fecha_entrega', 'empleados_num_doc');
     }
+
+    public function estados ()
+    {
+        return $this->belongsTo(Estado::class, 'tar_estado', 'id_estados');
+    }
 }

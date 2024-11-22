@@ -47,6 +47,15 @@ class produccionController extends Controller
         return view('Perfil_Produccion.produccion', compact('etapas', 'operarios', 'tareas', 'materiasPrimas'));
     }
 
+    public function indexTarea()
+    {
+        // $producciones = Produccion::with('etapa', 'regProFabricados', 'materiasPrimas', 'tareas')->get();
+
+        $tareas = Tarea::with('estados')->get();
+
+        return view('Perfil_Produccion.nueva_tarea', compact('tareas'));
+    }
+
     public function update(Request $request, $id)
     {
         // Validar los datos de entrada

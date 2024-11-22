@@ -6,12 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Estado extends Model
 {
-    // Especifica el nombre de la tabla si no sigue la convención
+    protected $primaryKey = 'id_estados';
+
     protected $table = 'estados';
 
-    // Indica los campos que se pueden rellenar de manera masiva
     protected $fillable = ['nombre_estado'];
 
-    // Si no estás utilizando campos de marca de tiempo, desactívalos
     public $timestamps = false;
+
+    public function tareas ()
+    {
+        return $this->hasOne(Tarea::class, 'tar_estado', 'id_estados');
+    }
 }

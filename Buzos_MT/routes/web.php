@@ -38,15 +38,11 @@ Route::get('/usuario/actualizar', [UserController::class, 'mostrarFormulario'])-
 Route::post('/usuario/actualizar', [UserController::class, 'actualizar'])->name('usuario.actualizar');
 
 
-
-
-
-
-
 // Rutas de 'Perfil de Producción'
 Route::get('/produccion', [produccionController::class, 'indexTwo'])->name('produccion');
 Route::put('/produccion/{id}', [produccionController::class, 'update'])->name('update_produccion');
 Route::get('/productos-fabricados', [produccionController::class, 'index'])->name('pro_fabricados');
 Route::post('/productos-formulario', [produccionController::class, 'store'])->name('nuevo-producto');
+Route::get('/produccion-tareas', [produccionController::class, 'indexTarea'])->name('pro_tareas');
 
 require __DIR__ . '/auth.php';
