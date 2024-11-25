@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TipoDocController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TareaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -43,6 +44,9 @@ Route::get('/produccion', [produccionController::class, 'indexTwo'])->name('prod
 Route::put('/produccion/{id}', [produccionController::class, 'update'])->name('update_produccion');
 Route::get('/productos-fabricados', [produccionController::class, 'index'])->name('pro_fabricados');
 Route::post('/productos-formulario', [produccionController::class, 'store'])->name('nuevo-producto');
-Route::get('/produccion-tareas', [produccionController::class, 'indexTarea'])->name('pro_tareas');
+
+//Rutas de 'Tarea'
+Route::get('/tareas-produccion', [TareaController::class, 'index'])->name('pro_tareas');
+Route::put('/tarea-actualizar/{id}', [TareaController::class, 'update'])->name('update_tarea');
 
 require __DIR__ . '/auth.php';
