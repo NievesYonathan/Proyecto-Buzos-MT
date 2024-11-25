@@ -46,6 +46,7 @@ Route::get('/productos-fabricados', [produccionController::class, 'index'])->nam
 Route::post('/productos-formulario', [produccionController::class, 'store'])->name('nuevo-producto');
 
 //Rutas de 'Tarea'
+Route::post('/tareas-crear', [TareaController::class, 'store'])->name('nueva_tarea');
 Route::get('/tareas-produccion', [TareaController::class, 'index'])->name('pro_tareas');
 Route::put('/tarea-actualizar/{id}', [TareaController::class, 'update'])->name('update_tarea');
 

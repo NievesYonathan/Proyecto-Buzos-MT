@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Estado;
 use App\Models\Tarea;
+use Google\Service\DriveActivity\Create;
 use Illuminate\Http\Request;
 
 class TareaController extends Controller
@@ -38,5 +39,29 @@ class TareaController extends Controller
 
         // Retornar la vista de tareas
         return redirect()->back();
+    }
+
+    public function store(Request $request)
+    {
+        // Vavilar datos
+        $request->validate([
+            'tar_nombre' => 'required|string|max:50',
+            'tar_descripcion' => 'required|string|max:200',
+        ]);
+
+        // Actualizar los campos
+        try {
+            Tarea::create([
+                'tar_nombre' => $request->tar_nombre,
+                'tar_descripcion' => $request->tar_descripcion,
+                'tar_estado' => 1
+            ]);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Ocurrió un problema al crear la tarea.');
+        }
+
+        // Retornar la vista de tareas
+        return redirect()->route('pro_tareas')->with('success', 'Tarea creada exitosamente.');
+
     }
 }

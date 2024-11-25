@@ -1,20 +1,21 @@
 <x-app-layout>
-    <div class="container-fluid">
-        <form action="../Controlador/ControladorTarea.php" method="POST" class="form-neon" autocomplete="off">
+    <div class="container mt-5">
+        <form action="{{ route('nueva_tarea') }}" method="POST" class="form-neon" autocomplete="off">
+            @csrf
             <fieldset>
                 <legend><i class="fas fa-user-lock"></i> &nbsp; Registrar nueva tarea</legend>
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12 col-md-6"> <!-- Nombre de la tarea -->
                             <div class="form-group">
-                                <label for="tarea_sistema" class="bmd-label-floating">Nombre de la tarea</label>
-                                <input type="text" class="form-control" name="tarea_sistema" id="tarea_sistema" required>
+                                <label for="tar_nombre" class="bmd-label-floating">Nombre de la tarea</label>
+                                <input type="text" class="form-control" name="tar_nombre" id="tarea_sistema" required>
                             </div>
                         </div>
                         <div class="col-12 col-md-6"> <!-- Descripción de la tarea -->
                             <div class="form-group">
-                                <label for="descripcion" class="bmd-label-floating">Descripción</label>
-                                <textarea class="form-control" name="descripcion" id="descripcion" rows="3" required></textarea>
+                                <label for="tar_descripcion" class="bmd-label-floating">Descripción</label>
+                                <textarea class="form-control" name="tar_descripcion" id="descripcion" rows="3" required></textarea>
                             </div>
                         </div>
                         <!-- <div class="col-12 col-md-6"> 
@@ -38,7 +39,7 @@
 
         <br>
 
-        <div class="form-neon mt-20">
+        <div class="form-neon">
             <legend><i class="fa-regular fa-address-book"></i> &nbsp; Lista de tareas</legend>
             <!-- Elimina el punto de la lista -->
             <style>
@@ -98,12 +99,12 @@
                                                         <label for="estado" class="bmd-label-floating">Estado</label>
                                                         <select class="form-control" name="tar_estado" id="estado">
                                                             @foreach ($estados as $estado)
-                                                                @if ($estado->nombre_estado === 'Activo' || $estado->nombre_estado === 'Inactivo')
-                                                                    <option value="{{ $estado->id_estados }}"
-                                                                        @if ($estado->id_estados === $tarea->estados->id_estados) selected @endif>
-                                                                        {{ $estado->nombre_estado }}
-                                                                    </option>
-                                                                @endif
+                                                            @if ($estado->nombre_estado === 'Activo' || $estado->nombre_estado === 'Inactivo')
+                                                            <option value="{{ $estado->id_estados }}"
+                                                                @if ($estado->id_estados === $tarea->estados->id_estados) selected @endif>
+                                                                {{ $estado->nombre_estado }}
+                                                            </option>
+                                                            @endif
                                                             @endforeach
                                                         </select>
                                                     </div>
