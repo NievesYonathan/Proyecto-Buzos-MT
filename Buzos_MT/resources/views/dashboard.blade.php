@@ -41,7 +41,7 @@
             </div>
 
             <div class="col-sm-12 col-md-3 tile-container">
-                <a href="#" class="tile">
+                <a href="{{ route('pro_tareas') }}" class="tile">
                     <div class="tile-tittle">Tareas</div>
                     <div class="tile-icon">
                         <i class="fa-solid fa-calendar-days"></i>

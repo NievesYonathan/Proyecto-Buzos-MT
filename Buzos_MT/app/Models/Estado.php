@@ -16,6 +16,6 @@ class Estado extends Model
 
     public function tareas ()
     {
-        return $this->hasOne(Tarea::class, 'tar_estado', 'id_estados');
+        return $this->hasMany(Tarea::class, 'tar_estado', 'id_estados');
     }
 }
