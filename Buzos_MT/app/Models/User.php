@@ -31,6 +31,8 @@ class User extends Authenticatable
         'usu_estado',
         'imag_perfil',
         'registro_gmail',
+        'external_id',
+        'external_auth'
     ];
 
     // Atributos que deben estar ocultos para la serialización
