@@ -27,75 +27,87 @@
         </script>
         @endif
 
-        <form method="POST" action="{{ route('user-new') }}">
+        <form method="POST" action="{{ route('user-store') }}">
             @csrf
+
+            @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
+            <input type="hidden" name="usu_estado" value="1"> <!-- O el valor adecuado para el estado -->
 
             <fieldset>
                 <legend><i class="far fa-address-card"></i> &nbsp; Información personal</legend>
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12 col-md-4">
-                            <div class="form-group">
-                                <label for="tipo_documento" class="bmd-label-floating">Tipo documento</label>
-                                <select class="form-control" name="tipoDocumento" id="tipo_documento">
-                                    @foreach($tipos_documentos as $tipo)
-                                    <option value="{{ $tipo->id_tipo_documento }}">{{ $tipo->tip_doc_descripcion }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
+                            <x-input-label for="t_doc" :value="__('Tipo de Documento')" />
+                            <select id="t_doc" name="t_doc" class="block mt-1 w-full" required>
+                                @foreach ($tipos_documentos as $tipo)
+                                <option value="{{ $tipo->id_tipo_documento }}">{{ $tipo->tip_doc_descripcion }}</option>
+                                @endforeach
+                            </select>
+                            <x-input-error :messages="$errors->get('t_doc')" class="mt-2" />
                         </div>
 
                         <div class="col-12 col-md-4">
-                            <div class="form-group">
-                                <label for="usuario_dni" class="bmd-label-floating">Numero de documento</label>
-                                <input type="number" pattern="[0-9-]{1,20}" class="form-control" name="numeroDocumento" id="usuario_dni" maxlength="20">
-                            </div>
+                            <x-input-label for="num_doc" :value="__('Número de Documento')" />
+                            <x-text-input id="num_doc" class="block mt-1 w-full" type="text" name="num_doc" :value="old('num_doc')"
+                                required />
+                            <x-input-error :messages="$errors->get('num_doc')" class="mt-2" />
                         </div>
 
                         <div class="col-12 col-md-4">
-                            <div class="form-group">
-                                <label for="usuario_nombre" class="bmd-label-floating">Nombres</label>
-                                <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="nombres" id="usuario_nombre" maxlength="35">
-                            </div>
+                            <x-input-label for="usu_nombres" :value="__('Nombres')" />
+                            <x-text-input id="usu_nombres" class="block mt-1 w-full" type="text" name="usu_nombres" :value="old('usu_nombres')"
+                                required />
+                            <x-input-error :messages="$errors->get('usu_nombres')" class="mt-2" />
                         </div>
 
                         <div class="col-12 col-md-4">
-                            <div class="form-group">
-                                <label for="usuario_apellido" class="bmd-label-floating">Apellidos</label>
-                                <input type="text" pattern="[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{1,35}" class="form-control" name="apellidos" id="usuario_apellido" maxlength="35">
-                            </div>
+                            <x-input-label for="usu_apellidos" :value="__('Apellidos')" />
+                            <x-text-input id="usu_apellidos" class="block mt-1 w-full" type="text" name="usu_apellidos"
+                                :value="old('usu_apellidos')" required />
+                            <x-input-error :messages="$errors->get('usu_apellidos')" class="mt-2" />
                         </div>
 
                         <div class="col-12 col-md-4">
-                            <div class="form-group">
-                                <label for="usu_fecha_nac" class="bmd-label-floating">Fecha de nacimiento</label>
-                                <input type="date" class="form-control" name="fechaNacimiento" id="usu_fecha_nac">
-                            </div>
+                            <x-input-label for="usu_fecha_nacimiento" :value="__('Fecha de Nacimiento')" />
+                            <x-text-input id="usu_fecha_nacimiento" class="block mt-1 w-full" type="date" name="usu_fecha_nacimiento"
+                                :value="old('usu_fecha_nacimiento')" required />
+                            <x-input-error :messages="$errors->get('usu_fecha_nacimiento')" class="mt-2" />
                         </div>
 
                         <div class="col-12 col-md-4">
-                            <div class="form-group">
-                                <label for="sexo" class="bmd-label-floating">Sexo</label>
-                                <select class="form-control" name="sexo" id="sexo">
-                                    <option value="">Sexo</option>
-                                    <option value="M">Masculino</option>
-                                    <option value="F">Femenino</option>
-                                </select>
-                            </div>
+                            <x-input-label for="usu_sexo" :value="__('Sexo')" />
+                            <select id="usu_sexo" name="usu_sexo" class="block mt-1 w-full" required>
+                                <option value="M">Masculino</option>
+                                <option value="F">Femenino</option>
+                                <option value="O">Otro</option>
+                            </select>
+                            <x-input-error :messages="$errors->get('usu_sexo')" class="mt-2" />
                         </div>
+
 
                         <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label for="usuario_direccion" class="bmd-label-floating">Dirección</label>
-                                <input type="text" pattern="[a-zA-Z0-99áéíóúÁÉÍÓÚñÑ()# ]{1,190}" class="form-control" name="direccion" id="usuario_direccion" maxlength="190">
-                            </div>
+                        <x-input-label for="usu_direccion" :value="__('Direccion')" />
+                            <x-text-input id="usu_direccion" class="block mt-1 w-full" type="text" name="usu_direccion"
+                                :value="old('usu_direccion')" required />
+                            <x-input-error :messages="$errors->get('usu_direccion')" class="mt-2" />
                         </div>
 
+
                         <div class="col-12 col-md-6">
-                            <div class="form-group">
-                                <label for="usuario_telefono" class="bmd-label-floating">Teléfono</label>
-                                <input type="text" pattern="[0-9()+]{1,20}" class="form-control" name="celular" id="usuario_telefono" maxlength="20">
-                            </div>
+                            <x-input-label for="usu_telefono" :value="__('Teléfono')" />
+                            <x-text-input id="usu_telefono" class="block mt-1 w-full" type="text" name="usu_telefono"
+                                :value="old('usu_telefono')" required />
+                            <x-input-error :messages="$errors->get('usu_telefono')" class="mt-2" />
                         </div>
 
                         <br><br><br>
@@ -104,32 +116,26 @@
                             <legend><i class="fas fa-user-lock"></i> &nbsp; Información de la cuenta</legend>
                             <div class="container-fluid">
                                 <div class="row">
+
                                     <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="usu_fecha_contratacion" class="bmd-label-floating">Fecha contratación</label>
-                                            <input type="date" class="form-control" name="fechaContratacion" id="usu_fecha_contratacion">
-                                        </div>
+                                        <x-input-label for="usu_email" :value="__('Correo Electrónico')" />
+                                        <x-text-input id="usu_email" class="block mt-1 w-full" type="email" name="usu_email" :value="old('usu_email')"
+                                            required autocomplete="username" />
+                                        <x-input-error :messages="$errors->get('usu_email')" class="mt-2" />
                                     </div>
 
                                     <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="usuario_email" class="bmd-label-floating">Email</label>
-                                            <input type="email" class="form-control" name="correo" id="usuario_email" maxlength="70">
-                                        </div>
+                                        <x-input-label for="password" :value="__('Contraseña')" />
+                                        <x-text-input id="password" class="block mt-1 w-full" type="password" name="password" required
+                                            autocomplete="new-password" />
+                                        <x-input-error :messages="$errors->get('password')" class="mt-2" />
                                     </div>
 
                                     <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="usuario_clave_1" class="bmd-label-floating">Contraseña</label>
-                                            <input type="password" class="form-control" name="password" id="usuario_clave_1" maxlength="200">
-                                        </div>
-                                    </div>
-
-                                    <div class="col-12 col-md-6">
-                                        <div class="form-group">
-                                            <label for="usuario_clave_2" class="bmd-label-floating">Repetir contraseña</label>
-                                            <input type="password" class="form-control" name="confirm_password" id="usuario_clave_2" maxlength="200">
-                                        </div>
+                                        <x-input-label for="password_confirmation" :value="__('Confirmar Contraseña')" />
+                                        <x-text-input id="password_confirmation" class="block mt-1 w-full" type="password"
+                                            name="password_confirmation" required autocomplete="new-password" />
+                                        <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                                     </div>
                                 </div>
                             </div>

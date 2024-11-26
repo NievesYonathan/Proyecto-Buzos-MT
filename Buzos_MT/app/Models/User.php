@@ -57,4 +57,13 @@ class User extends Authenticatable
 
     public $timestamps = false; // Deshabilitar timestamps
 
+    public function tipoDocumento()
+    {
+        return $this->belongsTo(TipoDoc::class, 't_doc', 'id_tipo_documento');
+    }
+
+    public function estadoUsuario()
+    {
+        return $this->belongsTo(Estado::class, 'usu_estado', 'id_estados');
+    }
 }

@@ -25,6 +25,7 @@ Route::middleware('auth')->group(function () {
 //rutas de 'perfil-admin-usuario'
 Route::get('/usuarios', [UserController::class, 'index'])->name('user-list');
 Route::get('/user/new', [UserController::class, 'create'])->name('user-new');
+Route::post('/user/new', [UserController::class, 'store'])->name('user-store');
 Route::post('/usuarios/{num_doc}/update', [UserController::class, 'update'])->name('user-update');
 Route::post('/usuarios/{num_doc}/delete', [UserController::class, 'destroy'])->name('user-delete');
 Route::get('/usuarios/buscar', [UserController::class, 'buscar'])->name('user-search');
