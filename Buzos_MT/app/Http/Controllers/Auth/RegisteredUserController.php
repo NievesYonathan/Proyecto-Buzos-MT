@@ -13,16 +13,37 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use App\Models\TipoDoc;
+use Illuminate\Support\Facades\Session;
+use Laravel\Socialite\Facades\Socialite;
 
 class RegisteredUserController extends Controller
 {
     /**
      * Display the registration view.
      */
+
+    public function handleGoogleCallback()
+    {
+        $googleUser = Socialite::driver('google')->user();
+
+        // Almacena los datos en la sesión temporalmente
+        Session::put('googleUser', [
+            'name' => $googleUser->name,
+            'email' => $googleUser->email,
+            'id' => $googleUser->id,
+            'avatar' => $googleUser->avatar,
+        ]);
+
+        return redirect()->route('register');
+    }
+
     public function create(): View
     {
         $tiposDoc = TipoDoc::all();
-        return view('auth.register', compact('tiposDoc'));
+        // Recupera los datos de la sesión
+        $user = Session::get('googleUser');
+
+        return view('auth.register', compact('tiposDoc', 'user'));
     }
 
     /**

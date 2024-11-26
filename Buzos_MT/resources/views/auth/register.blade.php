@@ -11,7 +11,7 @@
             <x-input-label for="t_doc" :value="__('Tipo de Documento')" />
             <select id="t_doc" name="t_doc" class="block mt-1 w-full" required>
                 @foreach ($tiposDoc as $tipo)
-                    <option value="{{ $tipo->id_tipo_documento }}">{{ $tipo->tip_doc_descripcion }}</option>
+                <option value="{{ $tipo->id_tipo_documento }}">{{ $tipo->tip_doc_descripcion }}</option>
                 @endforeach
             </select>
             <x-input-error :messages="$errors->get('t_doc')" class="mt-2" />
@@ -28,7 +28,7 @@
         <!-- Nombres -->
         <div class="mt-4">
             <x-input-label for="usu_nombres" :value="__('Nombres')" />
-            <x-text-input id="usu_nombres" class="block mt-1 w-full" type="text" name="usu_nombres" :value="old('usu_nombres')"
+            <x-text-input id="usu_nombres" class="block mt-1 w-full" type="text" name="usu_nombres" value="{{ old('usu_nombres', $user['name'] ?? '') }}"
                 required />
             <x-input-error :messages="$errors->get('usu_nombres')" class="mt-2" />
         </div>
@@ -37,7 +37,7 @@
         <div class="mt-4">
             <x-input-label for="usu_apellidos" :value="__('Apellidos')" />
             <x-text-input id="usu_apellidos" class="block mt-1 w-full" type="text" name="usu_apellidos"
-                :value="old('usu_apellidos')" required />
+                value="{{ old('usu_apellidos') }}" required />
             <x-input-error :messages="$errors->get('usu_apellidos')" class="mt-2" />
         </div>
 
@@ -68,10 +68,11 @@
             <x-input-error :messages="$errors->get('usu_telefono')" class="mt-2" />
         </div>
 
+        @if (!$user['id'])
         <!-- Email -->
         <div class="mt-4">
             <x-input-label for="usu_email" :value="__('Correo Electrónico')" />
-            <x-text-input id="usu_email" class="block mt-1 w-full" type="email" name="usu_email" :value="old('usu_email')"
+            <x-text-input id="usu_email" class="block mt-1 w-full" type="email" name="usu_email" value="{{ old('usu_email', $user['email'] ?? '') }}"
                 required autocomplete="username" />
             <x-input-error :messages="$errors->get('usu_email')" class="mt-2" />
         </div>
@@ -91,6 +92,7 @@
                 name="password_confirmation" required autocomplete="new-password" />
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
+        @endif
 
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800"
