@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
 //Rutas para login con Google
 Route::get('/login-google', function () {
     return Socialite::driver('google')->redirect();
-});
+})->name('login-google');
  
 Route::get('/callback-url', function () {
     $user = Socialite::driver('google')->user();

@@ -11,7 +11,7 @@
             <select id="t_doc" name="t_doc" class="block mt-1 w-full" required>
                 <option value="" disabled selected>{{ __('Selecciona un tipo de documento') }}</option>
                 @foreach ($tiposDoc as $tipo)
-                    <option value="{{ $tipo->id_tipo_documento }}">{{ $tipo->tip_doc_descripcion }}</option> <!-- Ajusta 'id' y 'nombre' según tu tabla -->
+                <option value="{{ $tipo->id_tipo_documento }}">{{ $tipo->tip_doc_descripcion }}</option> <!-- Ajusta 'id' y 'nombre' según tu tabla -->
                 @endforeach
             </select>
             <x-input-error :messages="$errors->get('t_doc')" class="mt-2" />
@@ -28,9 +28,9 @@
         <div class="mt-4">
             <x-input-label for="password" :value="__('Contraseña')" />
             <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="current-password" />
+                type="password"
+                name="password"
+                required autocomplete="current-password" />
             <x-input-error :messages="$errors->get('password')" class="mt-2" />
         </div>
 
@@ -43,10 +43,12 @@
         </div>
 
         <div class="flex items-center justify-end mt-4">
+            <a href="{{ route('login-google') }}">{{ __('Google') }}</a>
+
             @if (Route::has('password.request'))
-                <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
-                    {{ __('¿Olvidaste tu contraseña?') }}
-                </a>
+            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('password.request') }}">
+                {{ __('¿Olvidaste tu contraseña?') }}
+            </a>
             @endif
 
             <x-primary-button class="ms-3">
