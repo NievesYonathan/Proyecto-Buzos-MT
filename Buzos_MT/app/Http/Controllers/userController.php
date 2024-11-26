@@ -77,18 +77,44 @@ class UserController extends Controller
 
     public function update(Request $request, $num_doc)
     {
-        // Aquí actualizas los datos de un usuario
         $usuario = User::where('num_doc', $num_doc)->first();
-        $usuario->update($request->all());
+
+        if (!$usuario) {
+            return redirect()->route('user-list')->with('error', 'Usuario no encontrado.');
+        }
+
+        $telefono = $request->input('usuario_telefono', null);
+
+        // Actualiza solo los campos que están presentes en el request
+        $usuario->update([
+            'usu_nombres' => $request->usu_nombres,
+            'usu_apellidos' => $request->usu_apellidos,
+            'usu_email' => $request->usu_email,
+            'usu_telefono' => $request->usu_telefono,
+            'usu_fecha_contratacion' => $request->usu_fecha_contratacion,  // Fecha de contratación
+            'usu_estado' => $request->usu_estado,  // Estado
+        ]);
 
         return redirect()->route('user-list')->with('success', 'Usuario actualizado correctamente.');
     }
 
-    public function destroy($num_doc)
+    public function cambiarestado($num_doc)
     {
-        // Eliminar el usuario
-        User::where('num_doc', $num_doc)->delete();
-        return redirect()->route('user-list')->with('success', 'Usuario eliminado correctamente.');
+        // Buscar al usuario por su número de documento
+        $usuario = User::where('num_doc', $num_doc)->first();
+
+        if (!$usuario) {
+            return redirect()->route('user-list')->with('error', 'Usuario no encontrado.');
+        }
+
+        // Cambiar el estado del usuario
+        // Si el estado es "Activo" (1), lo cambiamos a "Inactivo" (0) y viceversa
+        $nuevoEstado = $usuario->usu_estado == 1 ? 2 : 1;
+
+        $usuario->usu_estado = $nuevoEstado;
+        $usuario->save(); // Guardamos los cambios
+
+        return redirect()->route('user-list')->with('success', 'Estado del usuario actualizado correctamente.');
     }
 
     public function buscar(Request $request)

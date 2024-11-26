@@ -27,11 +27,13 @@ Route::middleware('auth')->group(function () {
 Route::get('/usuarios', [UserController::class, 'index'])->name('user-list');
 Route::get('/user/new', [UserController::class, 'create'])->name('user-new');
 Route::post('/user/new', [UserController::class, 'store'])->name('user-store');
-Route::post('/usuarios/{num_doc}/update', [UserController::class, 'update'])->name('user-update');
-Route::post('/usuarios/{num_doc}/delete', [UserController::class, 'destroy'])->name('user-delete');
+Route::put('/usuarios/{num_doc}', [UserController::class, 'update'])->name('user-update');
+Route::put('usuario/cambiar-estado/{num_doc}', [UserController::class, 'cambiarestado'])->name('user-cambiarestado');
 Route::get('/usuarios/buscar', [UserController::class, 'buscar'])->name('user-search');
-Route::get('/tipo-documentos', [TipoDocController::class, 'index'])->name('tipoDocumentos.index');
-Route::post('/tipo-documentos', [TipoDocController::class, 'store'])->name('tipoDocumentos.store');
+
+Route::get('/tipo-documentos', [TipoDocController::class, 'index'])->name('tipoDocumentos');
+Route::get('/tipoDoc/new', [TipoDocController::class, 'create'])->name('tipoDocumentos.create');
+Route::post('/tipoDoc/new', [TipoDocController::class, 'store'])->name('tipoDocumentos.store');
 Route::put('/tipo-documentos/{id}', [TipoDocController::class, 'update'])->name('tipoDocumentos.update');
 Route::get('/estados', [EstadoController::class, 'index'])->name('vistaEstados');
 Route::post('/estados', [EstadoController::class, 'store'])->name('estado.store');

@@ -47,7 +47,7 @@
                         <li><a href="{{ route('user-list') }}"><i class="fa-solid fa-user-tie"></i> &nbsp; Empleados</a></li>
                         <li><a href="#"><i class="fa-solid fa-truck"></i> &nbsp; Proveedores</a></li>
                         <li><a href="{{ route('user-search') }}"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar usuario</a></li>
-                        <li><a href="#"><i class="fa-brands fa-dochub"></i> &nbsp; Tipos de Documentos</a></li>
+                        <li><a href="{{ route('tipoDocumentos') }}"><i class="fa-brands fa-dochub"></i> &nbsp; Tipos de Documentos</a></li>
                         <li><a href="{{ route('vistaEstados') }}"><i class="fa-solid fa-e"></i> &nbsp; Estados</a></li>
                     </ul>
                 </li>
