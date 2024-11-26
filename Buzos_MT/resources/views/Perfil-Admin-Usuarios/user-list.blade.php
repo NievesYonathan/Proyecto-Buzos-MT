@@ -39,13 +39,13 @@
                 <tbody>
                     @foreach($usuarios as $usuario)
                     <tr class="text-center">
-                        <td>{{ $usuario->tip_doc_descripcion }}</td>
+                        <td>{{ $usuario->tipoDocumento->tip_doc_descripcion }}</td>
                         <td>{{ $usuario->num_doc }}</td>
                         <td>{{ $usuario->usu_nombres }}</td>
                         <td>{{ $usuario->usu_apellidos }}</td>
                         <td>{{ $usuario->usu_telefono }}</td>
                         <td>{{ $usuario->usu_email }}</td>
-                        <td>{{ $usuario->estado_usuario }}</td>
+                        <td>{{ $usuario->estadoUsuario->nombre_estado }}</td>
                         <td>
                             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal{{ $usuario->num_doc }}">
                                 <i class="fa-solid fa-user-pen"></i>
@@ -100,14 +100,14 @@
                                                     <div class="col-12 col-md-4">
                                                         <div class="form-group">
                                                             <label for="usuario_nombre" class="bmd-label-floating">Nombres</label>
-                                                            <input type="text" class="form-control" name="usuario_nombre" id="usuario_nombre" value="{{ old('usuario_dni', $usuario->usu_nombres) }}" maxlength="60">
+                                                            <input type="text" class="form-control" name="usuario_nombre" id="usuario_nombre" value="{{ $usuario->usu_nombres }}" maxlength="60">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-4">
                                                         <div class="form-group">
                                                             <label for="usuario_apellido" class="bmd-label-floating">Apellidos</label>
-                                                            <input type="text" class="form-control" name="usuario_apellido" id="usuario_apellido" value="{{ old('usuario_dni', $usuario->usu_apellidos) }}" maxlength="40">
+                                                            <input type="text" class="form-control" name="usuario_apellido" id="usuario_apellido" value="{{ $usuario->usu_apellidos }}" maxlength="40">
                                                         </div>
                                                     </div>
 
@@ -115,28 +115,28 @@
                                                         <div class="form-group">
                                                             <label for="usuario_fecha_nacimiento" class="bmd-label-floating">Fecha de nacimiento</label>
                                                             <input type="date" class="form-control" name="usuario_fecha_nacimiento" id="usuario_fecha_nacimiento"
-                                                                value="">
+                                                                value="{{ $usuario->usu_fecha_nacimiento }}">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
                                                             <label for="usuario_sexo" class="bmd-label-floating">sexo</label>
-                                                            <input type="text" class="form-control" name="usuario_sexo" id="usuario_sexo" value="{{ old('usuario_dni', $usuario->usu_sexo) }}">
+                                                            <input type="text" class="form-control" name="usuario_sexo" id="usuario_sexo" value="{{ $usuario->usu_sexo }}">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
                                                             <label for="usuario_direccion" class="bmd-label-floating">Dirección</label>
-                                                            <input type="text" pattern="[a-zA-Z0-99áéíóúÁÉÍÓÚñÑ()# ]{1,190}" class="form-control" name="usuario_direccion" id="usuario_direccion" maxlength="190" value="{{ old('usuario_dni', $usuario->usu_direccion) }}">
+                                                            <input type="text" pattern="[a-zA-Z0-99áéíóúÁÉÍÓÚñÑ()# ]{1,190}" class="form-control" name="usuario_direccion" id="usuario_direccion" maxlength="190" value="{{ $usuario->usu_direccion }}">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
                                                             <label for="usuario_telefono" class="bmd-label-floating">Teléfono</label>
-                                                            <input type="text" pattern="[0-9()+]{1,20}" class="form-control" name="usuario_telefono" id="usuario_telefono" maxlength="20" value="{{ old('usuario_dni', $usuario->usu_telefono) }}">
+                                                            <input type="text" pattern="[0-9()+]{1,20}" class="form-control" name="usuario_telefono" id="usuario_telefono" maxlength="20" value="{{ $usuario->usu_telefono }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -148,8 +148,8 @@
                                                 <div class="row">
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
-                                                            <label for="usuario_email" class="bmd-label-floating">Email</label>
-                                                            <input type="email" class="form-control" name="usuario_email" id="usuario_email" maxlength="70" value="">
+                                                            <label for="usu_fecha_contratacion" class="bmd-label-floating">fecha contratacion</label>
+                                                            <input type="date" class="form-control" name="usu_fecha_contratacion" id="usu_fecha_contratacion" maxlength="70" value="{{ $usuario->usu_fecha_contratacion }}">
                                                         </div>
                                                     </div>
 
