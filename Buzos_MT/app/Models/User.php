@@ -30,7 +30,6 @@ class User extends Authenticatable
         'usu_fecha_contratacion',
         'usu_estado',
         'imag_perfil',
-        'registro_gmail',
         'external_id',
         'external_auth'
     ];
