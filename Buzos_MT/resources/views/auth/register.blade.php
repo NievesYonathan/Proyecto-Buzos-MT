@@ -5,6 +5,9 @@
         <!-- En tu formulario de registro -->
         <input type="hidden" name="usu_estado" value="1"> <!-- O el valor adecuado para el estado -->
         <input type="hidden" name="usu_direccion" value="Bogotá"> <!-- O el valor adecuado para el estado -->
+        @if($user)
+        <input type="hidden" name="external_id" value="{{}}">
+        @endif
 
         <!-- Tipo de Documento -->
         <div>
@@ -33,6 +36,7 @@
             <x-input-error :messages="$errors->get('usu_nombres')" class="mt-2" />
         </div>
 
+        @if (!$user)
         <!-- Apellidos -->
         <div class="mt-4">
             <x-input-label for="usu_apellidos" :value="__('Apellidos')" />
@@ -40,6 +44,7 @@
                 value="{{ old('usu_apellidos') }}" required />
             <x-input-error :messages="$errors->get('usu_apellidos')" class="mt-2" />
         </div>
+        @endif
 
         <!-- Fecha de Nacimiento -->
         <div class="mt-4">
@@ -68,7 +73,11 @@
             <x-input-error :messages="$errors->get('usu_telefono')" class="mt-2" />
         </div>
 
-        @if (!$user['id'])
+        @if ($user)
+        <input type="hidden" name="usu_email" value="{{$user['email']}}">
+        @endif
+
+        @if (!$user)
         <!-- Email -->
         <div class="mt-4">
             <x-input-label for="usu_email" :value="__('Correo Electrónico')" />

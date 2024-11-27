@@ -53,18 +53,19 @@ class RegisteredUserController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        dd($request->all());
         $request->validate([
             'num_doc' => ['required', 'integer'], // Validar el número de documento
             't_doc' => ['required', 'integer'], // Validar tipo de documento
             'usu_nombres' => ['required', 'string', 'max:60'],
-            'usu_apellidos' => ['required', 'string', 'max:45'],
+            'usu_apellidos' => ['string', 'max:45'],
             'usu_email' => ['required', 'string', 'email', 'max:50', 'unique:usuarios'],
             'usu_fecha_nacimiento' => ['required', 'date'],
             'usu_sexo' => ['required', 'string', 'max:1'],
             'usu_direccion' => ['required', 'string', 'max:50'],
             'usu_telefono' => ['required', 'string', 'max:10'],
             'usu_estado' => ['required', 'integer'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'password' => ['confirmed', Rules\Password::defaults()],
         ]);
 
         // Crear el usuario en la tabla usuarios
@@ -80,13 +81,17 @@ class RegisteredUserController extends Controller
             'usu_telefono' => $request->usu_telefono,
             'usu_estado' => $request->usu_estado,
             'usu_fecha_contratacion' => now(), // Asignar la fecha de contratación actual
+            'external_id' => $request->external_id,
+            'external_auth' => 'google'
         ]);
 
-        // Crear el registro en la tabla seguridad
-        Seguridad::create([
-            'usu_num_doc' => $request->num_doc,
-            'seg_clave_hash' => Hash::make($request->password),
-        ]);
+        if (!$request->external_id) {
+            // Crear el registro en la tabla seguridad
+            Seguridad::create([
+                'usu_num_doc' => $request->num_doc,
+                'seg_clave_hash' => Hash::make($request->password),
+            ]);
+        }
 
         event(new Registered($user));
 
