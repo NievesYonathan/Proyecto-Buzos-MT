@@ -69,7 +69,7 @@ Route::get('/usuarios/buscar', [UserController::class, 'buscar'])->name('user-se
 Route::get('/tipo-documentos', [TipoDocController::class, 'index'])->name('tipoDocumentos');
 Route::get('/tipoDoc/new', [TipoDocController::class, 'create'])->name('tipoDocumentos.create');
 Route::post('/tipoDoc/new', [TipoDocController::class, 'store'])->name('tipoDocumentos.store');
-Route::put('/tipo-documentos/{id}', [TipoDocController::class, 'update'])->name('tipoDocumentos.update');
+Route::put('/tipo-documentos', [TipoDocController::class, 'update'])->name('tipoDocumentos');
 Route::get('/estados', [EstadoController::class, 'index'])->name('vistaEstados');
 Route::post('/estados', [EstadoController::class, 'store'])->name('estado.store');
 Route::put('/estados/{id}', [EstadoController::class, 'update'])->name('estado.update');
