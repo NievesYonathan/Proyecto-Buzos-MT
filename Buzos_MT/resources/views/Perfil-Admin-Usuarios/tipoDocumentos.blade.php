@@ -7,7 +7,7 @@
 
 	<!-- Content -->
 	<div class="container-fluid">
-		<form action="{{ route('tipoDocumentos') }}" method="POST" class="form-neon" autocomplete="off">
+		<form action="{{ route('tipoDocumentos.store') }}" method="POST" class="form-neon" autocomplete="off">
 			@csrf
 			<fieldset>
 				<legend><i class="fas fa-user-lock"></i> &nbsp; Registrar Tipos de Documentos</legend>
@@ -16,7 +16,7 @@
 						<div class="col-12 col-md-12">
 							<div class="form-group">
 								<label for="nombreDoc" class="bmd-label-floating">Ingrese el tipo de documento</label>
-								<input type="text" class="form-control" name="nombreDoc" id="nombreDoc">
+								<input type="text" class="form-control" name="tip_doc_descripcion" id="nombreDoc">
 							</div>
 						</div>
 					</div>
@@ -44,23 +44,23 @@
 				}
 			</style>
 			<ul>
-				@foreach ($tiposDocumentos as $tipo)
+				@foreach ($tipoDocumentos as $tipo)
 				<li class="mb-2">
 					<i class="fas fa-check-circle"></i> {{ $tipo->tip_doc_descripcion }}
-					<button data-bs-toggle="modal" data-bs-target="#updateModal{{ $tipo->id }}">
+					<button data-bs-toggle="modal" data-bs-target="#updateModal{{ $tipo->id_tipo_documento }}">
 						<i class="fa-regular fa-pen-to-square"></i>
 					</button>
 				</li>
 
 				<!-- Modal para editar tipos de documento -->
-				<div class="modal fade" id="updateModal{{ $tipo->id }}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+				<div class="modal fade" id="updateModal{{ $tipo->id_tipo_documento }}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-lg">
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
-								<form action="{{ route('tipoDocumentos', $tipo->id) }}" method="POST">
+								<form action="{{ route('tipoDocumentos', $tipo->id_tipo_documento) }}" method="POST">
 									@csrf
 									@method('PUT')
 									<fieldset>
@@ -70,7 +70,7 @@
 												<div class="col-12 col-md-12">
 													<div class="form-group">
 														<label for="nombreDocEdit" class="bmd-label-floating">Nombre</label>
-														<input type="text" class="form-control" name="nombreDoc" id="nombreDocEdit" value="{{ $tipo->tip_doc_descripcion }}" maxlength="60">
+														<input type="text" class="form-control" name="tip_doc_descripcion" id="nombreDocEdit" value="{{ $tipo->tip_doc_descripcion }}" maxlength="60">
 													</div>
 												</div>
 											</div>
