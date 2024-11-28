@@ -6,7 +6,8 @@
         <input type="hidden" name="usu_estado" value="1"> <!-- O el valor adecuado para el estado -->
         <input type="hidden" name="usu_direccion" value="Bogotá"> <!-- O el valor adecuado para el estado -->
         @if($user)
-        <input type="hidden" name="external_id" value="{{}}">
+        <input type="hidden" name="external_id" value="{{$user['id']}}">
+        <input type="hidden" name="imag_perfil" value="{{$user['avatar']}}">
         @endif
 
         <!-- Tipo de Documento -->
