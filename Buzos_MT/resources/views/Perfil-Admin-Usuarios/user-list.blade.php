@@ -165,9 +165,11 @@
                                                         <label for="usuario_estado" class="bmd-label-floating">Estado</label>
                                                         <select class="form-select" aria-label="Default select example" id="usu_estado" name="usu_estado" required>
                                                             @foreach($estados as $estado)
+                                                            @if ($estado->nombre_estado == 'Activo' || $estado->nombre_estado == 'Inactivo')
                                                             <option value="{{ $estado->id_estados }}" {{ $estado->id_estados == $usuario->usu_estado ? 'selected' : '' }}>
                                                                 {{ $estado->nombre_estado }}
                                                             </option>
+                                                            @endif
                                                             @endforeach
                                                         </select>
                                                     </div>
