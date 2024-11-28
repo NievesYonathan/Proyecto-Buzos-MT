@@ -38,7 +38,7 @@
                 </thead>
                 <tbody>
                     @foreach($usuarios as $usuario)
-                    <tr class="text-center">
+                    <tr class="text-center text-dark">
                         <td>{{ $usuario->tipoDocumento->tip_doc_descripcion }}</td>
                         <td>{{ $usuario->num_doc }}</td>
                         <td>{{ $usuario->usu_nombres }}</td>
