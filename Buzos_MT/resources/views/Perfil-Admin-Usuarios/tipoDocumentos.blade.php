@@ -10,7 +10,7 @@
 		<form action="{{ route('tipoDocumentos.store') }}" method="POST" class="form-neon" autocomplete="off">
 			@csrf
 			<fieldset>
-				<legend><i class="fas fa-user-lock"></i> &nbsp; Registrar Tipos de Documentos</legend>
+				<legend><i class="fas fa-user-lock"></i> &nbsp; Registrar por que si </legend>
 				<div class="container-fluid">
 					<div class="row">
 						<div class="col-12 col-md-12">

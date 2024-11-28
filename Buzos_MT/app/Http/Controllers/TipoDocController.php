@@ -43,28 +43,17 @@ class tipoDocController extends Controller
         return redirect()->route('tipoDocumentos')->with('success', 'Tipo de documento creado correctamente');
     }
 
-    public function edit($id_tipo_documento)
-    {
-        $tipoDocumentos = TipoDoc::findOrFail($id_tipo_documento); // Encuentra el tipo de documento por ID
-        return view('tipoDocumentos', compact('tipoDocumentos'));
-    }
-
-    // Método para actualizar un tipo de documento
     public function update(Request $request, $id_tipo_documento)
     {
-        // Validar los datos antes de actualizar
-        $validated = $request->validate([
-            'tip_doc_descripcion' => 'required|string|max:60', // Validación del campo
+        $tipoDocumentos = TipoDoc::where('id_tipo_documento', $id_tipo_documento)->first();
+
+
+        // Actualiza solo los campos que están presentes en el request
+        $tipoDocumentos->update([
+            'tip_doc_descripcion' => $request->tip_doc_descripcion,
+
         ]);
 
-        // Encontrar el tipo de documento a actualizar
-        $tipoDocumentos = TipoDoc::findOrFail($id_tipo_documento);
-        $tipoDocumentos->tip_doc_descripcion = $validated['tip_doc_descripcion'];
-
-        // Guardar los cambios en la base de datos
-        $tipoDocumentos->save();
-
-        // Redirigir a donde quieras (por ejemplo, a la lista de tipos de documentos)
-        return redirect()->route('tipoDocumentos')->with('success', 'Tipo de documento actualizado correctamente');
+        return redirect()->route('tipoDocumentos')->with('success', 'descripcion actualizada correctamente.');
     }
 }
