@@ -16,7 +16,7 @@
                         <div class="col-12 col-md-12">
                             <div class="form-group">
                                 <label for="nombreEst" class="bmd-label-floating">Ingrese el tipo de estado</label>
-                                <input type="text" class="form-control" name="nombreEst" id="nombreEst">
+                                <input type="text" class="form-control" name="nombre_estado" id="nombreEst">
                             </div>
                         </div>
                     </div>
@@ -36,7 +36,7 @@
         <br>
 
         <div class="form-neon mt-20">
-            <legend><i class="fa-regular fa-address-book"></i> &nbsp; Lista de Tipos de Documentos</legend>
+            <legend><i class="fa-regular fa-address-book"></i> &nbsp; Lista de Estados</legend>
             <style>
                 ul {
                     list-style-type: none;
@@ -70,7 +70,7 @@
                                                     <div class="col-12 col-md-12">
                                                         <div class="form-group">
                                                             <label for="nombreEst" class="bmd-label-floating">Nombre</label>
-                                                            <input type="text" class="form-control" name="nombreEst" id="nombreEst" value="{{ $estado->nombre_estado }}" maxlength="60">
+                                                            <input type="text" class="form-control" name="nombre_estado" id="nombreEst" value="{{ $estado->nombre_estado }}" maxlength="60">
                                                         </div>
                                                     </div>
                                                 </div>
