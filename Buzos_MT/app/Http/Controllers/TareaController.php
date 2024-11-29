@@ -6,6 +6,7 @@ use App\Models\Estado;
 use App\Models\Tarea;
 use Google\Service\DriveActivity\Create;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TareaController extends Controller
 {
@@ -62,6 +63,23 @@ class TareaController extends Controller
 
         // Retornar la vista de tareas
         return redirect()->route('pro_tareas')->with('success', 'Tarea creada exitosamente.');
+    }
 
+    public function tareasAsignadas()
+    {
+        $userId = Auth::user()->num_doc;
+
+        // Consulta las tareas relacionadas al usuario autenticado
+        $tareasAsignadas = Tarea::whereHas('empleados', function ($query) use ($userId) {
+            $query->where('empleados_num_doc', $userId); // Filtra por el usuario autenticado
+        })
+        ->with(['empleados' => function($query) use ($userId) {
+            $query->where('empleados_num_doc', $userId); // Asegúrate de que solo se traigan los empleados correspondientes
+        }])
+        ->get();
+        
+        $estados = Estado::all();
+
+        return view('Perfil-Operario.tareasAsignadas', compact('tareasAsignadas', 'estados'));
     }
 }

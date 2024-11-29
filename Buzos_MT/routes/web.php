@@ -69,7 +69,7 @@ Route::get('/usuarios/buscar', [UserController::class, 'buscar'])->name('user-se
 Route::get('/tipo-documentos', [TipoDocController::class, 'index'])->name('tipoDocumentos');
 Route::get('/tipoDoc/new', [TipoDocController::class, 'create'])->name('tipoDocumentos.create');
 Route::post('/tipoDoc/new', [TipoDocController::class, 'store'])->name('tipoDocumentos.store');
-Route::put('/tipo-documentos', [TipoDocController::class, 'update'])->name('tipoDocumentos');
+Route::put('/tipo-documentos', [TipoDocController::class, 'update'])->name('tipoDocumentosP');
 Route::get('/estados', [EstadoController::class, 'index'])->name('vistaEstados');
 Route::post('/estados', [EstadoController::class, 'store'])->name('estado.store');
 Route::put('/estados/{id}', [EstadoController::class, 'update'])->name('estado.update');
@@ -87,5 +87,8 @@ Route::post('/productos-formulario', [produccionController::class, 'store'])->na
 Route::post('/tareas-crear', [TareaController::class, 'store'])->name('nueva_tarea');
 Route::get('/tareas-produccion', [TareaController::class, 'index'])->name('pro_tareas');
 Route::put('/tarea-actualizar/{id}', [TareaController::class, 'update'])->name('update_tarea');
+
+//Rutas de 'Perfil Operario'
+Route::get('/tareas-asigadas', [TareaController::class, 'tareasAsignadas'])->name('tareas-asigadas');
 
 require __DIR__ . '/auth.php';

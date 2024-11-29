@@ -45,6 +45,8 @@ class User extends Authenticatable
         'usu_fecha_contratacion' => 'date',
     ];
 
+    public $timestamps = false; // Deshabilitar timestamps
+
     // Relación con el modelo Seguridad
     public function seguridad()
     {
@@ -56,8 +58,6 @@ class User extends Authenticatable
         return $this->belongsToMany(Cargo::class, 'cargos_has_usuarios', 'usuarios_num_doc', 'cargos_id_cargos');
     }
 
-    public $timestamps = false; // Deshabilitar timestamps
-
     public function tipoDocumento()
     {
         return $this->belongsTo(TipoDoc::class, 't_doc', 'id_tipo_documento');
@@ -66,5 +66,10 @@ class User extends Authenticatable
     public function estadoUsuario()
     {
         return $this->belongsTo(Estado::class, 'usu_estado', 'id_estados');
+    }
+
+    public function tareasAsignadas()
+    {
+        return $this->belongsToMany(Tarea::class, 'emp_tarea', 'empleados_num_doc', 'tarea_id_tarea');
     }
 }

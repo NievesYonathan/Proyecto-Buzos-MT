@@ -73,7 +73,20 @@
             <x-input-label for="imag_perfil" :value="__('Profile Image')" />
             <div class="mt-1 mb-2">
                 @if ($user->imag_perfil)
-                    <img src="{{ asset('storage/' . $user->imag_perfil) }}" alt="Profile Image"
+                @php
+                $name = auth()->user()->usu_nombres;
+                $perfil = auth()->user()->cargos()->first()->car_nombre;
+        
+                $external_id = auth()->user()->external_id;
+        
+                if ($external_id) {
+                    $img_route = Auth::user()->imag_perfil;
+                } else {
+                    $img_route = 'storage/' . Auth::user()->imag_perfil;
+                }
+                @endphp
+        
+                    <img src="{{ asset($img_route) }}" alt="Profile Image"
                         class="img-user w-24 h-24 rounded-full object-cover">
                 @else
                     <p>{{ __('No profile image uploaded.') }}</p>

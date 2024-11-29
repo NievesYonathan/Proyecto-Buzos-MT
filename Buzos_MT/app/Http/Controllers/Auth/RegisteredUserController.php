@@ -24,26 +24,24 @@ class RegisteredUserController extends Controller
 
     public function handleGoogleCallback()
     {
-        $user = Socialite::driver('google')->user();
+        $googleUser = Socialite::driver('google')->user();
 
-        $userExists = User::where('external_id', $user->id)->where('external_auth', 'google')->first();
+        $userExists = User::where('external_id', $googleUser->id)->where('external_auth', 'google')->first();
 
         if ($userExists) {
             Auth::login($userExists);
             return redirect(route('dashboard', absolute: false));
-        } else {
-            $googleUser = Socialite::driver('google')->user();
-
-            // Almacena los datos en la sesión temporalmente
-            Session::put('googleUser', [
-                'name' => $googleUser->name,
-                'email' => $googleUser->email,
-                'id' => $googleUser->id,
-                'avatar' => $googleUser->avatar,
-            ]);
-
-            return redirect()->route('register');
         }
+
+        // Almacena los datos en la sesión temporalmente
+        Session::put('googleUser', [
+            'name' => $googleUser->name,
+            'email' => $googleUser->email,
+            'id' => $googleUser->id,
+            'avatar' => $googleUser->avatar,
+        ]);
+
+        return redirect()->route('register');
     }
 
     public function create(): View
@@ -67,7 +65,7 @@ class RegisteredUserController extends Controller
             'num_doc' => $request->num_doc,
             't_doc' => $request->t_doc,
             'usu_nombres' => $request->usu_nombres,
-            'usu_apellidos' => $request->usu_apellidos,
+            'usu_apellidos' => $request->usu_apellidos ?? " ",
             'usu_email' => $request->usu_email,
             'usu_fecha_nacimiento' => $request->usu_fecha_nacimiento,
             'usu_sexo' => $request->usu_sexo,
