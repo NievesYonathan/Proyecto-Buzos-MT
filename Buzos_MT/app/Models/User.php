@@ -67,4 +67,5 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Estado::class, 'usu_estado', 'id_estados');
     }
+
 }

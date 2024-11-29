@@ -4,6 +4,8 @@ use App\Http\Controllers\produccionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\TipoDocController;
 use App\Http\Controllers\EstadoController;
+use App\Http\Controllers\CargoController;
+use App\Http\Controllers\CargoUsuarioController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TareaController;
 use App\Models\User;
@@ -59,7 +61,7 @@ Route::get('/callback-url', function () {
 });
 
 //rutas de 'perfil-admin-usuario'
-Route::get('/usuarios', [UserController::class, 'index'])->name('user-list');
+Route::get('/usuario', [UserController::class, 'index'])->name('user-list');
 Route::get('/user/new', [UserController::class, 'create'])->name('user-new');
 Route::post('/user/new', [UserController::class, 'store'])->name('user-store');
 Route::put('/usuarios/{num_doc}', [UserController::class, 'update'])->name('user-update');
@@ -75,13 +77,12 @@ Route::get('/estados', [EstadoController::class, 'index'])->name('vistaEstados')
 Route::post('/estados', [EstadoController::class, 'store'])->name('estado.store');
 Route::put('/estados/{id}', [EstadoController::class, 'update'])->name('estado.update');
 //Rutas de 'Cargos'
-Route::get('/usuarios', [UserController::class, 'index'])->name('cargos');
+Route::get('/cargo', [CargoController::class, 'index'])->name('cargos');
+Route::post('/cargo', [CargoController::class, 'store'])->name('cargos.store');
+Route::put('/cargo/{id_cargos}', [CargoController::class, 'update'])->name('cargos.update');
+Route::resource('usuarios', UserController::class); // Rutas para usuarios
+Route::resource('cargousuarios', CargoController::class); // Rutas para asignar cargos a usuarios
 
-// Ruta para almacenar la asignación de cargos a un usuario
-Route::post('/cargos-usuarios', [UserController::class, 'store'])->name('cargosUsuarios.store');
-
-// Ruta para ver los cargos
-Route::get('/cargos', [UserController::class, 'index'])->name('cargos.index');
 
 
 

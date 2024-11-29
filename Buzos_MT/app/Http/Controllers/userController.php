@@ -29,7 +29,6 @@ class UserController extends Controller
 
     public function create()
     {
-        // Obtener tipos de documentos
         $tipos_documentos = TipoDoc::all();
         return view('Perfil-Admin-Usuarios.user-new', compact('tipos_documentos'));
     }
@@ -143,6 +142,13 @@ class UserController extends Controller
 
         // Retornar la vista con los resultados
         return view('Perfil-Admin-Usuarios.user-search', compact('search', 'resultado'));
+    }
+
+    public function mostrarcargos()
+    {
+        $usuarios = User::with('cargos')->paginate(10); // Trae usuarios con sus cargos
+        $cargos = Cargo::all(); // Todos los cargos
+        return view('user-list-cargos.mostrarcargos', compact('usuarios', 'cargos'));
     }
 
     //
