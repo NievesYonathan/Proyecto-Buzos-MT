@@ -6,6 +6,8 @@ use App\Models\User;
 use App\Models\TipoDoc;
 use App\Models\Estado;
 use App\Models\Seguridad;
+use App\Models\Cargo; 
+use App\Models\EmpTarea; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Auth;
@@ -27,7 +29,6 @@ class UserController extends Controller
 
     public function create()
     {
-        // Obtener tipos de documentos
         $tipos_documentos = TipoDoc::all();
         return view('Perfil-Admin-Usuarios.user-new', compact('tipos_documentos'));
     }
@@ -143,37 +144,13 @@ class UserController extends Controller
         return view('Perfil-Admin-Usuarios.user-search', compact('search', 'resultado'));
     }
 
-    public function mostrarFormulario()
+    public function mostrarcargos()
     {
-        $usuario = User::where('num_doc', Auth::user()->num_doc)->first();
-        $tiposDocumento = TipoDoc::all();
-
-        return view('actualizar-usuario', compact('usuario', 'tiposDocumento'));
+        $usuarios = User::with('cargos')->paginate(10); // Trae usuarios con sus cargos
+        $cargos = Cargo::all(); // Todos los cargos
+        return view('user-list-cargos.mostrarcargos', compact('usuarios', 'cargos'));
     }
 
-    public function actualizar(Request $request)
-    {
-        $request->validate([
-            'usuario_nombre' => 'required|string|max:35',
-            'usuario_apellido' => 'required|string|max:35',
-            'usuario_telefono' => 'required|string|max:15',
-            'usuario_email' => 'required|email|max:70',
-            'password' => 'nullable|min:8|confirmed',
-        ]);
+    //
 
-        $usuario = User::where('num_doc', Auth::user()->num_doc)->first();
-        $usuario->nombres = $request->input('usu_nombres');
-        $usuario->apellidos = $request->input('usu_apellidos');
-        $usuario->telefono = $request->input('usu_telefono');
-        $usuario->email = $request->input('usu_email');
-        $usuario->sexo = $request->input('usu_sexo');
-
-        if ($request->filled('password')) {
-            $usuario->password = bcrypt($request->input('password'));
-        }
-
-        $usuario->save();
-
-        return redirect()->route('usuario.formulario')->with('success', 'Datos actualizados correctamente.');
-    }
 }

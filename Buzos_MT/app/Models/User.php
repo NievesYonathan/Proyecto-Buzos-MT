@@ -68,8 +68,11 @@ class User extends Authenticatable
         return $this->belongsTo(Estado::class, 'usu_estado', 'id_estados');
     }
 
+<<<<<<< HEAD
     public function tareasAsignadas()
     {
         return $this->belongsToMany(Tarea::class, 'emp_tarea', 'empleados_num_doc', 'tarea_id_tarea');
     }
+=======
+>>>>>>> origin/main
 }

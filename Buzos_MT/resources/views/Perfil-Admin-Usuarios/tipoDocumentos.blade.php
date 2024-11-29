@@ -60,7 +60,7 @@
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
-								<form action="{{ route('tipoDocumentos', $tipo->id_tipo_documento) }}" method="POST">
+								<form action="{{ route('tipoDocumentos.update', $tipo->id_tipo_documento) }}" method="POST">
 									@csrf
 									@method('PUT')
 									<fieldset>
@@ -70,7 +70,7 @@
 												<div class="col-12 col-md-12">
 													<div class="form-group">
 														<label for="nombreDocEdit" class="bmd-label-floating">Nombre</label>
-														<input type="text" class="form-control" name="tip_doc_descripcion" id="nombreDocEdit" value="{{ $tipo->tip_doc_descripcion }}" maxlength="60">
+														<input type="text" class="form-control" name="tip_doc_descripcion" id="tip_doc_descripcion" value="{{ $tipo->tip_doc_descripcion }}" maxlength="60">
 													</div>
 												</div>
 											</div>

@@ -59,7 +59,7 @@
                         <li><a href="{{ route('vistaEstados') }}"><i class="fa-solid fa-e"></i> &nbsp; Estados</a></li>
                     </ul>
                 </li>
-                <li><a href="#"><i class="fa-solid fa-address-book"></i> &nbsp; Cargos </a></li>
+                <li><a href="{{ route('cargos') }}"><i class="fa-solid fa-address-book"></i> &nbsp; Cargos </a></li>
                 @endif
 
                 @if($perfil === 'Jefe Producción')
