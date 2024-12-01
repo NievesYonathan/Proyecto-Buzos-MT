@@ -67,6 +67,7 @@ Route::post('/user/new', [UserController::class, 'store'])->name('user-store');
 Route::put('/usuarios/{num_doc}', [UserController::class, 'update'])->name('user-update');
 Route::put('usuario/cambiar-estado/{num_doc}', [UserController::class, 'cambiarestado'])->name('user-cambiarestado');
 Route::get('/usuarios/buscar', [UserController::class, 'buscar'])->name('user-search');
+
 //Rutas de 'Tipos de Documentos'
 Route::get('/tipo-documentos', [TipoDocController::class, 'index'])->name('tipoDocumentos');
 Route::get('/tipoDoc/new', [TipoDocController::class, 'create'])->name('tipoDocumentos.create');
@@ -75,15 +76,13 @@ Route::put('/tipo-documentos', [TipoDocController::class, 'update'])->name('tipo
 Route::get('/estados', [EstadoController::class, 'index'])->name('vistaEstados');
 Route::post('/estados', [EstadoController::class, 'store'])->name('estado.store');
 Route::put('/estados/{id}', [EstadoController::class, 'update'])->name('estado.update');
+
 //Rutas de 'Cargos'
 Route::get('/cargo', [CargoController::class, 'index'])->name('cargos');
 Route::post('/cargo', [CargoController::class, 'store'])->name('cargos.store');
 Route::put('/cargo/{id_cargos}', [CargoController::class, 'update'])->name('cargos.update');
 Route::resource('usuarios', UserController::class); // Rutas para usuarios
 Route::resource('cargousuarios', CargoController::class); // Rutas para asignar cargos a usuarios
-
-
-
 
 // Rutas de 'Perfil de Producción'
 Route::get('/produccion', [produccionController::class, 'indexTwo'])->name('produccion');
