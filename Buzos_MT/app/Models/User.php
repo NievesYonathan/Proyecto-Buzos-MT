@@ -55,7 +55,7 @@ class User extends Authenticatable
 
     public function cargos()
     {
-        return $this->belongsToMany(Cargo::class, 'cargos_has_usuarios', 'usuarios_num_doc', 'cargos_id_cargos');
+        return $this->belongsToMany(Cargo::class, 'cargos_has_usuarios', 'usuarios_num_doc', 'cargos_id_cargos')->withPivot('fecha_asignacion');
     }
 
     public function tipoDocumento()

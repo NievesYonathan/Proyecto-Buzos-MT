@@ -1,5 +1,3 @@
-<!-- resources/views/usuarios/index.blade.php -->
-
 <x-app-layout>
 	<div class="full-box page-header">
 		<h3 class="text-left">
@@ -10,10 +8,10 @@
 	<div class="container-fluid">
 		<ul class="full-box list-unstyled page-nav-tabs">
 			<li>
-				<a href="{{ route('cargos.index') }}"><i class="fas fa-plus fa-fw"></i> &nbsp; CARGOS</a>
+				<a href="{{ route('cargos') }}"><i class="fas fa-plus fa-fw"></i> &nbsp; CARGOS</a>
 			</li>
 			<li>
-				<a class="active" href="{{ route('usuarios.index') }}"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE USUARIOS</a>
+				<a class="active" href="{{ route('user-list-cargo') }}"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE USUARIOS</a>
 			</li>
 		</ul>
 	</div>
@@ -33,8 +31,8 @@
 				</thead>
 				<tbody>
 					@foreach($usuarios as $usuario)
-					<tr class="text-center">
-						<td class="my-auto">{{ $usuario->tip_doc_descripcion }}</td>
+					<tr class="table-light text-center">
+						<td>{{ $usuario->tipoDocumento->tip_doc_descripcion }}</td>
 						<td>{{ $usuario->num_doc }}</td>
 						<td>{{ $usuario->usu_nombres }}</td>
 						<td>

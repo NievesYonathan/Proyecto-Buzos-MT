@@ -8,10 +8,10 @@
     <div class="container-fluid">
         <ul class="full-box list-unstyled page-nav-tabs">
             <li>
-                <a class="active" href="#"><i class="fas fa-plus fa-fw"></i> &nbsp; CARGOS</a>
+                <a class="active" href="{{ route('cargos') }}"><i class="fas fa-plus fa-fw"></i> &nbsp; CARGOS</a>
             </li>
             <li>
-                <a href="#"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE USUARIOS</a>
+                <a href="{{ route('user-list-cargo') }}"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE USUARIOS</a>
             </li>
         </ul>
     </div>

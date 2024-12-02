@@ -5,7 +5,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\TipoDocController;
 use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\CargoController;
-use App\Http\Controllers\CargoUsuarioController;
+use App\Http\Controllers\InformeController;
+use App\Http\Controllers\ListaCargoController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TareaController;
 use App\Models\User;
@@ -79,8 +80,12 @@ Route::put('/estados/{id}', [EstadoController::class, 'update'])->name('estado.u
 Route::get('/cargo', [CargoController::class, 'index'])->name('cargos');
 Route::post('/cargo', [CargoController::class, 'store'])->name('cargos.store');
 Route::put('/cargo/{id_cargos}', [CargoController::class, 'update'])->name('cargos.update');
-Route::resource('usuarios', UserController::class); // Rutas para usuarios
-Route::resource('cargousuarios', CargoController::class); // Rutas para asignar cargos a usuarios
+Route::get('/usuarios', [ListaCargoController::class, 'index'])->name('user-list-cargo');
+Route::post('/usuarios/asignar-cargo', [ListaCargoController::class, 'store'])->name('cargosUsuarios.store');
+//rutas RR.HH
+Route::get('/informes', [InformeController::class, 'index'])->name('informe-RRHH');
+Route::get('/informes/users', [InformeController::class, 'fetchUsers'])->name('informes-RRHH.fetchUsers');
+
 
 
 

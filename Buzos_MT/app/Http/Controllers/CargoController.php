@@ -26,22 +26,15 @@ class CargoController extends Controller
 
     public function store(Request $request)
     {
-        
-        $usuarios = User::findOrFail($request->num_doc);
-        // Asignar cargos al usuario
-        $usuarios->cargos()->sync($request->id_Cargo);
-        return redirect()->route('user-list-cargo.mostrarformulario')->with('success', 'Cargos asignados con éxito');
 
-        // Validar los datos antes de almacenarlos
-        $validated = $request->validate([
+        $request->validate([
             'car_nombre' => 'required|string|max:255',  // Validación del campo nombre
-
-
         ]);
 
         // Crear un nuevo tipo de documento
-        $cargos = new Cargo();
-        $cargos->car_nombre = $validated['car_nombre'];
+        $cargos = Cargo::create([
+            'car_nombre' => $request->car_nombre,
+        ]);
 
 
         // Guardar en la base de datos

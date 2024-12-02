@@ -53,6 +53,7 @@
                     </ul>
                 </li>
                 <li><a href="{{ route('cargos') }}"><i class="fa-solid fa-address-book"></i> &nbsp; Cargos </a></li>
+                <li><a href="{{ route('informe-RRHH') }}"><i class="fa-solid fa-users"></i> &nbsp; RR.HH </a></li>
                 @endif
 
                 @if($perfil === 'Jefe Producción')
