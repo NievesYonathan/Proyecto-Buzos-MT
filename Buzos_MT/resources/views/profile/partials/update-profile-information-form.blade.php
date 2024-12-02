@@ -62,12 +62,8 @@
     </form>
 
     <!-- Formulario para la imagen de perfil -->
-    <form method="post" action="{{ route('uploadImage') }}" class="mt-6 space-y-6" enctype="multipart/form-data">
+    <form method="post" action="{{ route('storeImage', $name = auth()->user()->num_doc) }}" class="mt-6 space-y-6" enctype="multipart/form-data">
         @csrf
-        @method('patch')
-
-        <!-- Input oculto para el num_doc -->
-        <input type="hidden" name="num_doc" value="{{ $user->num_doc }}">
         
         <div>
             <x-input-label for="imag_perfil" :value="__('Profile Image')" />
@@ -98,7 +94,7 @@
         </div>
 
         <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Update Image') }}</x-primary-button>
+            <x-primary-button>{{ __('Subir Imagen') }}</x-primary-button>
         </div>
     </form>
 </section>

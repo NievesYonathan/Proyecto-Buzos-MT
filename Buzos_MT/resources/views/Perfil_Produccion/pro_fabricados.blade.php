@@ -43,26 +43,37 @@
                         </div>
 
                         <div class="modal-body">
-                            <form method="post" action="{{ route('uploadImageBuzos') }}" class="mt-6 space-y-6"
-                                enctype="multipart/form-data">
-                                @csrf
-                                @method('patch')
-
-                                <!-- Input oculto para el id_reg_prod_fabricados -->
-                                <input type="hidden" name="id_produccion" value="{{ $produccion->id_produccion }}">
-                                <fieldset>
-                                    <div class="row mb-6">
-                                        <div class="col-6">
-                                            <input type="file" name="pro_img" id="imageInput" accept="image/*">
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="flex items-center gap-4">
-                                                <x-primary-button>{{ __('Update Image') }}</x-primary-button>
+                            <div class="row">
+                                <div class="col-8">
+                                    <form method="post" action="{{ route('storeImagePro', $produccion->id_produccion) }}" class="mt-6 space-y-6"
+                                        enctype="multipart/form-data">
+                                        @csrf
+        
+                                        <fieldset>
+                                            <div class="row mb-6">
+                                                <div class="col-6">
+                                                    <input type="file" name="pro_img" id="imageInput" accept="image/*">
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="flex items-center gap-4">
+                                                        <x-primary-button>{{ __('Subir Imagen') }}</x-primary-button>
+                                                    </div>
+                                                </div>
                                             </div>
+                                        </fieldset>
+                                    </form>        
+                                </div>
+
+                                <div class="col-4">
+                                    <form class="mb-3" action="{{ route('deleteImagePro', $produccion->id_produccion) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div class="flex items-center gap-4">
+                                            <x-danger-button>{{ __('Eliminar Imagen') }}</x-danger-button>
                                         </div>
-                                    </div>
-                                </fieldset>
-                            </form>
+                                    </form>        
+                                </div>
+                            </div>
 
                             <form action="{{ route('update_produccion', $produccion->id_produccion) }}"
                                 method="POST" class="form-neon" autocomplete="off">

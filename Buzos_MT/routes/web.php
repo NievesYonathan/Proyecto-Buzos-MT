@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 use App\Http\Controllers\produccionController;
 use App\Http\Controllers\UserController;
@@ -32,10 +32,10 @@ Route::middleware('auth')->group(function () {
 Route::get('/login-google', function () {
     return Socialite::driver('google')->redirect();
 })->name('login-google');
- 
+
 Route::get('/callback-url', function () {
     $user = Socialite::driver('google')->user();
- 
+
     $userExists = User::where('external_id', $user->id)->where('external_auth', 'google')->first();
 
     if ($userExists){
@@ -68,6 +68,7 @@ Route::post('/user/new', [UserController::class, 'store'])->name('user-store');
 Route::put('/usuarios/{num_doc}', [UserController::class, 'update'])->name('user-update');
 Route::put('usuario/cambiar-estado/{num_doc}', [UserController::class, 'cambiarestado'])->name('user-cambiarestado');
 Route::get('/usuarios/buscar', [UserController::class, 'buscar'])->name('user-search');
+
 //Rutas de 'Tipos de Documentos'
 Route::get('/tipo-documentos', [TipoDocController::class, 'index'])->name('tipoDocumentos');
 Route::get('/tipoDoc/new', [TipoDocController::class, 'create'])->name('tipoDocumentos.create');
@@ -76,6 +77,7 @@ Route::put('/tipo-documentos', [TipoDocController::class, 'update'])->name('tipo
 Route::get('/estados', [EstadoController::class, 'index'])->name('vistaEstados');
 Route::post('/estados', [EstadoController::class, 'store'])->name('estado.store');
 Route::put('/estados/{id}', [EstadoController::class, 'update'])->name('estado.update');
+
 //Rutas de 'Cargos'
 Route::get('/cargo', [CargoController::class, 'index'])->name('cargos');
 Route::post('/cargo', [CargoController::class, 'store'])->name('cargos.store');
@@ -85,9 +87,6 @@ Route::post('/usuarios/asignar-cargo', [ListaCargoController::class, 'store'])->
 //rutas RR.HH
 Route::get('/informes', [InformeController::class, 'index'])->name('informe-RRHH');
 Route::get('/informes/users', [InformeController::class, 'fetchUsers'])->name('informes-RRHH.fetchUsers');
-
-
-
 
 
 // Rutas de 'Perfil de Producción'
@@ -103,5 +102,9 @@ Route::put('/tarea-actualizar/{id}', [TareaController::class, 'update'])->name('
 
 //Rutas de 'Perfil Operario'
 Route::get('/tareas-asigadas', [TareaController::class, 'tareasAsignadas'])->name('tareas-asigadas');
+
+// Nuevas Rutas para editar y actualizar el estado de una tarea
+Route::get('/tarea/editar/{id_tarea}/{id_empleado_tarea}', [TareaController::class, 'editarEstado'])->name('tarea.editar');
+Route::post('/tarea/actualizar/{id_tarea}/{id_empleado_tarea}', [TareaController::class, 'actualizarEstado'])->name('tarea.actualizarEstado');
 
 require __DIR__ . '/auth.php';
