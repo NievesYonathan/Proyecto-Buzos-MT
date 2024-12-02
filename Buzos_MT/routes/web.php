@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 use App\Http\Controllers\produccionController;
 use App\Http\Controllers\UserController;
@@ -31,10 +31,10 @@ Route::middleware('auth')->group(function () {
 Route::get('/login-google', function () {
     return Socialite::driver('google')->redirect();
 })->name('login-google');
- 
+
 Route::get('/callback-url', function () {
     $user = Socialite::driver('google')->user();
- 
+
     $userExists = User::where('external_id', $user->id)->where('external_auth', 'google')->first();
 
     if ($userExists){
@@ -97,5 +97,9 @@ Route::put('/tarea-actualizar/{id}', [TareaController::class, 'update'])->name('
 
 //Rutas de 'Perfil Operario'
 Route::get('/tareas-asigadas', [TareaController::class, 'tareasAsignadas'])->name('tareas-asigadas');
+
+// Nuevas Rutas para editar y actualizar el estado de una tarea
+Route::get('/tarea/editar/{id_tarea}/{id_empleado_tarea}', [TareaController::class, 'editarEstado'])->name('tarea.editar');
+Route::post('/tarea/actualizar/{id_tarea}/{id_empleado_tarea}', [TareaController::class, 'actualizarEstado'])->name('tarea.actualizarEstado');
 
 require __DIR__ . '/auth.php';
