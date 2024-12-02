@@ -33,50 +33,12 @@
                         <td>{{ $empleado->pivot->emp_tar_fecha_asignacion }}</td>
                         <td>{{ $empleado->pivot->emp_tar_fecha_entrega }}</td>
                         <td>
-                            <button class="btn btn-warning" data-toggle="modal"
-                                data-target="#actualizarEstado{{ $empleado->pivot->id_empleado_tarea }}">
+                            <!-- Botón que redirige a vista de actualización de estado. -->
+                            <a href="{{ route('tarea.editar', ['id_tarea' => $tareas->id_tarea, 'id_empleado_tarea' => $empleado->pivot->id_empleado_tarea]) }}" class="btn btn-warning">
                                 <i class="fas fa-edit"></i>
-                            </button>
+                            </a>
                         </td>
                     </tr>
-                    <!-- Modal para actualizar estado -->
-                    <div class="modal fade" id="actualizarEstado{{ $empleado->pivot->id_empleado_tarea }}" tabindex="-1" role="dialog" aria-labelledby="modalLabelEstado" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="modalLabelEstado{{ $tareas->id_tarea }}">
-                                        Actualizar Estado de Tarea</h5>
-                                    <button type="button" class="close" data-dismiss="modal"
-                                        aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <form method="POST" action="../Controlador/ControladorTarea.php">
-                                    <input type="hidden" name="accion" value="actualizarEstado">
-                                    <input type="hidden" name="id_tarea" value="{{ $tareas->id_tarea }}">
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label for="estadoTarea">Estado</label>
-                                            <select class="form-control" name="estadoTarea" required>
-                                                @foreach ($estados as $estado)
-                                                <option value="{{ $estado->id_estados }}"
-                                                    @if ($estado->id_estados === $empleado->pivot->emp_tar_estado_tarea) selected @endif>
-                                                    {{ $estado->nombre_estado }}
-                                                </option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-dismiss="modal">Cerrar</button>
-                                        <button type="submit" class="btn btn-primary">Actualizar
-                                            Estado</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
                     @endforeach
                     @endforeach
                     @endif
