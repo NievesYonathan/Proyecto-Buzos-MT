@@ -12,7 +12,7 @@
         <form method="POST" action="{{ route('tarea.actualizarEstado', ['id_tarea' => $tarea->id_tarea, 'id_empleado_tarea' => $empleadoTarea->id_empleado_tarea]) }}">
             @csrf
             @method('POST')
-            <div class="form-group">
+            <div class="form-group mb-3">
                 <label for="estadoTarea">Estado</label>
                 <select class="form-control" name="estadoTarea" required>
                     @foreach ($estados as $estado)

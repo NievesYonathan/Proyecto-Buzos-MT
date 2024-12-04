@@ -7,6 +7,7 @@ use App\Http\Controllers\EstadoController;
 use App\Http\Controllers\CargoController;
 use App\Http\Controllers\InformeController;
 use App\Http\Controllers\ListaCargoController;
+use App\Http\Controllers\MateriaPrimaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TareaController;
 use App\Models\User;
@@ -88,7 +89,6 @@ Route::post('/usuarios/asignar-cargo', [ListaCargoController::class, 'store'])->
 Route::get('/informes', [InformeController::class, 'index'])->name('informe-RRHH');
 Route::get('/informes/users', [InformeController::class, 'fetchUsers'])->name('informes-RRHH.fetchUsers');
 
-
 // Rutas de 'Perfil de Producción'
 Route::get('/produccion', [produccionController::class, 'indexTwo'])->name('produccion');
 Route::put('/produccion/{id}', [produccionController::class, 'update'])->name('update_produccion');
@@ -106,5 +106,9 @@ Route::get('/tareas-asigadas', [TareaController::class, 'tareasAsignadas'])->nam
 // Nuevas Rutas para editar y actualizar el estado de una tarea
 Route::get('/tarea/editar/{id_tarea}/{id_empleado_tarea}', [TareaController::class, 'editarEstado'])->name('tarea.editar');
 Route::post('/tarea/actualizar/{id_tarea}/{id_empleado_tarea}', [TareaController::class, 'actualizarEstado'])->name('tarea.actualizarEstado');
+
+// Rutas para 'Jefe Materia Prima'
+Route::get('/materia-prima', [MateriaPrimaController::class, 'index']);
+Route::get('/materia-prima-agregar', [MateriaPrimaController::class, 'store']);
 
 require __DIR__ . '/auth.php';

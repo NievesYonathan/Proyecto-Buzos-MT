@@ -1,6 +1,6 @@
 <x-app-layout>
     <div class="container mt-5">
-        <div class="table-responsive">
+        <div class="table-overflow">
             <table class="table table-dark table-sm">
                 <thead>
                     <tr class="text-center roboto-medium">
