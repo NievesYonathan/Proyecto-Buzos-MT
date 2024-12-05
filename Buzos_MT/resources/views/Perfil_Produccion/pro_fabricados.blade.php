@@ -1,37 +1,30 @@
 <x-app-layout>
     <div class="container my-5">
-        <div class="row">
-            @foreach ($producciones as $produccion)
-            <div class="product-list mb-4 col-6">
-                <div class="product-item">
-                    <div class="image-container">
-                        <img src="{{ asset('storage/' . $produccion->pro_img) }}" alt="Producto" class="product-image">
-                        <div class="hover-overlay">
-                            <label for="imageInput">Actualizar imagen</label>
-                        </div>
-
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name"> {{ $produccion->pro_nombre }} {{ $produccion->id_produccion }}
-                        </h3>
-                        <p class="product-quantity">Cantidad de Producción: {{ $produccion->pro_cantidad }}</p>
-                        <p class="product-dates">Fecha de Inicio:
-                            {{ $produccion->pro_fecha_inicio->format('Y-m-d') }}
-                            - Fecha de Fin: {{ $produccion->pro_fecha_fin->format('Y-m-d') }}
-                        </p>
-                        <p class="product-status">Etapa: {{ $produccion->etapa->eta_nombre }}</p>
-                        @foreach ($produccion->regProFabricados as $registro)
-                        <p class="product-material">Material: {{ $registro->reg_pf_material }}</p>
-                        <!-- Accediendo al campo en cada registro -->
-                        @endforeach
-                        <div class="product-actions">
-                            <button class="btn btn-info" data-bs-toggle="modal"
-                                data-bs-target="#updateModal{{ $produccion->id_produccion }}">Editar</button>
-                        </div>
-                    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+        @foreach ($producciones as $produccion)
+        <div class="col">
+            <div class="card">
+            <div class="image-container">
+                <img src="{{ asset('storage/' . $produccion->pro_img) }}" alt="Producto">
+                <div class="price">Cantidad: {{ $produccion->pro_cantidad }}</div>
+            </div><br>
+            <div class="content">
+                <h3 class="product-name">{{ $produccion->pro_nombre }}</h3>
+                <p class="product-dates">Inicio: {{ $produccion->pro_fecha_inicio->format('Y-m-d') }} <br>
+                    Fin: {{ $produccion->pro_fecha_fin->format('Y-m-d') }}
+                </p>
+                <p class="product-status">Etapa: {{ $produccion->etapa->eta_nombre }}</p>
+                @foreach ($produccion->regProFabricados as $registro)
+                <p class="product-material">Material: {{ $registro->reg_pf_material }}</p>
+                @endforeach
+                <div class="button-container">
+                    <button class="button buy-button" data-bs-toggle="modal"
+                        data-bs-target="#updateModal{{ $produccion->id_produccion }}">Editar</button>
                 </div>
             </div>
-
+        </div>
+    </div>
+    </div>
             <!-- Modal-Ediciòn -->
             <div class="modal fade" id="updateModal{{ $produccion->id_produccion }}" tabindex="-1" role="dialog"
                 data-bs-backdrop="static">
