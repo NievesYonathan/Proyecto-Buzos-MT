@@ -160,11 +160,11 @@ html {
 	background-color: var(--accent-color);
 }
 
-.table-dark td,
+/* .table-dark td,
 .table-dark thead th,
 .table-dark th {
 	border: none;
-}
+} */
 
 .table-dark tr:hover {
 	color: var(--color-three);
@@ -702,7 +702,7 @@ table form {
 	transition: all 0.3s ease-in-out;
 }
 
-.table-responsive{
+.table-overflow{
 	overflow-x: hidden;
 }
 
