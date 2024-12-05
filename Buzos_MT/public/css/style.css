@@ -820,6 +820,7 @@ table form {
 }
 
 .card {
+	margin-top: 20px;
     --accent-color: #34e69f;
     position: relative;
     width: 280px; /* Ajusta el ancho según sea necesario */
