@@ -5,44 +5,130 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 
 class UserProfileController extends Controller
 {
-    public function uploadImage(Request $request)
+    public function storeImage(Request $request, $id)
     {
+        $usuario = User::find($id);
+
+        if (!$usuario) {
+            $data = [
+                'message' => 'Registrto no encontrado',
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
+
         $request->validate([
-            'imag_perfil' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'num_doc' => 'required|string', // Asegúrate de tener el num_doc
+            'imag_perfil' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-    
+
+        // Eliminar imagen anterior si existe
+        if ($usuario->imag_perfil) {
+            Storage::delete($usuario->imag_perfil);
+        }
+
         $path = null;
         if ($request->hasFile('imag_perfil')) {
             $path = $request->file('imag_perfil')->store('profile_images', 'public');
         }
-    
-        // Obtener num_doc desde la solicitud
-        $num_doc = $request->num_doc;
-    
-        // Buscar el usuario por num_doc
-        $user = User::where('num_doc', $num_doc)->first();
-    
-        // Verificar si el usuario existe
-        if ($user) {
-            // Actualizar solo el campo imag_perfil
-            $user->imag_perfil = $path; // Aquí asignamos el nuevo valor
-            $user->save(); // Guardar los cambios
-    
-            return redirect()->route('profile.edit')->with('success', 'Imagen actualizada con éxito.');
-        } else {
-            return response()->json(['error' => 'Usuario no encontrado'], 404);
-        }
-    }
+        // Actualizar solo el campo imag_perfil
+        $usuario->imag_perfil = $path; // Aquí asignamos el nuevo valor
+        $usuario->save(); // Guardar los cambios
+
+        $data = [
+            'message' => 'Registro actualizado',
+            'usuario' => $usuario,
+            'url_imagen' => $path ? Storage::url($path) : null,
+            'status' => 200
+        ];
         
+        //return response()->json($data, 200);
+
+        return redirect()->route('profile.edit');
+    }
+
+    public function updateImage(Request $request, $id)
+    {
+        $usuario = User::find($id);
+
+        if (!$usuario) {
+            $data = [
+                'message' => 'Registrto no encontrado',
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
+
+        $request->validate([
+            'imag_perfil' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+        ]);
+
+        // Eliminar imagen anterior si existe
+        if ($usuario->imag_perfil) {
+            Storage::delete($usuario->imag_perfil);
+        }
+
+        $path = null;
+        if ($request->hasFile('imag_perfil')) {
+            $path = $request->file('imag_perfil')->store('profile_images', 'public');
+        }
+        // Actualizar solo el campo imag_perfil
+        $usuario->imag_perfil = $path; // Aquí asignamos el nuevo valor
+        $usuario->save(); // Guardar los cambios
+
+        $data = [
+            'message' => 'Registro actualizado',
+            'usuario' => $usuario,
+            'url_imagen' => $path ? Storage::url($path) : null,
+            'status' => 200
+        ];
+        return response()->json($data, 200);
+    }
+
     public function getImage($id)
     {
         $user = User::findOrFail($id);
         return response()->json(['path' => Storage::url($user->imag_perfil)], 200);
+    }
+
+    public function deleteImage($id)
+    {
+        // Buscar al usuario por su ID
+        $usuario = User::find($id);
+
+        if (!$usuario) {
+            return response()->json([
+                'message' => 'Registro no encontrado',
+                'status' => 404
+            ], 404);
+        }
+
+        // Verificar si el usuario tiene una imagen asignada
+        if ($usuario->imag_perfil) {
+            // Eliminar el archivo físico del almacenamiento
+            if (Storage::disk('public')->exists($usuario->imag_perfil)) {
+                Storage::disk('public')->delete($usuario->imag_perfil);
+            }
+
+            // Limpiar el campo de la imagen en la base de datos
+            $usuario->imag_perfil = null;
+            $usuario->save();
+
+            // return response()->json([
+            //     'message' => 'Imagen eliminada correctamente',
+            //     'status' => 200
+            // ], 200);
+
+            return redirect()->route('profile.edit');
+        }
+
+        // Si no había imagen
+        return response()->json([
+            'message' => 'No hay imagen para eliminar',
+            'status' => 404
+        ], 404);
     }
 }

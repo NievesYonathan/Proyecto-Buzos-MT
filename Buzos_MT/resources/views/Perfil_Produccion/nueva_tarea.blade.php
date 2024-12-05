@@ -1,20 +1,21 @@
 <x-app-layout>
-    <div class="container-fluid">
-        <form action="../Controlador/ControladorTarea.php" method="POST" class="form-neon" autocomplete="off">
+    <div class="container mt-5">
+        <form action="{{ route('nueva_tarea') }}" method="POST" class="form-neon" autocomplete="off">
+            @csrf
             <fieldset>
                 <legend><i class="fas fa-user-lock"></i> &nbsp; Registrar nueva tarea</legend>
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-12 col-md-6"> <!-- Nombre de la tarea -->
                             <div class="form-group">
-                                <label for="tarea_sistema" class="bmd-label-floating">Nombre de la tarea</label>
-                                <input type="text" class="form-control" name="tarea_sistema" id="tarea_sistema" required>
+                                <label for="tar_nombre" class="bmd-label-floating">Nombre de la tarea</label>
+                                <input type="text" class="form-control" name="tar_nombre" id="tarea_sistema" required>
                             </div>
                         </div>
                         <div class="col-12 col-md-6"> <!-- Descripción de la tarea -->
                             <div class="form-group">
-                                <label for="descripcion" class="bmd-label-floating">Descripción</label>
-                                <textarea class="form-control" name="descripcion" id="descripcion" rows="3" required></textarea>
+                                <label for="tar_descripcion" class="bmd-label-floating">Descripción</label>
+                                <textarea class="form-control" name="tar_descripcion" id="descripcion" rows="3" required></textarea>
                             </div>
                         </div>
                         <!-- <div class="col-12 col-md-6"> 
@@ -38,7 +39,7 @@
 
         <br>
 
-        <div class="form-neon mt-20">
+        <div class="form-neon">
             <legend><i class="fa-regular fa-address-book"></i> &nbsp; Lista de tareas</legend>
             <!-- Elimina el punto de la lista -->
             <style>
@@ -49,10 +50,16 @@
             <ul>
                 @foreach ($tareas as $tarea)
                 <li class="mb-2">
-                    <i class="fas fa-check-circle"></i> {{ $tarea->tar_nombre }}
-                    <button class="ml-2" data-bs-toggle="modal" data-bs-target="#updateModal{{ $tarea->id_tarea }}">
-                        <i class="fa-regular fa-pen-to-square"></i>
-                    </button>
+                    <div class="row">
+                        <div class="col-6">
+                            <i class="fas fa-check-circle"></i> {{ $tarea->tar_nombre }}
+                        </div>
+                        <div class="col-6">
+                            <button data-bs-toggle="modal" data-bs-target="#updateModal{{ $tarea->id_tarea }}">
+                                <i class="fa-regular fa-pen-to-square"></i>
+                            </button>
+                        </div>
+                    </div>
                 </li>
                 <!-- Modal para editar usuarios -->
                 <div class="modal fade" id="updateModal{{ $tarea->id_tarea }}" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
@@ -62,7 +69,9 @@
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div class="modal-body">
-                                <form action="../Controlador/ControladorTarea.php" method="post">
+                                <form action="{{ route('update_tarea', $tarea->id_tarea)}}" method="post">
+                                    @csrf
+                                    @method('PUT')
                                     <input type="hidden" name="id" value="{{ $tarea->id_tarea }}">
                                     <fieldset>
                                         <legend><i class="far fa-address-card"></i> &nbsp; Editar tarea</legend>
@@ -89,8 +98,13 @@
                                                     <div class="form-group">
                                                         <label for="estado" class="bmd-label-floating">Estado</label>
                                                         <select class="form-control" name="tar_estado" id="estado">
-                                                            @foreach ($tarea->estados as $estado)
-                                                            <option value="{{ $estado->id_estados }}">{{ $estado->tar_estado }}</option>
+                                                            @foreach ($estados as $estado)
+                                                            @if ($estado->nombre_estado === 'Activo' || $estado->nombre_estado === 'Inactivo')
+                                                            <option value="{{ $estado->id_estados }}"
+                                                                @if ($estado->id_estados === $tarea->estados->id_estados) selected @endif>
+                                                                {{ $estado->nombre_estado }}
+                                                            </option>
+                                                            @endif
                                                             @endforeach
                                                         </select>
                                                     </div>

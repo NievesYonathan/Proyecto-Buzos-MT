@@ -30,7 +30,8 @@ class User extends Authenticatable
         'usu_fecha_contratacion',
         'usu_estado',
         'imag_perfil',
-        'registro_gmail',
+        'external_id',
+        'external_auth'
     ];
 
     // Atributos que deben estar ocultos para la serialización
@@ -44,6 +45,8 @@ class User extends Authenticatable
         'usu_fecha_contratacion' => 'date',
     ];
 
+    public $timestamps = false; // Deshabilitar timestamps
+
     // Relación con el modelo Seguridad
     public function seguridad()
     {
@@ -52,9 +55,21 @@ class User extends Authenticatable
 
     public function cargos()
     {
-        return $this->belongsToMany(Cargo::class, 'cargos_has_usuarios', 'usuarios_num_doc', 'cargos_id_cargos');
+        return $this->belongsToMany(Cargo::class, 'cargos_has_usuarios', 'usuarios_num_doc', 'cargos_id_cargos')->withPivot('fecha_asignacion');
     }
 
-    public $timestamps = false; // Deshabilitar timestamps
+    public function tipoDocumento()
+    {
+        return $this->belongsTo(TipoDoc::class, 't_doc', 'id_tipo_documento');
+    }
 
+    public function estadoUsuario()
+    {
+        return $this->belongsTo(Estado::class, 'usu_estado', 'id_estados');
+    }
+
+    public function tareasAsignadas()
+    {
+        return $this->belongsToMany(Tarea::class, 'emp_tarea', 'empleados_num_doc', 'tarea_id_tarea');
+    }
 }

@@ -7,6 +7,7 @@
         @php
         $name = auth()->user()->usu_nombres;
         $perfil = auth()->user()->cargos()->first()->car_nombre;
+
         @endphp
 
         <figure class="full-box nav-lateral-avatar">
@@ -47,11 +48,12 @@
                         <li><a href="{{ route('user-list') }}"><i class="fa-solid fa-user-tie"></i> &nbsp; Empleados</a></li>
                         <li><a href="#"><i class="fa-solid fa-truck"></i> &nbsp; Proveedores</a></li>
                         <li><a href="{{ route('user-search') }}"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar usuario</a></li>
-                        <li><a href="#"><i class="fa-brands fa-dochub"></i> &nbsp; Tipos de Documentos</a></li>
+                        <li><a href="{{ route('tipoDocumentos') }}"><i class="fa-brands fa-dochub"></i> &nbsp; Tipos de Documentos</a></li>
                         <li><a href="{{ route('vistaEstados') }}"><i class="fa-solid fa-e"></i> &nbsp; Estados</a></li>
                     </ul>
                 </li>
-                <li><a href="#"><i class="fa-solid fa-address-book"></i> &nbsp; Cargos </a></li>
+                <li><a href="{{ route('cargos') }}"><i class="fa-solid fa-address-book"></i> &nbsp; Cargos </a></li>
+                <li><a href="{{ route('informe-RRHH') }}"><i class="fa-solid fa-users"></i> &nbsp; RR.HH </a></li>
                 @endif
 
                 @if($perfil === 'Jefe Producción')
@@ -66,6 +68,11 @@
                 @endif
 
                 <!-- Agrega más secciones para otros perfiles como 'Jefe Producción' y 'Operario' según tu lógica -->
+
+            <!-- Boton para q el operario vea sus tareas -->
+                @if($perfil === 'Operario')
+                <li><a href="{{ route('tareas-asigadas') }}"><i class="fa-solid fa-calendar-days"></i> &nbsp; Mis Tareas</a></li>
+                @endif
 
                 <li><a href="{{ route('profile.edit') }}"><i class="fa-solid fa-gear"></i> &nbsp; Configuración</a></li>
             </ul>

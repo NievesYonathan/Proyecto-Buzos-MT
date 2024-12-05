@@ -1,37 +1,30 @@
 <x-app-layout>
     <div class="container my-5">
-        <div class="row">
-            @foreach ($producciones as $produccion)
-            <div class="product-list mb-4 col-6">
-                <div class="product-item">
-                    <div class="image-container">
-                        <img src="{{ asset('storage/' . $produccion->pro_img) }}" alt="Producto" class="product-image">
-                        <div class="hover-overlay">
-                            <label for="imageInput">Actualizar imagen</label>
-                        </div>
-
-                    </div>
-                    <div class="product-info">
-                        <h3 class="product-name"> {{ $produccion->pro_nombre }} {{ $produccion->id_produccion }}
-                        </h3>
-                        <p class="product-quantity">Cantidad de Producción: {{ $produccion->pro_cantidad }}</p>
-                        <p class="product-dates">Fecha de Inicio:
-                            {{ $produccion->pro_fecha_inicio->format('Y-m-d') }}
-                            - Fecha de Fin: {{ $produccion->pro_fecha_fin->format('Y-m-d') }}
-                        </p>
-                        <p class="product-status">Etapa: {{ $produccion->etapa->eta_nombre }}</p>
-                        @foreach ($produccion->regProFabricados as $registro)
-                        <p class="product-material">Material: {{ $registro->reg_pf_material }}</p>
-                        <!-- Accediendo al campo en cada registro -->
-                        @endforeach
-                        <div class="product-actions">
-                            <button class="btn btn-info" data-bs-toggle="modal"
-                                data-bs-target="#updateModal{{ $produccion->id_produccion }}">Editar</button>
-                        </div>
-                    </div>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+        @foreach ($producciones as $produccion)
+        <div class="col">
+            <div class="card">
+            <div class="image-container">
+                <img src="{{ asset('storage/' . $produccion->pro_img) }}" alt="Producto">
+                <div class="price">Cantidad: {{ $produccion->pro_cantidad }}</div>
+            </div><br>
+            <div class="content">
+                <h3 class="product-name">{{ $produccion->pro_nombre }}</h3>
+                <p class="product-dates">Inicio: {{ $produccion->pro_fecha_inicio->format('Y-m-d') }} <br>
+                    Fin: {{ $produccion->pro_fecha_fin->format('Y-m-d') }}
+                </p>
+                <p class="product-status">Etapa: {{ $produccion->etapa->eta_nombre }}</p>
+                @foreach ($produccion->regProFabricados as $registro)
+                <p class="product-material">Material: {{ $registro->reg_pf_material }}</p>
+                @endforeach
+                <div class="button-container">
+                    <button class="button buy-button" data-bs-toggle="modal"
+                        data-bs-target="#updateModal{{ $produccion->id_produccion }}">Editar</button>
                 </div>
             </div>
-
+        </div>
+    </div>
+    </div>
             <!-- Modal-Ediciòn -->
             <div class="modal fade" id="updateModal{{ $produccion->id_produccion }}" tabindex="-1" role="dialog"
                 data-bs-backdrop="static">
@@ -43,26 +36,37 @@
                         </div>
 
                         <div class="modal-body">
-                            <form method="post" action="{{ route('uploadImageBuzos') }}" class="mt-6 space-y-6"
-                                enctype="multipart/form-data">
-                                @csrf
-                                @method('patch')
-
-                                <!-- Input oculto para el id_reg_prod_fabricados -->
-                                <input type="hidden" name="id_produccion" value="{{ $produccion->id_produccion }}">
-                                <fieldset>
-                                    <div class="row mb-6">
-                                        <div class="col-6">
-                                            <input type="file" name="pro_img" id="imageInput" accept="image/*">
-                                        </div>
-                                        <div class="col-6">
-                                            <div class="flex items-center gap-4">
-                                                <x-primary-button>{{ __('Update Image') }}</x-primary-button>
+                            <div class="row">
+                                <div class="col-8">
+                                    <form method="post" action="{{ route('storeImagePro', $produccion->id_produccion) }}" class="mt-6 space-y-6"
+                                        enctype="multipart/form-data">
+                                        @csrf
+        
+                                        <fieldset>
+                                            <div class="row mb-6">
+                                                <div class="col-6">
+                                                    <input type="file" name="pro_img" id="imageInput" accept="image/*">
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="flex items-center gap-4">
+                                                        <x-primary-button>{{ __('Subir Imagen') }}</x-primary-button>
+                                                    </div>
+                                                </div>
                                             </div>
+                                        </fieldset>
+                                    </form>        
+                                </div>
+
+                                <div class="col-4">
+                                    <form class="mb-3" action="{{ route('deleteImagePro', $produccion->id_produccion) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div class="flex items-center gap-4">
+                                            <x-danger-button>{{ __('Eliminar Imagen') }}</x-danger-button>
                                         </div>
-                                    </div>
-                                </fieldset>
-                            </form>
+                                    </form>        
+                                </div>
+                            </div>
 
                             <form action="{{ route('update_produccion', $produccion->id_produccion) }}"
                                 method="POST" class="form-neon" autocomplete="off">

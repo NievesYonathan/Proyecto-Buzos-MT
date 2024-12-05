@@ -38,23 +38,23 @@
                 </thead>
                 <tbody>
                     @foreach($usuarios as $usuario)
-                    <tr class="text-center">
-                        <td>{{ $usuario->tip_doc_descripcion }}</td>
+                    <tr class="table-light text-center">
+                        <td>{{ $usuario->tipoDocumento->tip_doc_descripcion }}</td>
                         <td>{{ $usuario->num_doc }}</td>
                         <td>{{ $usuario->usu_nombres }}</td>
                         <td>{{ $usuario->usu_apellidos }}</td>
                         <td>{{ $usuario->usu_telefono }}</td>
                         <td>{{ $usuario->usu_email }}</td>
-                        <td>{{ $usuario->estado_usuario }}</td>
+                        <td>{{ $usuario->estadoUsuario->nombre_estado }}</td>
                         <td>
                             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal{{ $usuario->num_doc }}">
                                 <i class="fa-solid fa-user-pen"></i>
                             </button>
                         </td>
                         <td>
-                            <form action="{{ route('user-delete', $usuario->num_doc) }}" method="post">
+                            <form action="{{ route('user-cambiarestado', $usuario->num_doc) }}" method="post">
                                 @csrf
-                                @method('POST')
+                                @method('PUT')
                                 <button class="btn btn-danger" type="submit">
                                     <i class="far fa-trash-alt"></i>
                                 </button>
@@ -81,7 +81,7 @@
                                                     <div class="col-12 col-md-4">
                                                         <div class="form-group">
                                                             <label for="tipo_documento" class="bmd-label-floating">Tipo documento</label>
-                                                            <select class="form-select" aria-label="Default select example" id="tipoDocumento" name="tipoDocumento" required>
+                                                            <select class="form-select" aria-label="Default select example" id="t_doc" name="t_doc" required>
                                                                 <option value="">Tipo de documento</option>
                                                                 @foreach($tiposDocumentos as $tipo)
                                                                 <option value="{{ $tipo->id_tipo_documento }}" @if($tipo->id_tipo_documento == $usuario->t_doc) selected @endif>{{ $tipo->tip_doc_descripcion }}</option>
@@ -93,50 +93,50 @@
                                                     <div class="col-12 col-md-4">
                                                         <div class="form-group">
                                                             <label for="usuario_dni" class="bmd-label-floating">Numero de documento</label>
-                                                            <input type="number" pattern="[0-9-]{1,20}" class="form-control" name="usuario_dni" id="usuario_dni" value="{{ $usuario->num_doc }}">
+                                                            <input type="number" pattern="[0-9-]{1,20}" class="form-control" name="num_doc" id="num_doc" value="{{ $usuario->num_doc }}">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-4">
                                                         <div class="form-group">
                                                             <label for="usuario_nombre" class="bmd-label-floating">Nombres</label>
-                                                            <input type="text" class="form-control" name="usuario_nombre" id="usuario_nombre" value="{{ old('usuario_dni', $usuario->usu_nombres) }}" maxlength="60">
+                                                            <input type="text" class="form-control" name="usu_nombres" id="usu_nombres" value="{{ $usuario->usu_nombres }}" maxlength="60">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-4">
                                                         <div class="form-group">
                                                             <label for="usuario_apellido" class="bmd-label-floating">Apellidos</label>
-                                                            <input type="text" class="form-control" name="usuario_apellido" id="usuario_apellido" value="{{ old('usuario_dni', $usuario->usu_apellidos) }}" maxlength="40">
+                                                            <input type="text" class="form-control" name="usu_apellidos" id="usu_apellidos" value="{{ $usuario->usu_apellidos }}" maxlength="40">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-4">
                                                         <div class="form-group">
                                                             <label for="usuario_fecha_nacimiento" class="bmd-label-floating">Fecha de nacimiento</label>
-                                                            <input type="date" class="form-control" name="usuario_fecha_nacimiento" id="usuario_fecha_nacimiento"
-                                                                value="">
+                                                            <input type="date" class="form-control" name="usu_fecha_nacimiento" id="usu_fecha_nacimiento"
+                                                                value="{{ $usuario->usu_fecha_nacimiento ? \Carbon\Carbon::parse($usuario->usu_fecha_nacimiento)->format('Y-m-d') : now()->format('Y-m-d') }}">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
                                                             <label for="usuario_sexo" class="bmd-label-floating">sexo</label>
-                                                            <input type="text" class="form-control" name="usuario_sexo" id="usuario_sexo" value="{{ old('usuario_dni', $usuario->usu_sexo) }}">
+                                                            <input type="text" class="form-control" name="usu_sexo" id="usu_sexo" value="{{ $usuario->usu_sexo }}">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
                                                             <label for="usuario_direccion" class="bmd-label-floating">Dirección</label>
-                                                            <input type="text" pattern="[a-zA-Z0-99áéíóúÁÉÍÓÚñÑ()# ]{1,190}" class="form-control" name="usuario_direccion" id="usuario_direccion" maxlength="190" value="{{ old('usuario_dni', $usuario->usu_direccion) }}">
+                                                            <input type="text" pattern="[a-zA-Z0-99áéíóúÁÉÍÓÚñÑ()# ]{1,190}" class="form-control" name="usuario_direccion" id="usuario_direccion" maxlength="190" value="{{ $usuario->usu_direccion }}">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
                                                             <label for="usuario_telefono" class="bmd-label-floating">Teléfono</label>
-                                                            <input type="text" pattern="[0-9()+]{1,20}" class="form-control" name="usuario_telefono" id="usuario_telefono" maxlength="20" value="{{ old('usuario_dni', $usuario->usu_telefono) }}">
+                                                            <input type="text" pattern="[0-9()+]{1,20}" class="form-control" name="usu_telefono" id="usu_telefono" maxlength="20" value="{{ $usuario->usu_telefono }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -148,25 +148,31 @@
                                                 <div class="row">
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
-                                                            <label for="usuario_email" class="bmd-label-floating">Email</label>
-                                                            <input type="email" class="form-control" name="usuario_email" id="usuario_email" maxlength="70" value="">
+                                                            <label for="usu_fecha_contratacion" class="bmd-label-floating">Fecha de contratación</label>
+                                                            <input type="date" class="form-control" name="usu_fecha_contratacion" id="usu_fecha_contratacion" maxlength="70"
+                                                                value="{{ $usuario->usu_fecha_contratacion ? \Carbon\Carbon::parse($usuario->usu_fecha_contratacion)->format('Y-m-d') : now()->format('Y-m-d') }}">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
                                                             <label for="usuario_email" class="bmd-label-floating">Email</label>
-                                                            <input type="email" class="form-control" name="usuario_email" id="usuario_email" value="{{ $usuario->usu_email }}" maxlength="70">
+                                                            <input type="email" class="form-control" name="usu_email" id="usu_email" value="{{ $usuario->usu_email }}" maxlength="70">
                                                         </div>
                                                     </div>
 
-                                                    <select class="form-select" aria-label="Default select example" id="usuario_estado" name="usuario_estado" required>
-                                                        @foreach($estados as $estado)
-                                                        <option value="{{ $estado->id_estados }}" {{ $estado->id_estados == $usuario->usu_estado ? 'selected' : '' }}>
-                                                            {{ $estado->nombre_estado }}
-                                                        </option>
-                                                        @endforeach
-                                                    </select>
+                                                    <div class="col-12 col-md-6">
+                                                        <label for="usuario_estado" class="bmd-label-floating">Estado</label>
+                                                        <select class="form-select" aria-label="Default select example" id="usu_estado" name="usu_estado" required>
+                                                            @foreach($estados as $estado)
+                                                            @if ($estado->nombre_estado == 'Activo' || $estado->nombre_estado == 'Inactivo')
+                                                            <option value="{{ $estado->id_estados }}" {{ $estado->id_estados == $usuario->usu_estado ? 'selected' : '' }}>
+                                                                {{ $estado->nombre_estado }}
+                                                            </option>
+                                                            @endif
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
 
                                                 </div>
                                             </div>

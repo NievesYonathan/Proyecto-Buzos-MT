@@ -7,7 +7,7 @@
 
 	<!-- Content -->
 	<div class="container-fluid">
-		<form action="{{ route('tipoDocumentos') }}" method="POST" class="form-neon" autocomplete="off">
+		<form action="{{ route('tipoDocumentos.store') }}" method="POST" class="form-neon" autocomplete="off">
 			@csrf
 			<fieldset>
 				<legend><i class="fas fa-user-lock"></i> &nbsp; Registrar Tipos de Documentos</legend>
@@ -16,7 +16,7 @@
 						<div class="col-12 col-md-12">
 							<div class="form-group">
 								<label for="nombreDoc" class="bmd-label-floating">Ingrese el tipo de documento</label>
-								<input type="text" class="form-control" name="nombreDoc" id="nombreDoc">
+								<input type="text" class="form-control" name="tip_doc_descripcion" id="nombreDoc">
 							</div>
 						</div>
 					</div>
@@ -44,46 +44,46 @@
 				}
 			</style>
 			<ul>
-				@foreach ($tiposDocumentos as $tipo)
-					<li class="mb-2">
-						<i class="fas fa-check-circle"></i> {{ $tipo->descripcion }}
-						<button data-bs-toggle="modal" data-bs-target="#updateModal{{ $tipo->id }}">
-							<i class="fa-regular fa-pen-to-square"></i>
-						</button>
-					</li>
+				@foreach ($tipoDocumentos as $tipo)
+				<li class="mb-2">
+					<i class="fas fa-check-circle"></i> {{ $tipo->tip_doc_descripcion }}
+					<button data-bs-toggle="modal" data-bs-target="#updateModal{{ $tipo->id_tipo_documento }}">
+						<i class="fa-regular fa-pen-to-square"></i>
+					</button>
+				</li>
 
-					<!-- Modal para editar tipos de documento -->
-					<div class="modal fade" id="updateModal{{ $tipo->id }}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
-						<div class="modal-dialog modal-lg">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-								</div>
-								<div class="modal-body">
-									<form action="{{ route('tipoDocumentos', $tipo->id) }}" method="POST">
-										@csrf
-										@method('PUT')
-										<fieldset>
-											<legend><i class="far fa-address-card"></i> &nbsp; Editar Tipo de Documento</legend>
-											<div class="container-fluid">
-												<div class="row">
-													<div class="col-12 col-md-12">
-														<div class="form-group">
-															<label for="nombreDocEdit" class="bmd-label-floating">Nombre</label>
-															<input type="text" class="form-control" name="nombreDoc" id="nombreDocEdit" value="{{ $tipo->descripcion }}" maxlength="60">
-														</div>
+				<!-- Modal para editar tipos de documento -->
+				<div class="modal fade" id="updateModal{{ $tipo->id_tipo_documento }}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+					<div class="modal-dialog modal-lg">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+							</div>
+							<div class="modal-body">
+								<form action="{{ route('tipoDocumentos.update', $tipo->id_tipo_documento) }}" method="POST">
+									@csrf
+									@method('PUT')
+									<fieldset>
+										<legend><i class="far fa-address-card"></i> &nbsp; Editar Tipo de Documento</legend>
+										<div class="container-fluid">
+											<div class="row">
+												<div class="col-12 col-md-12">
+													<div class="form-group">
+														<label for="nombreDocEdit" class="bmd-label-floating">Nombre</label>
+														<input type="text" class="form-control" name="tip_doc_descripcion" id="tip_doc_descripcion" value="{{ $tipo->tip_doc_descripcion }}" maxlength="60">
 													</div>
 												</div>
 											</div>
-										</fieldset>
-										<div class="modal-footer">
-											<button class="btn btn-success" type="submit">Actualizar</button>
 										</div>
-									</form>
-								</div>
+									</fieldset>
+									<div class="modal-footer">
+										<button class="btn btn-success" type="submit">Actualizar</button>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
+				</div>
 				@endforeach
 			</ul>
 		</div>

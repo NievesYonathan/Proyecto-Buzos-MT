@@ -41,7 +41,7 @@
             </div>
 
             <div class="col-sm-12 col-md-3 tile-container">
-                <a href="#" class="tile">
+                <a href="{{ route('pro_tareas') }}" class="tile">
                     <div class="tile-tittle">Tareas</div>
                     <div class="tile-icon">
                         <i class="fa-solid fa-calendar-days"></i>
@@ -81,19 +81,11 @@
                 </a>
             </div>
 
-            <div class="col-sm-12 col-md-4 tile-container">
-                <a href="#" class="tile">
-                    <div class="tile-tittle">tareas</div>
-                    <div class="tile-icon">
-                        <i class="fa-solid fa-user fa-fw"></i>
-                    </div>
-                </a>
-            </div>
         @endif
 
         @if ($perfil === 'Operario')
             <div class="col-sm-12 col-md-4 tile-container">
-                <a href="#" class="tile">
+                <a href="{{ route('tareas-asigadas')}}" class="tile">
                     <div class="tile-tittle">Mis Tareas</div>
                     <div class="tile-icon">
                         <i class="fa-brands fa-stack-exchange"></i>
