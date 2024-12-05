@@ -18,4 +18,9 @@ class Estado extends Model
     {
         return $this->hasMany(Tarea::class, 'tar_estado', 'id_estados');
     }
+
+    public function materiaPrima ()
+    {
+        return $this->hasMany(MateriaPrima::class,'mat_pri_estado','id_estados');
+    }
 }
