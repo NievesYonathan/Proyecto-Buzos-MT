@@ -15,6 +15,12 @@ class MateriaPrimaController extends Controller
 
         return view("Perfil_Inventario.item-list", compact("materiaPrima"));
     }
+    public function show($id)
+    {
+        $materiaPrima = MateriaPrima::findOrFail($id);
+
+        return view("Perfil_Inventario.item-detail", compact("materiaPrima"));
+    }
     public function form_nuevo()
     {
         $estados = Estado::all();
