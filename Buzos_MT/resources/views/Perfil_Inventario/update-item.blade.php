@@ -1,6 +1,6 @@
-<x-app-layout> 
-        <!--CONTENT-->
-        <div class="container-fluid mt-5">
+<x-app-layout>
+    <!--CONTENT-->
+    <div class="container-fluid mt-5">
         <form action="{{ route('update-producto', $materiaPrima->id_materia_prima)}}" class="form-neon" autocomplete="off"
             method="post">
             <fieldset>
@@ -11,7 +11,7 @@
                             <div class="form-group">
                                 <label for="mat_pri_nombre" class="bmd-label-floating">Nombre</label>
                                 <input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,140}"
-                                    class="form-control" name="mat_pri_nombre" id="matNombre" maxlength="140">
+                                    class="form-control" name="mat_pri_nombre" id="matNombre" maxlength="140" value="{{ $materiaPrima->mat_pri_nombre }}">
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
@@ -19,24 +19,23 @@
                                 <label for="mat_pri_descripcion" class="bmd-label-floating">Descripción</label>
                                 <input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,255}"
                                     class="form-control" name="mat_pri_descripcion" id="matDescripcion"
-                                    maxlength="255">
+                                    maxlength="255" value="{{ $materiaPrima->mat_pri_descripcion }}">
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-group">
                                 <label for="mat_pri_cantidad" class="bmd-label-floating">Cantidad</label>
                                 <input type="number" pattern="[0-9]{1,9}" class="form-control"
-                                    name="mat_pri_cantidad" id="matCantidad" maxlength="9">
+                                    name="mat_pri_cantidad" id="matCantidad" maxlength="9" value="{{ $materiaPrima->mat_pri_cantidad}}">
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-group">
                                 <label for="mat_pri_unidad_medida" class="bmd-label-floating">Unidad de Medida</label>
                                 <select class="form-control" name="mat_pri_unidad_medida" id="matUnidad">
-                                    <option value="" selected="" disabled="">Seleccione una opción</option>
-                                    <option value="Metros">Metros (M)</option>
-                                    <option value="Centrimetros">Centimetros (Cm)</option>
-                                    <option value="Milimetros">Milimetros (Mm)</option>
+                                    <option value="Metros" @if ("Metros"===$materiaPrima->mat_pri_unidad_medida) selected @endif>Metros (M)</option>
+                                    <option value="Centrimetros" @if ("Centrimetros"===$materiaPrima->mat_pri_unidad_medida) selected @endif>Centimetros (Cm)</option>
+                                    <option value="Milimetros" @if ("Milimetros"===$materiaPrima->mat_pri_unidad_medida) selected @endif>Milimetros (Mm)</option>
                                 </select>
                             </div>
                         </div>
@@ -45,11 +44,11 @@
                                 <label for="mat_pri_estado" class="bmd-label-floating">Estado</label>
                                 <select class="form-control" name="mat_pri_estado" id="matEstado">
                                     @foreach ($estados as $estado)
-                                        @if ($estado->nombre_estado === 'Activo' || $estado->nombre_estado === 'Inactivo')
-                                        <option value="{{ $estado->id_estados }}">
-                                            {{ $estado->nombre_estado }}
-                                        </option>
-                                        @endif
+                                    @if ($estado->nombre_estado === 'Activo' || $estado->nombre_estado === 'Inactivo')
+                                    <option value="{{ $estado->id_estados }}">
+                                        {{ $estado->nombre_estado }}
+                                    </option>
+                                    @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -58,18 +57,18 @@
                             <div class="form-group">
                                 <label for="fecha_compra_mp" class="bmd-label-floating">Fecha de Compra</label>
                                 <input type="date" class="form-control" name="fecha_compra_mp"
-                                    id="matFechaCompra">
+                                    id="matFechaCompra" value="{{ $materiaPrima->fecha_compra_mp}}">
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
                             <div class="form-group">
-                                <label for="proveedores_id_proveedores"" class="bmd-label-floating">Proveedor</label>
-                                <select class="form-control" name="proveedores_id_proveedores"" id="matProveedor">
+                                <label for="proveedores_id_proveedores"" class=" bmd-label-floating">Proveedor</label>
+                                <select class="form-control" name="proveedores_id_proveedores"" id=" matProveedor">
                                     @foreach ($proveedores as $proveedor)
-                                        <option value="{{ $proveedor->num_doc }}">
-                                            {{ $proveedor->usu_nombres }}
-                                            {{ $proveedor->usu_apellidos }}
-                                        </option>
+                                    <option value="{{ $proveedor->num_doc }}">
+                                        {{ $proveedor->usu_nombres }}
+                                        {{ $proveedor->usu_apellidos }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>

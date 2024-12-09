@@ -6,7 +6,7 @@ use App\Models\Estado;
 use App\Models\MateriaPrima;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class MateriaPrimaController extends Controller
 {
@@ -14,6 +14,13 @@ class MateriaPrimaController extends Controller
         $materiaPrima = MateriaPrima::all();
 
         return view("Perfil_Inventario.item-list", compact("materiaPrima"));
+        // return response()->json($materiaPrima);     
+    }
+    public function show($id)
+    {
+        $materiaPrima = MateriaPrima::findOrFail($id);
+        return view("Perfil_Inventario.item-detail", compact("materiaPrima"));
+        // return response()->json($materiaPrima);
     }
     public function form_nuevo()
     {
@@ -131,13 +138,13 @@ class MateriaPrimaController extends Controller
     
             $materiaPrima->save();
 
-            return response()->json([
-                'message' => 'Registro actualizado',
-                'data' => $materiaPrima,
-                'status' => 200
-            ], 200);
+            // return response()->json([
+            //     'message' => 'Registro actualizado',
+            //     'data' => $materiaPrima,
+            //     'status' => 200
+            // ], 200);
 
-            // return redirect()->route('lista-item');
+            return redirect()->route('lista-item');
     
         } catch (\Exception $e) {
             // Manejar errores
@@ -146,6 +153,23 @@ class MateriaPrimaController extends Controller
                 'error' => $e->getMessage(),
                 'status' => 500
             ], 500);
+        }
+    }
+    
+    public function delete($id){// Buscar el registro por ID        
+        $materiaPrima = MateriaPrima::find($id);  // Validar si el registro existe
+     
+        if (!$materiaPrima) {return response()->json([
+            'message' => 'Registro no encontrado',
+            'status' => 404
+        ], 404) 
+    ;}
+        try {
+            $materiaPrima->delete();  // Eliminar el registro  
+        return response()->json(['message' => 'Registro eliminado correctamente','status' => 200 ], 200);} 
+        
+        catch (\Exception $e) {  // Manejar errores durante la eliminación            
+            return response()->json(['message' => 'Error al eliminar el registro','error' => $e->getMessage(),'status' => 500], 500); 
         }
     }
 }
