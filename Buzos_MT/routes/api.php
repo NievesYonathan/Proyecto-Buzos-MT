@@ -20,3 +20,4 @@ Route::delete('/producto/image/delete/{id}', [BuzosImageController::class, 'dele
 Route::get('/materia-prima', [MateriaPrimaController::class, 'index'])->name('lista-de-item');
 Route::post('/materia-prima-agregar', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto');
 Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class,'update'])->name('update-producto');
+Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'delete'])->name('materia-prima.delete');

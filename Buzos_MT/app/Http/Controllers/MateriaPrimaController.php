@@ -155,4 +155,21 @@ class MateriaPrimaController extends Controller
             ], 500);
         }
     }
+    
+    public function delete($id){// Buscar el registro por ID        
+        $materiaPrima = MateriaPrima::find($id);  // Validar si el registro existe
+     
+        if (!$materiaPrima) {return response()->json([
+            'message' => 'Registro no encontrado',
+            'status' => 404
+        ], 404) 
+    ;}
+        try {
+            $materiaPrima->delete();  // Eliminar el registro  
+        return response()->json(['message' => 'Registro eliminado correctamente','status' => 200 ], 200);} 
+        
+        catch (\Exception $e) {  // Manejar errores durante la eliminación            
+            return response()->json(['message' => 'Error al eliminar el registro','error' => $e->getMessage(),'status' => 500], 500); 
+        }
+    }
 }
