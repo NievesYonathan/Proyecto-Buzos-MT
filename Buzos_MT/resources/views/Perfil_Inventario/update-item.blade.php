@@ -11,7 +11,7 @@
                             <div class="form-group">
                                 <label for="mat_pri_nombre" class="bmd-label-floating">Nombre</label>
                                 <input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,140}"
-                                    class="form-control" name="mat_pri_nombre" id="matNombre" maxlength="140">
+                                    class="form-control" name="mat_pri_nombre" id="matNombre" maxlength="140" value="{{ $materiaPrima->mat_pri_nombre }}">
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
@@ -19,24 +19,23 @@
                                 <label for="mat_pri_descripcion" class="bmd-label-floating">Descripción</label>
                                 <input type="text" pattern="[a-zA-záéíóúÁÉÍÓÚñÑ0-9 ]{1,255}"
                                     class="form-control" name="mat_pri_descripcion" id="matDescripcion"
-                                    maxlength="255">
+                                    maxlength="255" value="{{ $materiaPrima->mat_pri_descripcion }}">
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-group">
                                 <label for="mat_pri_cantidad" class="bmd-label-floating">Cantidad</label>
                                 <input type="number" pattern="[0-9]{1,9}" class="form-control"
-                                    name="mat_pri_cantidad" id="matCantidad" maxlength="9">
+                                    name="mat_pri_cantidad" id="matCantidad" maxlength="9" value="{{ $materiaPrima->mat_pri_cantidad}}">
                             </div>
                         </div>
                         <div class="col-12 col-md-4">
                             <div class="form-group">
                                 <label for="mat_pri_unidad_medida" class="bmd-label-floating">Unidad de Medida</label>
                                 <select class="form-control" name="mat_pri_unidad_medida" id="matUnidad">
-                                    <option value="" selected="" disabled="">Seleccione una opción</option>
-                                    <option value="Metros">Metros (M)</option>
-                                    <option value="Centrimetros">Centimetros (Cm)</option>
-                                    <option value="Milimetros">Milimetros (Mm)</option>
+                                    <option value="Metros" @if ("Metros" === $materiaPrima->mat_pri_unidad_medida) selected @endif>Metros (M)</option>
+                                    <option value="Centrimetros" @if ("Centrimetros" === $materiaPrima->mat_pri_unidad_medida) selected @endif>Centimetros (Cm)</option>
+                                    <option value="Milimetros" @if ("Milimetros" === $materiaPrima->mat_pri_unidad_medida) selected @endif>Milimetros (Mm)</option>
                                 </select>
                             </div>
                         </div>
@@ -58,7 +57,7 @@
                             <div class="form-group">
                                 <label for="fecha_compra_mp" class="bmd-label-floating">Fecha de Compra</label>
                                 <input type="date" class="form-control" name="fecha_compra_mp"
-                                    id="matFechaCompra">
+                                    id="matFechaCompra" value="{{ $materiaPrima->fecha_compra_mp}}">
                             </div>
                         </div>
                         <div class="col-12 col-md-6">
