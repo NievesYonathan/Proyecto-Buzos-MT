@@ -139,6 +139,7 @@ section {
 .form .inputBox select option,
 .form .inputBox input::placeholder {
     color: #fff;
+    position: center;
 }
 
 .form {
