@@ -6,7 +6,7 @@ use App\Models\Estado;
 use App\Models\MateriaPrima;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class MateriaPrimaController extends Controller
 {
@@ -138,13 +138,13 @@ class MateriaPrimaController extends Controller
     
             $materiaPrima->save();
 
-            return response()->json([
-                'message' => 'Registro actualizado',
-                'data' => $materiaPrima,
-                'status' => 200
-            ], 200);
+            // return response()->json([
+            //     'message' => 'Registro actualizado',
+            //     'data' => $materiaPrima,
+            //     'status' => 200
+            // ], 200);
 
-            // return redirect()->route('lista-item');
+            return redirect()->route('lista-item');
     
         } catch (\Exception $e) {
             // Manejar errores
