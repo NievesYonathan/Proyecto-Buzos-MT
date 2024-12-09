@@ -1,35 +1,6 @@
 <x-app-layout>
-    <!-- Main container -->
-    <main class="full-box main-container">
-        <!-- Nav lateral -->
-        <!-- Page content -->
-        <section class="full-box page-content">
-            <!-- Navbar -->
-
-            <!-- Page header -->
-            <div class="full-box page-header">
-                <h3 class="text-left">
-                    <i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA DE ITEMS
-                </h3>
-            </div>
-            <div class="container-fluid">
-                <ul class="full-box list-unstyled page-nav-tabs">
-                    <li>
-                        <a href="item-new.php"><i class="fas fa-plus fa-fw"></i> &nbsp; AGREGAR ITEM</a>
-                    </li>
-                    <li>
-                        <a class="active" href="item-list.php"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; LISTA
-                            DE ITEMS</a>
-                    </li>
-                    <li>
-                        <a href="item-search.php"><i class="fas fa-search fa-fw"></i> &nbsp; BUSCAR ITEM</a>
-                    </li>
-                </ul>
-            </div>
-
-
             <!--CONTENT-->
-            <div class="container-fluid">
+<div class="container-fluid">
                 <div class="table-responsive">
                     <table class="table table-dark table-sm">
                         <thead>
@@ -48,7 +19,8 @@
                                     <td><?=$item->mat_pri_nombre?></td>
                                     <td><?=$item->mat_pri_cantidad?></td>
                                     <td>
-                                        <form action="item-update.php" method="post">
+                                        <form action="{{ route('editar-producto', $item->id_materia_prima)}}" method="post">
+                                        @csrf
                                             <input type="hidden" name="matId" value="<?=$item->id_materia_prima?>">
                                             <input type="hidden" name="matNombre" value="<?=$item->mat_pri_nombre?>">
                                             <input type="hidden" name="matDescripcion"
@@ -59,7 +31,7 @@
                                                 <i class="fas fa-sync-alt"></i>
                                             </button>
                                         </form>
-                                        <form action="item-detail.php" id="Detalles<?=$item->id_materia_prima?>"
+                                        <form action="Route:item-details" id="Detalles<?=$item->id_materia_prima?>"
                                             method="post">
                                             <input type="hidden" name="matId" value="<?=$item->id_materia_prima?>">
                                             <input type="hidden" name="matNombre" value="<?=$item->mat_pri_nombre?>">

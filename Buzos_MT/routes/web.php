@@ -110,6 +110,7 @@ Route::post('/tarea/actualizar/{id_tarea}/{id_empleado_tarea}', [TareaController
 // Rutas para 'Jefe Materia Prima'
 Route::get('/materia-prima', [MateriaPrimaController::class, 'index'])->name('lista-item');
 Route::get('/materia-prima-agregar-formulario', [MateriaPrimaController::class, 'form_nuevo'])->name('vistaForm');
-Route::get('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'edit'])->name('editar-producto');
+Route::get('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'show'])->name('Detalles-producto');
+Route::post('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'edit'])->name('editar-producto');
 
 require __DIR__ . '/auth.php';

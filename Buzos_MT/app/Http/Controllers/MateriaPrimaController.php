@@ -14,12 +14,13 @@ class MateriaPrimaController extends Controller
         $materiaPrima = MateriaPrima::all();
 
         return view("Perfil_Inventario.item-list", compact("materiaPrima"));
+        // return response()->json($materiaPrima);     
     }
     public function show($id)
     {
         $materiaPrima = MateriaPrima::findOrFail($id);
-
         return view("Perfil_Inventario.item-detail", compact("materiaPrima"));
+        // return response()->json($materiaPrima);
     }
     public function form_nuevo()
     {
