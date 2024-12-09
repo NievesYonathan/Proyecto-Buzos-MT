@@ -35,7 +35,7 @@
                                 <select class="form-control" name="mat_pri_unidad_medida" id="matUnidad">
                                     <option value="" selected="" disabled="">Seleccione una opción</option>
                                     <option value="Metros">Metros (M)</option>
-                                    <option value="Centrimetros">Centimetros (Cm)</option>
+                                    <option value="Centimetros">Centimetros (Cm)</option>
                                     <option value="Milimetros">Milimetros (Mm)</option>
                                 </select>
                             </div>

@@ -34,7 +34,7 @@
                                 <label for="mat_pri_unidad_medida" class="bmd-label-floating">Unidad de Medida</label>
                                 <select class="form-control" name="mat_pri_unidad_medida" id="matUnidad">
                                     <option value="Metros" @if ("Metros"===$materiaPrima->mat_pri_unidad_medida) selected @endif>Metros (M)</option>
-                                    <option value="Centrimetros" @if ("Centrimetros"===$materiaPrima->mat_pri_unidad_medida) selected @endif>Centimetros (Cm)</option>
+                                    <option value="Centimetros" @if ("Centimetros"===$materiaPrima->mat_pri_unidad_medida) selected @endif>Centimetros (Cm)</option>
                                     <option value="Milimetros" @if ("Milimetros"===$materiaPrima->mat_pri_unidad_medida) selected @endif>Milimetros (Mm)</option>
                                 </select>
                             </div>
