@@ -13,20 +13,29 @@ class MateriaPrimaController extends Controller
     public function index(){
         $materiaPrima = MateriaPrima::all();
 
+        if (request()->wantsJson()) {
+            return response()->json($materiaPrima, 200);
+        }
         return view("Perfil_Inventario.item-list", compact("materiaPrima"));
-        // return response()->json($materiaPrima);     
     }
+
     public function show($id)
     {
         $estados = Estado::all();
         $materiaPrima = MateriaPrima::findOrFail($id);
+
+        if (request()->wantsJson()) {
+            return response()->json($materiaPrima, 200);
+        }
+
         return view("Perfil_Inventario.item-detail", compact("estados","materiaPrima"));
-        // return response()->json($materiaPrima);
     }
+
     public function showSearchForm()
     {
         return view('Perfil_Inventario.search-item');
     }
+
     public function search(Request $request)
     {
         $busqueda = $request->input('busqueda');
@@ -77,12 +86,14 @@ class MateriaPrimaController extends Controller
                 'proveedores_id_proveedores' => $request->proveedores_id_proveedores
             ]);
     
-            // return response()->json([
-            //     'message' => 'Registro creado exitosamente',
-            //     'data' => $materiaPrima,
-            //     'status' => 201
-            // ], 201);
-
+            if (request()->wantsJson()) {
+                return response()->json([
+                    'message' => 'Registro creado exitosamente',
+                    'data' => $materiaPrima,
+                    'status' => 201
+                ], 201);    
+            }
+    
             return redirect()->route('lista-item');
     
         } catch (\Exception $e) {
@@ -150,11 +161,13 @@ class MateriaPrimaController extends Controller
     
             $materiaPrima->save();
 
-            // return response()->json([
-                // 'message' => 'Registro actualizado',
-                // 'data' => $materiaPrima,
-                // 'status' => 200
-            // ], 200);
+            if (request()->wantsJson()) {
+                return response()->json([
+                    'message' => 'Registro actualizado',
+                    'data' => $materiaPrima,
+                    'status' => 200
+                ], 200);        
+            }
 
             return redirect()->route('lista-item');
     
@@ -174,12 +187,21 @@ class MateriaPrimaController extends Controller
         if (!$materiaPrima) {return response()->json([
             'message' => 'Registro no encontrado',
             'status' => 404
-        ], 404) 
-    ;}
+        ], 404);
+        }
+
         try {
-            $materiaPrima->delete();  // Eliminar el registro  
-        return response()->json(['message' => 'Registro eliminado correctamente','status' => 200 ], 200);} 
-        
+            $materiaPrima->mat_pri_estado = 2;
+
+            if (request()->wantsJson()) {
+                return response()->json([
+                    'message' => 'Registro inhabilitado correctamente',
+                    'Materia Prima' => $materiaPrima,
+                    'status' => 200 ], 200);
+            }
+
+            return redirect()->route('lista-item');
+        }      
         catch (\Exception $e) {  // Manejar errores durante la eliminación            
             return response()->json(['message' => 'Error al eliminar el registro','error' => $e->getMessage(),'status' => 500], 500); 
         }
