@@ -50,7 +50,7 @@
   </div>
 </div>
 <div class="heroSubP">
-  <p>Introdución</p>
+  <p>Introducción</p>
 </div>
 <div class="hero">
   <div class="heroT">
@@ -93,7 +93,7 @@
         <span class="number" style="font-weight: bolder;">01</span>
         <span class="sneakers"style="font-weight: bolder;">BUZOS</span>
         <span class="price"style="font-weight: bolder;">$40.000</span>
-        <img src="images/img5.png">
+        <img src="./Logo/BuzoNegro.png">
     </div>
     <div class="title">
         <h2 style="font-weight: bolder;">Buzo Negro</h2>
@@ -105,7 +105,7 @@
         <span class="number"style="font-weight: bolder;">02</span>
         <span class="sneakers"style="font-weight: bolder;">BUZOS</span>
         <span class="price"style="font-weight: bolder;">$40.000</span>
-        <img src="images/img1.png">
+        <img src="./Logo/BuzoRojo.png">
     </div>
     <div class="title">
         <h2 style="font-weight: bolder;">Buzo Rojo</h2>
@@ -116,7 +116,7 @@
       <span class="number"style="font-weight: bolder;">03</span>
       <span class="sneakers"style="font-weight: bolder;">BUZOS</span>
       <span class="price"style="font-weight: bolder;">$40.000</span>
-      <img src="images/img6.png">
+      <img src="./Logo/BuzoNaranja.png">
   </div>
   <div class="title">
       <h2 style="font-weight: bolder;">Buzo Naranja</h2>
@@ -128,7 +128,7 @@
       <span class="number"style="font-weight: bolder;">04</span>
       <span class="sneakers"style="font-weight: bolder;">BUZOS</span>
       <span class="price"style="font-weight: bolder;">$40.000</span>
-      <img src="images/img7.png">
+      <img src="./Logo/BuzoVerde.png">
   </div>
   <div class="title">
       <h2 style="font-weight: bolder;">Buzo Verde</h2>
@@ -140,8 +140,8 @@
 <footer class="site-footer">
   <div class="footer-content">
       <div class="footer-section">
-          <h4>Escribenos</h4>
-          <p>Mediante nuestras redes sociales te atenderemos<br> con calidad y compromiso.</p>
+          <h4>Escríbenos</h4>
+          <p>Mediante nuestras redes sociales, te atenderemos<br> con calidad y compromiso.</p>
       </div>
         <ul class="wrapper">
           <li class="icon facebook">
