@@ -87,5 +87,4 @@
             </p>
         </form>
     </div>
-
 </x-app-layout>

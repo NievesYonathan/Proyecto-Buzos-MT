@@ -42,7 +42,7 @@
                                     <i class="far fa-trash-alt"></i>
                             </button>
                             </form>
-                            <form action="{{ route('Mat-Detalles', $item->id_materia_prima)}}" id="Detalles<?= $item->id_materia_prima ?>"
+                            <form action="{{ route('Detalles-producto', $item->id_materia_prima)}}" id="Detalles<?= $item->id_materia_prima ?>"
                                 method="post">
                                 @csrf
                                 <input type="hidden" name="matId" value="<?= $item->id_materia_prima ?>">

@@ -23,11 +23,11 @@
         </form>
         <br>
         @if (count($materiaPrima) > 0)
-        <p class="text-center" style="font-size: 20px;">
+        <p class="text-center table-light" style="font-size: 20px;">
             Resultados de la búsqueda: <strong>"{{ $busqueda }}"</strong>
         </p>
         @else
-        <p class="text-center" style="font-size: 20px;">
+        <p class="text-center table-light" style="font-size: 20px;">
             <strong>"No hay resultados para tu busqueda"</strong>
         </p>
         @endif
@@ -43,7 +43,7 @@
                 </thead>
                 <tbody>
                     @foreach ($materiaPrima as $item)
-                        <tr class="text-center">
+                        <tr class="text-center table-light details">
                             <td>{{ $item->id_materia_prima }}</td>
                             <td>{{ $item->mat_pri_nombre }}</td>
                             <td>{{ $item->mat_pri_cantidad }}</td>
