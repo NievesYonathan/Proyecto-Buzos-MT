@@ -9,6 +9,7 @@
                         <th>NOMBRE</th>
                         <th>STOCK</th>
                         <th>ACTUALIZAR</th>
+                        <th>ELIMINAR</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,8 +32,19 @@
                                     <i class="fas fa-sync-alt"></i>
                                 </button>
                             </form>
-                            <form action="Route:item-details" id="Detalles<?= $item->id_materia_prima ?>"
+                        </td>
+                        <td>
+                            <form action="{{ route('materia-prima-delete', $item->id_materia_prima )}}" method="post">
+                            @csrf
+                            @method('delete')
+                            <input type="hidden" name="matId" value="<?= $item->id_materia_prima ?>">
+                            <button type="submit" class="btn btn-danger">
+                                    <i class="far fa-trash-alt"></i>
+                            </button>
+                            </form>
+                            <form action="{{ route('Mat-Detalles', $item->id_materia_prima)}}" id="Detalles<?= $item->id_materia_prima ?>"
                                 method="post">
+                                @csrf
                                 <input type="hidden" name="matId" value="<?= $item->id_materia_prima ?>">
                                 <input type="hidden" name="matNombre" value="<?= $item->mat_pri_nombre ?>">
                                 <input type="hidden" name="matDescripcion"

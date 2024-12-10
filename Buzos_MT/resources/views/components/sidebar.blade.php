@@ -32,7 +32,7 @@
                     <ul>
                         <li><a href="{{ route('vistaForm')}}"><i class="fas fa-plus fa-fw"></i> &nbsp; Agregar item</a></li>
                         <li><a href=" {{ route('lista-item')}}"><i class="fas fa-clipboard-list fa-fw"></i> &nbsp; Lista de items</a></li>
-                        <li><a href="#"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar item</a></li>
+                        <li><a href="{{ route('buscar-producto')}}"><i class="fas fa-search fa-fw"></i> &nbsp; Buscar item</a></li>
                         <!-- <li><a href="#"><i class="fa-solid fa-info-circle"></i> &nbsp; Detalles item</a></li>
                         <li><a href="#"><i class="fa-solid fa-clock-rotate-left"></i> &nbsp; Historial</a></li>
                         <li><a href="#"><i class="fa-solid fa-pen-to-square"></i> &nbsp; Actualizar</a></li> -->

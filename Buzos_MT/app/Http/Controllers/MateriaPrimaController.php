@@ -22,6 +22,17 @@ class MateriaPrimaController extends Controller
         return view("Perfil_Inventario.item-detail", compact("materiaPrima"));
         // return response()->json($materiaPrima);
     }
+    public function showSearchForm()
+    {
+        return view('Perfil_Inventario.search-item');
+    }
+    public function search(Request $request)
+    {
+        $busqueda = $request->input('busqueda');
+        $materiaPrima = MateriaPrima::where('mat_pri_nombre', 'LIKE', "$busqueda%")->get(); 
+        return view('Perfil_Inventario.search-item-results', compact('materiaPrima', 'busqueda'));
+    }
+
     public function form_nuevo()
     {
         $estados = Estado::all();
@@ -139,9 +150,9 @@ class MateriaPrimaController extends Controller
             $materiaPrima->save();
 
             // return response()->json([
-            //     'message' => 'Registro actualizado',
-            //     'data' => $materiaPrima,
-            //     'status' => 200
+                // 'message' => 'Registro actualizado',
+                // 'data' => $materiaPrima,
+                // 'status' => 200
             // ], 200);
 
             return redirect()->route('lista-item');
@@ -156,7 +167,7 @@ class MateriaPrimaController extends Controller
         }
     }
     
-    public function delete($id){// Buscar el registro por ID        
+    public function delete($id){// Buscar el registro por ID
         $materiaPrima = MateriaPrima::find($id);  // Validar si el registro existe
      
         if (!$materiaPrima) {return response()->json([

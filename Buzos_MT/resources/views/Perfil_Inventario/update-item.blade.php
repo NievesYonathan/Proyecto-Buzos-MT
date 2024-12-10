@@ -3,6 +3,7 @@
     <div class="container-fluid mt-5">
         <form action="{{ route('update-producto', $materiaPrima->id_materia_prima)}}" class="form-neon" autocomplete="off"
             method="post">
+            @method('PUT')
             <fieldset>
                 <legend><i class="far fa-plus-square"></i> &nbsp; Información del item</legend>
                 <div class="container-fluid">
@@ -78,9 +79,9 @@
             </fieldset>
             <br><br><br>
             <p class="text-center" style="margin-top: 40px;">
-                <button type="reset" class="btn btn-raised btn-secondary btn-sm"><i
-                        class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button>
-                &nbsp; &nbsp;
+                <!-- <button type="reset" class="btn btn-raised btn-secondary btn-sm"><i
+                        class="fas fa-paint-roller"></i> &nbsp; LIMPIAR</button> -->
+                <!-- &nbsp; &nbsp; -->
                 <button type="submit" class="btn btn-raised btn-info btn-sm" name="accion" value="agregar"><i
                         class="far fa-save"></i> &nbsp; GUARDAR</button>
             </p>
