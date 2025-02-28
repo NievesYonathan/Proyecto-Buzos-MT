@@ -27,6 +27,9 @@
 
     <!-- jQuery Custom Content Scroller V3.1.5 -->
     <link rel="stylesheet" href="{{ asset('css/jquery.mCustomScrollbar.css') }}">
+
+     <!--Laravel Notify-->
+    @notifyCss
 </head>
 
 <body class="font-sans antialiased">
@@ -72,6 +75,10 @@
     <script src="{{ asset('js/calendear.js') }}"></script>
     <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
     <script src="{{ asset('js/duplicarInputs.js') }}"></script>
+
+    <!-- Laravel Notify -->
+    <x-notify::notify />
+    @notifyJs
 </body>
 
 </html>

@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\User; // Asegúrate de que el modelo User esté importado
 use App\Models\TipoDoc;
 
+
 class AuthenticatedSessionController extends Controller
 {
     /**
@@ -55,7 +56,9 @@ class AuthenticatedSessionController extends Controller
 
         // Autenticación exitosa
         Auth::login($usuario); // Usa el objeto de usuario
-
+        // Notificación de éxito con paquete mckenziearts/laravel-notify  
+        notify()->success('Welcome to Laravel Notify ⚡️');
+        // Redirige a la ruta dashboard
         return redirect()->intended(route('dashboard'));
     }
     
