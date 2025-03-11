@@ -20,6 +20,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    // emotify('success', 'You are awesome, your data was successfully created');
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
