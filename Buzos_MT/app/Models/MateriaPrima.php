@@ -29,4 +29,14 @@ class MateriaPrima extends Model
     {
         return $this->belongsToMany(Produccion::class, 'reg_pro_mat_prima', 'id_pro_materia_prima', 'id_produccion')->withPivot('reg_pmp_cantidad_usada');
     }
+
+    public function estado ()
+    {
+        return $this->belongsTo( Estado::class,'mat_pri_estado','id_estados');
+    }
+
+    public function proveedor ()
+    {
+        return $this->belongsTo(User::class, 'proveedores_id_proveedores', 'num_doc');
+    }
 }

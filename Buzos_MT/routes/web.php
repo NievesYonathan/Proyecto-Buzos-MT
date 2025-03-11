@@ -108,7 +108,11 @@ Route::get('/tarea/editar/{id_tarea}/{id_empleado_tarea}', [TareaController::cla
 Route::post('/tarea/actualizar/{id_tarea}/{id_empleado_tarea}', [TareaController::class, 'actualizarEstado'])->name('tarea.actualizarEstado');
 
 // Rutas para 'Jefe Materia Prima'
-Route::get('/materia-prima', [MateriaPrimaController::class, 'index']);
-Route::get('/materia-prima-agregar', [MateriaPrimaController::class, 'store']);
+Route::get('/materia-prima', [MateriaPrimaController::class, 'index'])->name('lista-item');
+Route::get('/materia-prima-agregar-formulario', [MateriaPrimaController::class, 'form_nuevo'])->name('vistaForm');
+Route::post('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'show'])->name('Detalles-producto');
+Route::get('/materia-prima-buscar', [MateriaPrimaController::class, 'showSearchForm'])->name('buscar-producto');
+Route::post('/materia-prima-resultados', [MateriaPrimaController::class, 'search'])->name('resultados-producto');
+Route::post('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'edit'])->name('editar-producto');
 
 require __DIR__ . '/auth.php';

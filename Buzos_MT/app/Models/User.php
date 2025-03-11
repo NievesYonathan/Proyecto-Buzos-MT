@@ -72,4 +72,10 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Tarea::class, 'emp_tarea', 'empleados_num_doc', 'tarea_id_tarea');
     }
+
+    public function materiaPrima ()
+    {
+        return $this->hasMany(MateriaPrima::class, 'proveedores_id_proveedores', 'num_doc');
+    }
+
 }
