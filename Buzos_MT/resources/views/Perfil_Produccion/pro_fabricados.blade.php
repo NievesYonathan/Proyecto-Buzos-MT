@@ -1,30 +1,33 @@
 <x-app-layout>
-    <div class="container my-5">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
-        @foreach ($producciones as $produccion)
-        <div class="col">
-            <div class="card">
-            <div class="image-container">
-                <img src="{{ asset('storage/' . $produccion->pro_img) }}" alt="Producto">
-                <div class="price">Cantidad: {{ $produccion->pro_cantidad }}</div>
-            </div><br>
-            <div class="content">
-                <h3 class="product-name">{{ $produccion->pro_nombre }}</h3>
-                <p class="product-dates">Inicio: {{ $produccion->pro_fecha_inicio->format('Y-m-d') }} <br>
-                    Fin: {{ $produccion->pro_fecha_fin->format('Y-m-d') }}
-                </p>
-                <p class="product-status">Etapa: {{ $produccion->etapa->eta_nombre }}</p>
-                @foreach ($produccion->regProFabricados as $registro)
-                <p class="product-material">Material: {{ $registro->reg_pf_material }}</p>
-                @endforeach
-                <div class="button-container">
-                    <button class="button buy-button" data-bs-toggle="modal"
-                        data-bs-target="#updateModal{{ $produccion->id_produccion }}">Editar</button>
+    <div class="my-5">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+            @foreach ($producciones as $produccion)
+            <div class="col">
+                <div class="card">
+                    <div class="image-container">
+                        <img src="{{ asset('storage/' . $produccion->pro_img) }}" alt="Producto">
+                        <div class="price">Cantidad: {{ $produccion->pro_cantidad }}</div>
+                    </div><br>
+                    <div class="content">
+                        <h3 class="product-name">{{ $produccion->pro_nombre }}</h3>
+                        <p class="product-dates">
+                            Inicio: {{ $produccion->pro_fecha_inicio->format('Y-m-d') }} <br>
+                            Fin: {{ $produccion->pro_fecha_fin->format('Y-m-d') }}
+                        </p>
+                        <p class="product-status">
+                            Etapa: {{ $produccion->etapa->eta_nombre }}
+                        </p>
+                        @foreach ($produccion->regProFabricados as $registro)
+                        <p class="product-material">Material: {{ $registro->reg_pf_material }}</p>
+                        @endforeach
+                        <div class="button-container">
+                            <button class="button buy-button" data-bs-toggle="modal"
+                                data-bs-target="#updateModal{{ $produccion->id_produccion }}">Editar</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    </div>
             <!-- Modal-Ediciòn -->
             <div class="modal fade" id="updateModal{{ $produccion->id_produccion }}" tabindex="-1" role="dialog"
                 data-bs-backdrop="static">
@@ -274,6 +277,5 @@
             </div>
             <!-- Fin Model Producción -->
             @endforeach
-        </div>
     </div>
 </x-app-layout>

@@ -11,7 +11,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/socialite": "*",
         "laravel/tinker": "^2.9",
-        "mckenziearts/laravel-notify": "^2.6"
+        "mckenziearts/laravel-notify": "^2.7"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

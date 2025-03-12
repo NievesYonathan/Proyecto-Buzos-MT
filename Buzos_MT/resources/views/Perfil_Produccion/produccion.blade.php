@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container my-5">
+    <div class="my-5">
         <div class="row">
             <div class="mb-5 col-sm-6 col-md-6 col-lg-5">
                 <div class="pro-btns">
