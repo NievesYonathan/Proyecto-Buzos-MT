@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import '../../Domains/models/user_model.dart';
 import '../../Domains/usecases/register_user.dart';
-import '../../data/repositories/user_repository.dart';
+import '../../Data/repositories/user_repository.dart';
 
 class RegisterScreen extends StatefulWidget {
   @override

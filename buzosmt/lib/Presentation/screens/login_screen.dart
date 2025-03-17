@@ -29,24 +29,20 @@ class _LoginState extends State<Login> {
           ListTile(
             title: TextField(
               controller: emailController,
-              decoration: InputDecoration(labelText: 'Email'),
+              decoration: InputDecoration(labelText: 'Email', border: OutlineInputBorder()),
             ),
           ),
           ListTile(
             title: TextField(
               controller: passwordController,
-              decoration: InputDecoration(labelText: 'Contaseña'),
+              decoration: InputDecoration(labelText: 'Contaseña', border: OutlineInputBorder()),
+              obscureText: true,
             ),
           ),
           // Text('Email: $email'),
           // Text('Password: $password'),
+        ElevatedButton(onPressed: login(emailController.text, passwordController.text), child: Text('Ingresar')),
         ],
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          login(emailController.text, passwordController.text);
-        },
-        child: Text('ingresar'),
       ),
     );
   }
