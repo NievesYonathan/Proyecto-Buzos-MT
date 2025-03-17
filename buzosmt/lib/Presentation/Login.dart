@@ -14,9 +14,10 @@ class _LoginState extends State<Login> {
   String password = '';
 
   login(String email, String password) {
-    print('Email: $email');
-    print('Password: $password');
-     
+  setState(() {
+    this.email = email;
+    this.password = password;
+  });
     }
 
   @override
@@ -37,6 +38,8 @@ class _LoginState extends State<Login> {
               decoration: InputDecoration(labelText: 'Contaseña'),
             ),
           ),
+          // Text('Email: $email'),
+          // Text('Password: $password'),
         ],
       ),
       floatingActionButton: FloatingActionButton(
