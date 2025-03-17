@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'Presentation/Login.dart';
-import 'Presentation/Register.dart';
+import 'Presentation/screens/register_screen.dart'; // Asegúrate de que esta importación sea correcta
 
 void main() {
   runApp(const BuzosMt());
@@ -8,7 +8,7 @@ void main() {
 
 class BuzosMt extends StatelessWidget {
   const BuzosMt({super.key});
-  
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -22,9 +22,6 @@ class BuzosMt extends StatelessWidget {
   }
 }
 
-
-//State<MyHomePage> createState() => _MyHomePageState();
-
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
   void login() {}
@@ -32,16 +29,13 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-      ),
+      appBar: AppBar(),
       body: Center(
-
         child: Column(
-          
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text('You have pushed the button this many times:'),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
                 Navigator.push(
@@ -49,17 +43,18 @@ class MyHomePage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => Login()),
                 );
               },
-              child: Text('Login'),
+              child: const Text('Login'),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Navigator.push(
-                  // context,
-                    // MaterialPageRoute(builder: (context) => Register()),
-                // );
+                // Navega a la pantalla de registro
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterScreen()),
+                );
               },
-              child: Text('Register'),
+              child: const Text('Register'),
             ),
           ],
         ),
