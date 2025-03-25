@@ -33,7 +33,7 @@ class produccionController extends Controller
 
     public function indexTwo()
     {
-        // $producciones = Produccion::with('etapa', 'regProFabricados', 'materiasPrimas', 'tareas')->get();
+        $producciones = Produccion::with('etapa', 'regProFabricados', 'materiasPrimas', 'tareas')->get();
 
         $tareas = Tarea::all();
 
@@ -45,7 +45,7 @@ class produccionController extends Controller
             $query->where('id_cargos', 3);
         })->get();
 
-        return view('Perfil_Produccion.produccion', compact('etapas', 'operarios', 'tareas', 'materiasPrimas'));
+        return view('Perfil_Produccion.produccion', compact('producciones', 'etapas', 'operarios', 'tareas', 'materiasPrimas'));
     }
 
     public function update(Request $request, $id)

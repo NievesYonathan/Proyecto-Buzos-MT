@@ -447,19 +447,26 @@ table form {
 }
 
 .pro-resumen {
-	width: 100%;
-	margin-top: 3em;
-	margin-right: 30px;
-	border: 2px solid #4b4b4b;
-	border-radius: 3px;
+	height: 400px; /* Ajusta este valor según lo que necesites */
+    overflow-y: auto; /* Scroll vertical cuando se desborde */
+    overflow-x: hidden; /* Evita el scroll horizontal */
+    padding: 1rem; /* Añade espacio interno */
+    border: 1px solid #ddd; /* Opcional: para visualizar el borde */
+    border-radius: 8px; /* Bordes redondeados */
+    background-color: #f8f9fa; /* Fondo suave para mejor visualización */
 }
 
-.pro-resumen h4 {
+.pro-resumen-titulo {
 	width: 80%;
 	margin-left: auto;
 	margin-right: auto;
 	border-bottom: 1px solid var(--border-color);
 	font-size: large;
+	position: sticky;
+	top: 0;
+	z-index: 10;
+	background-color: #ffffff;
+	text-align: center;
 }
 
 .pro-res-detalle {

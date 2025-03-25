@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\BuzosImageController;
+use App\Http\Controllers\Api\EmpTareasController;
+use App\Http\Controllers\Api\ProduccionController;
 use App\Http\Controllers\MateriaPrimaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -22,3 +24,16 @@ Route::get('/materia-prima', [MateriaPrimaController::class, 'index'])->name('li
 Route::post('/materia-prima-agregar', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto');
 Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class,'update'])->name('update-producto');
 Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'delete'])->name('materia-prima-delete');
+
+
+
+
+// Rutas para 'Jefe Producción'
+Route::get('/producciones', [ProduccionController::class, 'index']);
+Route::get('/produccion/{id}', [ProduccionController::class, 'show']);
+Route::post('/nueva-produccion', [ProduccionController::class, 'store']);
+Route::put('/produccion-editar/{id}', [ProduccionController::class, 'update']);
+Route::patch('/produccion-editar-selec/{id}', [ProduccionController::class, 'updatePartial']);
+Route::delete('/produccion-eliminar/{id}', [ProduccionController::class, 'destroy']);
+
+Route::post('/produccion-tareas/{id}', [EmpTareasController::class, 'store']);
