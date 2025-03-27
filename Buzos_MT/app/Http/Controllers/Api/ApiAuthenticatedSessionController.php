@@ -31,7 +31,7 @@ class ApiAuthenticatedSessionController extends Controller
 {
     $validator = Validator::make($request->all(), [
         't_doc' => 'required|integer',
-        'num_doc' => 'required|integer|max:10',
+        'num_doc' => 'required|integer|min:10',
         'password' => 'required|string|min:8',
     ]);
     // Verificar si hay errores en la validación

@@ -4,7 +4,8 @@ use App\Http\Controllers\Api\BuzosImageController;
 use App\Http\Controllers\MateriaPrimaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserProfileController;
-use App\Http\Controllers\Api\ApiAuthenticatedSessionController; // Ensure this file exists in the specified namespace
+use App\Http\Controllers\Api\ApiAuthenticatedSessionController;
+use App\Http\Controllers\Api\ApiRegisteredUserController;
 
 // Rutas para gestión de imagenes de usuarios
 Route::post('/user/image/{id}', [UserProfileController::class, 'storeImage'])->name('storeImage');
@@ -24,5 +25,7 @@ Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class,'update'
 Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'delete'])->name('materia-prima-delete');
 //Rutas para la Api de la aplicacion mobile
 
-Route::get('/login', [ApiAuthenticatedSessionController::class, 'create']);
-Route::post('/login', [ApiAuthenticatedSessionController::class, 'store']);
+Route::get('/Login', [ApiAuthenticatedSessionController::class, 'create']);
+Route::post('/Login', [ApiAuthenticatedSessionController::class, 'store']);
+Route::post('/Register',[ApiRegisteredUserController::class, 'store']);
+Route::get('/Register',[ApiRegisteredUserController::class, 'create']);

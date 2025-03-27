@@ -14,7 +14,7 @@ class _LoginState extends State<Login> {
   final TextEditingController passwordController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-  String textNumDoc ='';
+  String textNumDoc = '';
   int tDoc = 0;
   String password = '';
   ApiService apiService = ApiService();
@@ -22,10 +22,10 @@ class _LoginState extends State<Login> {
     if (_formKey.currentState!.validate()) {
       setState(() {
         int numDoc = (int.parse(textNumDoc));
-          apiService.apiLogin(tDoc, numDoc, password);
+        apiService.apiLogin(tDoc, numDoc, password);
       });
     }
-  } // 🔹 Se cerró correctamente la función aquí
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -86,10 +86,8 @@ class _LoginState extends State<Login> {
                   child: Column(
                     children: [
                       DropdownButtonFormField<int>(
-                        
                         value: tDoc,
                         items: [
-                          
                           for (var i = 0; i < 4; i++)
                             DropdownMenuItem(
                               child: Text('Tipo de Documento $i'),
