@@ -5,7 +5,7 @@ import 'package:buzosmt/Domains/usecases/register_user.dart';
 import 'package:flutter/material.dart';
 import '../../Domains/models/user_model.dart';
 import '../../Domains/usecases/register_user.dart';
-import '../../data/repositories/user_repository.dart';
+import '../../Data/repositories/user_repository.dart';
 import 'login_screen.dart'; // Importa la pantalla de login
 
 // Define a placeholder LoginScreen class if it doesn't exist

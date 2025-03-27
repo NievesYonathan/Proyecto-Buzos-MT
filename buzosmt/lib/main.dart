@@ -1,3 +1,4 @@
+// import 'package:buzosmt/Presentation/screens/dashboard_screen.dart';
 import 'package:flutter/material.dart';
 import 'Presentation/screens/login_screen.dart';
 import 'Presentation/screens/register_screen.dart'; // Asegúrate de que esta importación sea correcta
@@ -13,7 +14,7 @@ class BuzosMt extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
+      title: 'BuzosMt',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
       ),
@@ -24,7 +25,6 @@ class BuzosMt extends StatelessWidget {
 
 class MyHomePage extends StatelessWidget {
   const MyHomePage({super.key});
-  void login() {}
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text('You have pushed the button this many times:'),
+            const Text('Bienvenido a BuzosMt'),
             const SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
@@ -54,7 +54,7 @@ class MyHomePage extends StatelessWidget {
                   MaterialPageRoute(builder: (context) => RegisterScreen()),
                 );
               },
-              child: const Text('Register'),
+              child: const Text('Regiter'),
             ),
           ],
         ),
