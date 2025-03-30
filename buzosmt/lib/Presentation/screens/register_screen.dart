@@ -10,7 +10,6 @@ import 'login_screen.dart'; // Importa la pantalla de login
 
 // Define a placeholder LoginScreen class if it doesn't exist
 
-
 class RegisterScreen extends StatefulWidget {
   @override
   _RegisterScreenState createState() => _RegisterScreenState();
@@ -18,7 +17,7 @@ class RegisterScreen extends StatefulWidget {
 
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
-  final _userRepository = UserRepositoryImpl();
+  //  final _userRepository = UserRepositoryImpl();
   final _registerUser = RegisterUser();
 
   final _tDocController = TextEditingController();
@@ -41,7 +40,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
     if (picked != null) {
       setState(() {
-        _usuFechaNacimientoController.text = "${picked.toLocal()}".split(' ')[0];
+        _usuFechaNacimientoController.text =
+            "${picked.toLocal()}".split(' ')[0];
       });
     }
   }
@@ -134,19 +134,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
               height: double.infinity,
               width: double.infinity,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 20.0),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 25.0,
+                  vertical: 20.0,
+                ),
                 child: Form(
                   key: _formKey,
                   child: ListView(
                     padding: EdgeInsets.only(top: 20),
                     children: [
                       DropdownButtonFormField<String>(
-                        items: ['CC', 'PPT', 'TI'].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+                        items:
+                            ['CC', 'PPT', 'TI'].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
                         onChanged: (value) {
                           _tDocController.text = value!;
                         },
@@ -157,7 +161,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 15, 52, 67),
                           ),
-                          contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 15,
+                            horizontal: 10,
+                          ),
                         ),
                       ),
                       SizedBox(height: 20),
@@ -165,7 +172,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (_numDocController.text.isNotEmpty &&
-                              !RegExp(r'^[0-9]+$').hasMatch(_numDocController.text))
+                              !RegExp(
+                                r'^[0-9]+$',
+                              ).hasMatch(_numDocController.text))
                             Text(
                               'El número de documento solo debe contener números',
                               style: TextStyle(color: Colors.red, fontSize: 12),
@@ -179,7 +188,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 15, 52, 67),
                               ),
-                              contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 15,
+                                horizontal: 10,
+                              ),
                             ),
                             keyboardType: TextInputType.number,
                             onChanged: (value) {
@@ -202,7 +214,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (_usuNombresController.text.isNotEmpty &&
-                              !RegExp(r'^[a-zA-Z\s]+$').hasMatch(_usuNombresController.text))
+                              !RegExp(
+                                r'^[a-zA-Z\s]+$',
+                              ).hasMatch(_usuNombresController.text))
                             Text(
                               'Solo se permiten letras y espacios',
                               style: TextStyle(color: Colors.red, fontSize: 12),
@@ -216,7 +230,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 15, 52, 67),
                               ),
-                              contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 15,
+                                horizontal: 10,
+                              ),
                             ),
                             onChanged: (value) {
                               setState(() {});
@@ -238,7 +255,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (_usuApellidosController.text.isNotEmpty &&
-                              !RegExp(r'^[a-zA-Z\s]+$').hasMatch(_usuApellidosController.text))
+                              !RegExp(
+                                r'^[a-zA-Z\s]+$',
+                              ).hasMatch(_usuApellidosController.text))
                             Text(
                               'Solo se permiten letras y espacios',
                               style: TextStyle(color: Colors.red, fontSize: 12),
@@ -252,7 +271,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 15, 52, 67),
                               ),
-                              contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 15,
+                                horizontal: 10,
+                              ),
                             ),
                             onChanged: (value) {
                               setState(() {});
@@ -288,7 +310,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 15, 52, 67),
                               ),
-                              contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 15,
+                                horizontal: 10,
+                              ),
                               suffixIcon: IconButton(
                                 icon: Icon(Icons.calendar_today),
                                 onPressed: () => _selectDate(context),
@@ -312,12 +337,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       ),
                       SizedBox(height: 20),
                       DropdownButtonFormField<String>(
-                        items: ['M', 'F'].map((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+                        items:
+                            ['M', 'F'].map((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(value),
+                              );
+                            }).toList(),
                         onChanged: (value) {
                           _usuSexoController.text = value!;
                         },
@@ -328,7 +354,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             fontWeight: FontWeight.bold,
                             color: Color.fromARGB(255, 15, 52, 67),
                           ),
-                          contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                          contentPadding: EdgeInsets.symmetric(
+                            vertical: 15,
+                            horizontal: 10,
+                          ),
                         ),
                       ),
                       SizedBox(height: 20),
@@ -337,7 +366,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         children: [
                           if (_usuTelefonoController.text.isNotEmpty &&
                               (_usuTelefonoController.text.length != 10 ||
-                                  !RegExp(r'^[0-9]+$').hasMatch(_usuTelefonoController.text)))
+                                  !RegExp(
+                                    r'^[0-9]+$',
+                                  ).hasMatch(_usuTelefonoController.text)))
                             Text(
                               'El teléfono debe tener exactamente 10 dígitos',
                               style: TextStyle(color: Colors.red, fontSize: 12),
@@ -351,7 +382,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 15, 52, 67),
                               ),
-                              contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 15,
+                                horizontal: 10,
+                              ),
                             ),
                             keyboardType: TextInputType.phone,
                             onChanged: (value) {
@@ -361,7 +395,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (value == null || value.isEmpty) {
                                 return 'Por favor ingrese su teléfono';
                               }
-                              if (value.length != 10 || !RegExp(r'^[0-9]+$').hasMatch(value)) {
+                              if (value.length != 10 ||
+                                  !RegExp(r'^[0-9]+$').hasMatch(value)) {
                                 return 'El teléfono debe tener exactamente 10 dígitos';
                               }
                               return null;
@@ -374,7 +409,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (_usuEmailController.text.isNotEmpty &&
-                              !RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(_usuEmailController.text))
+                              !RegExp(
+                                r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                              ).hasMatch(_usuEmailController.text))
                             Text(
                               'Ingrese un correo electrónico válido',
                               style: TextStyle(color: Colors.red, fontSize: 12),
@@ -388,7 +425,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 15, 52, 67),
                               ),
-                              contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 15,
+                                horizontal: 10,
+                              ),
                             ),
                             keyboardType: TextInputType.emailAddress,
                             onChanged: (value) {
@@ -398,7 +438,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (value == null || value.isEmpty) {
                                 return 'Por favor ingrese su correo electrónico';
                               }
-                              if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                              if (!RegExp(
+                                r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                              ).hasMatch(value)) {
                                 return 'Ingrese un correo electrónico válido';
                               }
                               return null;
@@ -411,7 +453,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (_passwordController.text.isNotEmpty &&
-                              !RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(_passwordController.text))
+                              !RegExp(
+                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
+                              ).hasMatch(_passwordController.text))
                             Text(
                               'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial',
                               style: TextStyle(color: Colors.red, fontSize: 12),
@@ -425,7 +469,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 15, 52, 67),
                               ),
-                              contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 15,
+                                horizontal: 10,
+                              ),
                             ),
                             obscureText: true,
                             onChanged: (value) {
@@ -435,7 +482,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               if (value == null || value.isEmpty) {
                                 return 'Este campo es obligatorio';
                               }
-                              if (!RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$').hasMatch(value)) {
+                              if (!RegExp(
+                                r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$',
+                              ).hasMatch(value)) {
                                 return 'La contraseña debe tener al menos 8 caracteres, una mayúscula, una minúscula, un número y un carácter especial';
                               }
                               return null;
@@ -448,7 +497,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           if (_passwordConfirmationController.text.isNotEmpty &&
-                              _passwordConfirmationController.text != _passwordController.text)
+                              _passwordConfirmationController.text !=
+                                  _passwordController.text)
                             Text(
                               'Las contraseñas no coinciden',
                               style: TextStyle(color: Colors.red, fontSize: 12),
@@ -462,7 +512,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 fontWeight: FontWeight.bold,
                                 color: Color.fromARGB(255, 15, 52, 67),
                               ),
-                              contentPadding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: 15,
+                                horizontal: 10,
+                              ),
                             ),
                             obscureText: true,
                             onChanged: (value) {
@@ -494,7 +547,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             shadowColor: Colors.transparent,
                           ),
                           onPressed: () {
-                            _submitForm(context); // Llamar a la función para enviar el formulario
+                            _submitForm(
+                              context,
+                            ); // Llamar a la función para enviar el formulario
                           },
                           child: Text(
                             'Registrar',
@@ -517,3 +572,4 @@ class _RegisterScreenState extends State<RegisterScreen> {
     );
   }
 }
+

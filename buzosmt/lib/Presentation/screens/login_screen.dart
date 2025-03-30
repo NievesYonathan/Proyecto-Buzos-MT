@@ -9,15 +9,29 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  @override
+  void initState() {
+    super.initState();
+    _loadDocs();
+  }
+
   // final TextEditingController tDocumentoController = TextEditingController();
   final TextEditingController numDocController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
   String textNumDoc = '';
   int tDoc = 0;
   String password = '';
   ApiService apiService = ApiService();
+  List<dynamic> docItems = [];
+
+  Future<void> _loadDocs() async {
+    final items = await apiService.getDoc();
+    setState(() {
+      docItems = items;
+    });
+  }
+
   void login(int tDoc, String numDoc, String password) {
     if (_formKey.currentState!.validate()) {
       setState(() {
@@ -86,14 +100,14 @@ class _LoginState extends State<Login> {
                   child: Column(
                     children: [
                       DropdownButtonFormField<int>(
-                        value: tDoc,
-                        items: [
-                          for (var i = 0; i < 4; i++)
-                            DropdownMenuItem(
-                              child: Text('Tipo de Documento $i'),
-                              value: i,
-                            ),
-                        ],
+                        items:
+                            docItems.map<DropdownMenuItem<int>>((item) {
+                              return DropdownMenuItem<int>(
+                                value: item['id_tipo_documento'],
+                                child: Text(item['tip_doc_descripcion'].trim()),
+                              );
+                            }).toList(),
+
                         onChanged: (value) {
                           setState(() {
                             tDoc =
