@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="container mt-5">
+    <div class="mt-5">
         <form action="{{ route('nueva_tarea') }}" method="POST" class="form-neon" autocomplete="off">
             @csrf
             <fieldset>

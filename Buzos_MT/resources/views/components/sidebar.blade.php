@@ -65,6 +65,9 @@
                     </ul>
                 </li>
                 <li><a href="{{ route('pro_tareas') }}"><i class="fa-solid fa-calendar-days"></i> &nbsp; Tareas </a></li>
+                <li>
+                    <a href="{{ route('perfil-produccion.etapas') }}"><i class="fa-solid fa-route"></i> &nbsp; Etapas</a>
+                </li>
                 @endif
 
                 <!-- Agrega más secciones para otros perfiles como 'Jefe Producción' y 'Operario' según tu lógica -->
