@@ -5,6 +5,7 @@ use App\Http\Controllers\MateriaPrimaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserProfileController;
+use App\Http\Controllers\Api\EtapaController;
 
 // Rutas para gestión de imagenes de usuarios
 Route::post('/user/image/{id}', [UserProfileController::class, 'storeImage'])->name('storeImage');
@@ -22,3 +23,10 @@ Route::get('/materia-prima', [MateriaPrimaController::class, 'index'])->name('li
 Route::post('/materia-prima-agregar', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto');
 Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class,'update'])->name('update-producto');
 Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'delete'])->name('materia-prima-delete');
+
+// Rutas para el CRUD de Etapas
+Route::get('/etapas', [EtapaController::class, 'index']); // Obtener todas las etapas
+Route::post('/etapas', [EtapaController::class, 'store']); // Crear una nueva etapa
+Route::get('/etapas/{id}', [EtapaController::class, 'show']); // Obtener una etapa por ID
+Route::put('/etapas/{id}', [EtapaController::class, 'update']); // Actualizar una etapa
+Route::delete('/etapas/{id}', [EtapaController::class, 'destroy']); // Eliminar una etapa
