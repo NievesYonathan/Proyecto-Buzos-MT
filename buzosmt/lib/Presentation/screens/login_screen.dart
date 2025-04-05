@@ -1,5 +1,10 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
-import '../../Domains/usecases/login_user.dart';
+import 'package:buzosmt/Presentation/Widgets/Inputs/customTextField.dart';
+import 'package:buzosmt/Presentation/Widgets/Inputs/Customtextformfiel.dart';
+import 'package:buzosmt/Domains/usecases/login_user.dart';
+import 'package:buzosmt/Domains/usecases/getdocs_usecase.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -9,35 +14,50 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  int? tDoc;
+  // final TextEd itingController tDocController = TextEditingController();
+  final TextEditingController numDocController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  List<DropdownMenuItem<int>> items = [];
+  Map<int, String> docItems = {};
+  Map<String?, dynamic> _errors = {};
+
   @override
   void initState() {
     super.initState();
     _loadDocs();
   }
 
-  // final TextEditingController tDocumentoController = TextEditingController();
-  final TextEditingController numDocController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
-  String textNumDoc = '';
-  int tDoc = 0;
-  String password = '';
-  ApiService apiService = ApiService();
-  List<dynamic> docItems = [];
-
   Future<void> _loadDocs() async {
-    final items = await apiService.getDoc();
-    setState(() {
-      docItems = items;
-    });
+    final Tdoc tDocUseCase = Tdoc();
+  final docs = await tDocUseCase.getDocumentosMap();
+
+  setState(() {
+    docItems = docs;
+    items = docs.entries.map((e) => DropdownMenuItem<int>(
+              value: e.key,
+              child: Text(e.value),
+            ))
+        .toList();
+  });
   }
 
-  void login(int tDoc, String numDoc, String password) {
+  Future<void> dataValidate() async {
     if (_formKey.currentState!.validate()) {
+      UserValidator validator = UserValidator();
+      final errors = await validator.validateLogin(
+        tDoc,
+        numDocController.text,
+        passwordController.text,
+      );
       setState(() {
-        int numDoc = (int.parse(textNumDoc));
-        apiService.apiLogin(tDoc, numDoc, password);
+        _errors = errors;
       });
+      if (_errors.isEmpty) {
+        // print('Data correcta');
+        // Aquí iría la lógica para navegar o hacer el login real
+      }
     }
   }
 
@@ -99,75 +119,32 @@ class _LoginState extends State<Login> {
                   ),
                   child: Column(
                     children: [
-                      DropdownButtonFormField<int>(
-                        items:
-                            docItems.map<DropdownMenuItem<int>>((item) {
-                              return DropdownMenuItem<int>(
-                                value: item['id_tipo_documento'],
-                                child: Text(item['tip_doc_descripcion'].trim()),
-                              );
-                            }).toList(),
-
+                      CustomDropdownButtonFormField(
+                        labelText: 'Tipo de documento',
+                        items: items,
+                        prefixIcon: Icons.badge,
+                        error: _errors['tDocError'],
                         onChanged: (value) {
                           setState(() {
-                            tDoc =
-                                value!; // 🔹 Se actualiza la variable en lugar del controller
+                            tDoc = value;
                           });
                         },
-                        decoration: const InputDecoration(
-                          floatingLabelStyle: TextStyle(
-                            color: Color(0xFF12464C),
-                          ),
-                          labelText: 'Tipo de Documento',
-                          prefixIcon: Icon(Icons.badge),
-                        ),
-                        validator: (value) {
-                          if (value == null || value == 0) {
-                            return 'Por favor seleccione un tipo de documento';
-                          }
-                          return null;
-                        },
                       ),
                       const SizedBox(height: 10),
-                      TextFormField(
+                      Customtextformfiel(
+                        prefixIcon: Icons.person,
+                        labelText: 'Numero de documento',
+                        isPassword: false,
                         controller: numDocController,
-                        decoration: const InputDecoration(
-                          labelText: 'Número de Documento',
-                          floatingLabelStyle: TextStyle(
-                            color: Color(0xFF12464C),
-                          ),
-                          prefixIcon: Icon(Icons.person),
-                        ),
-                        validator: (value) {
-                          if (value == null || value == 0) {
-                            return 'Por favor ingrese su número de documento';
-                          }
-                          return null;
-                        },
+                        error: _errors['numDocError'],
                       ),
                       const SizedBox(height: 10),
-                      TextFormField(
+                      Customtextformfiel(
+                        prefixIcon: Icons.lock,
+                        labelText: 'Contraseña',
+                        isPassword: true,
                         controller: passwordController,
-                        decoration: const InputDecoration(
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: Color(0xFF12464C),
-                              width: 2.0,
-                            ),
-                          ),
-                          labelText: 'Contraseña',
-                          floatingLabelStyle: TextStyle(
-                            color: Color(0xFF12464C),
-                          ),
-                          prefixIcon: Icon(Icons.lock),
-                        ),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Por favor ingrese una contraseña';
-                          }
-                          return null;
-                        },
-                        obscureText: true,
+                        error: _errors['passwordError'],
                       ),
                       const SizedBox(height: 20),
                       Container(
@@ -183,11 +160,7 @@ class _LoginState extends State<Login> {
                             shadowColor: Colors.transparent,
                           ),
                           onPressed: () {
-                            login(
-                              tDoc,
-                              numDocController.text,
-                              passwordController.text,
-                            );
+                            dataValidate();
                           },
                           child: const Text(
                             'Ingresar',

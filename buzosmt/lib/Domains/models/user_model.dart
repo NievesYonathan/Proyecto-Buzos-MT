@@ -1,31 +1,42 @@
-// lib/domain/models/user_model.dart
+import 'dart:convert';
+import 'package:buzosmt/Data/DataSources/remote/Login_remote.dart';
 
 class User {
-  final String tDoc;
+  final int? tDoc;
   final String numDoc;
-  final String usuNombres;
-  final String usuApellidos;
-  final String usuFechaNacimiento;
-  final String usuSexo;
-  final String usuTelefono;
-  final String usuEmail;
+  final String? usuNombres;
+  final String? usuApellidos;
+  final String? usuFechaNacimiento;
+  final String? usuSexo;
+  final String? usuTelefono;
+  final String? usuEmail;
   final String password;
-  final String passwordConfirmation;
+  final String? passwordConfirmation;
   final int usuEstado;
-  final String usuDireccion;
 
+  // Constructor principal
   User({
     required this.tDoc,
     required this.numDoc,
-    required this.usuNombres,
-    required this.usuApellidos,
-    required this.usuFechaNacimiento,
-    required this.usuSexo,
-    required this.usuTelefono,
-    required this.usuEmail,
+    this.usuNombres,
+    this.usuApellidos,
+    this.usuFechaNacimiento,
+    this.usuSexo,
+    this.usuTelefono,
+    this.usuEmail,
     required this.password,
-    required this.passwordConfirmation,
+    this.passwordConfirmation,
     this.usuEstado = 1,
-    this.usuDireccion = 'Bogotá',
   });
+
+  Future<dynamic> jsonForLogin() async {
+    final Map<String, dynamic> user = {
+      't_doc': tDoc, // Clave explícita
+      'num_doc': numDoc, // Valor asociado
+      'password': password,
+    };
+    final String data = jsonEncode(user);
+    Login login = Login();
+     login.apiLogin(data);
+  }
 }

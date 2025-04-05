@@ -9,6 +9,6 @@ abstract class UserRepository {
 class UserRepositoryImpl implements UserRepository {
   @override
   Future<void> registerUser(User user) async {
-    // Aquí iría la lógica para enviar los datos a la API o base de datos.
+    
   }
 }

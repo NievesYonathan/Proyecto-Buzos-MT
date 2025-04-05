@@ -1,33 +1,22 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:buzosmt/Presentation/screens/login_screen.dart';
+import '../models/user_model.dart';
 
-class ApiService {
-  // URL de la API
-  final url = Uri.parse('http://127.0.0.1:8000/api/Login');
-  //Lista de documentos
-  Future<List<dynamic>> getDoc() async {
-    //peticion get a la API
-    final response = await http.get(url);
-
-    if (response.statusCode == 400) {
-      return []; // Retorna una lista vacía compatible
+class UserValidator {
+  Future<Map<String?, dynamic>> validateLogin(
+    int? tDoc,
+    String numDoc,
+    String password,
+  ) async {
+    final errors = {
+      if (tDoc == 0 || tDoc == null) 'tDocError': 'Tipo de documento no válido',
+      if (numDoc.isEmpty) 'numDocError': 'Número de documento requerido',
+      if (password.isEmpty) 'passwordError': 'Contraseña requerida',
+    };
+    if (errors.isEmpty) {
+      final User user = User(tDoc: tDoc, numDoc: numDoc, password: password);
+      user.jsonForLogin();
     }
-    //Concertir la respuesta en formato JSON
-    final List<dynamic> data = jsonDecode(response.body);
-    //Retorna lista de documentos
-    return data;
-  }
 
-  Future<void> apiLogin(int tDoc, int numDoc, String password) async {
-    final response = await http.post(
-      url,
-      headers: {'Content-Type': 'application/json; charset=UTF-8'},
-      body: jsonEncode({'tDoc': tDoc, 'numDoc': numDoc, 'password': password}),
-    );
-    if (response.statusCode == 200) {
-      // print('Login exitoso');
-    } else {
-      // print('Login fallido');
-    }
+    return errors;
   }
 }

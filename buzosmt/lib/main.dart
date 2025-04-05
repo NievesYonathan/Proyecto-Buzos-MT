@@ -49,10 +49,10 @@ class MyHomePage extends StatelessWidget {
             ElevatedButton(
               onPressed: () {
                 // Navega a la pantalla de registro
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => RegisterScreen()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(builder: (context) => RegisterScreen()),
+                // );
               },
               child: const Text('Regiter'),
             ),
