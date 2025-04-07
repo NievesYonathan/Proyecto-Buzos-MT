@@ -29,14 +29,15 @@ class User {
     this.usuEstado = 1,
   });
 
-  Future<dynamic> jsonForLogin() async {
+  Future <Map<String, dynamic>> jsonForLogin() async {
     final Map<String, dynamic> user = {
-      't_doc': tDoc, // Clave explícita
-      'num_doc': numDoc, // Valor asociado
+      't_doc': tDoc,
+      'num_doc': numDoc,
       'password': password,
     };
     final String data = jsonEncode(user);
     Login login = Login();
-     login.apiLogin(data);
+    final status = await login.apiLogin(data);
+    return status;
   }
 }

@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 
 class Login {
   // URL de la API
-  final url = Uri.parse('http://127.0.0.1:8000/api/Login');
+  final url = Uri.parse('http://192.168.80.16:8000/api/Login');
 
   //Lista de documentos
   Future<List<dynamic>> getDoc() async {
@@ -17,16 +17,19 @@ class Login {
     return data;
   }
 
-  Future<void> apiLogin(String data) async {
+  Future<Map<String, dynamic>> apiLogin(String data) async {
     final response = await http.post(
       url,
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
       body: data,
     );
+    final Map<String, dynamic> status = jsonDecode(response.body);
     if (response.statusCode == 400) {
-      print('Error en el login: ${response.body}');
+      // print(status);
+      return status;
     }
-    print('Login exitoso: ${response.body}');
+    // print(status);
+    return status;
   }
 
   // Future<void> _loadDocs() async {

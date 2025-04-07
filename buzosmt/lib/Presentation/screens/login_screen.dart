@@ -1,10 +1,11 @@
-import 'dart:ffi';
-
+import 'package:buzosmt/Domains/models/user_model.dart';
 import 'package:flutter/material.dart';
 import 'package:buzosmt/Presentation/Widgets/Inputs/customTextField.dart';
 import 'package:buzosmt/Presentation/Widgets/Inputs/Customtextformfiel.dart';
 import 'package:buzosmt/Domains/usecases/login_user.dart';
 import 'package:buzosmt/Domains/usecases/getdocs_usecase.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:buzosmt/Presentation/Widgets/butons/customelevatedbutton.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});
@@ -20,165 +21,178 @@ class _LoginState extends State<Login> {
   final TextEditingController numDocController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   List<DropdownMenuItem<int>> items = [];
-  Map<int, String> docItems = {};
   Map<String?, dynamic> _errors = {};
 
   @override
   void initState() {
     super.initState();
-    _loadDocs();
+    cargarDocs();
   }
 
-  Future<void> _loadDocs() async {
+  Future<void> cargarDocs() async {
     final Tdoc tDocUseCase = Tdoc();
-  final docs = await tDocUseCase.getDocumentosMap();
+    final docs = await tDocUseCase.getDocumentosMap();
 
-  setState(() {
-    docItems = docs;
-    items = docs.entries.map((e) => DropdownMenuItem<int>(
-              value: e.key,
-              child: Text(e.value),
-            ))
-        .toList();
-  });
+    setState(() {
+      items =
+          docs.entries
+              .map(
+                (e) =>
+                    DropdownMenuItem<int>(value: e.key, child: Text(e.value)),
+              )
+              .toList();
+    });
   }
 
   Future<void> dataValidate() async {
+    FocusScope.of(context).unfocus();
     if (_formKey.currentState!.validate()) {
-      UserValidator validator = UserValidator();
-      final errors = await validator.validateLogin(
-        tDoc,
-        numDocController.text,
-        passwordController.text,
+      UsesCasesUser validator = UsesCasesUser(
+        User(
+          tDoc: tDoc,
+          numDoc: numDocController.text,
+          password: passwordController.text,
+        ),
       );
+      final errors = validator.loginValidate();
+
       setState(() {
         _errors = errors;
       });
-      if (_errors.isEmpty) {
-        // print('Data correcta');
-        // Aquí iría la lógica para navegar o hacer el login real
+      if (errors.isEmpty) {
+        final status = await validator.loginUser();
+
+        final isSuccess = status['status'] == 'success';
+        Fluttertoast.showToast(
+          msg: status['message'] ?? 'Algo salió mal',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor:
+              isSuccess
+                  ? const Color.fromARGB(255, 0, 255, 8)
+                  : const Color.fromARGB(255, 255, 0, 0),
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            height: double.infinity,
-            width: double.infinity,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF12464C), Color(0xFF34E69F)],
-              ),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.only(top: 20.0, left: 15.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Icon(Icons.arrow_back),
-                  ),
-                  const SizedBox(height: 10),
-                  const Text(
-                    '¡Hola,\nBienvenido! a Buzos Mt',
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(top: 300.0),
-            child: Container(
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        body: Stack(
+          children: [
+            Container(
               height: double.infinity,
               width: double.infinity,
               decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(30),
-                  topRight: Radius.circular(30),
+                gradient: LinearGradient(
+                  colors: [Color(0xFF12464C), Color(0xFF34E69F)],
                 ),
               ),
-              child: Form(
-                key: _formKey,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 18.0,
-                    vertical: 30.0,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 50.0, left: 15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                        size: 30,
+                      ),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+
+                    const SizedBox(height: 10),
+                    const Text(
+                      '¡Hola,\nBienvenido! a Buzos Mt',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 35,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 10),
+                    Center(
+                      child: Image.asset(
+                        'assets/images/logo.png',
+                        width: MediaQuery.of(context).size.width * 0.45,
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 500.0),
+              child: Container(
+                height: double.infinity,
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(30),
+                    topRight: Radius.circular(30),
                   ),
-                  child: Column(
-                    children: [
-                      CustomDropdownButtonFormField(
-                        labelText: 'Tipo de documento',
-                        items: items,
-                        prefixIcon: Icons.badge,
-                        error: _errors['tDocError'],
-                        onChanged: (value) {
-                          setState(() {
-                            tDoc = value;
-                          });
-                        },
-                      ),
-                      const SizedBox(height: 10),
-                      Customtextformfiel(
-                        prefixIcon: Icons.person,
-                        labelText: 'Numero de documento',
-                        isPassword: false,
-                        controller: numDocController,
-                        error: _errors['numDocError'],
-                      ),
-                      const SizedBox(height: 10),
-                      Customtextformfiel(
-                        prefixIcon: Icons.lock,
-                        labelText: 'Contraseña',
-                        isPassword: true,
-                        controller: passwordController,
-                        error: _errors['passwordError'],
-                      ),
-                      const SizedBox(height: 20),
-                      Container(
-                        height: 55,
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: const Color.fromARGB(255, 15, 52, 67),
-                        ),
-                        child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.transparent,
-                            shadowColor: Colors.transparent,
-                          ),
-                          onPressed: () {
-                            dataValidate();
+                ),
+                child: Form(
+                  key: _formKey,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 18.0,
+                      vertical: 30.0,
+                    ),
+                    child: Column(
+                      children: [
+                        CustomDropdownButtonFormField(
+                          labelText: 'Tipo de documento',
+                          items: items,
+                          prefixIcon: Icons.badge,
+                          error: _errors['tDocError'],
+                          onChanged: (value) {
+                            setState(() {
+                              tDoc = value;
+                            });
                           },
-                          child: const Text(
-                            'Ingresar',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20,
-                            ),
-                          ),
                         ),
-                      ),
-                    ],
+                        const SizedBox(height: 10),
+                        Customtextformfiel(
+                          prefixIcon: Icons.person,
+                          labelText: 'Numero de documento',
+                          isPassword: false,
+                          controller: numDocController,
+                          error: _errors['numDocError'],
+                        ),
+                        const SizedBox(height: 10),
+                        Customtextformfiel(
+                          prefixIcon: Icons.lock,
+                          labelText: 'Contraseña',
+                          isPassword: true,
+                          controller: passwordController,
+                          error: _errors['passwordError'],
+                        ),
+                        const SizedBox(height: 20),
+                        CustomElevatedButton(
+                          text: 'Ingresar',
+                          onPressed: () {
+                            dataValidate(); // tu función personalizada
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

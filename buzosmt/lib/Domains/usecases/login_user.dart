@@ -1,22 +1,19 @@
+import 'package:buzosmt/Domains/usecases/getdocs_usecase.dart';
 import 'package:buzosmt/Presentation/screens/login_screen.dart';
 import '../models/user_model.dart';
 
-class UserValidator {
-  Future<Map<String?, dynamic>> validateLogin(
-    int? tDoc,
-    String numDoc,
-    String password,
-  ) async {
-    final errors = {
-      if (tDoc == 0 || tDoc == null) 'tDocError': 'Tipo de documento no válido',
-      if (numDoc.isEmpty) 'numDocError': 'Número de documento requerido',
-      if (password.isEmpty) 'passwordError': 'Contraseña requerida',
-    };
-    if (errors.isEmpty) {
-      final User user = User(tDoc: tDoc, numDoc: numDoc, password: password);
-      user.jsonForLogin();
-    }
-
-    return errors;
+class UsesCasesUser {
+  final User user;
+  UsesCasesUser(this.user);
+  Map<String, String> loginValidate() {
+  return {
+    if (user.tDoc == null || user.tDoc == 0) 'tDocError': 'Selecciona un tipo de documento',
+    if (user.numDoc.isEmpty) 'numDocError': 'Número de documento requerido',
+    if (user.password.isEmpty) 'passwordError': 'Contraseña requerida',
+  };
+}
+  Future<Map<String, dynamic>> loginUser() async {
+    final status = await user.jsonForLogin();
+    return status;
   }
 }
