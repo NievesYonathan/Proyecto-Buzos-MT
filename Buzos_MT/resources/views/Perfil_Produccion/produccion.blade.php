@@ -2,7 +2,7 @@
     <div class="my-5">
         <div class="row">
             <div class="mb-5 col-sm-6 col-md-6 col-lg-5">
-                <div class="pro-btns">
+{{--                 <div class="pro-btns">
                     <div class="pro-btn">
                         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#agregar">
                             <i class="fa-solid fa-square-plus fa-2xl" style="color: #2baf54;"></i>
@@ -253,7 +253,7 @@
                     </div>
                     <!-- Fin Modal Tarea -->
                 </div>
-
+ --}}
                 <h4 class="pro-resumen-titulo">Resumen de Producciones:</h4>
                 <div class="pro-resumen">
                     @foreach ($producciones as $produccion)
