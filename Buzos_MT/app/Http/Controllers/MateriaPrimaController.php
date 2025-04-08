@@ -41,7 +41,13 @@ class MateriaPrimaController extends Controller
     public function search(Request $request)
     {
         $busqueda = $request->input('busqueda');
-        return view('Perfil_Inventario.search-item-results', compact('busqueda'));
+
+        $materiaPrima = MateriaPrima::where('mat_pri_nombre', 'LIKE', '%' . $busqueda . '%')->get();
+
+        return view('Perfil_Inventario.search-item-results', [
+            'busqueda' => $busqueda,
+            'materiaPrima' => $materiaPrima
+        ]);
     }
 
     public function form_nuevo()
@@ -56,33 +62,48 @@ class MateriaPrimaController extends Controller
 
     public function store(Request $request)
     {
+        $request->validate([
+            'nombre' => 'required|string|max:140',
+            'descripcion' => 'nullable|string|max:255',
+            'unidad_medida' => 'required|string|max:20',
+            'cantidad' => 'required|integer|min:1',
+            'estado' => 'required|boolean',
+            'fecha_compra' => 'required|date',
+            'proveedor_id' => 'required|integer',
+        ]);
+
         try {
-            // Enviar los datos a la API
             $response = Http::post('http://localhost:8000/api/materia-prima', [
-                'nombre' => $request->input('nombre'),
-                'cantidad' => $request->input('cantidad'),
-                'proveedor_id' => $request->input('proveedor_id'),
+                'mat_pri_nombre' => $request->input('nombre'),
+                'mat_pri_descripcion' => $request->input('descripcion'),
+                'mat_pri_unidad_medida' => $request->input('unidad_medida'),
+                'mat_pri_cantidad' => $request->input('cantidad'),
+                'mat_pri_estado' => $request->input('estado'),
+                'fecha_compra_mp' => $request->input('fecha_compra'),
+                'proveedores_id_proveedores' => $request->input('proveedor_id'),
             ]);
 
             if ($response->successful()) {
-                return redirect()->to(route('item-list'))->with('success', 'Materia prima agregada correctamente.');
+                return redirect()->route('lista-item')->with('success', 'Materia prima creada exitosamente.');
+            } else {
+                return redirect()->back()->with('error', 'Error al crear materia prima: ' . $response->body());
             }
         } catch (\Exception $e) {
-            return redirect()->route('item-list')->with('error', 'Error al agregar materia prima.');
+            return redirect()->back()->with('error', 'Excepción: ' . $e->getMessage());
         }
     }
 
     public function edit($id)
-{
-    $materiaPrima = MateriaPrima::findOrFail($id);
-    $estados = Estado::all();
-    $proveedores = User::whereHas('cargos', function ($query) {
-        $query->where('id_cargos', 4);
-    })->get();
-
-    // Devolver la vista explícitamente
-    return response()->view("Perfil_Inventario.update-item", compact("materiaPrima", "estados", "proveedores"));
-}
+    {
+        $materiaPrima = MateriaPrima::findOrFail($id);
+        $estados = Estado::all();
+        $proveedores = User::whereHas('cargos', function ($query) {
+            $query->where('id_cargos', 4);
+        })->get();
+    
+        // Devolver la vista explícitamente
+        return response()->view("Perfil_Inventario.update-item", compact("materiaPrima", "estados", "proveedores"));
+    }
 
     public function delete($id)
     {

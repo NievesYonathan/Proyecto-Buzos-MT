@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\BuzosImageController;
-use App\Http\Controllers\API\MateriaPrimaController;
+use App\Http\Controllers\Api\MateriaPrimaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserProfileController;
@@ -17,23 +17,22 @@ Route::delete('/user/image/delete/{id}', [UserProfileController::class, 'deleteI
 Route::post('/producto/image/{id}', [BuzosImageController::class, 'storeImagePro'])->name('storeImagePro');
 Route::delete('/producto/image/delete/{id}', [BuzosImageController::class, 'deleteImagePro'])->name('deleteImagePro');
 
-// Rutas para 'Jefe inventario'
-Route::get('/materia-prima', [MateriaPrimaController::class, 'index'])->name('lista-de-item');
-Route::post('/materia-prima-agregar', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto');
-<<<<<<< HEAD
-Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class,'update'])->name('update-producto');
-Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'delete'])->name('materia-prima-delete');
-
 // Rutas para el CRUD de Etapas
 Route::get('/etapas', [EtapaController::class, 'index']); // Obtener todas las etapas
 Route::post('/etapas', [EtapaController::class, 'store']); // Crear una nueva etapa
 Route::get('/etapas/{id}', [EtapaController::class, 'show']); // Obtener una etapa por ID
 Route::put('/etapas/{id}', [EtapaController::class, 'update']); // Actualizar una etapa
 Route::delete('/etapas/{id}', [EtapaController::class, 'destroy']); // Eliminar una etapa
-=======
 Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'update'])->name('update-producto');
 
-// API materia prima
-Route::apiResource('materia-prima', MateriaPrimaController::class);
+// // Rutas para 'Jefe inventario'  API materia prima
+Route::get('/materia-prima', [MateriaPrimaController::class, 'index']);
+Route::post('/materia-prima', [MateriaPrimaController::class, 'store']);
+Route::get('/materia-prima/{id}', [MateriaPrimaController::class, 'show']);
+Route::put('/materia-prima/{id}', [MateriaPrimaController::class, 'update']);
+Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'destroy']);
+Route::get('/materia-prima-buscar', [MateriaPrimaController::class, 'buscar']);
 
->>>>>>> migracion-materia-prima
+
+
+

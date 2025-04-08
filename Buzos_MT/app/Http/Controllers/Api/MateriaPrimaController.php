@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -18,7 +18,6 @@ class MateriaPrimaController extends Controller
     // Crear un nuevo registro
     public function store(Request $request)
     {
-        // Validar la solicitud antes de crear el registro
         $request->validate([
             'mat_pri_nombre' => 'required|string|max:255',
             'mat_pri_descripcion' => 'nullable|string',
@@ -26,19 +25,33 @@ class MateriaPrimaController extends Controller
             'mat_pri_cantidad' => 'required|integer|min:1',
             'mat_pri_estado' => 'required|boolean',
             'fecha_compra_mp' => 'required|date',
+            'proveedores_id_proveedores' => 'required|integer'
         ]);
 
-        // Crear el nuevo registro asegurando que solo se usen los datos validados
         $nuevoDato = MateriaPrima::create($request->only([
             'mat_pri_nombre',
             'mat_pri_descripcion',
             'mat_pri_unidad_medida',
             'mat_pri_cantidad',
             'mat_pri_estado',
-            'fecha_compra_mp'
+            'fecha_compra_mp',
+            'proveedores_id_proveedores'
         ]));
 
         return response()->json($nuevoDato, 201);
+    }
+
+    public function buscar(Request $request)
+    {
+        // Validación de la solicitud
+        $request->validate([
+            'nombre' => 'required|string'
+        ]);
+
+        $nombre = $request->query('nombre');
+        $resultados = MateriaPrima::where('mat_pri_nombre', 'LIKE', '%' . $nombre . '%')->get();
+
+        return response()->json($resultados);
     }
 
     // Obtener un solo registro
@@ -66,7 +79,7 @@ class MateriaPrimaController extends Controller
             'mat_pri_unidad_medida' => 'sometimes|required|string|max:50',
             'mat_pri_cantidad' => 'sometimes|required|integer|min:1',
             'mat_pri_estado' => 'sometimes|required|boolean',
-            'fecha_compra_mp' => 'sometimes|required|date',
+            'fecha_compra_mp' => 'sometimes|required|date'
         ]);
 
         $dato->update($request->only([
@@ -75,7 +88,8 @@ class MateriaPrimaController extends Controller
             'mat_pri_unidad_medida',
             'mat_pri_cantidad',
             'mat_pri_estado',
-            'fecha_compra_mp'
+            'fecha_compra_mp',
+            'proveedores_id_proveedores'
         ]));
 
         if (!$request->expectsJson()) {

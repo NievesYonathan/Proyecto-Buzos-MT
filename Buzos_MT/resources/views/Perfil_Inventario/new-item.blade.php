@@ -2,7 +2,7 @@
     <!--CONTENT-->
     <div class="container-fluid mt-5">
         <form action="{{ route('reg-nuevo-producto')}}" class="form-neon" autocomplete="off"
-            method="post">
+            method="POST">
             @csrf
             <fieldset>
                 <legend><i class="far fa-plus-square"></i> &nbsp; Información del item</legend>
@@ -46,11 +46,11 @@
                                 <label for="estado" class="bmd-label-floating">Estado</label>
                                 <select class="form-control" name="estado" id="estado">
                                     @foreach ($estados as $estado)
-                                        @if ($estado->nombre_estado === 'Activo' || $estado->nombre_estado === 'Inactivo')
-                                        <option value="{{ $estado->id_estados }}">
-                                            {{ $estado->nombre_estado }}
-                                        </option>
-                                        @endif
+                                    @if ($estado->nombre_estado === 'Activo' || $estado->nombre_estado === 'Inactivo')
+                                    <option value="{{ $estado->id_estados }}">
+                                        {{ $estado->nombre_estado }}
+                                    </option>
+                                    @endif
                                     @endforeach
                                 </select>
                             </div>
@@ -67,12 +67,12 @@
                                 <label for="proveedor_id" class="bmd-label-floating">Proveedor</label>
                                 <select class="form-control" name="proveedor_id" id="proveedor_id">
                                     @foreach ($proveedores as $proveedor)
-                                        <option value="{{ $proveedor->num_doc }}">
-                                            {{ $proveedor->usu_nombres }}
-                                            {{ $proveedor->usu_apellidos }}
-                                        </option>
+                                    <option value="{{ $proveedor->num_doc }}">
+                                        {{ $proveedor->usu_nombres }} {{ $proveedor->usu_apellidos }}
+                                    </option>
                                     @endforeach
                                 </select>
+
                             </div>
                         </div>
                     </div>

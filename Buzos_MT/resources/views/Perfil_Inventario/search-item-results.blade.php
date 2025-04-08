@@ -25,16 +25,10 @@
         </form>
         <br>
 
-        @if (!empty($materiaPrima) && is_array($materiaPrima))
-            @if (count($materiaPrima) > 0)
-                <p class="text-center table-light" style="font-size: 20px;">
-                    Resultados de la búsqueda: <strong>"{{ $busqueda }}"</strong>
-                </p>
-            @else
-                <p class="text-center table-light" style="font-size: 20px;">
-                    <strong>"No hay resultados para tu búsqueda"</strong>
-                </p>
-            @endif
+        @if ($materiaPrima->isNotEmpty())
+            <p class="text-center table-light" style="font-size: 20px;">
+                Resultados de la búsqueda: <strong>"{{ $busqueda }}"</strong>
+            </p>
 
             <div class="table-responsive">
                 <table class="table table-dark table-sm">
@@ -49,17 +43,17 @@
                     <tbody>
                         @foreach ($materiaPrima as $item)
                             <tr class="text-center table-light details">
-                                <td>{{ $item['id_materia_prima'] }}</td>
-                                <td>{{ $item['mat_pri_nombre'] }}</td>
-                                <td>{{ $item['mat_pri_cantidad'] }}</td>
+                                <td>{{ $item->id_materia_prima }}</td>
+                                <td>{{ $item->mat_pri_nombre }}</td>
+                                <td>{{ $item->mat_pri_cantidad }}</td>
                                 <td>
-                                    <form action="{{ route('editar-producto', $item['id_materia_prima'])}}" method="post">
+                                    <form action="{{ route('editar-producto', $item->id_materia_prima) }}" method="post">
                                         @csrf
-                                        <input type="hidden" name="matId" value="{{ $item['id_materia_prima'] }}">
-                                        <input type="hidden" name="matNombre" value="{{ $item['mat_pri_nombre'] }}">
-                                        <input type="hidden" name="matDescripcion" value="{{ $item['mat_pri_descripcion'] }}">
-                                        <input type="hidden" name="matCantidad" value="{{ $item['mat_pri_cantidad'] }}">
-                                        <input type="hidden" name="matEstado" value="{{ $item['mat_pri_estado'] }}">
+                                        <input type="hidden" name="matId" value="{{ $item->id_materia_prima }}">
+                                        <input type="hidden" name="matNombre" value="{{ $item->mat_pri_nombre }}">
+                                        <input type="hidden" name="matDescripcion" value="{{ $item->mat_pri_descripcion }}">
+                                        <input type="hidden" name="matCantidad" value="{{ $item->mat_pri_cantidad }}">
+                                        <input type="hidden" name="matEstado" value="{{ $item->mat_pri_estado }}">
                                         <button type="submit" class="btn btn-success">
                                             <i class="fas fa-sync-alt"></i>
                                         </button>
@@ -70,6 +64,10 @@
                     </tbody>
                 </table>
             </div>
+        @else
+            <p class="text-center table-light" style="font-size: 20px;">
+                <strong>"No hay resultados para tu búsqueda"</strong>
+            </p>
         @endif
     </div>
 </x-app-layout>
