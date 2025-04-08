@@ -10,6 +10,7 @@ use App\Http\Controllers\ListaCargoController;
 use App\Http\Controllers\MateriaPrimaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TareaController;
+use App\Http\Controllers\Api\EtapaController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -96,6 +97,13 @@ Route::put('/produccion/{id}', [produccionController::class, 'update'])->name('u
 Route::get('/productos-fabricados', [produccionController::class, 'index'])->name('pro_fabricados');
 Route::post('/productos-formulario', [produccionController::class, 'store'])->name('nuevo-producto');
 
+
+// Rutas para las vistas
+Route::get('/perfil-produccion/etapas', [EtapaController::class, 'indexView'])->name('perfil-produccion.etapas'); // Mostrar etapas
+Route::post('/perfil-produccion/etapas', [EtapaController::class, 'storeFromView'])->name('perfil-produccion.etapas.store'); // Crear nueva etapa
+Route::get('/perfil-produccion/etapas/{id}/edit', [EtapaController::class, 'updateView'])->name('perfil-produccion.etapas.edit'); // Editar etapa
+Route::put('/perfil-produccion/etapas/{id}', [EtapaController::class, 'updateFromView'])->name('perfil-produccion.etapas.update'); // Actualizar etapa
+Route::delete('/perfil-produccion/etapas/{id}', [EtapaController::class, 'destroy'])->name('perfil-produccion.etapas.destroy'); //para eliminar :)
 //Rutas de 'Tarea'
 Route::post('/tareas-crear', [TareaController::class, 'store'])->name('nueva_tarea');
 Route::get('/tareas-produccion', [TareaController::class, 'index'])->name('pro_tareas');
@@ -111,9 +119,13 @@ Route::post('/tarea/actualizar/{id_tarea}/{id_empleado_tarea}', [TareaController
 // Rutas para 'Jefe Materia Prima'
 Route::get('/materia-prima', [MateriaPrimaController::class, 'index'])->name('lista-item');
 Route::get('/materia-prima-agregar-formulario', [MateriaPrimaController::class, 'form_nuevo'])->name('vistaForm');
-Route::post('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'show'])->name('Detalles-producto');
+Route::post('/nuevo-producto', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto');
+Route::get('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'show'])->name('Detalles-producto');
 Route::get('/materia-prima-buscar', [MateriaPrimaController::class, 'showSearchForm'])->name('buscar-producto');
 Route::post('/materia-prima-resultados', [MateriaPrimaController::class, 'search'])->name('resultados-producto');
 Route::post('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'edit'])->name('editar-producto');
+Route::get('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'edit'])->name('editar-producto');
+
+
 
 require __DIR__ . '/auth.php';
