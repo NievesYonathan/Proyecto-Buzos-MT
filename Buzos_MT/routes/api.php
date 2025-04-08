@@ -1,20 +1,20 @@
 <?php
 
 use App\Http\Controllers\Api\BuzosImageController;
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 use App\Http\Controllers\Api\EmpTareasController;
 use App\Http\Controllers\Api\ProduccionController;
 use App\Http\Controllers\Api\RegProMateriaPrimaController;
-use App\Http\Controllers\MateriaPrimaController;
-=======
-use App\Http\Controllers\API\MateriaPrimaController;
->>>>>>> origin/main
-=======
-use App\Http\Controllers\Api\EmpTareasController;
-use App\Http\Controllers\Api\ProduccionController;
-use App\Http\Controllers\MateriaPrimaController;
->>>>>>> origin/main
+//use App\Http\Controllers\MateriaPrimaController;
+use App\Http\Controllers\Api\MateriaPrimaController;
+//use App\Http\Controllers\Api\EmpTareasController;
+//use App\Http\Controllers\Api\ProduccionController;
+//use App\Http\Controllers\MateriaPrimaController;
+//use App\Http\Controllers\MateriaPrimaController;
+//use App\Http\Controllers\Api\MateriaPrimaController;
+//use App\Http\Controllers\Api\EmpTareasController;
+//use App\Http\Controllers\Api\ProduccionController;
+//use App\Http\Controllers\MateriaPrimaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserProfileController;
@@ -38,11 +38,6 @@ Route::post('/materia-prima-agregar', [MateriaPrimaController::class, 'store'])-
 Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class,'update'])->name('update-producto');
 Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'delete'])->name('materia-prima-delete');
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> origin/main
-
 
 
 // Rutas para 'Jefe Producción'
@@ -55,21 +50,14 @@ Route::patch('/produccion-editar-selec/{id}', [ProduccionController::class, 'upd
 Route::delete('/produccion-eliminar/{id}', [ProduccionController::class, 'destroy']);
 
 Route::post('/produccion-tareas/{id}', [EmpTareasController::class, 'store']);
-<<<<<<< HEAD
-=======
+
 // Rutas para el CRUD de Etapas
 Route::get('/etapas', [EtapaController::class, 'index']); // Obtener todas las etapas
 Route::post('/etapas', [EtapaController::class, 'store']); // Crear una nueva etapa
 Route::get('/etapas/{id}', [EtapaController::class, 'show']); // Obtener una etapa por ID
 Route::put('/etapas/{id}', [EtapaController::class, 'update']); // Actualizar una etapa
 Route::delete('/etapas/{id}', [EtapaController::class, 'destroy']); // Eliminar una etapa
-=======
 Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'update'])->name('update-producto');
 
 // API materia prima
 Route::apiResource('materia-prima', MateriaPrimaController::class);
-
->>>>>>> migracion-materia-prima
->>>>>>> origin/main
-=======
->>>>>>> origin/main
