@@ -116,7 +116,7 @@ Route::get('/tareas-asigadas', [TareaController::class, 'tareasAsignadas'])->nam
 Route::get('/tarea/editar/{id_tarea}/{id_empleado_tarea}', [TareaController::class, 'editarEstado'])->name('tarea.editar');
 Route::post('/tarea/actualizar/{id_tarea}/{id_empleado_tarea}', [TareaController::class, 'actualizarEstado'])->name('tarea.actualizarEstado');
 
-// Rutas para 'Jefe Materia Prima'
+// Rutas para 'Jefe inventario'
 Route::get('/materia-prima', [MateriaPrimaController::class, 'index'])->name('lista-item');
 Route::get('/materia-prima-agregar-formulario', [MateriaPrimaController::class, 'form_nuevo'])->name('vistaForm');
 Route::post('/nuevo-producto', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto');

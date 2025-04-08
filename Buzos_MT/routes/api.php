@@ -5,16 +5,7 @@ use App\Http\Controllers\Api\BuzosImageController;
 use App\Http\Controllers\Api\EmpTareasController;
 use App\Http\Controllers\Api\ProduccionController;
 use App\Http\Controllers\Api\RegProMateriaPrimaController;
-//use App\Http\Controllers\MateriaPrimaController;
 use App\Http\Controllers\Api\MateriaPrimaController;
-//use App\Http\Controllers\Api\EmpTareasController;
-//use App\Http\Controllers\Api\ProduccionController;
-//use App\Http\Controllers\MateriaPrimaController;
-//use App\Http\Controllers\MateriaPrimaController;
-//use App\Http\Controllers\Api\MateriaPrimaController;
-//use App\Http\Controllers\Api\EmpTareasController;
-//use App\Http\Controllers\Api\ProduccionController;
-//use App\Http\Controllers\MateriaPrimaController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserProfileController;
@@ -33,8 +24,8 @@ Route::delete('/producto/image/delete/{id}', [BuzosImageController::class, 'dele
 
 // Rutas para 'Jefe Materia Prima'
 Route::get('/materia-prima', [MateriaPrimaController::class, 'index'])->name('lista-de-item');
-// Route::post('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'show'])->name('Detalles-producto');
-Route::post('/materia-prima-agregar', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto-api');
+Route::post('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'show'])->name('Detalles-producto');
+Route::post('/materia-prima-agregar', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto');
 Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class,'update'])->name('update-producto');
 Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'delete'])->name('materia-prima-delete');
 

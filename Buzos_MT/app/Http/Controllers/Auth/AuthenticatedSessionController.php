@@ -57,7 +57,7 @@ class AuthenticatedSessionController extends Controller
         // Autenticación exitosa
         Auth::login($usuario); // Usa el objeto de usuario
         // Notificación de éxito con paquete mckenziearts/laravel-notify  
-        notify()->success('Welcome to Laravel Notify ⚡️');
+        //notify()->success('Welcome to Laravel Notify ⚡️');
         // Redirige a la ruta dashboard
         return redirect()->intended(route('dashboard'));
     }
