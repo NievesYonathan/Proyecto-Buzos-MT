@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\BuzosImageController;
 <<<<<<< HEAD
 use App\Http\Controllers\Api\EmpTareasController;
 use App\Http\Controllers\Api\ProduccionController;
+use App\Http\Controllers\Api\RegProMateriaPrimaController;
 use App\Http\Controllers\MateriaPrimaController;
 =======
 use App\Http\Controllers\API\MateriaPrimaController;
@@ -18,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\Api\EtapaController;
+use App\Models\RegProMateriaPrima;
 
 // Rutas para gestión de imágenes de usuarios
 Route::post('/user/image/{id}', [UserProfileController::class, 'storeImage'])->name('storeImage');
@@ -47,6 +49,7 @@ Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'delete'])-
 Route::get('/producciones', [ProduccionController::class, 'index']);
 Route::get('/produccion/{id}', [ProduccionController::class, 'show']);
 Route::post('/nueva-produccion', [ProduccionController::class, 'store']);
+Route::post('/nueva-prod-matPrima/{id}', [RegProMateriaPrimaController::class, 'store']);
 Route::put('/produccion-editar/{id}', [ProduccionController::class, 'update']);
 Route::patch('/produccion-editar-selec/{id}', [ProduccionController::class, 'updatePartial']);
 Route::delete('/produccion-eliminar/{id}', [ProduccionController::class, 'destroy']);

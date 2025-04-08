@@ -3,20 +3,20 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Produccion;
 use Illuminate\Http\Request;
+use App\Models\RegProMateriaPrima;
 use Illuminate\Support\Facades\Validator;
 
-class ProduccionController extends Controller
+class RegProMateriaPrimaController extends Controller
 {
     public function index()
     {
-        $producto = Produccion::with(['etapa', 'materiasPrimas', 'tareas'])->get();
+        $producto = RegProMateriaPrima::with(['etapa', 'materiasPrimas', 'tareas'])->get();
 
         if(!$producto)
         {
             $data = [
-                'message' => 'No se encontró producciones.',
+                'message' => 'No se encontró RegProMateriaPrimaes.',
                 'status' => 200
             ];
             return response()->json($data, 404);
@@ -32,7 +32,7 @@ class ProduccionController extends Controller
 
     public function show($id)
     {
-        $producto = Produccion::with(['etapa', 'materiasPrimas', 'tareas'])->find($id);
+        $producto = RegProMateriaPrima::with(['etapa', 'materiasPrimas', 'tareas'])->find($id);
 
         if(!$producto){
             $data = [
@@ -50,14 +50,11 @@ class ProduccionController extends Controller
         return response()->json($data, 200);
     }
 
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
         $validator = Validator::make($request->all(), [
-        'pro_nombre' => 'required',
-        'pro_fecha_inicio' => 'required',
-        'pro_fecha_fin' => 'required',
-        'pro_cantidad' => 'required',
-        'pro_etapa' => 'required'
+        'reg_pmp_cantidad_usada' => 'required',
+        'id_pro_materia_prima' => 'required'
         ]);
 
         if ($validator->fails()){
@@ -69,12 +66,11 @@ class ProduccionController extends Controller
             return response()->json($data, 400);
         }
 
-        $producto = Produccion::create([
-            'pro_nombre' => $request->pro_nombre,
-            'pro_fecha_inicio' => $request->pro_fecha_inicio,
-            'pro_fecha_fin' => $request->pro_fecha_fin,
-            'pro_cantidad' => $request->pro_cantidad,
-            'pro_etapa' => $request->pro_etapa
+        $producto = RegProMateriaPrima::create([
+            'reg_pmp_cantidad_usada' => $request->reg_pmp_cantidad_usada,
+            'reg_pmp_fecha_registro' => now(),
+            'id_pro_materia_prima' => $request->id_pro_materia_prima,
+            'id_produccion' => $id
         ]);
 
         if(!$producto){
@@ -95,7 +91,7 @@ class ProduccionController extends Controller
 
     public function update(Request $request, $id)
     {
-        $producto = Produccion::find($id);
+        $producto = RegProMateriaPrima::find($id);
 
         if(!$producto){
             $data = [
@@ -140,7 +136,7 @@ class ProduccionController extends Controller
 
     public function updatePartial(Request $request, $id)
     {
-        $producto = Produccion::find($id);
+        $producto = RegProMateriaPrima::find($id);
 
         if(!$producto){
             $data = [
@@ -182,7 +178,7 @@ class ProduccionController extends Controller
 
     public function destroy($id)
     {
-        $producto = Produccion::find($id);
+        $producto = RegProMateriaPrima::find($id);
 
         if(!$producto){
             $data = [
@@ -201,5 +197,4 @@ class ProduccionController extends Controller
 
         return response()->json($data, 200);
     }
-
 }
