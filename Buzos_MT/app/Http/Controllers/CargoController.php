@@ -2,59 +2,57 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cargo;
-use App\Models\User;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class CargoController extends Controller
 {
+    protected $apiUrl;
+
+    public function __construct()
+    {
+        $this->apiUrl = url('/api/cargos');
+    }
+
     public function index()
     {
-        // Obtener todos los estados
-        $cargos = Cargo::with('usuarios')->paginate(10);
+        $response = Http::get($this->apiUrl);
+        $data = $response->json();
+
+        $cargos = $data['cargos']['data'] ?? [];
+
         return view('Perfil-Admin-Usuarios.cargos', compact('cargos'));
     }
 
     public function create(Request $request)
     {
-        $cargos = Cargo::all();
-        // Aquí podrías retornar la vista donde se muestra el formulario.
-        return view('cargos');
-    }
+        $response = Http::get($this->apiUrl);
+        $data = $response->json();
 
+        $cargos = $data['cargos']['data'] ?? [];
+
+        return view('cargos', compact('cargos'));
+    }
 
     public function store(Request $request)
     {
-
         $request->validate([
-            'car_nombre' => 'required|string|max:255',  // Validación del campo nombre
+            'car_nombre' => 'required|string|max:255',
         ]);
 
-        // Crear un nuevo tipo de documento
-        $cargos = Cargo::create([
+        Http::post($this->apiUrl, [
             'car_nombre' => $request->car_nombre,
         ]);
 
-
-        // Guardar en la base de datos
-        $cargos->save();
-
-        // Redirigir o devolver una respuesta (puede ser JSON, o redirigir a la lista)
         return redirect()->route('cargos')->with('success', 'Cargo creado correctamente');
     }
 
     public function update(Request $request, $id_cargos)
     {
-        $cargos = Cargo::where('id_cargos', $id_cargos)->first();
-
-
-        // Actualiza solo los campos que están presentes en el request
-        $cargos->update([
+        Http::put($this->apiUrl . '/' . $id_cargos, [
             'car_nombre' => $request->car_nombre,
-
         ]);
 
-        return redirect()->route('cargos')->with('success', 'Cargo actualizada correctamente.');
+        return redirect()->route('cargos')->with('success', 'Cargo actualizado correctamente');
     }
 }

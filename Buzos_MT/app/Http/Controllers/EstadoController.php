@@ -2,59 +2,60 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Estado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class EstadoController extends Controller
 {
+    protected $apiUrl;
+
+    public function __construct()
+    {
+        $this->apiUrl = url('/api/estados');
+    }
+
     public function index()
     {
-        // Obtener todos los estados
-        $estados = Estado::all();
+        $response = Http::get($this->apiUrl);
+        $data = $response->json();
+
+        $estados = $data['estados'] ?? [];
+
         return view('Perfil-Admin-Usuarios.vistaEstados', compact('estados'));
     }
 
     public function crearEstado(Request $request)
     {
-        // Validar y crear un nuevo estado
-        $request->validate(['nombre_estado' => 'required|string|max:255']);
-        Estado::create(['nombre_estado' => $request->nombre_estado]);
+        $request->validate([
+            'nombre_estado' => 'required|string|max:255',
+        ]);
+
+        Http::post($this->apiUrl, [
+            'nombre_estado' => $request->nombre_estado,
+        ]);
 
         return redirect()->back()->with('success', 'Estado creado correctamente.');
     }
 
-
     public function store(Request $request)
     {
-        // Validar los datos antes de almacenarlos
-        $validated = $request->validate([
-            'nombre_estado' => 'required|string|max:255',  // Validación del campo nombre
-
+        $request->validate([
+            'nombre_estado' => 'required|string|max:255',
         ]);
 
-        // Crear un nuevo tipo de documento
-        $estados = new Estado();
-        $estados->nombre_estado = $validated['nombre_estado'];
+        Http::post($this->apiUrl, [
+            'nombre_estado' => $request->nombre_estado,
+        ]);
 
-
-        // Guardar en la base de datos
-        $estados->save();
-
-        // Redirigir o devolver una respuesta (puede ser JSON, o redirigir a la lista)
         return redirect()->route('vistaEstados')->with('success', 'Estado creado correctamente');
     }
 
     public function update(Request $request, $id_estados)
     {
-        $estados = Estado::where('id_estados', $id_estados)->first();
-
-
-        // Actualiza solo los campos que están presentes en el request
-        $estados->update([
+        Http::put($this->apiUrl . '/' . $id_estados, [
             'nombre_estado' => $request->nombre_estado,
-
         ]);
 
-        return redirect()->route('vistaEstados')->with('success', 'estado actualzado actualizada correctamente.');
+        return redirect()->route('vistaEstados')->with('success', 'Estado actualizado correctamente.');
     }
 }
