@@ -28,4 +28,5 @@ Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'delete'])-
 Route::get('/Login', [ApiAuthenticatedSessionController::class, 'create']);
 Route::post('/Login', [ApiAuthenticatedSessionController::class, 'store']);
 Route::post('/Register',[ApiRegisteredUserController::class, 'store']);
-Route::get('/Register',[ApiRegisteredUserController::class, 'create']);
+// Route::get('/Register',[ApiRegisteredUserController::class, 'create']);
+Route::middleware('jwt')->delete('/logout', [ApiAuthenticatedSessionController::class, 'destroy']);

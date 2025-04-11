@@ -1,6 +1,7 @@
 import 'package:buzosmt/Data/DataSources/remote/Login_remote.dart';
 
 class Tdoc {
+  // Objeto del login de la 
   final Login apiService = Login();
   
   Future<Map<int, String>> getDocumentosMap() async {

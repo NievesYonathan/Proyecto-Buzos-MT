@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -56,12 +55,12 @@ class AuthenticatedSessionController extends Controller
 
         // Autenticación exitosa
         Auth::login($usuario); // Usa el objeto de usuario
-        // Notificación de éxito con paquete mckenziearts/laravel-notify  
+        // Notificación de éxito con paquete mckenziearts/laravel-notify
         // notify()->success('Welcome to Laravel Notify ⚡️');
         // Redirige a la ruta dashboard
         return redirect()->intended(route('dashboard'));
     }
-    
+
     /**
      * Destroy an authenticated session.
      */

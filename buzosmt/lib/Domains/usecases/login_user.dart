@@ -9,6 +9,7 @@ class UsesCasesUser {
   return {
     if (user.tDoc == null || user.tDoc == 0) 'tDocError': 'Selecciona un tipo de documento',
     if (user.numDoc.isEmpty) 'numDocError': 'Número de documento requerido',
+    if (RegExp(r'[a-zA-Z]').hasMatch(user.numDoc)) 'numDocError': 'El número de documento no puede contener letras',
     if (user.password.isEmpty) 'passwordError': 'Contraseña requerida',
   };
 }

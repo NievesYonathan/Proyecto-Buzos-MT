@@ -43,17 +43,17 @@ class ApiRegisteredUserController extends Controller
         return redirect()->route('register');
     }
 
-    public function create(): JsonResponse
-    {
-        $tiposDoc = TipoDoc::all();
-        $user = Session::get('googleUser');
+    // public function create(): JsonResponse
+    // {
+    //     $tiposDoc = TipoDoc::all();
+    //     // $user = Session::get('googleUser');
     
-        return response()->json([
-            'tipos_documento' => $tiposDoc,
-            'googleUser' => $user,
-            'message' => 'Datos cargados correctamente',
-        ]);
-    }
+    //     return response()->json([
+    //         'tipos_documento' => $tiposDoc,
+    //         // 'googleUser' => $user,
+    //         // 'message' => 'Datos cargados correctamente',
+    //     ]);
+    // }
     
 
     /**

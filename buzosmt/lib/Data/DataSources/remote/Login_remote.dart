@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login {
   // URL de la API
@@ -28,14 +29,10 @@ class Login {
       // print(status);
       return status;
     }
-    // print(status);
+    final token = status['token'] ?? '';
+    final tockLocal = await SharedPreferences.getInstance();
+
+    await tockLocal.setString('token', token);
     return status;
   }
-
-  // Future<void> _loadDocs() async {
-  //   final items = await apiService.getDoc();
-  //   setState(() {
-  //     docItems = items;
-  //   });
-  // }
 }
