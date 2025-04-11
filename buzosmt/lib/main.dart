@@ -61,7 +61,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // Imagen de fondo
         Positioned.fill(
           child: Image.asset(
-            '../assets/images/verdecito.png',
+            'assets/images/verdecito.png',
             fit: BoxFit.cover,
           ),
         ),
@@ -75,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
             children: [
               // Logo en la parte superior
               Image.asset(
-                '../assets/images/image.png',
+                'assets/images/image.png',
                 height: 150,  // Ajusta este valor según necesites
                 fit: BoxFit.contain,
                 color: Colors.white, // Cambiado a blanco para mejor contraste
