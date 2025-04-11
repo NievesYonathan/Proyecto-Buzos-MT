@@ -78,6 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 '../assets/images/image.png',
                 height: 150,  // Ajusta este valor según necesites
                 fit: BoxFit.contain,
+                color: Colors.white, // Cambiado a blanco para mejor contraste
               ),
               const SizedBox(height: 30),
               
