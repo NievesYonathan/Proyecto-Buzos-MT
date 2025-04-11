@@ -9,7 +9,6 @@ class Login {
   //Lista de documentos
   Future<List<dynamic>> getDoc() async {
     final response = await http.get(url);
-
     if (response.statusCode == 400) {
       return [];
     }

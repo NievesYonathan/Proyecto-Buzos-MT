@@ -17,7 +17,7 @@ class Customtextformfiel extends StatelessWidget {
     required this.labelText,
     required this.isPassword,
     required this.controller,
-    this.error,
+    this.error, required InputDecoration decoration,
   });
   @override
   Widget build(BuildContext context) {

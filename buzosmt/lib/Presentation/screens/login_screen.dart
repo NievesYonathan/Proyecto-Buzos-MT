@@ -7,92 +7,96 @@ import 'package:buzosmt/Domains/usecases/login_user.dart';
 import 'package:buzosmt/Domains/usecases/getdocs_usecase.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:buzosmt/Presentation/Widgets/butons/customelevatedbutton.dart';
+import 'package:buzosmt/Presentation/screens/register_screen.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      child: const Scaffold(
-        body: Stack(
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Stack(
           children: [
-            LoginHeader(),
-            LoginFormSection(), // Se movió el widget aquí
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class LoginHeader extends StatelessWidget {
-  const LoginHeader({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      height: double.infinity,
-      width: double.infinity,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Color(0xFF12464C), Color(0xFF34E69F)],
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.only(top: 50.0, left: 15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            IconButton(
-              icon: const Icon(Icons.arrow_back, color: Colors.white, size: 30),
-              onPressed: () {
-                Navigator.pop(context);
-              },
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              '¡Hola,\nBienvenido! a Buzos Mt',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 35,
-                color: Colors.white,
+            // Fondo gradiente verde
+            Positioned.fill(
+              child: Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [Color(0xFF0F969C), Color(0xFF6DA5C0)],
+                  ),
+                ),
               ),
             ),
-            const SizedBox(height: 10),
-            Center(
-              child: Image.asset(
-                'assets/images/logo.png',
-                width: MediaQuery.of(context).size.width * 0.45,
-                fit: BoxFit.contain,
+            
+            // Logo en la parte superior
+            Positioned(
+              top: 60,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: Image.asset(
+                  '../assets/images/image.png',
+                  width: 150,
+                  height: 150,
+                  fit: BoxFit.contain,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+            
+            // Formulario con estilo de la imagen
+            Positioned.fill(
+              top: 220,
+              child: Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(40),
+                    topRight: Radius.circular(40),
+                  ),
+                ),
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 40.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      // Título
+                      const Text(
+                        'Sign In',
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF0F969C),
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 16),
+                      
+                      // Subtítulo
+                      const Text(
+                        'Sign in now to access your exercises\nand saved music.',
+                        style: TextStyle(
+                          fontSize: 14,
+                          color: Color(0xFF6DA5C0),
+                          height: 1.5,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 40),
+                      
+                      // Formulario (con toda la lógica original)
+                      const _LoginFormContent(),
+                    ],
+                  ),
+                ),
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class LoginFormSection extends StatelessWidget {
-  const LoginFormSection({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.only(top: 500.0),
-      child: Container(
-        height: double.infinity,
-        width: double.infinity,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(30),
-            topRight: Radius.circular(30),
-          ),
-        ),
-        child: const _LoginFormContent(), // Contenido separado
       ),
     );
   }
@@ -177,55 +181,210 @@ class _LoginFormContentState extends State<_LoginFormContent> {
   Widget build(BuildContext context) {
     return Form(
       key: _formKey,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 30.0),
-        child: Column(
-          children: [
-            FutureBuilder<List<DropdownMenuItem<int>>>(
-              future: itemsFuture,
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const CircularProgressIndicator();
-                }
-                //  else if (snapshot.hasError) {
-                //   return const Text('Error al cargar los datos'); }
-                else if (!snapshot.hasData || snapshot.data!.isEmpty) {
-                  return const Text('No hay datos disponibles');
-                } else {
-                  return CustomDropdownButtonFormField(
-                    labelText: 'Tipo de documento',
-                    items: snapshot.data!,
-                    prefixIcon: Icons.badge,
-                    error: _errors['tDocError'],
-                    onChanged: (value) {
-                      setState(() {
-                        tDoc = value;
-                      });
-                    },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          // Tipo de documento (Dropdown)
+          FutureBuilder<List<DropdownMenuItem<int>>>(
+            future: itemsFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
+                return const Text('No hay datos disponibles');
+              } else {
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Document Type',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        color: Color(0xFF0F969C),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                    CustomDropdownButtonFormField(
+                      items: snapshot.data!,
+                      prefixIcon: Icons.badge,
+                      error: _errors['tDocError'],
+                      onChanged: (value) {
+                        setState(() {
+                          tDoc = value;
+                        });
+                      },
+                      decoration: InputDecoration(
+                        hintText: 'Select document type',
+                        hintStyle: TextStyle(color: Colors.grey[400]),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Color(0xFF6DA5C0)),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Color(0xFF6DA5C0)),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: const BorderSide(color: Color(0xFF0F969C), width: 2),
+                        ),
+                        contentPadding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 14),
+                        prefixIconColor: Color(0xFF0F969C),
+                      ), labelText: '',
+                    ),
+                  ],
+                );
+              }
+            },
+          ),
+          const SizedBox(height: 20),
+          
+          // Número de documento
+          const Text(
+            'Document Number',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF0F969C),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Customtextformfiel(
+            prefixIcon: Icons.person,
+            labelText: 'Enter your document number',
+            isPassword: false,
+            controller: numDocController,
+            error: _errors['numDocError'],
+            decoration: InputDecoration(
+              hintStyle: TextStyle(color: Colors.grey[400]),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF6DA5C0)),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF6DA5C0)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF0F969C), width: 2),
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16, vertical: 14),
+              prefixIconColor: Color(0xFF0F969C),
+            ),
+          ),
+          const SizedBox(height: 20),
+          
+          // Contraseña
+          const Text(
+            'Password',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              color: Color(0xFF0F969C),
+            ),
+          ),
+          const SizedBox(height: 8),
+          Customtextformfiel(
+            prefixIcon: Icons.lock,
+            labelText: 'Enter your password',
+            isPassword: true,
+            controller: passwordController,
+            error: _errors['passwordError'],
+            decoration: InputDecoration(
+              hintStyle: TextStyle(color: Colors.grey[400]),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF6DA5C0)),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF6DA5C0)),
+              ),
+              focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(12),
+                borderSide: const BorderSide(color: Color(0xFF0F969C), width: 2),
+              ),
+              contentPadding: const EdgeInsets.symmetric(
+                  horizontal: 16, vertical: 14),
+              prefixIconColor: Color(0xFF0F969C),
+            ),
+          ),
+          const SizedBox(height: 16),
+          
+          // Olvidé mi contraseña
+          Align(
+            alignment: Alignment.centerRight,
+            child: TextButton(
+              onPressed: () {},
+              child: const Text(
+                'Forgot Password?',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF6DA5C0),
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+          
+          // Botón de Ingresar
+          ElevatedButton(
+            onPressed: dataValidate,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF0F969C),
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+              ),
+              elevation: 3,
+              shadowColor: Color(0xFF6DA5C0).withOpacity(0.5),
+            ),
+            child: const Text(
+              'LOG IN',
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+          
+          // No tienes cuenta
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Don\'t have an account? ',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Color(0xFF6DA5C0),
+                ),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const RegisterScreen()),
                   );
-                }
-              },
-            ),
-            const SizedBox(height: 10),
-            Customtextformfiel(
-              prefixIcon: Icons.person,
-              labelText: 'Numero de documento',
-              isPassword: false,
-              controller: numDocController,
-              error: _errors['numDocError'],
-            ),
-            const SizedBox(height: 10),
-            Customtextformfiel(
-              prefixIcon: Icons.lock,
-              labelText: 'Contraseña',
-              isPassword: true,
-              controller: passwordController,
-              error: _errors['passwordError'],
-            ),
-            const SizedBox(height: 20),
-            CustomElevatedButton(text: 'Ingresar', onPressed: dataValidate),
-          ],
-        ),
+                },
+                child: const Text(
+                  'Sign Up',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF0F969C),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }
