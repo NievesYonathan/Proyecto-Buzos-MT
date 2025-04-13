@@ -11,11 +11,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\Api\EtapaController;
 use App\Models\RegProMateriaPrima;
-use App\Http\Controllers\Api\UserApiController;
-use App\Http\Controllers\api\TipoDocApiController;
-use App\Http\Controllers\API\ListaCargoApiController;
-use App\Http\Controllers\API\CargoApiController;
-use App\Http\Controllers\API\EstadoApiController;
 
 // Rutas para gestión de imágenes de usuarios
 Route::post('/user/image/{id}', [UserProfileController::class, 'storeImage'])->name('storeImage');
@@ -57,35 +52,3 @@ Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'update
 
 // API materia prima
 Route::apiResource('materia-prima', MateriaPrimaController::class);
-
-//API CRUD Administrador de usuarios
-Route::prefix('usuarios')->group(function () {
-    Route::get('/', [UserApiController::class, 'index']);
-    Route::post('/', [UserApiController::class, 'store']);
-    Route::put('/{num_doc}', [UserApiController::class, 'update']);
-    Route::put('/{num_doc}/estado', [UserApiController::class, 'cambiarEstado']);
-    Route::get('/buscar', [UserApiController::class, 'buscar']);
-    Route::get('/cargos', [UserApiController::class, 'mostrarConCargos']);
-});
-
-//APItipos documentos
-Route::apiResource('tipos-documentos', TipoDocApiController::class);
-
-//APIlista cargos 
-Route::get('/lista-cargo', [ListaCargoApiController::class, 'index']);
-Route::post('/lista-cargo', [ListaCargoApiController::class, 'store']);
-
-//APIcargos
-Route::get('/cargos', [CargoApiController::class, 'index']);
-Route::post('/cargos', [CargoApiController::class, 'store']);
-Route::put('/cargos/{id_cargos}', [CargoApiController::class, 'update']);
-
-//APIestado
-Route::get('/estados', [EstadoApiController::class, 'index']);
-Route::post('/estados', [EstadoApiController::class, 'store']);
-Route::put('/estados/{id_estados}', [EstadoApiController::class, 'update']);
-
-
-
-
-
