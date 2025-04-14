@@ -29,8 +29,9 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        // Validación de los campos recibidos
         $validatedData = $request->validate([
-            'num_doc' => ['required', 'integer'],
+            'num_doc' => ['required', 'integer', 'unique:usuarios,num_doc'],
             't_doc' => ['required', 'integer'],
             'usu_nombres' => ['required', 'string', 'max:60'],
             'usu_apellidos' => ['required', 'string', 'max:45'],
@@ -41,8 +42,11 @@ class UserController extends Controller
             'usu_direccion' => ['required', 'string', 'max:50'],
             'usu_estado' => ['required', 'integer'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+        ], [
+            'num_doc.unique' => 'Este número de documento ya está registrado.'
         ]);
 
+        // Enviar los datos a la API para crear el usuario
         $response = Http::withHeaders([
             'Accept' => 'application/json',
         ])->post("{$this->apiBase}/usuarios", $validatedData);
@@ -56,6 +60,7 @@ class UserController extends Controller
 
     public function update(Request $request, $num_doc)
     {
+        // Validación para actualizar el usuario
         $validatedData = $request->validate([
             'usu_nombres' => ['required', 'string', 'max:60'],
             'usu_apellidos' => ['required', 'string', 'max:45'],
@@ -67,6 +72,7 @@ class UserController extends Controller
             'usu_estado' => ['required', 'integer'],
         ]);
 
+        // Enviar los datos para actualizar el usuario
         $response = Http::withHeaders([
             'Accept' => 'application/json',
         ])->put("{$this->apiBase}/usuarios/{$num_doc}", $validatedData);
@@ -80,6 +86,7 @@ class UserController extends Controller
 
     public function cambiarestado($num_doc)
     {
+        // Cambiar el estado del usuario
         $response = Http::withHeaders([
             'Accept' => 'application/json',
         ])->put("{$this->apiBase}/usuarios/cambiar-estado/{$num_doc}");
@@ -93,6 +100,7 @@ class UserController extends Controller
 
     public function buscar(Request $request)
     {
+        // Buscar usuarios
         $query = $request->input('query');
 
         $response = Http::get("{$this->apiBase}/usuarios/buscar", [
