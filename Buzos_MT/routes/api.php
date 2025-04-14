@@ -12,10 +12,10 @@ use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\Api\EtapaController;
 use App\Models\RegProMateriaPrima;
 use App\Http\Controllers\Api\UserApiController;
-use App\Http\Controllers\api\TipoDocApiController;
-use App\Http\Controllers\API\ListaCargoApiController;
-use App\Http\Controllers\API\CargoApiController;
-use App\Http\Controllers\API\EstadoApiController;
+use App\Http\Controllers\Api\TipoDocApiController;
+use App\Http\Controllers\Api\EstadoApiController;
+use App\Http\Controllers\Api\CargoApiController;
+use App\Http\Controllers\Api\ListaCargoApiController;
 
 // Rutas para gestión de imágenes de usuarios
 Route::post('/user/image/{id}', [UserProfileController::class, 'storeImage'])->name('storeImage');
@@ -58,34 +58,34 @@ Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'update
 // API materia prima
 Route::apiResource('materia-prima', MateriaPrimaController::class);
 
-//API CRUD Administrador de usuarios
-Route::prefix('usuarios')->group(function () {
-    Route::get('/', [UserApiController::class, 'index']);
-    Route::post('/', [UserApiController::class, 'store']);
-    Route::put('/{num_doc}', [UserApiController::class, 'update']);
-    Route::put('/{num_doc}/estado', [UserApiController::class, 'cambiarEstado']);
-    Route::get('/buscar', [UserApiController::class, 'buscar']);
-    Route::get('/cargos', [UserApiController::class, 'mostrarConCargos']);
+// Rutas para usuarios
+Route::controller(UserApiController::class)->group(function () {
+    Route::get('/usuarios', 'index');
+    Route::post('/usuarios', 'store');
+    Route::put('/usuarios/{num_doc}', 'update');
+    Route::put('/usuarios/cambiar-estado/{num_doc}', 'cambiarEstado');
+    Route::get('/usuarios/buscar', 'buscar');
+    Route::get('/tipos-documentos', 'getTiposDocumentos');
+    Route::get('/estados', 'getEstados');
 });
 
-//APItipos documentos
-Route::apiResource('tipos-documentos', TipoDocApiController::class);
+//rutas tipos documentos
+Route::get('/tipos-documentos', [TipoDocApiController::class, 'index']);
+Route::post('/tipos-documentos', [TipoDocApiController::class, 'store']);
+Route::put('/tipos-documentos/{id}', [TipoDocApiController::class, 'update']);
 
-//APIlista cargos 
-Route::get('/lista-cargo', [ListaCargoApiController::class, 'index']);
-Route::post('/lista-cargo', [ListaCargoApiController::class, 'store']);
 
-//APIcargos
+//estados
+Route::prefix('estados')->group(function () {
+    Route::get('/', [EstadoApiController::class, 'index']);          // Obtener todos los estados
+    Route::post('/', [EstadoApiController::class, 'store']);         // Crear un nuevo estado
+    Route::put('/{id_estados}', [EstadoApiController::class, 'update']); // Actualizar un estado
+    Route::delete('/{id_estados}', [EstadoApiController::class, 'destroy']); // Eliminar un estado
+});
+
+//cargos
 Route::get('/cargos', [CargoApiController::class, 'index']);
 Route::post('/cargos', [CargoApiController::class, 'store']);
-Route::put('/cargos/{id_cargos}', [CargoApiController::class, 'update']);
-
-//APIestado
-Route::get('/estados', [EstadoApiController::class, 'index']);
-Route::post('/estados', [EstadoApiController::class, 'store']);
-Route::put('/estados/{id_estados}', [EstadoApiController::class, 'update']);
-
-
-
-
-
+Route::put('/cargos/{id}', [CargoApiController::class, 'update']);
+Route::get('/usuarios-cargos', [ListaCargoApiController::class, 'index']);
+Route::post('/usuarios-cargos', [ListaCargoApiController::class, 'store']);

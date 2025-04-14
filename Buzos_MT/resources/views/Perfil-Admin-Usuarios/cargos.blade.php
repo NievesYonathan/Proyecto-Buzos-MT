@@ -53,21 +53,21 @@
             <ul>
                 @foreach ($cargos as $cargo)
                     <li>
-                        <i class="fas fa-check-circle"></i> {{ $cargo->car_nombre }} 
-                        <button data-bs-toggle="modal" data-bs-target="#updateModal{{ $cargo->id_cargos }}">
+                        <i class="fas fa-check-circle"></i> {{ $cargo['car_nombre'] }} 
+                        <button data-bs-toggle="modal" data-bs-target="#updateModal{{ $cargo['id_cargos'] }}">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
                     </li>
 
                     <!-- Modal para editar usuarios -->
-                    <div class="modal fade" id="updateModal{{ $cargo->id_cargos }}" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="updateModal{{ $cargo['id_cargos'] }}" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ route('cargos.update', $cargo->id_cargos) }}" method="POST">
+                                    <form action="{{ route('cargos.update', $cargo ['id_cargos']) }}" method="POST">
                                         @csrf
                                         @method('PUT')
                                         <fieldset>
@@ -77,7 +77,7 @@
                                                     <div class="col-12 col-md-12">
                                                         <div class="form-group">
                                                             <label for="car_nombre" class="bmd-label-floating">Nombre</label>
-                                                            <input type="text" class="form-control" name="car_nombre" id="car_nombre" value="{{ $cargo->car_nombre }}" maxlength="60">
+                                                            <input type="text" class="form-control" name="car_nombre" id="car_nombre" value="{{ $cargo['car_nombre'] }}" maxlength="60">
                                                         </div>
                                                     </div>
                                                 </div>

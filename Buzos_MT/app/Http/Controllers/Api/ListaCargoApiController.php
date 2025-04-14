@@ -1,24 +1,20 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Cargo;
-use Illuminate\Http\Request;
 
 class ListaCargoApiController extends Controller
 {
     public function index()
     {
-        $usuarios = User::with('cargos')->paginate(10);
-        $cargos = Cargo::all();
-
-        return response()->json([
-            'usuarios' => $usuarios,
-            'cargos' => $cargos
-        ]);
+        $usuarios = User::with(['tipoDocumento', 'cargos'])->paginate(10); 
+        return response()->json($usuarios, 200);
     }
+    
 
     public function store(Request $request)
     {
@@ -39,6 +35,6 @@ class ListaCargoApiController extends Controller
 
         $usuario->cargos()->sync($cargoConDatos);
 
-        return response()->json(['message' => 'Cargo asignado correctamente.']);
+        return response()->json(['message' => 'Cargo asignado correctamente'], 200);
     }
 }

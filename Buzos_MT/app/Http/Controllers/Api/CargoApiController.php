@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Cargo;
 use Illuminate\Http\Request;
+use App\Models\Cargo;
 
 class CargoApiController extends Controller
 {
     public function index()
     {
-        $cargos = Cargo::with('usuarios')->paginate(10);
-        return response()->json(['cargos' => $cargos]);
+        return response()->json(Cargo::all(), 200);
     }
 
     public function store(Request $request)
@@ -24,17 +23,17 @@ class CargoApiController extends Controller
             'car_nombre' => $request->car_nombre,
         ]);
 
-        return response()->json(['message' => 'Cargo creado correctamente', 'cargo' => $cargo]);
+        return response()->json($cargo, 201);
     }
 
-    public function update(Request $request, $id_cargos)
+    public function update(Request $request, $id)
     {
-        $cargo = Cargo::findOrFail($id_cargos);
+        $cargo = Cargo::findOrFail($id);
 
         $cargo->update([
             'car_nombre' => $request->car_nombre,
         ]);
 
-        return response()->json(['message' => 'Cargo actualizado correctamente', 'cargo' => $cargo]);
+        return response()->json($cargo, 200);
     }
 }

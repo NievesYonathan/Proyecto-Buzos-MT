@@ -7,7 +7,7 @@
 
     <!-- Content -->
     <div class="container-fluid">
-        <form action="{{ route('estado.store') }}" method="POST" class="form-neon" autocomplete="off">
+        <form action="{{ route('estados.store') }}" method="POST" class="form-neon" autocomplete="off">
             @csrf
             <fieldset>
                 <legend><i class="fas fa-user-lock"></i> &nbsp; Registrar Estados</legend>
@@ -45,24 +45,24 @@
             <ul>
                 @foreach ($estados as $estado)
                     <li class="mb-2">
-                        <i class="fas fa-check-circle"></i> {{ $estado->nombre_estado }}
-                        <button data-bs-toggle="modal" data-bs-target="#updateModal{{ $estado->id_estados }}">
+                        <i class="fas fa-check-circle"></i> {{ $estado['nombre_estado'] }}
+                        <button data-bs-toggle="modal" data-bs-target="#updateModal{{ $estado['id_estados'] }}">
                             <i class="fa-regular fa-pen-to-square"></i>
                         </button>
                     </li>
 
                     <!-- Modal para editar usuarios -->
-                    <div class="modal fade" id="updateModal{{ $estado->id_estados }}" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="updateModal{{ $estado['id_estados'] }}" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ route('estado.update', $estado->id_estados) }}" method="post">
+                                    <form action="{{ route('estados.update', $estado['id_estados']) }}" method="post">
                                         @csrf
                                         @method('PUT')
-                                        <input type="hidden" name="id" value="{{ $estado->id_estados }}">
+                                        <input type="hidden" name="id" value="{{ $estado['id_estados'] }}">
                                         <fieldset>
                                             <legend><i class="far fa-address-card"></i> &nbsp; Editar Cargo</legend>
                                             <div class="container-fluid">
@@ -70,7 +70,7 @@
                                                     <div class="col-12 col-md-12">
                                                         <div class="form-group">
                                                             <label for="nombreEst" class="bmd-label-floating">Nombre</label>
-                                                            <input type="text" class="form-control" name="nombre_estado" id="nombreEst" value="{{ $estado->nombre_estado }}" maxlength="60">
+                                                            <input type="text" class="form-control" name="nombre_estado" id="nombreEst" value="{{ $estado['nombre_estado'] }}" maxlength="60">
                                                         </div>
                                                     </div>
                                                 </div>

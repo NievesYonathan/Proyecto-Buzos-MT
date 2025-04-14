@@ -67,20 +67,20 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if($resultado && $resultado->isNotEmpty())
+                    @if($resultado && count($resultado) > 0)
                     @foreach($resultado as $row)
                     <tr>
-                        <td class="text-center">{{ $row->t_doc }}</td>
-                        <td class="text-center">{{ $row->num_doc }}</td>
-                        <td>{{ $row->usu_nombres }}</td>
-                        <td class="text-center">{{ $row->usu_apellidos }}</td>
-                        <td>{{ $row->usu_fecha_nacimiento }}</td>
-                        <td>{{ $row->usu_sexo }}</td>
-                        <td>{{ $row->usu_telefono }}</td>
-                        <td>{{ $row->usu_email }}</td>
-                        <td class="text-center">{{ $row->usu_direccion }}</td>
-                        <td class="text-center">{{ $row->usu_fecha_contratacion }}</td>
-                        <td>{{ $row->estado_nombre }}</td>
+                        <td class="text-center">{{ $row['tipo_documento']['tip_doc_descripcion'] }}</td>
+                        <td class="text-center">{{ $row['num_doc'] }}</td>
+                        <td>{{ $row['usu_nombres'] }}</td>
+                        <td class="text-center">{{ $row['usu_apellidos'] }}</td>
+                        <td>{{ $row['usu_fecha_nacimiento'] }}</td>
+                        <td>{{ $row['usu_sexo'] }}</td>
+                        <td>{{ $row['usu_telefono'] }}</td>
+                        <td>{{ $row['usu_email'] }}</td>
+                        <td class="text-center">{{ $row['usu_direccion'] }}</td>
+                        <td class="text-center">{{ \Carbon\Carbon::parse($row['usu_fecha_contratacion'])->format('Y-m-d') }}</td>
+                        <td>{{ $row['usu_estado'] == 1 ? 'Activo' : 'Inactivo' }}</td>
                     </tr>
                     @endforeach
                     @else
