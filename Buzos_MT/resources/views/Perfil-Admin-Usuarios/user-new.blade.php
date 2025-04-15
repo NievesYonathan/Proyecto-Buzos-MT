@@ -50,7 +50,7 @@
                             <x-input-label for="t_doc" :value="__('Tipo de Documento')" />
                             <select id="t_doc" name="t_doc" class="block mt-1 w-full" required>
                                 @foreach ($tipos_documentos as $tipo)
-                                <option value="{{ $tipo->id_tipo_documento }}">{{ $tipo->tip_doc_descripcion }}</option>
+                                <option value="{{ $tipo['id_tipo_documento'] }}">{{ $tipo['tip_doc_descripcion'] }}</option>
                                 @endforeach
                             </select>
                             <x-input-error :messages="$errors->get('t_doc')" class="mt-2" />

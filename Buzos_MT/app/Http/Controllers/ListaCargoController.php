@@ -3,53 +3,71 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User; // Modelo de Usuario
-use App\Models\Cargo;   // Modelo de Cargo
+use Illuminate\Support\Facades\Http;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class ListaCargoController extends Controller
 {
-    /**
-     * Muestra la lista de usuarios con sus cargos.
-     */
-    public function index()
+    private $apiBase;
+
+    public function __construct()
     {
-        // Obtener todos los usuarios con sus cargos relacionados
-        $usuarios = User::with('cargos')->paginate(10);
-
-        // Obtener todos los cargos disponibles
-        $cargos = Cargo::all();
-
-        // Retornar la vista con los datos
-        return view('Perfil-Admin-Usuarios.user-list-cargo', compact('usuarios', 'cargos'));
+        $this->apiBase = 'http://localhost/Proyecto-Buzos-MT/Buzos_MT/public/api';
+        Http::timeout(5);
     }
 
-    /**
-     * Almacena los cargos seleccionados para un usuario específico.
-     */
+    public function index()
+{
+    try {
+        $usuariosResponse = Http::get("{$this->apiBase}/usuarios-cargos");
+        $cargosResponse = Http::get("{$this->apiBase}/cargos");
+
+        if (!$usuariosResponse->successful() || !$cargosResponse->successful()) {
+            throw new \Exception('Error al obtener los datos');
+        }
+
+        // Obtener estructura paginada desde la respuesta JSON
+        $data = $usuariosResponse->json();
+
+        $usuarios = new LengthAwarePaginator(
+            collect($data['data'])->map(function ($usuario) {
+                // Convertir relaciones internas a objetos para Blade
+                $usuario = (object) $usuario;
+
+                // Asegurarte de que tipo_documento sea un objeto
+                $usuario->tipo_documento = isset($usuario->tipo_documento) ? (object) $usuario->tipo_documento : null;
+                $usuario->cargos = isset($usuario->cargos) ? collect($usuario->cargos)->map(fn($c) => (object) $c) : collect([]);
+
+                return $usuario;
+            }),
+            $data['total'],
+            $data['per_page'],
+            $data['current_page'],
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return view('Perfil-Admin-Usuarios.user-list-cargo', [
+            'usuarios' => $usuarios,
+            'cargos' => collect($cargosResponse->json()),
+        ]);
+    } catch (\Exception $e) {
+        return back()->with('error', 'Error de conexión con el servidor');
+    }
+}
+
+
     public function store(Request $request)
     {
-        // Validar los datos recibidos
-        $request->validate([
-            'numDoc' => 'required|exists:usuarios,num_doc', // Validar que el usuario exista
-            'idCargo' => 'required|array|size:1',          // Validar que solo se seleccione un cargo
-            'idCargo.*' => 'exists:cargos,id_cargos',      // Validar que el cargo exista
-        ]);
+        try {
+            $response = Http::post("{$this->apiBase}/usuarios-cargos", $request->all());
 
-        // Buscar al usuario por su número de documento
-        $usuario = User::where('num_doc', $request->numDoc)->firstOrFail();
+            if ($response->successful()) {
+                return redirect()->route('user-list-cargo')->with('success', 'Cargo asignado correctamente.');
+            }
 
-        // Preparar el cargo con la fecha de asignación y estado asignación
-        $cargoConDatos = [
-            $request->idCargo[0] => [
-                'fecha_asignacion' => now(),
-                'estado_asignacion' => 1, // Asignamos el ID 1 (activo)
-            ],
-        ];
-
-        // Asignar el cargo, reemplazando cualquier existente
-        $usuario->cargos()->sync($cargoConDatos);
-
-        // Redirigir con un mensaje de éxito
-        return redirect()->route('user-list-cargo')->with('success', 'Cargo asignado correctamente.');
+            return back()->withErrors(['error' => $response->json()['message'] ?? 'Error al asignar cargo']);
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error de conexión con el servidor']);
+        }
     }
 }

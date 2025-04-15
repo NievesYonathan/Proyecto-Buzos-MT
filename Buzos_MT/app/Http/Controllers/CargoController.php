@@ -2,59 +2,68 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cargo;
-use App\Models\User;
-
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class CargoController extends Controller
 {
+    private $apiBase;
+
+    public function __construct()
+    {
+        $this->apiBase = 'http://localhost/Proyecto-Buzos-MT/Buzos_MT/public/api';
+        Http::timeout(5);
+    }
+
     public function index()
     {
-        // Obtener todos los estados
-        $cargos = Cargo::with('usuarios')->paginate(10);
-        return view('Perfil-Admin-Usuarios.cargos', compact('cargos'));
+        try {
+            $response = Http::get("{$this->apiBase}/cargos");
+
+            if (!$response->successful()) {
+                throw new \Exception('Error al obtener los cargos');
+            }
+
+            return view('Perfil-Admin-Usuarios.cargos', [
+                'cargos' => $response->json()
+            ]);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error de conexión con el servidor');
+        }
     }
 
-    public function create(Request $request)
+    public function create()
     {
-        $cargos = Cargo::all();
-        // Aquí podrías retornar la vista donde se muestra el formulario.
-        return view('cargos');
+        return view('Perfil-Admin-Usuarios.cargos-new'); // Crea esta vista si no existe
     }
-
 
     public function store(Request $request)
     {
+        try {
+            $response = Http::post("{$this->apiBase}/cargos", $request->all());
 
-        $request->validate([
-            'car_nombre' => 'required|string|max:255',  // Validación del campo nombre
-        ]);
+            if ($response->successful()) {
+                return redirect()->route('cargos')->with('success', 'Cargo creado correctamente');
+            }
 
-        // Crear un nuevo tipo de documento
-        $cargos = Cargo::create([
-            'car_nombre' => $request->car_nombre,
-        ]);
-
-
-        // Guardar en la base de datos
-        $cargos->save();
-
-        // Redirigir o devolver una respuesta (puede ser JSON, o redirigir a la lista)
-        return redirect()->route('cargos')->with('success', 'Cargo creado correctamente');
+            return back()->withErrors(['error' => $response->json()['message'] ?? 'Error al crear cargo'])->withInput();
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error de conexión con el servidor'])->withInput();
+        }
     }
 
-    public function update(Request $request, $id_cargos)
+    public function update(Request $request, $id)
     {
-        $cargos = Cargo::where('id_cargos', $id_cargos)->first();
+        try {
+            $response = Http::put("{$this->apiBase}/cargos/{$id}", $request->all());
 
+            if ($response->successful()) {
+                return redirect()->route('cargos')->with('success', 'Cargo actualizado correctamente');
+            }
 
-        // Actualiza solo los campos que están presentes en el request
-        $cargos->update([
-            'car_nombre' => $request->car_nombre,
-
-        ]);
-
-        return redirect()->route('cargos')->with('success', 'Cargo actualizada correctamente.');
+            return back()->withErrors(['error' => $response->json()['message'] ?? 'Error al actualizar cargo']);
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error de conexión con el servidor']);
+        }
     }
 }

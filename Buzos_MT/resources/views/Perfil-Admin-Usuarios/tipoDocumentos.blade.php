@@ -46,21 +46,21 @@
 			<ul>
 				@foreach ($tipoDocumentos as $tipo)
 				<li class="mb-2">
-					<i class="fas fa-check-circle"></i> {{ $tipo->tip_doc_descripcion }}
-					<button data-bs-toggle="modal" data-bs-target="#updateModal{{ $tipo->id_tipo_documento }}">
+					<i class="fas fa-check-circle"></i> {{ $tipo['tip_doc_descripcion'] }}
+					<button data-bs-toggle="modal" data-bs-target="#updateModal{{ $tipo['id_tipo_documento'] }}">
 						<i class="fa-regular fa-pen-to-square"></i>
 					</button>
 				</li>
 
 				<!-- Modal para editar tipos de documento -->
-				<div class="modal fade" id="updateModal{{ $tipo->id_tipo_documento }}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+				<div class="modal fade" id="updateModal{{ $tipo['id_tipo_documento'] }}" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
 					<div class="modal-dialog modal-lg">
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 							</div>
 							<div class="modal-body">
-								<form action="{{ route('tipoDocumentos.update', $tipo->id_tipo_documento) }}" method="POST">
+								<form action="{{ route('tipoDocumentos.update', $tipo['id_tipo_documento']) }}" method="POST">
 									@csrf
 									@method('PUT')
 									<fieldset>
@@ -70,7 +70,7 @@
 												<div class="col-12 col-md-12">
 													<div class="form-group">
 														<label for="nombreDocEdit" class="bmd-label-floating">Nombre</label>
-														<input type="text" class="form-control" name="tip_doc_descripcion" id="tip_doc_descripcion" value="{{ $tipo->tip_doc_descripcion }}" maxlength="60">
+														<input type="text" class="form-control" name="tip_doc_descripcion" id="tip_doc_descripcion" value="{{ $tipo['tip_doc_descripcion'] }}" maxlength="60">
 													</div>
 												</div>
 											</div>

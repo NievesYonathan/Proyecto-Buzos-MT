@@ -39,20 +39,20 @@
                 <tbody>
                     @foreach($usuarios as $usuario)
                     <tr class="table-light text-center">
-                        <td>{{ $usuario->tipoDocumento->tip_doc_descripcion }}</td>
-                        <td>{{ $usuario->num_doc }}</td>
-                        <td>{{ $usuario->usu_nombres }}</td>
-                        <td>{{ $usuario->usu_apellidos }}</td>
-                        <td>{{ $usuario->usu_telefono }}</td>
-                        <td>{{ $usuario->usu_email }}</td>
-                        <td>{{ $usuario->estadoUsuario->nombre_estado }}</td>
+                        <td>{{ $usuario['tipo_documento']['tip_doc_descripcion'] }}</td>
+                        <td>{{ $usuario['num_doc'] }}</td>
+                        <td>{{ $usuario['usu_nombres'] }}</td>
+                        <td>{{ $usuario['usu_apellidos'] }}</td>
+                        <td>{{ $usuario['usu_telefono'] }}</td>
+                        <td>{{ $usuario['usu_email'] }}</td>
+                        <td>{{ $usuario['estado']['nombre_estado'] }}</td>
                         <td>
-                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal{{ $usuario->num_doc }}">
+                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal{{ $usuario['num_doc'] }}">
                                 <i class="fa-solid fa-user-pen"></i>
                             </button>
                         </td>
                         <td>
-                            <form action="{{ route('user-cambiarestado', $usuario->num_doc) }}" method="post">
+                            <form action="{{ route('user-cambiarestado', $usuario['num_doc']) }}" method="post">
                                 @csrf
                                 @method('PUT')
                                 <button class="btn btn-danger" type="submit">
@@ -63,15 +63,15 @@
                     </tr>
 
                     <!-- Modal para editar usuarios -->
-                    <div class="modal fade" id="updateModal{{ $usuario->num_doc }}" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="updateModal{{ $usuario['num_doc'] }}" tabindex="-1" aria-labelledby="addModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="addModalLabel">Modificar Usuario - {{ $usuario->num_doc }}</h5>
+                                    <h5 class="modal-title" id="addModalLabel">Modificar Usuario - {{ $usuario['num_doc'] }}</h5>
                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <form action="{{ route('user-update', $usuario->num_doc) }}" method="post">
+                                    <form action="{{ route('user-update', $usuario['num_doc']) }}" method="post">
                                         @csrf
                                         @method('PUT')
                                         <fieldset>
@@ -84,7 +84,7 @@
                                                             <select class="form-select" aria-label="Default select example" id="t_doc" name="t_doc" required>
                                                                 <option value="">Tipo de documento</option>
                                                                 @foreach($tiposDocumentos as $tipo)
-                                                                <option value="{{ $tipo->id_tipo_documento }}" @if($tipo->id_tipo_documento == $usuario->t_doc) selected @endif>{{ $tipo->tip_doc_descripcion }}</option>
+                                                                <option value="{{ $tipo['id_tipo_documento'] }}" @if($tipo['id_tipo_documento'] == $usuario['t_doc']) selected @endif>{{ $tipo['tip_doc_descripcion'] }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -93,21 +93,21 @@
                                                     <div class="col-12 col-md-4">
                                                         <div class="form-group">
                                                             <label for="usuario_dni" class="bmd-label-floating">Numero de documento</label>
-                                                            <input type="number" pattern="[0-9-]{1,20}" class="form-control" name="num_doc" id="num_doc" value="{{ $usuario->num_doc }}">
+                                                            <input type="number" pattern="[0-9-]{1,20}" class="form-control" name="num_doc" id="num_doc" value="{{ $usuario['num_doc'] }}">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-4">
                                                         <div class="form-group">
                                                             <label for="usuario_nombre" class="bmd-label-floating">Nombres</label>
-                                                            <input type="text" class="form-control" name="usu_nombres" id="usu_nombres" value="{{ $usuario->usu_nombres }}" maxlength="60">
+                                                            <input type="text" class="form-control" name="usu_nombres" id="usu_nombres" value="{{ $usuario['usu_nombres'] }}" maxlength="60">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-4">
                                                         <div class="form-group">
                                                             <label for="usuario_apellido" class="bmd-label-floating">Apellidos</label>
-                                                            <input type="text" class="form-control" name="usu_apellidos" id="usu_apellidos" value="{{ $usuario->usu_apellidos }}" maxlength="40">
+                                                            <input type="text" class="form-control" name="usu_apellidos" id="usu_apellidos" value="{{ $usuario['usu_apellidos'] }}" maxlength="40">
                                                         </div>
                                                     </div>
 
@@ -115,28 +115,28 @@
                                                         <div class="form-group">
                                                             <label for="usuario_fecha_nacimiento" class="bmd-label-floating">Fecha de nacimiento</label>
                                                             <input type="date" class="form-control" name="usu_fecha_nacimiento" id="usu_fecha_nacimiento"
-                                                                value="{{ $usuario->usu_fecha_nacimiento ? \Carbon\Carbon::parse($usuario->usu_fecha_nacimiento)->format('Y-m-d') : now()->format('Y-m-d') }}">
+                                                                value="{{ $usuario['usu_fecha_nacimiento'] ? \Carbon\Carbon::parse($usuario['usu_fecha_nacimiento'])->format('Y-m-d') : now()->format('Y-m-d') }}">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
                                                             <label for="usuario_sexo" class="bmd-label-floating">sexo</label>
-                                                            <input type="text" class="form-control" name="usu_sexo" id="usu_sexo" value="{{ $usuario->usu_sexo }}">
+                                                            <input type="text" class="form-control" name="usu_sexo" id="usu_sexo" value="{{ $usuario['usu_sexo'] }}">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
                                                             <label for="usuario_direccion" class="bmd-label-floating">Dirección</label>
-                                                            <input type="text" pattern="[a-zA-Z0-99áéíóúÁÉÍÓÚñÑ()# ]{1,190}" class="form-control" name="usuario_direccion" id="usuario_direccion" maxlength="190" value="{{ $usuario->usu_direccion }}">
+                                                            <input type="text" pattern="[a-zA-Z0-99áéíóúÁÉÍÓÚñÑ()# ]{1,190}" class="form-control" name="usuario_direccion" id="usuario_direccion" maxlength="190" value="{{ $usuario['usu_direccion'] }}">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
                                                             <label for="usuario_telefono" class="bmd-label-floating">Teléfono</label>
-                                                            <input type="text" pattern="[0-9()+]{1,20}" class="form-control" name="usu_telefono" id="usu_telefono" maxlength="20" value="{{ $usuario->usu_telefono }}">
+                                                            <input type="text" pattern="[0-9()+]{1,20}" class="form-control" name="usu_telefono" id="usu_telefono" maxlength="20" value="{{ $usuario['usu_telefono'] }}">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -150,14 +150,14 @@
                                                         <div class="form-group">
                                                             <label for="usu_fecha_contratacion" class="bmd-label-floating">Fecha de contratación</label>
                                                             <input type="date" class="form-control" name="usu_fecha_contratacion" id="usu_fecha_contratacion" maxlength="70"
-                                                                value="{{ $usuario->usu_fecha_contratacion ? \Carbon\Carbon::parse($usuario->usu_fecha_contratacion)->format('Y-m-d') : now()->format('Y-m-d') }}">
+                                                                value="{{ $usuario['usu_fecha_contratacion'] ? \Carbon\Carbon::parse($usuario['usu_fecha_contratacion'])->format('Y-m-d') : now()->format('Y-m-d') }}">
                                                         </div>
                                                     </div>
 
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
                                                             <label for="usuario_email" class="bmd-label-floating">Email</label>
-                                                            <input type="email" class="form-control" name="usu_email" id="usu_email" value="{{ $usuario->usu_email }}" maxlength="70">
+                                                            <input type="email" class="form-control" name="usu_email" id="usu_email" value="{{ $usuario['usu_email'] }}" maxlength="70">
                                                         </div>
                                                     </div>
 
@@ -165,9 +165,9 @@
                                                         <label for="usuario_estado" class="bmd-label-floating">Estado</label>
                                                         <select class="form-select" aria-label="Default select example" id="usu_estado" name="usu_estado" required>
                                                             @foreach($estados as $estado)
-                                                            @if ($estado->nombre_estado == 'Activo' || $estado->nombre_estado == 'Inactivo')
-                                                            <option value="{{ $estado->id_estados }}" {{ $estado->id_estados == $usuario->usu_estado ? 'selected' : '' }}>
-                                                                {{ $estado->nombre_estado }}
+                                                            @if ($estado['nombre_estado'] == 'Activo' || $estado['nombre_estado'] == 'Inactivo')
+                                                            <option value="{{ $estado['id_estados'] }}" {{ $estado['id_estados'] == $usuario['usu_estado'] ? 'selected' : '' }}>
+                                                                {{ $estado['nombre_estado'] }}
                                                             </option>
                                                             @endif
                                                             @endforeach
