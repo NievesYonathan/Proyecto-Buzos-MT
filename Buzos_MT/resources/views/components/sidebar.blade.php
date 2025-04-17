@@ -74,7 +74,7 @@
 
             <!-- Boton para q el operario vea sus tareas -->
                 @if($perfil === 'Operario')
-                <li><a href="{{ route('tareas-asigadas') }}"><i class="fa-solid fa-calendar-days"></i> &nbsp; Mis Tareas</a></li>
+                <li><a href="{{ route('tareas-asignadas') }}"><i class="fa-solid fa-calendar-days"></i> &nbsp; Mis Tareas</a></li>
                 @endif
 
                 <li><a href="{{ route('profile.edit') }}"><i class="fa-solid fa-gear"></i> &nbsp; Configuración</a></li>

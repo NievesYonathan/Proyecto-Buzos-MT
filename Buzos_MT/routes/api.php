@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\TipoDocApiController;
 use App\Http\Controllers\Api\EstadoApiController;
 use App\Http\Controllers\Api\CargoApiController;
 use App\Http\Controllers\Api\ListaCargoApiController;
+use App\Http\Controllers\Api\TareaApiController;
 
 // Rutas para gestión de imágenes de usuarios
 Route::post('/user/image/{id}', [UserProfileController::class, 'storeImage'])->name('storeImage');
@@ -31,7 +32,7 @@ Route::delete('/producto/image/delete/{id}', [BuzosImageController::class, 'dele
 Route::get('/materia-prima', [MateriaPrimaController::class, 'index'])->name('lista-de-item');
 Route::post('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'show'])->name('Detalles-producto');
 Route::post('/materia-prima-agregar', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto');
-Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class,'update'])->name('update-producto');
+Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'update'])->name('update-producto');
 Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'delete'])->name('materia-prima-delete');
 
 
@@ -89,3 +90,16 @@ Route::post('/cargos', [CargoApiController::class, 'store']);
 Route::put('/cargos/{id}', [CargoApiController::class, 'update']);
 Route::get('/usuarios-cargos', [ListaCargoApiController::class, 'index']);
 Route::post('/usuarios-cargos', [ListaCargoApiController::class, 'store']);
+
+
+//tareas
+Route::get('/tareas', [TareaApiController::class, 'index']); // Mostrar todas las tareas
+Route::post('/tareas', [TareaApiController::class, 'store']); // Crear tarea
+Route::put('/tareas/{id}', [TareaApiController::class, 'update']); // Actualizar tarea
+
+// Rutas de tareas asignadas a un operario
+Route::get('/tareas-asignadas', [TareaApiController::class, 'tareasAsignadas']);
+
+// Rutas para editar estado de tareas asignadas
+Route::get('/tareas/estado/{id_tarea}/{id_empleado_tarea}', [TareaApiController::class, 'editarEstado']);
+Route::put('/tareas/estado/{id_empleado_tarea}', [TareaApiController::class, 'actualizarEstado']);

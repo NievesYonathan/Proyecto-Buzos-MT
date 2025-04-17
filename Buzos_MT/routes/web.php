@@ -118,13 +118,14 @@ Route::post('/usuarios-cargos', [ListaCargoController::class, 'store'])->name('c
     Route::get('/perfil-produccion/etapas/{id}/edit', [EtapaController::class, 'updateView'])->name('perfil-produccion.etapas.edit'); // Editar etapa
     Route::put('/perfil-produccion/etapas/{id}', [EtapaController::class, 'updateFromView'])->name('perfil-produccion.etapas.update'); // Actualizar etapa
     Route::delete('/perfil-produccion/etapas/{id}', [EtapaController::class, 'destroy'])->name('perfil-produccion.etapas.destroy'); //para eliminar :)
+    
     //Rutas de 'Tarea'
     Route::post('/tareas-crear', [TareaController::class, 'store'])->name('nueva_tarea');
     Route::get('/tareas-produccion', [TareaController::class, 'index'])->name('pro_tareas');
     Route::put('/tarea-actualizar/{id}', [TareaController::class, 'update'])->name('update_tarea');
 
     //Rutas de 'Perfil Operario'
-    Route::get('/tareas-asigadas', [TareaController::class, 'tareasAsignadas'])->name('tareas-asigadas');
+    Route::get('/tareas-asignadas', [TareaController::class, 'tareasAsignadas'])->name('tareas-asignadas');
 
     // Nuevas Rutas para editar y actualizar el estado de una tarea
     Route::get('/tarea/editar/{id_tarea}/{id_empleado_tarea}', [TareaController::class, 'editarEstado'])->name('tarea.editar');
