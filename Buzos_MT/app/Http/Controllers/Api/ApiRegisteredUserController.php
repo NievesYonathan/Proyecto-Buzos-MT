@@ -89,6 +89,7 @@ class ApiRegisteredUserController extends Controller
     
         // Obtener los datos validados
         $validatedData = $validator->validated();
+        
     
         // Crear usuario
         $user = User::create([
@@ -119,9 +120,8 @@ class ApiRegisteredUserController extends Controller
         event(new Registered($user));
     
         return response()->json([
-            'message' => 'Usuario registrado exitosamente',
-            'user' => $user,
-            'seguridad' => $seguridad ? 'Registro de seguridad creado' : 'No se creó registro de seguridad',
+            'message' => 'Usuario registrado correctamente',
+            'status' => 'success',
         ]);
     }
     

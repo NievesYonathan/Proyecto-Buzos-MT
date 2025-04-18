@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Customtextformfiel extends StatelessWidget {
+class CustomTextFormFiel extends StatelessWidget {
   //
   final Key? key;
   final String? value;
@@ -9,15 +9,15 @@ class Customtextformfiel extends StatelessWidget {
   final String? labelText;
   final bool isPassword;
   final TextEditingController? controller;
-  //
-  Customtextformfiel({
+  
+  CustomTextFormFiel({
     this.key,
     this.value,
     required this.prefixIcon,
     required this.labelText,
-    required this.isPassword,
+    this.isPassword = false,
     required this.controller,
-    this.error, required InputDecoration decoration,
+    this.error
   });
   @override
   Widget build(BuildContext context) {

@@ -33,20 +33,6 @@ class LoginScreen extends StatelessWidget {
             ),
             
             // Logo en la parte superior
-            Positioned(
-              top: 60,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: Image.asset(
-                  'assets/images/image.png',
-                  width: 150,
-                  height: 150,
-                  fit: BoxFit.contain,
-                  color: Colors.white,
-                ),
-              ),
-            ),
             
             // Formulario con estilo de la imagen
             Positioned.fill(
@@ -126,7 +112,6 @@ class _LoginFormContentState extends State<_LoginFormContent> {
   Future<List<DropdownMenuItem<int>>> cargarDocs() async {
     final Tdoc tDocUseCase = Tdoc();
     final docs = await tDocUseCase.getDocumentosMap();
-
     return docs.entries
         .map((e) => DropdownMenuItem<int>(value: e.key, child: Text(e.value)))
         .toList();
@@ -150,24 +135,24 @@ class _LoginFormContentState extends State<_LoginFormContent> {
       if (_errors.isEmpty) {
         final status = await validator.loginUser();
         if (status['status'] != 'success') {
-          Fluttertoast.showToast(
-            msg: status['message'],
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            backgroundColor: const Color.fromARGB(255, 255, 0, 0),
-            textColor: Colors.white,
-            fontSize: 16.0,
-          );
+          // Fluttertoast.showToast(
+          //   msg: status['message'],
+          //   toastLength: Toast.LENGTH_SHORT,
+          //   gravity: ToastGravity.BOTTOM,
+          //   backgroundColor: const Color.fromARGB(255, 255, 0, 0),
+          //   textColor: Colors.white,
+          //   fontSize: 16.0,
+          // );
           return;
         }
-        Fluttertoast.showToast(
-          msg: status['message'],
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          backgroundColor: const Color.fromARGB(255, 9, 255, 0),
-          textColor: Colors.white,
-          fontSize: 16.0,
-        );
+        // Fluttertoast.showToast(
+        //   msg: status['message'],
+        //   toastLength: Toast.LENGTH_SHORT,
+        //   gravity: ToastGravity.BOTTOM,
+        //   backgroundColor: const Color.fromARGB(255, 9, 255, 0),
+        //   textColor: Colors.white,
+        //   fontSize: 16.0,
+        // );
 
         Navigator.push(
           context,
@@ -197,7 +182,7 @@ class _LoginFormContentState extends State<_LoginFormContent> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const Text(
-                      'Document Type',
+                      'Tipo de Documento',
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
@@ -205,7 +190,8 @@ class _LoginFormContentState extends State<_LoginFormContent> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    CustomDropdownButtonFormField(
+                     CustomDropdownButtonFormField(
+                      labelText: 'Selecciona un tipo de documento',
                       items: snapshot.data!,
                       prefixIcon: Icons.badge,
                       error: _errors['tDocError'],
@@ -213,30 +199,11 @@ class _LoginFormContentState extends State<_LoginFormContent> {
                         setState(() {
                           tDoc = value;
                         });
-                      },
-                      decoration: InputDecoration(
-                        hintText: 'Select document type',
-                        hintStyle: TextStyle(color: Colors.grey[400]),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(color: Color(0xFF6DA5C0)),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(color: Color(0xFF6DA5C0)),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(12),
-                          borderSide: const BorderSide(color: Color(0xFF0F969C), width: 2),
-                        ),
-                        contentPadding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 14),
-                        prefixIconColor: Color(0xFF0F969C),
-                      ), labelText: '',
+                      }
                     ),
                   ],
                 );
-              }
+              } 
             },
           ),
           const SizedBox(height: 20),
@@ -251,30 +218,12 @@ class _LoginFormContentState extends State<_LoginFormContent> {
             ),
           ),
           const SizedBox(height: 8),
-          Customtextformfiel(
+          CustomTextFormFiel(
             prefixIcon: Icons.person,
-            labelText: 'Enter your document number',
+            labelText: 'Ingresa tu numero de documento',
             isPassword: false,
             controller: numDocController,
-            error: _errors['numDocError'],
-            decoration: InputDecoration(
-              hintStyle: TextStyle(color: Colors.grey[400]),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFF6DA5C0)),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFF6DA5C0)),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFF0F969C), width: 2),
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16, vertical: 14),
-              prefixIconColor: Color(0xFF0F969C),
-            ),
+            error: _errors['numDocError']
           ),
           const SizedBox(height: 20),
           
@@ -288,30 +237,12 @@ class _LoginFormContentState extends State<_LoginFormContent> {
             ),
           ),
           const SizedBox(height: 8),
-          Customtextformfiel(
+          CustomTextFormFiel(
             prefixIcon: Icons.lock,
-            labelText: 'Enter your password',
+            labelText: 'Ingresa Tu contraseña',
             isPassword: true,
             controller: passwordController,
             error: _errors['passwordError'],
-            decoration: InputDecoration(
-              hintStyle: TextStyle(color: Colors.grey[400]),
-              border: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFF6DA5C0)),
-              ),
-              enabledBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFF6DA5C0)),
-              ),
-              focusedBorder: OutlineInputBorder(
-                borderRadius: BorderRadius.circular(12),
-                borderSide: const BorderSide(color: Color(0xFF0F969C), width: 2),
-              ),
-              contentPadding: const EdgeInsets.symmetric(
-                  horizontal: 16, vertical: 14),
-              prefixIconColor: Color(0xFF0F969C),
-            ),
           ),
           const SizedBox(height: 16),
           

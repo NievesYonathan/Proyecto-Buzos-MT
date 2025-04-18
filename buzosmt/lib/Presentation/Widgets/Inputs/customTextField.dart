@@ -17,7 +17,7 @@ class CustomDropdownButtonFormField extends StatelessWidget {
     this.value,
     required this.onChanged,
     this.validator,
-    this.prefixIcon, required InputDecoration decoration,
+    this.prefixIcon
   });
 
   @override
