@@ -2,7 +2,7 @@
     <div class="my-5">
         <div class="row">
             <div class="mb-5 col-sm-6 col-md-6 col-lg-5">
-                <div class="pro-btns">
+{{--                 <div class="pro-btns">
                     <div class="pro-btn">
                         <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#agregar">
                             <i class="fa-solid fa-square-plus fa-2xl" style="color: #2baf54;"></i>
@@ -253,119 +253,278 @@
                     </div>
                     <!-- Fin Modal Tarea -->
                 </div>
-
+ --}}
+                <h4 class="pro-resumen-titulo">Resumen de Producciones:</h4>
                 <div class="pro-resumen">
-                    <h4>Resumen de Producción</h4>
+                    @foreach ($producciones as $produccion)
                     <div class="pro-res-detalle">
-                        <p>Producción: <span>Buzos Amarillos de Algodón</span></p>
-                        <p>Etapa: <span>2 - Armado de los patrones.</span></p>
+                        <p>Producción: <span>{{ $produccion->pro_nombre }}</span></p>
+                        <p>Etapa: 
+                            <span>
+                                @foreach ($etapas as $etapa)
+                                    @if ($etapa->id_etapas === $produccion->etapa->id_etapas) 
+                                        {{ $etapa->eta_nombre }} 
+                                    @endif
+                                @endforeach
+                            </span>
+                        </p>
                         <button type="button" name="detalle" value="detalle" class="btn btn-success"
-                            data-bs-toggle="modal" data-bs-target="#detalleProduccion">Ver Detalles</button>
+                            data-bs-toggle="modal" data-bs-target="#detalleProduccion{{ $produccion->id_produccion }}">Ver Detalles</button>
                         <!-- <a href="#" class="pro-ver">Ver Detalles</a> -->
                     </div>
-                    <div class="pro-res-detalle">
-                        <p>Producción: <span>Buzos Amarillos de Algodón</span></p>
-                        <p>Etapa: <span>2 - Armado de los patrones.</span></p>
-                        <button type="button" name="detalle" value="detalle" class="btn btn-success"
-                            data-bs-toggle="modal" data-bs-target="#detalleProduccion">Ver Detalles</button>
-                        <!-- <a href="#" class="pro-ver">Ver Detalles</a> -->
-                    </div>
+                    @endforeach
                 </div>
 
-                <!-- Modal-Detalles-Producción -->
-                <div class="modal fade" id="detalleProduccion" tabindex="-1" role="dialog"
-                    data-bs-backdrop="static">
-                    <div class="modal-dialog modal-lg modal-dialog-scrollable modal-dialog-centered" role="document">
-                        <div class="modal-content">
+            <!-- Modal-Ediciòn -->
+            @foreach ($producciones as $produccion)
+            <div class="modal fade" id="detalleProduccion{{ $produccion->id_produccion }}" tabindex="-1" role="dialog"
+                data-bs-backdrop="static">
+                <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Gestionar Producción | {{ $produccion->id_produccion }}</h5>
+                            <button class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
 
-                            <div class="modal-header">
-                                <h5 class="modal-title">Detalles de Producción:</h5>
-                                <button class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-8">
+                                    <form method="post" action="{{ route('storeImagePro', $produccion->id_produccion) }}" class="mt-6 space-y-6"
+                                        enctype="multipart/form-data">
+                                        @csrf
+        
+                                        <fieldset>
+                                            <div class="row mb-6">
+                                                <div class="col-6">
+                                                    <input type="file" name="pro_img" id="imageInput" accept="image/*">
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="flex items-center gap-4">
+                                                        <x-primary-button>{{ __('Subir Imagen') }}</x-primary-button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </fieldset>
+                                    </form>        
+                                </div>
 
-                            <div class="modal-body">
-                                <div class="container-fluid">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            <h6><strong>1. Nombre de la Producción:</strong></h6>
-                                            <p id="nombreProduccion">Buzos Amarillos de Algodón</p>
+                                <div class="col-4">
+                                    <form class="mb-3" action="{{ route('deleteImagePro', $produccion->id_produccion) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <div class="flex items-center gap-4">
+                                            <x-danger-button>{{ __('Eliminar Imagen') }}</x-danger-button>
                                         </div>
-                                        <div class="col-12">
-                                            <h6><strong>2. Código de Producción:</strong></h6>
-                                            <p id="codigoProduccion">PROD-00123</p>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <h6><strong>3. Fecha de Inicio:</strong></h6>
-                                            <p id="fechaInicio">01/08/2024</p>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <h6><strong>4. Fecha Estimada de Finalización:</strong></h6>
-                                            <p id="fechaEstimadaFinalizacion">15/08/2024</p>
-                                        </div>
-                                        <div class="col-12">
-                                            <h6><strong>5. Etapas de Producción:</strong></h6>
-                                            <ul id="etapasProduccion">
-                                                <li>Corte de tela</li>
-                                                <li>Costura</li>
-                                                <li>Revisión de calidad</li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-12">
-                                            <h6><strong>6. Estado Actual:</strong></h6>
-                                            <p id="estadoActual">2 - Armado de los patrones</p>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <h6><strong>7. Cantidad Total a Producir:</strong></h6>
-                                            <p id="cantidadTotal">500 unidades</p>
-                                        </div>
-                                        <div class="col-12 col-md-6">
-                                            <h6><strong>8. Cantidad Producida:</strong></h6>
-                                            <p id="cantidadProducida">250 unidades</p>
-                                        </div>
-                                        <div class="col-12">
-                                            <h6><strong>9. Responsables:</strong></h6>
-                                            <ul id="responsables">
-                                                <li>Juan Pérez - Corte de tela</li>
-                                                <li>María García - Costura</li>
-                                                <li>Carlos López - Revisión de calidad</li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-12">
-                                            <h6><strong>10. Materiales Usados:</strong></h6>
-                                            <p id="materialesUsados">Algodón 100%, Hilo de poliéster</p>
-                                        </div>
-                                        <div class="col-12">
-                                            <h6><strong>11. Recursos Asignados:</strong></h6>
-                                            <p id="recursosAsignados">Máquina de coser industrial, Mesa de corte,
-                                                Personal de costura</p>
-                                        </div>
-                                        <div class="col-12">
-                                            <h6><strong>12. Comentarios o Notas:</strong></h6>
-                                            <p id="comentariosNotas">Ajustar las costuras laterales para mayor
-                                                durabilidad.</p>
-                                        </div>
-                                        <div class="col-12">
-                                            <h6><strong>13. Historial de Cambios:</strong></h6>
-                                            <ul id="historialCambios">
-                                                <li>05/08/2024: Cambio de proveedor de hilo</li>
-                                                <li>07/08/2024: Ajuste en las medidas del patrón</li>
-                                            </ul>
-                                        </div>
-                                        <div class="col-12">
-                                            <h6><strong>14. Prioridad:</strong></h6>
-                                            <p id="prioridad">Alta</p>
-                                        </div>
-                                    </div>
+                                    </form>        
                                 </div>
                             </div>
 
-                            <div class="modal-footer">
-                                <button class="btn btn-danger" data-bs-dismiss="modal">Cerrar</button>
-                            </div>
+                            <form action="{{ route('update_produccion', $produccion->id_produccion) }}"
+                                method="POST" class="form-neon" autocomplete="off">
+                                @csrf
+                                @method('PUT')
+
+                                <fieldset>
+                                    <legend>
+                                        <i class="fas fa-industry"></i> &nbsp; Información de la producción
+                                    </legend>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="col-12 col-md-4">
+                                                <div class="form-group">
+                                                    <label for="produccion_nombre" class="bmd-label-floating">Nombre
+                                                        de la Producción</label>
+                                                    <input type="text" class="form-control border border-dark"
+                                                        name="produccion_nombre" id="produccion_nombre"
+                                                        maxlength="50" value="{{ $produccion->pro_nombre }}"
+                                                        required>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-4">
+                                                <div class="form-group">
+                                                    <label for="produccion_fecha_inicio"
+                                                        class="bmd-label-floating">Fecha de Inicio</label>
+                                                    <input type="date" class="form-control border border-dark"
+                                                        name="produccion_fecha_inicio" id="productionDate"
+                                                        value="{{ $produccion->pro_fecha_inicio->format('Y-m-d') }}"
+                                                        disabled>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-4">
+                                                <div class="form-group">
+                                                    <label for="produccion_fecha_fin"
+                                                        class="bmd-label-floating">Fecha de Finalización</label>
+                                                    <input type="date" class="form-control border border-dark"
+                                                        name="produccion_fecha_fin" id="produccion_fecha_fin"
+                                                        value="{{ $produccion->pro_fecha_fin->format('Y-m-d') }}"
+                                                        required>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mt-3">
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label for="produccion_cantidad"
+                                                        class="bmd-label-floating">Cantidad Produccida</label>
+                                                    <input type="number" class="form-control border border-dark"
+                                                        name="produccion_cantidad" id="produccion_cantidad"
+                                                        maxlength="50" value="{{ $produccion->pro_cantidad }}"
+                                                        required>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label for="produccion_etapa"
+                                                        class="bmd-label-floating">Etapa</label>
+                                                    <select class="form-control border border-dark"
+                                                        id="produccion_etapa" name="produccion_etapa" required>
+                                                        @foreach ($etapas as $etapa)
+                                                        <option value="{{ $etapa->id_etapas }}"
+                                                            @if ($etapa->id_etapas === $produccion->etapa->id_etapas) selected @endif>
+                                                            {{ $etapa->eta_nombre }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <br><br>
+
+                                <fieldset>
+                                    <legend><i class="fas fa-pallet fa-fw"></i> &nbsp; Detalles de Materia Prima
+                                    </legend>
+                                    <div class="container-fluid">
+                                        <div class="row mt-3" id="mtPrima-container">
+                                            @foreach ($produccion->materiasPrimas as $index => $materiaPrima)
+                                            <input type="hidden" name="idRegistroMP[]"
+                                                value="{{ $materiaPrima->pivot->id_registro }}">
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label for="produccion_mtPrima"
+                                                        class="bmd-label-floating">Materia Prima</label>
+                                                    <select class="form-control border border-dark"
+                                                        id="produccion_mtPrima{{$index}}" name="produccion_mtPrima[]"
+                                                        required>
+                                                        @foreach ($materiasPrimas as $materiaPrima1)
+                                                        <option value="{{ $materiaPrima1->id_materia_prima }}"
+                                                            @if ($materiaPrima1->id_materia_prima === $materiaPrima->id_materia_prima) selected @endif>
+                                                            {{ $materiaPrima1->mat_pri_nombre }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group">
+                                                    <label for="mtPrima_cantidad"
+                                                        class="bmd-label-floating">Cantidad</label>
+                                                    <input type="number"
+                                                        class="form-control border border-dark"
+                                                        name="mtPrima_cantidad[]" id="mtPrima_cantidad{{$index}}"
+                                                        maxlength="50"
+                                                        value="{{ $materiaPrima->pivot->reg_pmp_cantidad_usada }}"
+                                                        required>
+                                                </div>
+                                            </div>
+                                            @endforeach
+
+                                            <div class="col-12">
+                                                <button type="button" id="addMtPrimaBtn" class="btn btn-info mt-3"><i class="fa-solid fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <br><br>
+
+                                <fieldset>
+                                    <legend><i class="fas fa-tasks"></i> &nbsp; Detalles de la Tarea</legend>
+                                    <div class="container-fluid">
+                                        <div class="row" id="tarea-container">
+                                            @foreach ($produccion->tareas as $tarea)
+                                            <input type="hidden" name="idRegistroET[]"
+                                                value="{{ $tarea->pivot->id_empleado_tarea }}">
+                                            <div class="col-12 col-md-4 mb-2">
+                                                <div class="form-group">
+                                                    <select class="form-control border border-dark"
+                                                        id="produccion_tarea1" name="produccion_tarea[]"
+                                                        required>
+                                                        @foreach ($tareas as $tareas1)
+                                                        <option value="{{ $tareas1->id_tarea }}"
+                                                            @if ($tareas1->id_tarea === $tareas1->id_tarea) selected @endif>
+                                                            {{ $tareas1->tar_nombre }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-4 mb-2" id="resp-container">
+                                                <div class="form-group">
+                                                    <select class="form-control border border-dark"
+                                                        id="produccion_responsable1"
+                                                        name="produccion_responsable[]" required>
+                                                        @foreach ($operarios as $operario)
+                                                        <option value="{{ $operario->num_doc }}"
+                                                            @if ($operario->num_doc === $tarea->pivot->empleados_num_doc) selected @endif>
+                                                            {{ $operario->usu_nombres }}
+                                                            {{ $operario->usu_apellidos }}
+                                                        </option>
+                                                        @endforeach
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-4 mb-2" id="fEntrega-container">
+                                                <div class="form-group">
+                                                    <input type="date"
+                                                        class="form-control border border-dark"
+                                                        name="produccion_fecha_entrega[]"
+                                                        id="produccion_fecha_entrega1"
+                                                        value="{{ $tarea->pivot->emp_tar_fecha_entrega }}"
+                                                        required>
+                                                </div>
+                                            </div>
+                                            @endforeach
+
+                                            <hr>
+
+                                            <div class="col-12">
+                                                <button type="button" id="addTareaBtn"
+                                                    class="btn btn-info mt-3"><i class="fa-solid fa-plus"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+
+                                <p class="text-center" style="margin-top: 40px;">
+                                    <button type="reset" class="btn btn-raised btn-secondary btn-sm">
+                                        <i class="fas fa-paint-roller"></i> &nbsp; LIMPIAR
+                                    </button>
+                                    &nbsp; &nbsp;
+                                    <button type="submit" name="btn-produccion" value="editar"
+                                        class="btn btn-raised btn-success btn-sm">
+                                        <i class="far fa-save"></i> &nbsp; GUARDAR
+                                    </button>
+                                </p>
+                            </form>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
                         </div>
                     </div>
                 </div>
-                <!-- Fin-Modal -->
+            </div>
+            <!-- Fin Model Producción -->
+            @endforeach
             </div>
 
             <div class="col-sm-6 col-md-6 col-lg-7">

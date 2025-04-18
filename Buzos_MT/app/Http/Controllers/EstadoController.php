@@ -4,57 +4,110 @@ namespace App\Http\Controllers;
 
 use App\Models\Estado;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class EstadoController extends Controller
 {
+    private $apiBase;
+
+    public function __construct()
+    {
+        // Configuración de la API base
+        $this->apiBase = 'hhttp://localhost/Proyecto-Buzos-MT/Buzos_MT/public/api';
+    }
+
+    // Obtener todos los estados
     public function index()
     {
-        // Obtener todos los estados
-        $estados = Estado::all();
-        return view('Perfil-Admin-Usuarios.vistaEstados', compact('estados'));
+        try {
+            // Llamada a la API para obtener los estados
+            $response = Http::get("{$this->apiBase}/estados");
+
+            // Verifica si la respuesta fue exitosa
+            if (!$response->successful()) {
+                throw new \Exception('Error al obtener los estados');
+            }
+
+            // Redirige a la vista 'vistaEstados' pasando los estados obtenidos
+            return view('Perfil-Admin-Usuarios.vistaEstados', [
+                'estados' => $response->json()
+            ]);
+        } catch (\Exception $e) {
+            // En caso de error, redirige hacia la vista con un mensaje de error
+            return back()->with('error', 'Error de conexión con el servidor');
+        }
     }
 
-    public function crearEstado(Request $request)
-    {
-        // Validar y crear un nuevo estado
-        $request->validate(['nombre_estado' => 'required|string|max:255']);
-        Estado::create(['nombre_estado' => $request->nombre_estado]);
-
-        return redirect()->back()->with('success', 'Estado creado correctamente.');
-    }
-
-
+    // Crear un nuevo estado
     public function store(Request $request)
     {
-        // Validar los datos antes de almacenarlos
-        $validated = $request->validate([
-            'nombre_estado' => 'required|string|max:255',  // Validación del campo nombre
+        try {
+            // Validar los datos de entrada
+            $validated = $request->validate([
+                'nombre_estado' => 'required|string|max:255',
+            ]);
 
-        ]);
+            // Crear un nuevo estado
+            Estado::create([
+                'nombre_estado' => $validated['nombre_estado'],
+            ]);
 
-        // Crear un nuevo tipo de documento
-        $estados = new Estado();
-        $estados->nombre_estado = $validated['nombre_estado'];
-
-
-        // Guardar en la base de datos
-        $estados->save();
-
-        // Redirigir o devolver una respuesta (puede ser JSON, o redirigir a la lista)
-        return redirect()->route('vistaEstados')->with('success', 'Estado creado correctamente');
+            // Después de crear el estado, redirige a 'vistaEstados' con un mensaje de éxito
+            return redirect()->route('vistaEstados')->with('success', 'Estado creado con éxito');
+        } catch (\Exception $e) {
+            // En caso de error, redirige hacia la vista con un mensaje de error
+            return back()->with('error', 'Error al crear el estado');
+        }
     }
 
+    // Actualizar un estado
     public function update(Request $request, $id_estados)
     {
-        $estados = Estado::where('id_estados', $id_estados)->first();
+        try {
+            // Buscar el estado por ID
+            $estado = Estado::find($id_estados);
 
+            if (!$estado) {
+                return redirect()->route('vistaEstados')->with('error', 'Estado no encontrado');
+            }
 
-        // Actualiza solo los campos que están presentes en el request
-        $estados->update([
-            'nombre_estado' => $request->nombre_estado,
+            // Validar los datos de entrada
+            $validated = $request->validate([
+                'nombre_estado' => 'required|string|max:255',
+            ]);
 
-        ]);
+            // Actualizar el estado
+            $estado->update([
+                'nombre_estado' => $validated['nombre_estado'],
+            ]);
 
-        return redirect()->route('vistaEstados')->with('success', 'estado actualzado actualizada correctamente.');
+            // Después de actualizar el estado, redirige a 'vistaEstados' con un mensaje de éxito
+            return redirect()->route('vistaEstados')->with('success', 'Estado actualizado correctamente');
+        } catch (\Exception $e) {
+            // En caso de error, redirige hacia la vista con un mensaje de error
+            return back()->with('error', 'Error al actualizar el estado');
+        }
+    }
+
+    // Eliminar un estado
+    public function destroy($id_estados)
+    {
+        try {
+            
+            $estado = Estado::find($id_estados);
+
+            if (!$estado) {
+                return redirect()->route('vistaEstados')->with('error', 'Estado no encontrado');
+            }
+
+            // Eliminar el estado
+            $estado->delete();
+
+            // Después de eliminar el estado, redirige a 'vistaEstados' con un mensaje de éxito
+            return redirect()->route('vistaEstados')->with('success', 'Estado eliminado correctamente');
+        } catch (\Exception $e) {
+            // En caso de error, redirige hacia la vista con un mensaje de error
+            return back()->with('error', 'Error al eliminar el estado');
+        }
     }
 }

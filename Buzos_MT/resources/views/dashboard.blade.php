@@ -57,6 +57,15 @@
                     </div>
                 </a>
             </div>
+
+            <div class="col-sm-12 col-md-3 tile-container">
+                <a href="{{ route('perfil-produccion.etapas') }}" class="tile">
+                    <div class="tile-tittle">Etapas</div>
+                    <div class="tile-icon">
+                    <i class="fa-solid fa-route"></i>
+                    </div>
+                </a>
+            </div>
         @endif
         
         @if ($perfil === 'Jefe Inventario')
@@ -85,7 +94,7 @@
 
         @if ($perfil === 'Operario')
             <div class="col-sm-12 col-md-4 tile-container">
-                <a href="{{ route('tareas-asigadas')}}" class="tile">
+                <a href="{{ route('tareas-asignadas')}}" class="tile">
                     <div class="tile-tittle">Mis Tareas</div>
                     <div class="tile-icon">
                         <i class="fa-brands fa-stack-exchange"></i>

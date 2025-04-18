@@ -20,21 +20,19 @@
                     </tr>
                     @else
                     @foreach ($tareasAsignadas as $tareas)
-                    @foreach ($tareas->empleados as $empleado)
+                    @foreach ($tareas['empleados'] as $empleado)
                     <tr class="table-light text-center">
-                        <td>{{ $tareas->id_tarea }}</td>
-                        <td>{{ $tareas->tar_nombre }}</td>
-                        <td>{{ $tareas->tar_descripcion }}</td>
+                        <td>{{ $tareas['id_tarea'] }}</td>
+                        <td>{{ $tareas['tar_nombre'] }}</td>
+                        <td>{{ $tareas['tar_descripcion'] }}</td>
                         @php
-                        // Encuentra el estado correspondiente al valor de 'emp_tar_estado_tarea'
-                        $estadoCorrespondiente = $estados->firstWhere('id_estados', $empleado->pivot->emp_tar_estado_tarea);
+                        $estadoCorrespondiente = collect($estados)->firstWhere('id_estados', $empleado['pivot']['emp_tar_estado_tarea']);
                         @endphp
-                        <td>{{ $estadoCorrespondiente ? $estadoCorrespondiente->nombre_estado : 'Estado no encontrado'  }}</td>
-                        <td>{{ $empleado->pivot->emp_tar_fecha_asignacion }}</td>
-                        <td>{{ $empleado->pivot->emp_tar_fecha_entrega }}</td>
+                        <td>{{ $estadoCorrespondiente ? $estadoCorrespondiente['nombre_estado'] : 'Estado no encontrado' }}</td>
+                        <td>{{ $empleado['pivot']['emp_tar_fecha_asignacion'] }}</td>
+                        <td>{{ $empleado['pivot']['emp_tar_fecha_entrega'] }}</td>
                         <td>
-                            <!-- Botón que redirige a vista de actualización de estado. -->
-                            <a href="{{ route('tarea.editar', ['id_tarea' => $tareas->id_tarea, 'id_empleado_tarea' => $empleado->pivot->id_empleado_tarea]) }}" class="btn btn-warning">
+                            <a href="{{ route('tarea.editar', ['id_tarea' => $tareas['id_tarea'], 'id_empleado_tarea' => $empleado['pivot']['id_empleado_tarea']]) }}" class="btn btn-warning">
                                 <i class="fas fa-edit"></i>
                             </a>
                         </td>

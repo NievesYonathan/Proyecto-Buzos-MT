@@ -64,7 +64,7 @@
                         <div class="col-12 col-md-6">
                             <div class="form-group">
                                 <label for="proveedores_id_proveedores"" class=" bmd-label-floating">Proveedor</label>
-                                <select class="form-control" name="proveedores_id_proveedores"" id=" matProveedor">
+                                <select class="form-control" name="proveedores_id_proveedores" id=" matProveedor">
                                     @foreach ($proveedores as $proveedor)
                                     <option value="{{ $proveedor->num_doc }}">
                                         {{ $proveedor->usu_nombres }}

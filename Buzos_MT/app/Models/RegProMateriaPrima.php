@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class RegProMateriPrima extends Model
+class RegProMateriaPrima extends Model
 {
     use HasFactory;
 
@@ -21,4 +21,14 @@ class RegProMateriPrima extends Model
     ];
 
     public $timestamps = false;
+
+    public function produccion()
+    {
+        return $this->belongsTo(Produccion::class, 'id_produccion', 'id_registro');
+    }
+
+    public function materiaPrima()
+    {
+        return $this->belongsTo(MateriaPrima::class, 'id_pro_materia_prima', 'id_pro_materia_prima');
+    }
 }

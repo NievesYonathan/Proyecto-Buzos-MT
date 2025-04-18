@@ -1,8 +1,8 @@
 <x-app-layout>
     <div class="my-5">
-        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+        <div class="row ">
             @foreach ($producciones as $produccion)
-            <div class="col">
+            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 mb-5">
                 <div class="card">
                     <div class="image-container">
                         <img src="{{ asset('storage/' . $produccion->pro_img) }}" alt="Producto">
@@ -27,8 +27,10 @@
                     </div>
                 </div>
             </div>
+            @endforeach
         </div>
             <!-- Modal-Ediciòn -->
+            @foreach ($producciones as $produccion)
             <div class="modal fade" id="updateModal{{ $produccion->id_produccion }}" tabindex="-1" role="dialog"
                 data-bs-backdrop="static">
                 <div class="modal-dialog modal-xl modal-dialog-scrollable modal-dialog-centered" role="document">

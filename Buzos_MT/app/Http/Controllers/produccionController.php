@@ -7,7 +7,7 @@ use App\Models\Estado;
 use App\Models\Etapas;
 use App\Models\MateriaPrima;
 use App\Models\Produccion;
-use App\Models\RegProMateriPrima;
+use App\Models\RegProMateriaPrima;
 use App\Models\Tarea;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,7 +33,7 @@ class produccionController extends Controller
 
     public function indexTwo()
     {
-        // $producciones = Produccion::with('etapa', 'regProFabricados', 'materiasPrimas', 'tareas')->get();
+        $producciones = Produccion::with('etapa', 'regProFabricados', 'materiasPrimas', 'tareas')->get();
 
         $tareas = Tarea::all();
 
@@ -45,7 +45,7 @@ class produccionController extends Controller
             $query->where('id_cargos', 3);
         })->get();
 
-        return view('Perfil_Produccion.produccion', compact('etapas', 'operarios', 'tareas', 'materiasPrimas'));
+        return view('Perfil_Produccion.produccion', compact('producciones', 'etapas', 'operarios', 'tareas', 'materiasPrimas'));
     }
 
     public function update(Request $request, $id)
@@ -80,12 +80,12 @@ class produccionController extends Controller
     
         // Eliminar materias primas no enviadas
         foreach (array_diff($currentMtPrimaIds, $existingMtPrimaIds) as $idToDelete) {
-            RegProMateriPrima::findOrFail($idToDelete)->delete();
+            RegProMateriaPrima::findOrFail($idToDelete)->delete();
         }
     
         // Actualizar materias primas existentes
         foreach ($existingMtPrimaIds as $key => $idRegistro) {
-            $registro = RegProMateriPrima::findOrFail($idRegistro);
+            $registro = RegProMateriaPrima::findOrFail($idRegistro);
             $registro->update([
                 'id_pro_materia_prima' => $request->produccion_mtPrima[$key],
                 'reg_pmp_cantidad_usada' => $request->mtPrima_cantidad[$key],
@@ -95,7 +95,7 @@ class produccionController extends Controller
     
         // Agregar nuevas materias primas
         for ($i = count($existingMtPrimaIds); $i < count($request->produccion_mtPrima); $i++) {
-            RegProMateriPrima::create([
+            RegProMateriaPrima::create([
                 'id_produccion' => $produccion->id_produccion,
                 'id_pro_materia_prima' => $request->produccion_mtPrima[$i],
                 'reg_pmp_cantidad_usada' => $request->mtPrima_cantidad[$i],
