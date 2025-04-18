@@ -1,30 +1,20 @@
 <?php
-
 use App\Http\Controllers\Api\BuzosImageController;
-<<<<<<< HEAD
-use App\Http\Controllers\MateriaPrimaController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\Api\ApiAuthenticatedSessionController;
 use App\Http\Controllers\Api\ApiRegisteredUserController;
-=======
-
 use App\Http\Controllers\Api\EmpTareasController;
 use App\Http\Controllers\Api\ProduccionController;
 use App\Http\Controllers\Api\RegProMateriaPrimaController;
 use App\Http\Controllers\Api\MateriaPrimaController;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\Api\EtapaController;
-use App\Models\RegProMateriaPrima;
 use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\TipoDocApiController;
 use App\Http\Controllers\Api\EstadoApiController;
 use App\Http\Controllers\Api\CargoApiController;
 use App\Http\Controllers\Api\ListaCargoApiController;
 use App\Http\Controllers\Api\TareaApiController;
->>>>>>> main
 
 // Rutas para gestión de imágenes de usuarios
 Route::post('/user/image/{id}', [UserProfileController::class, 'storeImage'])->name('storeImage');
@@ -42,7 +32,6 @@ Route::post('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'sho
 Route::post('/materia-prima-agregar', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto');
 Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'update'])->name('update-producto');
 Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'delete'])->name('materia-prima-delete');
-<<<<<<< HEAD
 //Rutas para la Api de la aplicacion mobile
 
 Route::get('/Login', [ApiAuthenticatedSessionController::class, 'create']);
@@ -50,7 +39,6 @@ Route::post('/Login', [ApiAuthenticatedSessionController::class, 'store']);
 Route::post('/Register',[ApiRegisteredUserController::class, 'store']);
 // Route::get('/Register',[ApiRegisteredUserController::class, 'create']);
 Route::middleware('jwt')->delete('/logout', [ApiAuthenticatedSessionController::class, 'destroy']);
-=======
 
 
 
@@ -120,4 +108,3 @@ Route::get('/tareas-asignadas', [TareaApiController::class, 'tareasAsignadas']);
 // Rutas para editar estado de tareas asignadas
 Route::get('/tareas/estado/{id_tarea}/{id_empleado_tarea}', [TareaApiController::class, 'editarEstado']);
 Route::put('/tareas/estado/{id_empleado_tarea}', [TareaApiController::class, 'actualizarEstado']);
->>>>>>> main
