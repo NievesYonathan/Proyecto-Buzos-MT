@@ -7,6 +7,7 @@ import 'package:buzosmt/Presentation/Widgets/Inputs/Customtextformfiel.dart';
 import 'package:buzosmt/Presentation/Widgets/butons/customelevatedbutton.dart';
 import 'package:buzosmt/Domains/usecases/login_user.dart';
 import 'package:intl/intl.dart';
+import 'package:buzosmt/main.dart';
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -57,10 +58,37 @@ class RegisterScreen extends StatelessWidget {
                             ],
                           ),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              // Botón de retorno al login
+                              Align(
+                                alignment: Alignment.topLeft,
+                                child: InkWell(
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => const BuzosMt()),
+                                    );
+                                  },
+                                  child: Container(
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: BoxDecoration(
+                                      color: const Color(0xFFF5F5F5),
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    child: const Icon(
+                                      Icons.arrow_back,
+                                      color: Color(0xFF064c41),
+                                      size: 24,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(height: 8),
+                              
                               // Logo
                               Padding(
-                                padding: const EdgeInsets.only(bottom: 20.0),
+                                padding: const EdgeInsets.only(bottom: 12.0),
                                 child: Image.asset(
                                   'assets/images/image.png',
                                   height: 100,
@@ -95,6 +123,35 @@ class RegisterScreen extends StatelessWidget {
                               
                               // Registration form
                               const _RegisterForm(),
+                              
+                              // Google Registration Button
+                              const SizedBox(height: 20),
+                              Center(
+                                child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    // Implementar registro con Google
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: Colors.grey[800],
+                                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                      side: BorderSide(color: Colors.grey[300]!),
+                                    ),
+                                    elevation: 2,
+                                  ),
+                                  icon: Image.asset(
+                                    'assets/images/google.png', // Asegúrate que esta ruta sea correcta
+                                    height: 24,
+                                    width: 24,
+                                  ),
+                                  label: const Text(
+                                    "Registrarme con Google",
+                                    style: TextStyle(fontSize: 16),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -610,7 +667,7 @@ class _FormRegisterState extends State<_RegisterForm> {
                 elevation: 0,
               ),
               child: const Text(
-                "Registrarse",
+                "Registrarme",
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 16,

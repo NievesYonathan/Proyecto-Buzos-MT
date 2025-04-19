@@ -47,18 +47,41 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          // Logo (reemplazar con tu imagen)
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 20.0),
-                            child: Image.asset(
-                              'assets/images/image.png', // Reemplaza esta ruta con la ubicación de tu logo
-                              height: 130, // Aumentado de 100 a 130
-                              width: double.infinity,
-                              fit: BoxFit.contain,
+                          // Botón de retorno al main
+                            Align(
+                              alignment: Alignment.topLeft,
+                              child: InkWell(
+                                onTap: () {
+                                  Navigator.pop(context);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFF5F5F5),
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  child: const Icon(
+                                    Icons.arrow_back,
+                                    color: Color(0xFF064c41),
+                                    size: 24,
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                          
+                            const SizedBox(height: 2),
+
+                            // Logo (reemplazar con tu imagen)
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 12.0), // Reducido de 20 a 12
+                              child: Image.asset(
+                                'assets/images/image.png', // Reemplaza esta ruta con la ubicación de tu logo
+                                height: 140, 
+                                width: double.infinity,
+                                fit: BoxFit.contain,
+                              ),
+                            ),
                           // App name "LOGIN PAGE"
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -89,7 +112,10 @@ class LoginScreen extends StatelessWidget {
                           const SizedBox(height: 20),
                           
                           // Google Login Button
-                          ElevatedButton.icon(
+                          SizedBox(
+                          width: double.infinity,
+                          child: Center(
+                          child: ElevatedButton.icon(
                             onPressed: () {
                               // Agrega aquí la navegación a otra vista
                               // Por ejemplo:
@@ -97,14 +123,14 @@ class LoginScreen extends StatelessWidget {
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
-                              foregroundColor: Colors.grey[800],
-                              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                side: BorderSide(color: Colors.grey[300]!),
-                              ),
-                              elevation: 2,
-                            ),
+                                foregroundColor: Colors.grey[800],
+                                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(30),
+                                  side: BorderSide(color: Colors.grey[300]!),
+                                ),
+                                elevation: 2,
+                                ),
                             icon: Image.asset(
                               'assets/images/google.png', // Reemplaza con la ruta correcta a tu logo de Google
                               height: 24,
@@ -114,6 +140,8 @@ class LoginScreen extends StatelessWidget {
                               "Iniciar Session con Google",
                               style: TextStyle(fontSize: 16),
                             ),
+                          ),
+                          ),
                           ),
                         ],
                       ),
