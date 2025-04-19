@@ -17,7 +17,7 @@ class BuzosMt extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'BuzosMt',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.green,
         fontFamily: 'Roboto',
       ),
       home: const MyHomePage(),
@@ -54,101 +54,147 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   @override
- Widget build(BuildContext context) {
-  return Scaffold(
-    body: Stack(
-      children: [
-        // Imagen de fondo
-        Positioned.fill(
-          child: Image.asset(
-            'assets/images/verdecito.png',
-            fit: BoxFit.cover,
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          // Imagen de fondo con ondas (verdecito.png)
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/verdecito.png',
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        
-        // Contenido principal
-        Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              // Logo en la parte superior
-              Image.asset(
-                'assets/images/image.png',
-                height: 150,  // Ajusta este valor según necesites
-                fit: BoxFit.contain,
-                color: Colors.white, // Cambiado a blanco para mejor contraste
-              ),
-              const SizedBox(height: 30),
-              
-              // Texto "WELCOME"
-              const Text(
-                'Bienvenido a BuzosMt',
-                style: TextStyle(
-                  fontSize: 32,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.white,
-                ),
-                textAlign: TextAlign.center,
-              ),
-              
-              // Resto de tu contenido...
-              const SizedBox(height: 30),
-              const Text(
-                'Do meditation. Stay focused.',
-                style: TextStyle(
-                  fontSize: 18,
-                  color: Colors.white70,
-                ),
-                textAlign: TextAlign.center,
-              ),
-                const SizedBox(height: 10),
-                const Text(
-                  'Live a healthy life.',
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.white70,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                const SizedBox(height: 50),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const LoginScreen()),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFF7C9A92), // Color verde
-                    padding: const EdgeInsets.symmetric(vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    elevation: 5, // Sombra para mejor visibilidad
-                  ),
-                  child: const Text(
-                    'Iniciar Sesión',
-                    style: TextStyle(
-                      fontSize: 16,
+
+          // Contenido principal
+          SafeArea(
+            child: Column(
+              children: [
+                // Sección del logo con tamaño fijo
+                SizedBox(
+                  height: 300, // Ajustado para posicionar el contenido
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/image.png',
+                      height: 280, // Ajustado proporcionalmente
                       color: Colors.white,
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
-                TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => const RegisterScreen()),
-                    );
-                  },
-                  child: const Text(
-                    'No Tienes Una Cuenta? Registrarme',
-                    style: TextStyle(
-                      fontSize: 14,
-                      color: Colors.white, // Cambiado a blanco para mejor contraste
+
+                // Contenido de texto y botones
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    child: Column(
+                      children: [
+                        // Título BuzosMT
+                        const Text(
+                          'Buzos MT',
+                          style: TextStyle(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white,
+                            letterSpacing: 1.2,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 10),
+                        // Subtítulo
+                        const Text(
+                          'La mejor calidad',
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        const Text(
+                          'en tus manos',
+                          style: TextStyle(
+                            fontSize: 28,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.white,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        
+                        // Espacio ajustable - aumentado para bajar un poco los botones
+                        const SizedBox(height: 120),
+                        
+                        // Botones con esquinas cuadradas pero sin borde blanco
+                        // Botón de Iniciar Sesión
+                        SizedBox(
+                          width: double.infinity,
+                          height: 56,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const LoginScreen()),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF064c41),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8), // Esquinas cuadradas
+                              ),
+                              elevation: 0,
+                            ),
+                            child: const Text(
+                              'Iniciar Sesión',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                        // Botón de Registrarme
+                        SizedBox(
+                          width: double.infinity,
+                          height: 56,
+                          child: ElevatedButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                              );
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF20A67B),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8), // Esquinas cuadradas
+                              ),
+                              elevation: 0,
+                            ),
+                            child: const Text(
+                              'Registrarme',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.w500,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                        
+                        const Spacer(), // Empuja el indicador al final
+                        
+                        // Indicador de página (línea blanca en la parte inferior)
+                        Container(
+                          width: 40,
+                          height: 5,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(3),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                      ],
                     ),
                   ),
                 ),
