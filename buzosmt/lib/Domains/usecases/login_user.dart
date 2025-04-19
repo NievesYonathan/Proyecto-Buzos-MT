@@ -66,7 +66,9 @@ class UsesCasesUser {
     }
 
     if (user.usuApellidos!.isEmpty) {
-      return {'usuApellidosError': 'El nombre debe tener al menos 3 caracteres'};
+      return {
+        'usuApellidosError': 'El nombre debe tener al menos 3 caracteres',
+      };
     }
     if (user.password.isEmpty) {
       return {'passwordError': 'Contraseña requerida'};
