@@ -17,71 +17,143 @@ class LoginScreen extends StatelessWidget {
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
-        child: Stack(
-          children: [
-            // Fondo gradiente verde
-            Positioned.fill(
-              child: Container(
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [Color(0xFF0F969C), Color(0xFF6DA5C0)],
-                  ),
+        child: Container(
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [Color(0xFF064c41), Color(0xFF20A67B)],
+            ),
+          ),
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.all(24.0),
+                child: Column(
+                  children: [
+                    // Main card with logo and login form
+                    Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(24),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(30),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.1),
+                            blurRadius: 10,
+                            offset: const Offset(0, 5),
+                          ),
+                        ],
+                      ),
+                      child: Column(
+                        children: [
+                          // Logo (reemplazar con tu imagen)
+                          Padding(
+                            padding: const EdgeInsets.only(bottom: 20.0),
+                            child: Image.asset(
+                              'assets/images/image.png', // Reemplaza esta ruta con la ubicación de tu logo
+                              height: 130, // Aumentado de 100 a 130
+                              width: double.infinity,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                          
+                          // App name "LOGIN PAGE"
+                          const Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "BUZOS",
+                                style: TextStyle(
+                                  color: Color(0xFF064c41),
+                                  fontSize: 32,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              Text(
+                                "MT",
+                                style: TextStyle(
+                                  color: Color(0xFF20A67B),
+                                  fontSize: 28,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 30),
+                          
+                          // Login form content
+                          const _LoginFormContent(),
+                          
+                          const SizedBox(height: 20),
+                          
+                          // Google Login Button
+                          ElevatedButton.icon(
+                            onPressed: () {
+                              // Agrega aquí la navegación a otra vista
+                              // Por ejemplo:
+                              // Navigator.push(context, MaterialPageRoute(builder: (context) => OtraVista()));
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.grey[800],
+                              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                side: BorderSide(color: Colors.grey[300]!),
+                              ),
+                              elevation: 2,
+                            ),
+                            icon: Image.asset(
+                              'assets/images/google.png', // Reemplaza con la ruta correcta a tu logo de Google
+                              height: 24,
+                              width: 24,
+                            ),
+                            label: const Text(
+                              "Iniciar Session con Google",
+                              style: TextStyle(fontSize: 16),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    
+                    // Sign up option
+                    const SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "No Tienes Una Cuenta? ",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 14,
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                            );
+                          },
+                          child: const Text(
+                            "Registrarme",
+                            style: TextStyle(
+                              color: Color(0xFF064c41),
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
             ),
-            
-            // Logo en la parte superior
-            
-            // Formulario con estilo de la imagen
-            Positioned.fill(
-              top: 220,
-              child: Container(
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    topRight: Radius.circular(40),
-                  ),
-                ),
-                child: SingleChildScrollView(
-                  padding: const EdgeInsets.symmetric(horizontal: 32.0, vertical: 40.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      // Título
-                      const Text(
-                        'Sign In',
-                        style: TextStyle(
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                          color: Color(0xFF0F969C),
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 16),
-                      
-                      // Subtítulo
-                      const Text(
-                        'Sign in now to access your exercises\nand saved music.',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Color(0xFF6DA5C0),
-                          height: 1.5,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                      const SizedBox(height: 40),
-                      
-                      // Formulario (con toda la lógica original)
-                      const _LoginFormContent(),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -102,6 +174,7 @@ class _LoginFormContentState extends State<_LoginFormContent> {
   final TextEditingController passwordController = TextEditingController();
   late Future<List<DropdownMenuItem<int>>> itemsFuture;
   Map<String?, dynamic> _errors = {};
+  bool _rememberMe = false;
 
   @override
   void initState() {
@@ -135,24 +208,9 @@ class _LoginFormContentState extends State<_LoginFormContent> {
       if (_errors.isEmpty) {
         final status = await validator.loginUser();
         if (status['status'] != 'success') {
-          // Fluttertoast.showToast(
-          //   msg: status['message'],
-          //   toastLength: Toast.LENGTH_SHORT,
-          //   gravity: ToastGravity.BOTTOM,
-          //   backgroundColor: const Color.fromARGB(255, 255, 0, 0),
-          //   textColor: Colors.white,
-          //   fontSize: 16.0,
-          // );
+          // Handle error
           return;
         }
-        // Fluttertoast.showToast(
-        //   msg: status['message'],
-        //   toastLength: Toast.LENGTH_SHORT,
-        //   gravity: ToastGravity.BOTTOM,
-        //   backgroundColor: const Color.fromARGB(255, 9, 255, 0),
-        //   textColor: Colors.white,
-        //   fontSize: 16.0,
-        // );
 
         Navigator.push(
           context,
@@ -167,9 +225,20 @@ class _LoginFormContentState extends State<_LoginFormContent> {
     return Form(
       key: _formKey,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Tipo de documento (Dropdown)
+          // Tipo de documento
+          const Text(
+            "Tipo De Documento",
+            style: TextStyle(
+              color: Color(0xFF064c41),
+              fontSize: 14,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          const SizedBox(height: 8),
+          
+          // Document Type Dropdown
           FutureBuilder<List<DropdownMenuItem<int>>>(
             future: itemsFuture,
             builder: (context, snapshot) {
@@ -178,142 +247,234 @@ class _LoginFormContentState extends State<_LoginFormContent> {
               } else if (!snapshot.hasData || snapshot.data!.isEmpty) {
                 return const Text('No hay datos disponibles');
               } else {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Text(
-                      'Tipo de Documento',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w500,
-                        color: Color(0xFF0F969C),
+                return Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF5F5F5),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: Row(
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
+                        child: Icon(
+                          Icons.badge,
+                          color: Colors.grey,
+                        ),
                       ),
-                    ),
-                    const SizedBox(height: 8),
-                     CustomDropdownButtonFormField(
-                      labelText: 'Selecciona un tipo de documento',
-                      items: snapshot.data!,
-                      prefixIcon: Icons.badge,
-                      error: _errors['tDocError'],
-                      onChanged: (value) {
-                        setState(() {
-                          tDoc = value;
-                        });
-                      }
-                    ),
-                  ],
+                      Expanded(
+                        child: DropdownButtonFormField<int>(
+                          value: tDoc,
+                          decoration: const InputDecoration(
+                            hintText: "Selecciona un tipo de documento",
+                            border: InputBorder.none,
+                            hintStyle: TextStyle(color: Colors.grey),
+                            contentPadding: EdgeInsets.symmetric(vertical: 12),
+                          ),
+                          items: snapshot.data,
+                          onChanged: (value) {
+                            setState(() {
+                              tDoc = value;
+                            });
+                          },
+                          icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF064c41)),
+                          isExpanded: true,
+                          dropdownColor: Colors.white,
+                        ),
+                      ),
+                    ],
+                  ),
                 );
-              } 
+              }
             },
           ),
+          
+          if (_errors['tDocError'] != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 4, left: 16),
+              child: Text(
+                _errors['tDocError'],
+                style: const TextStyle(color: Colors.red, fontSize: 12),
+              ),
+            ),
+          
           const SizedBox(height: 20),
           
           // Número de documento
           const Text(
-            'Document Number',
+            "Numero De Documento",
             style: TextStyle(
+              color: Color(0xFF064c41),
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF0F969C),
             ),
           ),
           const SizedBox(height: 8),
-          CustomTextFormFiel(
-            prefixIcon: Icons.person,
-            labelText: 'Ingresa tu numero de documento',
-            isPassword: false,
-            controller: numDocController,
-            error: _errors['numDocError']
+          
+          // Document Number Field (sin el chulito)
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFFF5F5F5),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Row(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Icon(
+                    Icons.person_outline,
+                    color: Colors.grey,
+                  ),
+                ),
+                Expanded(
+                  child: TextFormField(
+                    controller: numDocController,
+                    decoration: const InputDecoration(
+                      hintText: "Ingresa tu número de documento",
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                ),
+                // Se eliminó el chulito aquí
+              ],
+            ),
           ),
+          
+          if (_errors['numDocError'] != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 4, left: 16),
+              child: Text(
+                _errors['numDocError'],
+                style: const TextStyle(color: Colors.red, fontSize: 12),
+              ),
+            ),
+          
           const SizedBox(height: 20),
           
-          // Contraseña
+          // Password Field
           const Text(
-            'Password',
+            "Contaseña",
             style: TextStyle(
+              color: Color(0xFF064c41),
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF0F969C),
             ),
           ),
           const SizedBox(height: 8),
-          CustomTextFormFiel(
-            prefixIcon: Icons.lock,
-            labelText: 'Ingresa Tu contraseña',
-            isPassword: true,
-            controller: passwordController,
-            error: _errors['passwordError'],
+          
+          Container(
+            decoration: BoxDecoration(
+              color: const Color(0xFFF5F5F5),
+              borderRadius: BorderRadius.circular(30),
+            ),
+            child: Row(
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  child: Icon(
+                    Icons.lock_outline,
+                    color: Colors.grey,
+                  ),
+                ),
+                Expanded(
+                  child: TextFormField(
+                    controller: passwordController,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      hintText: "Ingresa tu contraseña",
+                      border: InputBorder.none,
+                      hintStyle: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
+          
+          if (_errors['passwordError'] != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 4, left: 16),
+              child: Text(
+                _errors['passwordError'],
+                style: const TextStyle(color: Colors.red, fontSize: 12),
+              ),
+            ),
+          
           const SizedBox(height: 16),
           
-          // Olvidé mi contraseña
-          Align(
-            alignment: Alignment.centerRight,
-            child: TextButton(
-              onPressed: () {},
-              child: const Text(
-                'Forgot Password?',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF6DA5C0),
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-          const SizedBox(height: 24),
-          
-          // Botón de Ingresar
-          ElevatedButton(
-            onPressed: dataValidate,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF0F969C),
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-              elevation: 3,
-              shadowColor: Color(0xFF6DA5C0).withOpacity(0.5),
-            ),
-            child: const Text(
-              'LOG IN',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: Colors.white,
-              ),
-            ),
-          ),
-          const SizedBox(height: 24),
-          
-          // No tienes cuenta
+          // Remember me and Forgot password
           Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const Text(
-                'Don\'t have an account? ',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF6DA5C0),
-                ),
+              // Remember me checkbox
+              Row(
+                children: [
+                  SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: Checkbox(
+                      value: _rememberMe,
+                      onChanged: (value) {
+                        setState(() {
+                          _rememberMe = value ?? false;
+                        });
+                      },
+                      activeColor: const Color(0xFF20A67B),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  const Text(
+                    "Recordarme",
+                    style: TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
+                  ),
+                ],
               ),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const RegisterScreen()),
-                  );
+              
+              // Forgot password
+              GestureDetector(
+                onTap: () {
+                  // Forgot password functionality
                 },
                 child: const Text(
-                  'Sign Up',
+                  "Olvide Mi Contraseña",
                   style: TextStyle(
+                    color: Color(0xFF20A67B),
                     fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                    color: Color(0xFF0F969C),
                   ),
                 ),
               ),
             ],
+          ),
+          const SizedBox(height: 30),
+          
+          // Sign In Button
+          SizedBox(
+            width: double.infinity,
+            height: 55,
+            child: ElevatedButton(
+              onPressed: dataValidate,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFF20A67B),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                elevation: 0,
+              ),
+              child: const Text(
+                "Iniciar Sesión",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
           ),
         ],
       ),
