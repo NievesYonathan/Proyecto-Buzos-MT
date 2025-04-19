@@ -4,7 +4,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class UserRepository {
   // URL base de la API
-  static const String urlBase  = 'http://192.168.101.17:8000';
+  static const String urlBase  = 'http://127.0.0.1:8001';
 
   // Rutas específicas
   final Uri loginUrl = Uri.parse('$urlBase/api/Login');
