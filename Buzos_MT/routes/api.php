@@ -1,24 +1,15 @@
 <?php
 use App\Http\Controllers\Api\BuzosImageController;
-<<<<<<< Updated upstream
-=======
 
-use App\Http\Controllers\MateriaPrimaController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\UserProfileController;
->>>>>>> Stashed changes
+
 use App\Http\Controllers\Api\ApiAuthenticatedSessionController;
 use App\Http\Controllers\Api\ApiRegisteredUserController;
 use App\Http\Controllers\Api\EmpTareasController;
 use App\Http\Controllers\Api\ProduccionController;
 use App\Http\Controllers\Api\RegProMateriaPrimaController;
-<<<<<<< Updated upstream
 use App\Http\Controllers\Api\MateriaPrimaController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserProfileController;
-=======
-use Illuminate\Http\Request;
->>>>>>> Stashed changes
 use App\Http\Controllers\Api\EtapaController;
 use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\TipoDocApiController;
@@ -43,10 +34,6 @@ Route::post('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'sho
 Route::post('/materia-prima-agregar', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto');
 Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'update'])->name('update-producto');
 Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'delete'])->name('materia-prima-delete');
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 //Rutas para la Api de la aplicacion mobile
 
 Route::get('/Login', [ApiAuthenticatedSessionController::class, 'create']);
@@ -54,12 +41,6 @@ Route::post('/Login', [ApiAuthenticatedSessionController::class, 'store']);
 Route::post('/Register',[ApiRegisteredUserController::class, 'store']);
 // Route::get('/Register',[ApiRegisteredUserController::class, 'create']);
 Route::middleware('jwt')->delete('/logout', [ApiAuthenticatedSessionController::class, 'destroy']);
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
-
-
 
 // Rutas para 'Jefe Producción'
 Route::get('/producciones', [ProduccionController::class, 'index']);
@@ -127,7 +108,3 @@ Route::get('/tareas-asignadas', [TareaApiController::class, 'tareasAsignadas']);
 // Rutas para editar estado de tareas asignadas
 Route::get('/tareas/estado/{id_tarea}/{id_empleado_tarea}', [TareaApiController::class, 'editarEstado']);
 Route::put('/tareas/estado/{id_empleado_tarea}', [TareaApiController::class, 'actualizarEstado']);
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes

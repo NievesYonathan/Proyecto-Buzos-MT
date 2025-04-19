@@ -2,6 +2,7 @@ import 'package:buzosmt/main.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'login_screen.dart';
+import 'configuration_user.dart';
 
 class Dashboard extends StatelessWidget {
   const Dashboard({super.key});
@@ -78,17 +79,36 @@ class Dashboard extends StatelessWidget {
             children: [
               _buildDrawerItem(Icons.dashboard, 'Dashboard'),
               ExpansionTile(
+              leading: const Icon(Icons.factory, color: Colors.white),
+              title: const Text('Producción', style: TextStyle(color: Colors.white)),
+              children: [
+                ListTile(
                 leading: const Icon(Icons.factory, color: Colors.white),
-                title: const Text('Producción', style: TextStyle(color: Colors.white)),
-                children: [
-                  ListTile(
-                    title: const Text('Submenú 1', style: TextStyle(color: Colors.white70)),
-                    onTap: () {},
-                  ),
-                ],
+                title: const Text('Gestion de Produccion', style: TextStyle(color: Colors.white70)),
+                onTap: () {
+
+                },
+                ),
+                ListTile(
+                leading: const Icon(Icons.checkroom, color: Colors.white),
+                title: const Text('Gestion productos Fabricados', style: TextStyle(color: Colors.white70),),
+                onTap: () {
+                
+                },
+                ),
+              ],
               ),
               _buildDrawerItem(Icons.calendar_today, 'Tareas'),
-              _buildDrawerItem(Icons.settings, 'Configuración'),
+              ListTile(
+              leading: const Icon(Icons.settings, color: Colors.white),
+              title: const Text('Configuración', style: TextStyle(color: Colors.white)),
+              onTap: () {
+                Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const ConfigurationUserScreen()),
+                );
+              },
+              ),
             ],
           ),
         ),
