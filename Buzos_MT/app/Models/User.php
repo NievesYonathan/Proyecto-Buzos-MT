@@ -16,7 +16,8 @@ class User extends Authenticatable implements JWTSubject
 
     // Define la clave primaria
     protected $primaryKey = 'num_doc';
-
+    // Indica si la clave primaria es un entero autoincremental
+    protected $usuEmail = 'usu_email';
     // Atributos que son asignables en masa
     protected $fillable = [
         'num_doc',
@@ -88,4 +89,19 @@ class User extends Authenticatable implements JWTSubject
     {
         return [];
     }
+
+    /**
+     * Get the email address that should be used for password reset.
+     *
+     * @return string
+     */
+    public function getEmailForPasswordReset()
+    {
+        return $this->usu_email;
+    }
+    
 }
+
+
+
+
