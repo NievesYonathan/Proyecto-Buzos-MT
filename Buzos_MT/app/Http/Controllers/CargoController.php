@@ -7,52 +7,63 @@ use Illuminate\Support\Facades\Http;
 
 class CargoController extends Controller
 {
-    protected $apiUrl;
+    private $apiBase;
 
     public function __construct()
     {
-        $this->apiUrl = url('/api/cargos');
+        $this->apiBase = 'http://localhost/Proyecto-Buzos-MT/Buzos_MT/public/api';
+        Http::timeout(5);
     }
 
     public function index()
     {
-        $response = Http::get($this->apiUrl);
-        $data = $response->json();
+        try {
+            $response = Http::get("{$this->apiBase}/cargos");
 
-        $cargos = $data['cargos']['data'] ?? [];
+            if (!$response->successful()) {
+                throw new \Exception('Error al obtener los cargos');
+            }
 
-        return view('Perfil-Admin-Usuarios.cargos', compact('cargos'));
+            return view('Perfil-Admin-Usuarios.cargos', [
+                'cargos' => $response->json()
+            ]);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error de conexión con el servidor');
+        }
     }
 
-    public function create(Request $request)
+    public function create()
     {
-        $response = Http::get($this->apiUrl);
-        $data = $response->json();
-
-        $cargos = $data['cargos']['data'] ?? [];
-
-        return view('cargos', compact('cargos'));
+        return view('Perfil-Admin-Usuarios.cargos-new'); // Crea esta vista si no existe
     }
 
     public function store(Request $request)
     {
-        $request->validate([
-            'car_nombre' => 'required|string|max:255',
-        ]);
+        try {
+            $response = Http::post("{$this->apiBase}/cargos", $request->all());
 
-        Http::post($this->apiUrl, [
-            'car_nombre' => $request->car_nombre,
-        ]);
+            if ($response->successful()) {
+                return redirect()->route('cargos')->with('success', 'Cargo creado correctamente');
+            }
 
-        return redirect()->route('cargos')->with('success', 'Cargo creado correctamente');
+            return back()->withErrors(['error' => $response->json()['message'] ?? 'Error al crear cargo'])->withInput();
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error de conexión con el servidor'])->withInput();
+        }
     }
 
-    public function update(Request $request, $id_cargos)
+    public function update(Request $request, $id)
     {
-        Http::put($this->apiUrl . '/' . $id_cargos, [
-            'car_nombre' => $request->car_nombre,
-        ]);
+        try {
+            $response = Http::put("{$this->apiBase}/cargos/{$id}", $request->all());
 
-        return redirect()->route('cargos')->with('success', 'Cargo actualizado correctamente');
+            if ($response->successful()) {
+                return redirect()->route('cargos')->with('success', 'Cargo actualizado correctamente');
+            }
+
+            return back()->withErrors(['error' => $response->json()['message'] ?? 'Error al actualizar cargo']);
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error de conexión con el servidor']);
+        }
     }
 }

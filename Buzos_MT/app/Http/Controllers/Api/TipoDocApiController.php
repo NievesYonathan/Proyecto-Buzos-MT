@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\API;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\TipoDoc;
@@ -10,7 +10,7 @@ class TipoDocApiController extends Controller
 {
     public function index()
     {
-        return TipoDoc::all();
+        return response()->json(TipoDoc::all());
     }
 
     public function store(Request $request)
@@ -19,32 +19,25 @@ class TipoDocApiController extends Controller
             'tip_doc_descripcion' => 'required|string|max:255',
         ]);
 
-        return TipoDoc::create([
+        $tipoDoc = TipoDoc::create([
             'tip_doc_descripcion' => $request->tip_doc_descripcion,
         ]);
+
+        return response()->json(['message' => 'Tipo de documento creado', 'data' => $tipoDoc], 201);
     }
 
     public function update(Request $request, $id)
     {
-        $tipo = TipoDoc::findOrFail($id);
+        $tipoDoc = TipoDoc::findOrFail($id);
 
-        $tipo->update([
+        $request->validate([
+            'tip_doc_descripcion' => 'required|string|max:255',
+        ]);
+
+        $tipoDoc->update([
             'tip_doc_descripcion' => $request->tip_doc_descripcion,
         ]);
 
-        return response()->json($tipo);
-    }
-
-    public function destroy($id)
-    {
-        $tipo = TipoDoc::findOrFail($id);
-        $tipo->delete();
-
-        return response()->json(['message' => 'Eliminado correctamente']);
-    }
-
-    public function show($id)
-    {
-        return TipoDoc::findOrFail($id);
+        return response()->json(['message' => 'Tipo de documento actualizado', 'data' => $tipoDoc]);
     }
 }

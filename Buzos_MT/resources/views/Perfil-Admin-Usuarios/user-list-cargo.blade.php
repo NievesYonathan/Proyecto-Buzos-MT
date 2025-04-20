@@ -32,7 +32,7 @@
 				<tbody>
 					@foreach($usuarios as $usuario)
 					<tr class="table-light text-center">
-						<td>{{ $usuario->tipoDocumento->tip_doc_descripcion }}</td>
+					<td>{{ optional($usuario->tipo_documento)->tip_doc_descripcion }}</td>
 						<td>{{ $usuario->num_doc }}</td>
 						<td>{{ $usuario->usu_nombres }}</td>
 						<td>
@@ -61,8 +61,8 @@
 									<div class="modal-body">
 										<div class="form-check form-switch">
 											@foreach($cargos as $cargo)
-											<input class="form-check-input" type="checkbox" name="idCargo[]" value="{{ $cargo->id_cargos }}" id="checkbox{{ $cargo->id_cargos }}">
-											<label class="form-check-label" for="checkbox{{ $cargo->id_cargos }}">{{ $cargo->car_nombre }}</label><br>
+											<input class="form-check-input" type="checkbox" name="idCargo[]" value="{{ $cargo['id_cargos'] }}" id="checkbox{{ $cargo['id_cargos'] }}">
+											<label class="form-check-label" for="checkbox{{ $cargo['id_cargos'] }}">{{ $cargo['car_nombre'] }}</label><br>
 											@endforeach
 										</div>
 									</div>

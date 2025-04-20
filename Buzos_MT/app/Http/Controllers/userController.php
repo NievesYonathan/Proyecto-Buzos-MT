@@ -4,114 +4,114 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
-    private $apiBase = 'http://localhost:8000/api';
+    private $apiBase;
+
+    public function __construct()
+    {
+        $this->apiBase = 'http://localhost/Proyecto-Buzos-MT/Buzos_MT/public/api';
+        Http::timeout(5);
+    }
 
     public function index()
     {
-        $usuarios = Http::get("{$this->apiBase}/usuarios")->json();
-        $tiposDocumentos = Http::get("{$this->apiBase}/tipos-documentos")->json();
-        $estados = Http::get("{$this->apiBase}/estados")->json();
+        try {
+            $response = Http::get("{$this->apiBase}/usuarios");
+            $tiposResponse = Http::get("{$this->apiBase}/tipos-documentos");
+            $estadosResponse = Http::get("{$this->apiBase}/estados");
 
-        return view('Perfil-Admin-Usuarios.user-list', compact('usuarios', 'tiposDocumentos', 'estados'));
+            if (!$response->successful() || !$tiposResponse->successful() || !$estadosResponse->successful()) {
+                throw new \Exception('Error al obtener datos de la API');
+            }
+
+            return view('Perfil-Admin-Usuarios.user-list', [
+                'usuarios' => $response->json(),
+                'tiposDocumentos' => $tiposResponse->json(),
+                'estados' => $estadosResponse->json()
+            ]);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error de conexión con el servidor');
+        }
     }
 
     public function create()
     {
-        $tiposDocumentos = Http::get("{$this->apiBase}/tipos-documentos")->json();
-        $estados = Http::get("{$this->apiBase}/estados")->json();
+        try {
+            $response = Http::get("{$this->apiBase}/tipos-documentos");
+            
+            if (!$response->successful()) {
+                throw new \Exception('Error al obtener tipos de documentos');
+            }
 
-        return view('Perfil-Admin-Usuarios.user-new', compact('tiposDocumentos', 'estados'));
+            return view('Perfil-Admin-Usuarios.user-new', ['tipos_documentos' => $response->json()]);
+        } catch (\Exception $e) {
+            return back()->with('error', 'Error de conexión con el servidor');
+        }
     }
 
     public function store(Request $request)
     {
-        // Validación de los campos recibidos
-        $validatedData = $request->validate([
-            'num_doc' => ['required', 'integer', 'unique:usuarios,num_doc'],
-            't_doc' => ['required', 'integer'],
-            'usu_nombres' => ['required', 'string', 'max:60'],
-            'usu_apellidos' => ['required', 'string', 'max:45'],
-            'usu_email' => ['required', 'string', 'email', 'max:50'],
-            'usu_fecha_nacimiento' => ['required', 'date'],
-            'usu_sexo' => ['required', 'string', 'max:1'],
-            'usu_telefono' => ['required', 'string', 'max:10'],
-            'usu_direccion' => ['required', 'string', 'max:50'],
-            'usu_estado' => ['required', 'integer'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ], [
-            'num_doc.unique' => 'Este número de documento ya está registrado.'
-        ]);
+        try {
+            $response = Http::post("{$this->apiBase}/usuarios", $request->all());
 
-        // Enviar los datos a la API para crear el usuario
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-        ])->post("{$this->apiBase}/usuarios", $validatedData);
+            if ($response->successful()) {
+                return redirect()->route('user-list')->with('alerta', 'Usuario creado con éxito');
+            }
 
-        if ($response->successful()) {
-            return redirect()->route('user-list')->with('alerta', 'Usuario creado con éxito');
+            $errorMessage = $response->json()['message'] ?? $response->json()['error'] ?? 'Error al crear usuario';
+            return back()->withErrors(['error' => $errorMessage])->withInput();
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error de conexión con el servidor'])->withInput();
         }
-
-        return redirect()->back()->with('error', 'Error al crear usuario.');
     }
 
     public function update(Request $request, $num_doc)
     {
-        // Validación para actualizar el usuario
-        $validatedData = $request->validate([
-            'usu_nombres' => ['required', 'string', 'max:60'],
-            'usu_apellidos' => ['required', 'string', 'max:45'],
-            'usu_email' => ['required', 'string', 'email', 'max:50'],
-            'usu_fecha_nacimiento' => ['required', 'date'],
-            'usu_sexo' => ['required', 'string', 'max:1'],
-            'usu_telefono' => ['required', 'string', 'max:10'],
-            'usu_direccion' => ['required', 'string', 'max:50'],
-            'usu_estado' => ['required', 'integer'],
-        ]);
+        try {
+            $response = Http::put("{$this->apiBase}/usuarios/{$num_doc}", $request->all());
 
-        // Enviar los datos para actualizar el usuario
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-        ])->put("{$this->apiBase}/usuarios/{$num_doc}", $validatedData);
+            if ($response->successful()) {
+                return redirect()->route('user-list')->with('alerta', 'Usuario actualizado correctamente');
+            }
 
-        if ($response->successful()) {
-            return redirect()->route('user-list')->with('alerta', 'Usuario actualizado con éxito');
+            return back()->withErrors(['error' => $response->json()['message'] ?? 'Error al actualizar usuario']);
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error de conexión con el servidor']);
         }
-
-        return redirect()->back()->with('error', 'Error al actualizar usuario.');
     }
 
     public function cambiarestado($num_doc)
     {
-        // Cambiar el estado del usuario
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-        ])->put("{$this->apiBase}/usuarios/cambiar-estado/{$num_doc}");
+        try {
+            $response = Http::put("{$this->apiBase}/usuarios/cambiar-estado/{$num_doc}");
 
-        if ($response->successful()) {
-            return redirect()->route('user-list')->with('alerta', 'Estado del usuario cambiado con éxito');
+            if ($response->successful()) {
+                return redirect()->route('user-list')->with('alerta', 'Estado actualizado correctamente');
+            }
+
+            return back()->withErrors(['error' => $response->json()['message'] ?? 'Error al cambiar estado']);
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error de conexión con el servidor']);
         }
-
-        return redirect()->back()->with('error', 'No se pudo cambiar el estado del usuario.');
     }
 
     public function buscar(Request $request)
     {
-        // Buscar usuarios
-        $query = $request->input('query');
+        try {
+            $search = $request->input('search', '');
+            
+            if ($search) {
+                $response = Http::get("{$this->apiBase}/usuarios/buscar", ['search' => $search]);
+                $resultado = $response->successful() ? collect($response->json()) : collect([]);
+            } else {
+                $resultado = collect([]);
+            }
 
-        $response = Http::get("{$this->apiBase}/usuarios/buscar", [
-            'query' => $query
-        ]);
-
-        if ($response->successful()) {
-            $usuarios = $response->json();
-            return response()->json($usuarios);
+            return view('Perfil-Admin-Usuarios.user-search', compact('search', 'resultado'));
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Error de conexión con el servidor']);
         }
-
-        return response()->json(['error' => 'Error al buscar usuarios'], 500);
     }
 }

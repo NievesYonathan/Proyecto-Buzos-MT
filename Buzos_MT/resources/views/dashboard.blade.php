@@ -94,7 +94,7 @@
 
         @if ($perfil === 'Operario')
             <div class="col-sm-12 col-md-4 tile-container">
-                <a href="{{ route('tareas-asigadas')}}" class="tile">
+                <a href="{{ route('tareas-asignadas')}}" class="tile">
                     <div class="tile-tittle">Mis Tareas</div>
                     <div class="tile-icon">
                         <i class="fa-brands fa-stack-exchange"></i>
