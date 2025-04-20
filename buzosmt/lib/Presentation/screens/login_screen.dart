@@ -243,14 +243,14 @@ class _LoginFormContentState extends State<_LoginFormContent> {
         print(status);
         if (status['status'] != 'success') {
           // Handle error
-          // Fluttertoast.showToast(
-          //   msg: status['message'],
-          //   toastLength: Toast.LENGTH_SHORT,
-          //   gravity: ToastGravity.BOTTOM,
-          //   backgroundColor: Colors.red,
-          //   textColor: Colors.white,
-          //   fontSize: 16.0,
-          // );
+          Fluttertoast.showToast(
+            msg: status['message'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
           return;
         }
 
