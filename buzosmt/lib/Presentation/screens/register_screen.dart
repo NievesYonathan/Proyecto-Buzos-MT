@@ -7,7 +7,11 @@ import 'package:buzosmt/Presentation/Widgets/Inputs/Customtextformfiel.dart';
 import 'package:buzosmt/Presentation/Widgets/butons/customelevatedbutton.dart';
 import 'package:buzosmt/Domains/usecases/login_user.dart';
 import 'package:intl/intl.dart';
+<<<<<<< HEAD
 import 'package:buzosmt/main.dart';
+=======
+import 'package:fluttertoast/fluttertoast.dart';
+>>>>>>> origin/AppMobile
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -31,11 +35,9 @@ class RegisterScreen extends StatelessWidget {
                 // Header - Fixed at the top
                 const Padding(
                   padding: EdgeInsets.only(top: 30.0, left: 24.0, bottom: 20.0),
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                  ),
+                  child: Align(alignment: Alignment.centerLeft),
                 ),
-                
+
                 // Scrollable content
                 Expanded(
                   child: SingleChildScrollView(
@@ -44,7 +46,10 @@ class RegisterScreen extends StatelessWidget {
                       children: [
                         // Main card with registration form
                         Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
+                          margin: const EdgeInsets.symmetric(
+                            horizontal: 24,
+                            vertical: 10,
+                          ),
                           padding: const EdgeInsets.all(24),
                           decoration: BoxDecoration(
                             color: Colors.white,
@@ -96,7 +101,7 @@ class RegisterScreen extends StatelessWidget {
                                   fit: BoxFit.contain,
                                 ),
                               ),
-                              
+
                               // App name
                               const Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -120,7 +125,7 @@ class RegisterScreen extends StatelessWidget {
                                 ],
                               ),
                               const SizedBox(height: 30),
-                              
+
                               // Registration form
                               const _RegisterForm(),
                               
@@ -155,7 +160,7 @@ class RegisterScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        
+
                         // Login option
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20),
@@ -173,7 +178,9 @@ class RegisterScreen extends StatelessWidget {
                                 onTap: () {
                                   Navigator.push(
                                     context,
-                                    MaterialPageRoute(builder: (context) => const LoginScreen()),
+                                    MaterialPageRoute(
+                                      builder: (context) => const LoginScreen(),
+                                    ),
                                   );
                                 },
                                 child: const Text(
@@ -249,9 +256,12 @@ class _FormRegisterState extends State<_RegisterForm> {
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
-      initialDate: usuFechaNacimientoController.text.isNotEmpty
-          ? DateFormat('dd/MM/yyyy').parse(usuFechaNacimientoController.text)
-          : DateTime.now(),
+      initialDate:
+          usuFechaNacimientoController.text.isNotEmpty
+              ? DateFormat(
+                'yyyy-MM-dd',
+              ).parse(usuFechaNacimientoController.text)
+              : DateTime.now(),
       firstDate: DateTime(1920),
       lastDate: DateTime.now(),
       builder: (context, child) {
@@ -272,10 +282,12 @@ class _FormRegisterState extends State<_RegisterForm> {
         );
       },
     );
-    
+
     if (picked != null) {
       setState(() {
-        usuFechaNacimientoController.text = DateFormat('dd/MM/yyyy').format(picked);
+        usuFechaNacimientoController.text = DateFormat(
+          'dd-MM-yyyy',
+        ).format(picked);
       });
     }
   }
@@ -283,6 +295,7 @@ class _FormRegisterState extends State<_RegisterForm> {
   Future<void> dataValidate() async {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState!.validate()) {
+      print(usuFechaNacimientoController.text);
       UsesCasesUser validator = UsesCasesUser(
         User(
           tDoc: tDoc,
@@ -305,11 +318,27 @@ class _FormRegisterState extends State<_RegisterForm> {
 
       if (_errors.isEmpty) {
         final status = await validator.registerUser();
-        print(status);
+        
         if (status['status'] != 'success') {
+          Fluttertoast.showToast(
+            msg: status['message'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
           return;
         }
 
+        Fluttertoast.showToast(
+          msg: status['message'],
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: const Color.fromARGB(255, 98, 244, 54),
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => LoginScreen()),
@@ -335,7 +364,7 @@ class _FormRegisterState extends State<_RegisterForm> {
             ),
           ),
           const SizedBox(height: 8),
-          
+
           // Document Type Dropdown
           Container(
             decoration: BoxDecoration(
@@ -346,10 +375,7 @@ class _FormRegisterState extends State<_RegisterForm> {
               children: [
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Icon(
-                    Icons.badge,
-                    color: Colors.grey,
-                  ),
+                  child: Icon(Icons.badge, color: Colors.grey),
                 ),
                 Expanded(
                   child: DropdownButtonFormField<int>(
@@ -366,7 +392,10 @@ class _FormRegisterState extends State<_RegisterForm> {
                         tDoc = value;
                       });
                     },
-                    icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF064c41)),
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Color(0xFF064c41),
+                    ),
                     isExpanded: true,
                     dropdownColor: Colors.white,
                   ),
@@ -374,7 +403,7 @@ class _FormRegisterState extends State<_RegisterForm> {
               ],
             ),
           ),
-          
+
           if (_errors['tDocError'] != null)
             Padding(
               padding: const EdgeInsets.only(top: 4, left: 16),
@@ -383,9 +412,9 @@ class _FormRegisterState extends State<_RegisterForm> {
                 style: const TextStyle(color: Colors.red, fontSize: 12),
               ),
             ),
-          
+
           const SizedBox(height: 20),
-          
+
           // Número de documento
           const Text(
             "Numero De Documento",
@@ -396,16 +425,16 @@ class _FormRegisterState extends State<_RegisterForm> {
             ),
           ),
           const SizedBox(height: 8),
-          
+
           _buildTextField(
             controller: numDocController,
             hintText: "Ingresa tu número de documento",
             icon: Icons.credit_card,
             errorText: _errors['numDocError'],
           ),
-          
+
           const SizedBox(height: 20),
-          
+
           // Nombres
           const Text(
             "Nombres",
@@ -416,16 +445,16 @@ class _FormRegisterState extends State<_RegisterForm> {
             ),
           ),
           const SizedBox(height: 8),
-          
+
           _buildTextField(
             controller: usuNombresController,
             hintText: "Ingresa tus nombres",
             icon: Icons.person,
             errorText: _errors['usuNombresError'],
           ),
-          
+
           const SizedBox(height: 20),
-          
+
           // Apellidos
           const Text(
             "Apellidos",
@@ -436,16 +465,16 @@ class _FormRegisterState extends State<_RegisterForm> {
             ),
           ),
           const SizedBox(height: 8),
-          
+
           _buildTextField(
             controller: usuApellidosController,
             hintText: "Ingresa tus apellidos",
             icon: Icons.person_outline,
             errorText: _errors['usuApellidosError'],
           ),
-          
+
           const SizedBox(height: 20),
-          
+
           // Fecha de nacimiento
           const Text(
             "Fecha de Nacimiento",
@@ -456,7 +485,7 @@ class _FormRegisterState extends State<_RegisterForm> {
             ),
           ),
           const SizedBox(height: 8),
-          
+
           // Date picker field
           Container(
             decoration: BoxDecoration(
@@ -467,10 +496,7 @@ class _FormRegisterState extends State<_RegisterForm> {
               children: [
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Icon(
-                    Icons.calendar_today,
-                    color: Colors.grey,
-                  ),
+                  child: Icon(Icons.calendar_today, color: Colors.grey),
                 ),
                 Expanded(
                   child: TextFormField(
@@ -487,16 +513,13 @@ class _FormRegisterState extends State<_RegisterForm> {
                 ),
                 // Calendar icon button to open date picker
                 IconButton(
-                  icon: const Icon(
-                    Icons.event,
-                    color: Color(0xFF20A67B),
-                  ),
+                  icon: const Icon(Icons.event, color: Color(0xFF20A67B)),
                   onPressed: () => _selectDate(context),
                 ),
               ],
             ),
           ),
-          
+
           if (_errors['usuFechaError'] != null)
             Padding(
               padding: const EdgeInsets.only(top: 4, left: 16),
@@ -505,9 +528,9 @@ class _FormRegisterState extends State<_RegisterForm> {
                 style: const TextStyle(color: Colors.red, fontSize: 12),
               ),
             ),
-          
+
           const SizedBox(height: 20),
-          
+
           // Género
           const Text(
             "Género",
@@ -518,7 +541,7 @@ class _FormRegisterState extends State<_RegisterForm> {
             ),
           ),
           const SizedBox(height: 8),
-          
+
           Container(
             decoration: BoxDecoration(
               color: const Color(0xFFF5F5F5),
@@ -528,10 +551,7 @@ class _FormRegisterState extends State<_RegisterForm> {
               children: [
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Icon(
-                    Icons.people_outline,
-                    color: Colors.grey,
-                  ),
+                  child: Icon(Icons.people_outline, color: Colors.grey),
                 ),
                 Expanded(
                   child: DropdownButtonFormField<String>(
@@ -551,7 +571,10 @@ class _FormRegisterState extends State<_RegisterForm> {
                         usuSexoController.text = value ?? '';
                       });
                     },
-                    icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF064c41)),
+                    icon: const Icon(
+                      Icons.arrow_drop_down,
+                      color: Color(0xFF064c41),
+                    ),
                     isExpanded: true,
                     dropdownColor: Colors.white,
                   ),
@@ -559,7 +582,7 @@ class _FormRegisterState extends State<_RegisterForm> {
               ],
             ),
           ),
-          
+
           if (_errors['usuSexoError'] != null)
             Padding(
               padding: const EdgeInsets.only(top: 4, left: 16),
@@ -568,9 +591,9 @@ class _FormRegisterState extends State<_RegisterForm> {
                 style: const TextStyle(color: Colors.red, fontSize: 12),
               ),
             ),
-          
+
           const SizedBox(height: 20),
-          
+
           // Teléfono
           const Text(
             "Teléfono",
@@ -581,16 +604,16 @@ class _FormRegisterState extends State<_RegisterForm> {
             ),
           ),
           const SizedBox(height: 8),
-          
+
           _buildTextField(
             controller: usuTelefonoController,
             hintText: "Ingresa tu número de teléfono",
             icon: Icons.phone,
             errorText: _errors['usuTelError'],
           ),
-          
+
           const SizedBox(height: 20),
-          
+
           // Correo electrónico
           const Text(
             "Correo Electrónico",
@@ -601,16 +624,16 @@ class _FormRegisterState extends State<_RegisterForm> {
             ),
           ),
           const SizedBox(height: 8),
-          
+
           _buildTextField(
             controller: usuEmailController,
             hintText: "Ingresa tu correo electrónico",
             icon: Icons.email,
             errorText: _errors['usuEmailError'],
           ),
-          
+
           const SizedBox(height: 20),
-          
+
           // Contraseña
           const Text(
             "Contraseña",
@@ -621,7 +644,7 @@ class _FormRegisterState extends State<_RegisterForm> {
             ),
           ),
           const SizedBox(height: 8),
-          
+
           _buildTextField(
             controller: passwordController,
             hintText: "Ingresa tu contraseña",
@@ -629,9 +652,9 @@ class _FormRegisterState extends State<_RegisterForm> {
             isPassword: true,
             errorText: _errors['passwordError'],
           ),
-          
+
           const SizedBox(height: 20),
-          
+
           // Confirmar contraseña
           const Text(
             "Confirmar Contraseña",
@@ -642,7 +665,7 @@ class _FormRegisterState extends State<_RegisterForm> {
             ),
           ),
           const SizedBox(height: 8),
-          
+
           _buildTextField(
             controller: passwordConfirmationController,
             hintText: "Confirma tu contraseña",
@@ -650,9 +673,9 @@ class _FormRegisterState extends State<_RegisterForm> {
             isPassword: true,
             errorText: _errors['passwordConfirmationError'],
           ),
-          
+
           const SizedBox(height: 30),
-          
+
           // Register Button
           SizedBox(
             width: double.infinity,
@@ -680,7 +703,7 @@ class _FormRegisterState extends State<_RegisterForm> {
       ),
     );
   }
-  
+
   Widget _buildTextField({
     required TextEditingController controller,
     required String hintText,
@@ -700,10 +723,7 @@ class _FormRegisterState extends State<_RegisterForm> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Icon(
-                  icon,
-                  color: Colors.grey,
-                ),
+                child: Icon(icon, color: Colors.grey),
               ),
               Expanded(
                 child: TextFormField(
