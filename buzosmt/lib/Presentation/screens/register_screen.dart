@@ -7,11 +7,8 @@ import 'package:buzosmt/Presentation/Widgets/Inputs/Customtextformfiel.dart';
 import 'package:buzosmt/Presentation/Widgets/butons/customelevatedbutton.dart';
 import 'package:buzosmt/Domains/usecases/login_user.dart';
 import 'package:intl/intl.dart';
-<<<<<<< HEAD
 import 'package:buzosmt/main.dart';
-=======
 import 'package:fluttertoast/fluttertoast.dart';
->>>>>>> origin/AppMobile
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
