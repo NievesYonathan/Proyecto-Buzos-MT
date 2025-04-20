@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User; // Asegúrate de que el modelo User esté importado
+use App\Models\User; 
 use App\Models\TipoDoc;
 
 
@@ -29,36 +29,40 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        // Obtiene el tipo y número de documento del request
         $t_doc = $request->t_doc;
         $num_doc = $request->num_doc;
         $password = $request->password;
 
-        // Busca el usuario por el tipo de documento y el número de documento
         $usuario = User::where('t_doc', $t_doc)->where('num_doc', $num_doc)->first();
 
-        // Verifica si el usuario existe
         if (!$usuario) {
             return back()->withErrors([
                 'num_doc' => 'El número de documento o el tipo de documento son incorrectos.',
             ]);
         }
 
-        // Verifica si la contraseña es correcta
-        if (!Hash::check($password, $usuario->seguridad->seg_clave_hash ?? '')) { // Asegúrate de tener una relación 'seguridad' en tu modelo User
+        // Obtener el hash de la contraseña
+        $hashedPassword = $usuario->seguridad->seg_clave_hash ?? null;
+
+        // Si no hay hash o no usa Bcrypt, actualizamos el hash
+        if (!$hashedPassword || !str_starts_with($hashedPassword, '$2y$')) {
+            $newHash = Hash::make($password);
+            // Actualizamos usando el ID del usuario
+            $usuario->seguridad()->update([
+                'seg_clave_hash' => $newHash
+            ]);
+            $hashedPassword = $newHash;
+        }
+
+        // Verificar la contraseña
+        if (!Hash::check($password, $hashedPassword)) {
             return back()->withErrors([
                 'password' => 'La contraseña es incorrecta.',
             ]);
         }
 
-        // Regenerar la sesión
         $request->session()->regenerate();
-
-        // Autenticación exitosa
-        Auth::login($usuario); // Usa el objeto de usuario
-        // Notificación de éxito con paquete mckenziearts/laravel-notify  
-        //notify()->success('Welcome to Laravel Notify ⚡️');
-        // Redirige a la ruta dashboard
+        Auth::login($usuario);
         return redirect()->intended(route('dashboard'));
     }
     

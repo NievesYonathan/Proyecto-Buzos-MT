@@ -20,7 +20,7 @@ return new class extends Migration
             $table->char('usu_sexo', 1)->comment('Atributo que identifica el tipo de sexo del Usuario');
             $table->string('usu_direccion', 50)->comment('Atributo que identifica el la direccion de residencia del Usuario');
             $table->string('usu_telefono', 10)->comment('Atributo que identifica el el numero de contacto del Usuario');
-            $table->string('usu_email', 50)->comment('Atributo que identifica el correo del Usuario');
+            $table->string('email', 50)->comment('Atributo que identifica el correo del Usuario');
             $table->date('usu_fecha_contratacion')->comment('Atributo que identifica el la fecha de contracion del Usuario');
             $table->integer('usu_estado')->index('fk_estados_idx')->comment('Atributo que identifica el estado del Usuario');
             $table->string('imag_perfil', 255)->nullable();

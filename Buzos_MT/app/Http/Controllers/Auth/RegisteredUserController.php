@@ -66,7 +66,7 @@ class RegisteredUserController extends Controller
             't_doc' => $request->t_doc,
             'usu_nombres' => $request->usu_nombres,
             'usu_apellidos' => $request->usu_apellidos ?? " ",
-            'usu_email' => $request->usu_email,
+            'email' => $request->usu_email,
             'usu_fecha_nacimiento' => $request->usu_fecha_nacimiento,
             'usu_sexo' => $request->usu_sexo,
             'usu_direccion' => $request->usu_direccion,

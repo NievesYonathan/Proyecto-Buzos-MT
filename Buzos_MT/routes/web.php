@@ -15,6 +15,39 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/test-email', function () {
+    try {
+        // Primero veamos la configuración actual
+        $config = [
+            'host' => config('mail.mailers.smtp.host'),
+            'port' => config('mail.mailers.smtp.port'),
+            'from' => config('mail.from.address'),
+            'to' => 'yonathannieves17@gmail.com'
+        ];
+        
+        dd($config); // Esto nos mostrará la configuración antes de intentar enviar
+
+        Mail::raw('Test email content', function ($message) {
+            $message->to('yonathannieves17@gmail.com')
+                   ->subject('Test Email')
+                   ->from(config('mail.from.address'), config('mail.from.name'));
+        });
+        
+        return [
+            'status' => 'success',
+            'message' => 'Email sent successfully!',
+            'config' => $config
+        ];
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ];
+    }
+});
 
 Route::get('/', function () {
     return view('welcome');
@@ -97,7 +130,7 @@ Route::get('/cargos', [CargoController::class, 'index'])->name('cargos');
 Route::get('/cargos/create', [CargoController::class, 'create'])->name('cargos.create');
 Route::post('/cargos', [CargoController::class, 'store'])->name('cargos.store');
 Route::put('/cargos/{id}', [CargoController::class, 'update'])->name('cargos.update');
-Route::get('/usuarios', [ListaCargoController::class, 'index'])->name('user-list-cargo');
+Route::get('/usuarios', [ListaCargoController::class, 'index'])->name('user-list-cargo2');
 Route::get('/usuarios-cargos', [ListaCargoController::class, 'index'])->name('user-list-cargo');
 Route::post('/usuarios-cargos', [ListaCargoController::class, 'store'])->name('cargosUsuarios.store');
 

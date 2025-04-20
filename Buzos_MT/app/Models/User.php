@@ -26,7 +26,7 @@ class User extends Authenticatable
         'usu_sexo',
         'usu_direccion',
         'usu_telefono',
-        'usu_email',
+        'email',
         'usu_fecha_contratacion',
         'usu_estado',
         'imag_perfil',
@@ -46,6 +46,7 @@ class User extends Authenticatable
     ];
 
     public $timestamps = false; // Deshabilitar timestamps
+    protected $remember_token = null;
 
     // Relación con el modelo Seguridad
     public function seguridad()
@@ -76,6 +77,11 @@ class User extends Authenticatable
     public function materiaPrima ()
     {
         return $this->hasMany(MateriaPrima::class, 'proveedores_id_proveedores', 'num_doc');
+    }
+
+    public function getEmailForPasswordReset()
+    {
+        return $this->email;
     }
 
 }
