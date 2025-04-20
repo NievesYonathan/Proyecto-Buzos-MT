@@ -398,6 +398,32 @@ table form {
 	transition: all .2s ease-in-out;
 }
 
+/* Sidebar lateral */
+.nav-lateral {
+	width: 100%;
+	transition: width 0.3s ease;
+	background-color: var(--color-one, #141e30); /* o el color que uses */
+	overflow: hidden;
+}
+
+/* Ocultar el sidebar */
+.nav-lateral.active {
+	width: 0;
+}
+
+/* Contenido principal */
+/* .page-content {
+	transition: all 0.3s ease;
+	margin-left: 250px;
+	width: calc(100% - 250px);
+} */
+
+/* Cuando el sidebar está oculto, el contenido se expande */
+.page-content.active {
+	margin-left: 0;
+	width: 100%;
+}
+
 /*  Page content */
 .navbar-info {
 	height: 50px;
@@ -830,7 +856,7 @@ table form {
 	margin-top: 20px;
     --accent-color: #34e69f;
     position: relative;
-    width: 280px; /* Ajusta el ancho según sea necesario */
+    width: 85%; /* Ajusta el ancho según sea necesario */
     background: white;
     border-radius: 1rem;
     padding: 0.3rem;

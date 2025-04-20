@@ -106,11 +106,10 @@ class ProduccionController extends Controller
         }
 
         $validator = Validator::make($request->all(), [
-            'pro_nombre' => 'required',
-            'pro_fecha_inicio' => 'required',
-            'pro_fecha_fin' => 'required',
-            'pro_cantidad' => 'required',
-            'pro_etapa' => 'required'
+            'produccion_nombre' => 'required',
+            'produccion_fecha_fin' => 'required',
+            'produccion_cantidad' => 'required',
+            'produccion_etapa' => 'required'
         ]);
 
         if($validator->fails()){
@@ -122,11 +121,10 @@ class ProduccionController extends Controller
             return response()->json($data, 400);
         }
 
-        $producto->pro_nombre = $request->pro_nombre;
-        $producto->pro_fecha_inicio = $request->pro_fecha_inicio;
-        $producto->pro_fecha_fin = $request->pro_fecha_fin;
-        $producto->pro_cantidad = $request->pro_cantidad;
-        $producto->pro_etapa = $request->pro_etapa;
+        $producto->pro_nombre = $request->produccion_nombre;
+        $producto->pro_fecha_fin = $request->produccion_fecha_fin;
+        $producto->pro_cantidad = $request->produccion_cantidad;
+        $producto->pro_etapa = $request->produccion_etapa;
 
         $producto->save();
 
@@ -135,7 +133,8 @@ class ProduccionController extends Controller
             'producto' => $producto,
             'status' => 200
         ];
-        return response()->json($data, 200);
+        // Redirigir o retornar una respuesta de éxito
+        return redirect()->route('pro_fabricados')->with('success', 'Producción actualizada exitosamente.');
     }
 
     public function updatePartial(Request $request, $id)

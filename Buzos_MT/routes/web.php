@@ -92,11 +92,12 @@ Route::get('/informes', [InformeController::class, 'index'])->name('informe-RRHH
 Route::get('/informes/users', [InformeController::class, 'fetchUsers'])->name('informes-RRHH.fetchUsers');
 
 // Rutas de 'Perfil de Producción'
-Route::get('/produccion', [produccionController::class, 'indexTwo'])->name('produccion');
-Route::put('/produccion/{id}', [produccionController::class, 'update'])->name('update_produccion');
-Route::get('/productos-fabricados', [produccionController::class, 'index'])->name('pro_fabricados');
-Route::post('/productos-formulario', [produccionController::class, 'store'])->name('nuevo-producto');
-
+Route::middleware('auth')->group(function () {
+    Route::get('/produccion', [produccionController::class, 'indexTwo'])->name('produccion');
+    Route::put('/produccion/{id}', [produccionController::class, 'update'])->name('update_produccion');
+    Route::get('/productos-fabricados', [produccionController::class, 'index'])->name('pro_fabricados');
+    Route::post('/productos-formulario', [produccionController::class, 'store'])->name('nuevo-producto');
+});
 
 // Rutas para las vistas
 Route::get('/perfil-produccion/etapas', [EtapaController::class, 'indexView'])->name('perfil-produccion.etapas'); // Mostrar etapas
