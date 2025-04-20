@@ -8,9 +8,44 @@ import 'package:buzosmt/Domains/usecases/getdocs_usecase.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:buzosmt/Presentation/Widgets/butons/customelevatedbutton.dart';
 import 'package:buzosmt/Presentation/screens/register_screen.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
+
+  Future<void> _signInWithGoogle(BuildContext context) async {
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn();
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+      if (googleUser == null) {
+        // El usuario canceló el inicio de sesión
+        return;
+      }
+
+      final GoogleSignInAuthentication googleAuth =
+          await googleUser.authentication;
+
+      // Aquí obtienes el token de acceso y el ID token
+      final String? accessToken = googleAuth.accessToken;
+      final String? idToken = googleAuth.idToken;
+
+      // Envía estos tokens a tu backend para validarlos o crear una sesión
+      // Por ejemplo:
+      // await tuBackendLogin(accessToken, idToken);
+
+      // Navega al Dashboard después del inicio de sesión exitoso
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => Dashboard()),
+      );
+    } catch (e) {
+      // Maneja errores de inicio de sesión
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text("Error al iniciar sesión con Google: $e")),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,6 +117,11 @@ class LoginScreen extends StatelessWidget {
                                 fit: BoxFit.contain,
                               ),
                             ),
+<<<<<<< HEAD
+=======
+                          ),
+
+>>>>>>> origin/AppMobile
                           // App name "LOGIN PAGE"
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -105,13 +145,14 @@ class LoginScreen extends StatelessWidget {
                             ],
                           ),
                           const SizedBox(height: 30),
-                          
+
                           // Login form content
                           const _LoginFormContent(),
-                          
+
                           const SizedBox(height: 20),
-                          
+
                           // Google Login Button
+<<<<<<< HEAD
                           SizedBox(
                           width: double.infinity,
                           child: Center(
@@ -131,13 +172,30 @@ class LoginScreen extends StatelessWidget {
                                 ),
                                 elevation: 2,
                                 ),
+=======
+                          ElevatedButton.icon(
+                            onPressed: () => _signInWithGoogle(context),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white,
+                              foregroundColor: Colors.grey[800],
+                              padding: const EdgeInsets.symmetric(
+                                vertical: 12,
+                                horizontal: 16,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(30),
+                                side: BorderSide(color: Colors.grey[300]!),
+                              ),
+                              elevation: 2,
+                            ),
+>>>>>>> origin/AppMobile
                             icon: Image.asset(
                               'assets/images/google.png', // Reemplaza con la ruta correcta a tu logo de Google
                               height: 24,
                               width: 24,
                             ),
                             label: const Text(
-                              "Iniciar Session con Google",
+                              "Iniciar Sesión con Google",
                               style: TextStyle(fontSize: 16),
                             ),
                           ),
@@ -146,7 +204,7 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                     ),
-                    
+
                     // Sign up option
                     const SizedBox(height: 20),
                     Row(
@@ -154,16 +212,15 @@ class LoginScreen extends StatelessWidget {
                       children: [
                         const Text(
                           "No Tienes Una Cuenta? ",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                          ),
+                          style: TextStyle(color: Colors.white, fontSize: 14),
                         ),
                         GestureDetector(
                           onTap: () {
                             Navigator.push(
                               context,
-                              MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                              MaterialPageRoute(
+                                builder: (context) => const RegisterScreen(),
+                              ),
                             );
                           },
                           child: const Text(
@@ -235,8 +292,17 @@ class _LoginFormContentState extends State<_LoginFormContent> {
       });
       if (_errors.isEmpty) {
         final status = await validator.loginUser();
+        print(status);
         if (status['status'] != 'success') {
           // Handle error
+          Fluttertoast.showToast(
+            msg: status['message'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
           return;
         }
 
@@ -265,7 +331,7 @@ class _LoginFormContentState extends State<_LoginFormContent> {
             ),
           ),
           const SizedBox(height: 8),
-          
+
           // Document Type Dropdown
           FutureBuilder<List<DropdownMenuItem<int>>>(
             future: itemsFuture,
@@ -284,10 +350,7 @@ class _LoginFormContentState extends State<_LoginFormContent> {
                     children: [
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 16),
-                        child: Icon(
-                          Icons.badge,
-                          color: Colors.grey,
-                        ),
+                        child: Icon(Icons.badge, color: Colors.grey),
                       ),
                       Expanded(
                         child: DropdownButtonFormField<int>(
@@ -304,7 +367,10 @@ class _LoginFormContentState extends State<_LoginFormContent> {
                               tDoc = value;
                             });
                           },
-                          icon: const Icon(Icons.arrow_drop_down, color: Color(0xFF064c41)),
+                          icon: const Icon(
+                            Icons.arrow_drop_down,
+                            color: Color(0xFF064c41),
+                          ),
                           isExpanded: true,
                           dropdownColor: Colors.white,
                         ),
@@ -315,7 +381,7 @@ class _LoginFormContentState extends State<_LoginFormContent> {
               }
             },
           ),
-          
+
           if (_errors['tDocError'] != null)
             Padding(
               padding: const EdgeInsets.only(top: 4, left: 16),
@@ -324,9 +390,9 @@ class _LoginFormContentState extends State<_LoginFormContent> {
                 style: const TextStyle(color: Colors.red, fontSize: 12),
               ),
             ),
-          
+
           const SizedBox(height: 20),
-          
+
           // Número de documento
           const Text(
             "Numero De Documento",
@@ -337,7 +403,7 @@ class _LoginFormContentState extends State<_LoginFormContent> {
             ),
           ),
           const SizedBox(height: 8),
-          
+
           // Document Number Field (sin el chulito)
           Container(
             decoration: BoxDecoration(
@@ -348,10 +414,7 @@ class _LoginFormContentState extends State<_LoginFormContent> {
               children: [
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Icon(
-                    Icons.person_outline,
-                    color: Colors.grey,
-                  ),
+                  child: Icon(Icons.person_outline, color: Colors.grey),
                 ),
                 Expanded(
                   child: TextFormField(
@@ -367,7 +430,7 @@ class _LoginFormContentState extends State<_LoginFormContent> {
               ],
             ),
           ),
-          
+
           if (_errors['numDocError'] != null)
             Padding(
               padding: const EdgeInsets.only(top: 4, left: 16),
@@ -376,9 +439,9 @@ class _LoginFormContentState extends State<_LoginFormContent> {
                 style: const TextStyle(color: Colors.red, fontSize: 12),
               ),
             ),
-          
+
           const SizedBox(height: 20),
-          
+
           // Password Field
           const Text(
             "Contaseña",
@@ -389,7 +452,7 @@ class _LoginFormContentState extends State<_LoginFormContent> {
             ),
           ),
           const SizedBox(height: 8),
-          
+
           Container(
             decoration: BoxDecoration(
               color: const Color(0xFFF5F5F5),
@@ -399,10 +462,7 @@ class _LoginFormContentState extends State<_LoginFormContent> {
               children: [
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 16),
-                  child: Icon(
-                    Icons.lock_outline,
-                    color: Colors.grey,
-                  ),
+                  child: Icon(Icons.lock_outline, color: Colors.grey),
                 ),
                 Expanded(
                   child: TextFormField(
@@ -418,7 +478,7 @@ class _LoginFormContentState extends State<_LoginFormContent> {
               ],
             ),
           ),
-          
+
           if (_errors['passwordError'] != null)
             Padding(
               padding: const EdgeInsets.only(top: 4, left: 16),
@@ -427,9 +487,9 @@ class _LoginFormContentState extends State<_LoginFormContent> {
                 style: const TextStyle(color: Colors.red, fontSize: 12),
               ),
             ),
-          
+
           const SizedBox(height: 16),
-          
+
           // Remember me and Forgot password
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -456,14 +516,11 @@ class _LoginFormContentState extends State<_LoginFormContent> {
                   const SizedBox(width: 8),
                   const Text(
                     "Recordarme",
-                    style: TextStyle(
-                      color: Colors.grey,
-                      fontSize: 14,
-                    ),
+                    style: TextStyle(color: Colors.grey, fontSize: 14),
                   ),
                 ],
               ),
-              
+
               // Forgot password
               GestureDetector(
                 onTap: () {
@@ -471,16 +528,13 @@ class _LoginFormContentState extends State<_LoginFormContent> {
                 },
                 child: const Text(
                   "Olvide Mi Contraseña",
-                  style: TextStyle(
-                    color: Color(0xFF20A67B),
-                    fontSize: 14,
-                  ),
+                  style: TextStyle(color: Color(0xFF20A67B), fontSize: 14),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 30),
-          
+
           // Sign In Button
           SizedBox(
             width: double.infinity,

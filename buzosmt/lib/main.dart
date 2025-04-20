@@ -16,10 +16,7 @@ class BuzosMt extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'BuzosMt',
-      theme: ThemeData(
-        primarySwatch: Colors.green,
-        fontFamily: 'Roboto',
-      ),
+      theme: ThemeData(primarySwatch: Colors.green, fontFamily: 'Roboto'),
       home: const MyHomePage(),
     );
   }
@@ -44,8 +41,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> checkSession() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-
-    if (mounted && token != null) {
+    if (mounted && token != null && token != '') {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const Dashboard()),
@@ -119,10 +115,10 @@ class _MyHomePageState extends State<MyHomePage> {
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        
+
                         // Espacio ajustable - aumentado para bajar un poco los botones
                         const SizedBox(height: 120),
-                        
+
                         // Botones con esquinas cuadradas pero sin borde blanco
                         // Botón de Iniciar Sesión
                         SizedBox(
@@ -132,13 +128,17 @@ class _MyHomePageState extends State<MyHomePage> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const LoginScreen()),
+                                MaterialPageRoute(
+                                  builder: (context) => const LoginScreen(),
+                                ),
                               );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF064c41),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8), // Esquinas cuadradas
+                                borderRadius: BorderRadius.circular(
+                                  8,
+                                ), // Esquinas cuadradas
                               ),
                               elevation: 0,
                             ),
@@ -161,13 +161,17 @@ class _MyHomePageState extends State<MyHomePage> {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => const RegisterScreen()),
+                                MaterialPageRoute(
+                                  builder: (context) => const RegisterScreen(),
+                                ),
                               );
                             },
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xFF20A67B),
                               shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8), // Esquinas cuadradas
+                                borderRadius: BorderRadius.circular(
+                                  8,
+                                ), // Esquinas cuadradas
                               ),
                               elevation: 0,
                             ),
@@ -181,9 +185,8 @@ class _MyHomePageState extends State<MyHomePage> {
                             ),
                           ),
                         ),
-                        
+
                         const Spacer(), // Empuja el indicador al final
-                        
                         // Indicador de página (línea blanca en la parte inferior)
                         Container(
                           width: 40,
