@@ -29,13 +29,53 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
+  // Controlador para las animaciones
+  late AnimationController _animationController;
+  late Animation<Offset> _loginButtonAnimation;
+  late Animation<Offset> _registerButtonAnimation;
+
   @override
   void initState() {
     super.initState();
+    
+    // Inicializar el controlador de animación con duración más larga
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 1500), // Duración aumentada para una animación más lenta
+    );
+    
+    // Animación para el botón de Iniciar Sesión (desde la izquierda)
+    _loginButtonAnimation = Tween<Offset>(
+      begin: const Offset(-1.5, 0.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      // Intervalo más largo y curva más suave para movimiento más lento
+      curve: const Interval(0.1, 0.6, curve: Curves.easeInOutQuad),
+    ));
+    
+    // Animación para el botón de Registrarme (desde la derecha)
+    _registerButtonAnimation = Tween<Offset>(
+      begin: const Offset(1.5, 0.0),
+      end: Offset.zero,
+    ).animate(CurvedAnimation(
+      parent: _animationController,
+      // Intervalo más largo y curva más suave para movimiento más lento
+      curve: const Interval(0.3, 0.8, curve: Curves.easeInOutQuad),
+    ));
+    
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkSession();
+      // Inicia la animación cuando se construye la pantalla
+      _animationController.forward();
     });
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
   }
 
   Future<void> checkSession() async {
@@ -119,68 +159,70 @@ class _MyHomePageState extends State<MyHomePage> {
                         // Espacio ajustable - aumentado para bajar un poco los botones
                         const SizedBox(height: 120),
 
-                        // Botones con esquinas cuadradas pero sin borde blanco
-                        // Botón de Iniciar Sesión
-                        SizedBox(
-                          width: double.infinity,
-                          height: 56,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const LoginScreen(),
+                        // Botón de Iniciar Sesión con animación
+                        SlideTransition(
+                          position: _loginButtonAnimation,
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 56,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const LoginScreen(),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF064c41),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF064c41),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  8,
-                                ), // Esquinas cuadradas
+                                elevation: 0,
                               ),
-                              elevation: 0,
-                            ),
-                            child: const Text(
-                              'Iniciar Sesión',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
+                              child: const Text(
+                                'Iniciar Sesión',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
                         ),
                         const SizedBox(height: 16),
-                        // Botón de Registrarme
-                        SizedBox(
-                          width: double.infinity,
-                          height: 56,
-                          child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => const RegisterScreen(),
+                        
+                        // Botón de Registrarme con animación
+                        SlideTransition(
+                          position: _registerButtonAnimation,
+                          child: SizedBox(
+                            width: double.infinity,
+                            height: 56,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const RegisterScreen(),
+                                  ),
+                                );
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(0xFF20A67B),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
-                              );
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: const Color(0xFF20A67B),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(
-                                  8,
-                                ), // Esquinas cuadradas
+                                elevation: 0,
                               ),
-                              elevation: 0,
-                            ),
-                            child: const Text(
-                              'Registrarme',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white,
+                              child: const Text(
+                                'Registrarme',
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
