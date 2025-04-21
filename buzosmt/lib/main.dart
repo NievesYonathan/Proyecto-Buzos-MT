@@ -30,7 +30,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateMixin {
-  // Controlador para las animaciones
   late AnimationController _animationController;
   late Animation<Offset> _loginButtonAnimation;
   late Animation<Offset> _registerButtonAnimation;
@@ -38,36 +37,30 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
-    
-    // Inicializar el controlador de animación con duración más larga
+
     _animationController = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 1500), // Duración aumentada para una animación más lenta
+      duration: const Duration(milliseconds: 1500),
     );
-    
-    // Animación para el botón de Iniciar Sesión (desde la izquierda)
+
     _loginButtonAnimation = Tween<Offset>(
       begin: const Offset(-1.5, 0.0),
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _animationController,
-      // Intervalo más largo y curva más suave para movimiento más lento
       curve: const Interval(0.1, 0.6, curve: Curves.easeInOutQuad),
     ));
-    
-    // Animación para el botón de Registrarme (desde la derecha)
+
     _registerButtonAnimation = Tween<Offset>(
       begin: const Offset(1.5, 0.0),
       end: Offset.zero,
     ).animate(CurvedAnimation(
       parent: _animationController,
-      // Intervalo más largo y curva más suave para movimiento más lento
       curve: const Interval(0.3, 0.8, curve: Curves.easeInOutQuad),
     ));
-    
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       checkSession();
-      // Inicia la animación cuando se construye la pantalla
       _animationController.forward();
     });
   }
@@ -91,40 +84,35 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: Stack(
         children: [
-          // Imagen de fondo con ondas (verdecito.png)
           Positioned.fill(
             child: Image.asset(
               'assets/images/verdecito.png',
               fit: BoxFit.cover,
             ),
           ),
-
-          // Contenido principal
           SafeArea(
             child: Column(
               children: [
-                // Sección del logo con tamaño fijo
                 SizedBox(
-                  height: 300, // Ajustado para posicionar el contenido
+                  height: size.height * 0.35,
                   child: Center(
                     child: Image.asset(
                       'assets/images/image.png',
-                      height: 280, // Ajustado proporcionalmente
+                      height: size.height * 0.3,
                       color: Colors.white,
                     ),
                   ),
                 ),
-
-                // Contenido de texto y botones
                 Expanded(
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                    padding: EdgeInsets.symmetric(horizontal: size.width * 0.06),
                     child: Column(
                       children: [
-                        // Título BuzosMT
                         const Text(
                           'Buzos MT',
                           style: TextStyle(
@@ -135,8 +123,7 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 10),
-                        // Subtítulo
+                        SizedBox(height: size.height * 0.02),
                         const Text(
                           'La mejor calidad',
                           style: TextStyle(
@@ -155,16 +142,12 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                           ),
                           textAlign: TextAlign.center,
                         ),
-
-                        // Espacio ajustable - aumentado para bajar un poco los botones
-                        const SizedBox(height: 120),
-
-                        // Botón de Iniciar Sesión con animación
+                        SizedBox(height: size.height * 0.1),
                         SlideTransition(
                           position: _loginButtonAnimation,
                           child: SizedBox(
                             width: double.infinity,
-                            height: 56,
+                            height: size.height * 0.07,
                             child: ElevatedButton(
                               onPressed: () {
                                 Navigator.push(
@@ -192,14 +175,12 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                             ),
                           ),
                         ),
-                        const SizedBox(height: 16),
-                        
-                        // Botón de Registrarme con animación
+                        SizedBox(height: size.height * 0.02),
                         SlideTransition(
                           position: _registerButtonAnimation,
                           child: SizedBox(
                             width: double.infinity,
-                            height: 56,
+                            height: size.height * 0.07,
                             child: ElevatedButton(
                               onPressed: () {
                                 Navigator.push(
@@ -227,18 +208,16 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
                             ),
                           ),
                         ),
-
-                        const Spacer(), // Empuja el indicador al final
-                        // Indicador de página (línea blanca en la parte inferior)
+                        const Spacer(),
                         Container(
-                          width: 40,
-                          height: 5,
+                          width: size.width * 0.1,
+                          height: size.height * 0.005,
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(3),
                           ),
                         ),
-                        const SizedBox(height: 10),
+                        SizedBox(height: size.height * 0.01),
                       ],
                     ),
                   ),
