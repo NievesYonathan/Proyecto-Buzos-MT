@@ -1,5 +1,5 @@
-import 'package:buzosmt/Domains/usecases/getdocs_usecase.dart';
-import 'package:buzosmt/Presentation/screens/login_screen.dart';
+import 'getdocs_usecase.dart';
+import '../../Presentation/screens/login_screen.dart';
 import '../models/user_model.dart';
 
 class UsesCasesUser {

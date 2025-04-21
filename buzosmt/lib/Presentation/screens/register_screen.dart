@@ -1,13 +1,13 @@
-import 'package:buzosmt/Domains/models/user_model.dart';
-import 'package:buzosmt/Domains/usecases/getdocs_usecase.dart';
+import '../../Domains/models/user_model.dart';
+import '../../Domains/usecases/getdocs_usecase.dart';
 import 'package:flutter/material.dart';
 import 'login_screen.dart';
-import 'package:buzosmt/Presentation/Widgets/Inputs/customTextField.dart';
-import 'package:buzosmt/Presentation/Widgets/Inputs/Customtextformfiel.dart';
-import 'package:buzosmt/Presentation/Widgets/butons/customelevatedbutton.dart';
-import 'package:buzosmt/Domains/usecases/login_user.dart';
+import '../Widgets/Inputs/customTextField.dart';
+import '../Widgets/Inputs/Customtextformfiel.dart';
+import '../Widgets/butons/customelevatedbutton.dart';
+import '../../Domains/usecases/login_user.dart';
 import 'package:intl/intl.dart';
-import 'package:buzosmt/main.dart';
+import '../../main.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 class RegisterScreen extends StatelessWidget {

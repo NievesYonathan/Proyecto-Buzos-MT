@@ -1,4 +1,4 @@
-import 'package:buzosmt/Data/repositories/user_repository.dart';
+import '../../Data/repositories/user_repository.dart';
 
 class Tdoc {
   // Objeto del login de la 

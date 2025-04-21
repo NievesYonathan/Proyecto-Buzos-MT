@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'Presentation/screens/login_screen.dart';
 import 'Presentation/screens/register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:buzosmt/Presentation/screens/dashboard_screen.dart';
+import 'Presentation/screens/dashboard_screen.dart';
 
 void main() {
   runApp(const BuzosMt());

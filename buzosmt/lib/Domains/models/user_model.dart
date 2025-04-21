@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:buzosmt/Data/repositories/user_repository.dart';
+import '../../Data/repositories/user_repository.dart';
 
 class User {
   final int? tDoc;

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:buzosmt/Data/repositories/production_repository.dart';
+// import '../../Data/repositories/production_repository.dart';
 class ProduccionModel {
   final String proNombre;
   final DateTime proFechaInicio;

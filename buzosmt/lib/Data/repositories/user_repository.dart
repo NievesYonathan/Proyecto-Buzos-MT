@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:buzosmt/Data/repositories/base_url.dart';
+import 'base_url.dart';
 
 class UserRepository {
   // URL base de la API

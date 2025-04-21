@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:buzosmt/Data/repositories/etapa_repostitory.dart';
+import '../../Data/repositories/etapa_repostitory.dart';
 class Etapa { 
   final int ? etaId;
   final String ? etaNombre;

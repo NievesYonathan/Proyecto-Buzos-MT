@@ -1,4 +1,4 @@
-import 'package:buzosmt/Domains/models/etapa_model.dart';
+import '../models/etapa_model.dart';
 
 class EtapasUsecase {
   final Etapa etapa;

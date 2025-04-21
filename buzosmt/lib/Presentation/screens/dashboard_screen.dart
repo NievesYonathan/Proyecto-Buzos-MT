@@ -4,7 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'login_screen.dart';
 import 'configuration_user.dart';
 import 'etapas_screen.dart';
-import 'package:buzosmt/main.dart';
+import '../../main.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});

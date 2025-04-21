@@ -1,6 +1,6 @@
-import 'package:buzosmt/Domains/models/etapa_model.dart';
+import '../../Domains/models/etapa_model.dart';
 import 'package:flutter/material.dart';
-import 'package:buzosmt/Domains/usecases/etapas_usecase.dart';
+import '../../Domains/usecases/etapas_usecase.dart';
 
 class EtapasScreen extends StatefulWidget {
   const EtapasScreen({super.key});

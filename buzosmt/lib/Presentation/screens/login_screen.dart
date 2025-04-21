@@ -1,15 +1,15 @@
-import 'package:buzosmt/Domains/models/user_model.dart';
-import 'package:buzosmt/Presentation/screens/dashboard_screen.dart';
+import '../../Domains/models/user_model.dart';
+import 'dashboard_screen.dart';
 import 'package:flutter/material.dart';
-import 'package:buzosmt/Presentation/Widgets/Inputs/customTextField.dart';
-import 'package:buzosmt/Presentation/Widgets/Inputs/Customtextformfiel.dart';
-import 'package:buzosmt/Domains/usecases/login_user.dart';
-import 'package:buzosmt/Domains/usecases/getdocs_usecase.dart';
+import '../Widgets/Inputs/customTextField.dart';
+import '../Widgets/Inputs/Customtextformfiel.dart';
+import '../../Domains/usecases/login_user.dart';
+import '../../Domains/usecases/getdocs_usecase.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:buzosmt/Presentation/Widgets/butons/customelevatedbutton.dart';
-import 'package:buzosmt/Presentation/screens/register_screen.dart';
-import 'package:buzosmt/Presentation/screens/forgot_password_screen.dart';
-import 'package:buzosmt/main.dart';
+import '../Widgets/butons/customelevatedbutton.dart';
+import 'register_screen.dart';
+import 'forgot_password_screen.dart';
+import '../../main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatelessWidget {

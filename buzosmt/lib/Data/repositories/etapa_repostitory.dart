@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:buzosmt/Data/repositories/base_url.dart';
+import 'base_url.dart';
 
 class EtapaRepository {
   // URL base
