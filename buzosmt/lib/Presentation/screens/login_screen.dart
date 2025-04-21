@@ -9,7 +9,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:buzosmt/Presentation/Widgets/butons/customelevatedbutton.dart';
 import 'package:buzosmt/Presentation/screens/register_screen.dart';
 import 'package:buzosmt/Presentation/screens/forgot_password_screen.dart';
-import 'package:buzosmt/main.dart'; // Asegúrate de crear este archivo
+import 'package:buzosmt/main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -32,10 +32,6 @@ class LoginScreen extends StatelessWidget {
       final String? accessToken = googleAuth.accessToken;
       final String? idToken = googleAuth.idToken;
 
-      // Envía estos tokens a tu backend para validarlos o crear una sesión
-      // Por ejemplo:
-      // await tuBackendLogin(accessToken, idToken);
-
       // Navega al Dashboard después del inicio de sesión exitoso
       Navigator.push(
         context,
@@ -51,6 +47,11 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Obtenemos el tamaño de la pantalla
+    final Size screenSize = MediaQuery.of(context).size;
+    final bool isSmallScreen = screenSize.width < 600;
+    final double cardWidth = isSmallScreen ? screenSize.width : 500;
+    
     return Scaffold(
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -63,158 +64,171 @@ class LoginScreen extends StatelessWidget {
             ),
           ),
           child: SafeArea(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(24.0),
-                child: Column(
-                  children: [
-                    // Main card with logo and login form
-                    Container(
-                      width: double.infinity,
-                      padding: const EdgeInsets.all(24),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.1),
-                            blurRadius: 10,
-                            offset: const Offset(0, 5),
-                          ),
-                        ],
+            child: Center(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: isSmallScreen ? 16.0 : 24.0,
+                    vertical: 24.0,
+                  ),
+                  child: Column(
+                    children: [
+                      // Main card with logo and login form
+                      Container(
+                        width: cardWidth,
+                        padding: EdgeInsets.all(isSmallScreen ? 16.0 : 24.0),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 10,
+                              offset: const Offset(0, 5),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // Botón con flecha hacia la izquierda
+                            InkWell(
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => const BuzosMt(),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  color: const Color(0xFFF5F5F5),
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: const Icon(
+                                  Icons.arrow_back,
+                                  color: Color(0xFF064c41),
+                                  size: 24,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: isSmallScreen ? 8 : 12),
+
+                            // Logo (reemplazar con tu imagen)
+                            Center(
+                              child: Padding(
+                                padding: const EdgeInsets.only(bottom: 20.0),
+                                child: Image.asset(
+                                  'assets/images/image.png',
+                                  height: isSmallScreen ? 100 : 130,
+                                  width: double.infinity,
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            ),
+
+                            // App name "LOGIN PAGE"
+                            const Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  "BUZOS",
+                                  style: TextStyle(
+                                    color: Color(0xFF064c41),
+                                    fontSize: 32,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                Text(
+                                  "MT",
+                                  style: TextStyle(
+                                    color: Color(0xFF20A67B),
+                                    fontSize: 28,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: isSmallScreen ? 20 : 30),
+
+                            // Login form content
+                            const _LoginFormContent(),
+
+                            SizedBox(height: isSmallScreen ? 15 : 20),
+
+                            // Google Login Button
+                            Center(
+                              child: ConstrainedBox(
+                                constraints: BoxConstraints(
+                                  maxWidth: isSmallScreen ? double.infinity : 300,
+                                ),
+                                child: ElevatedButton.icon(
+                                  onPressed: () => _signInWithGoogle(context),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: Colors.grey[800],
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: isSmallScreen ? 10 : 13,
+                                      horizontal: 12,
+                                    ),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30),
+                                      side: BorderSide(color: Colors.grey[300]!),
+                                    ),
+                                    elevation: 2,
+                                  ),
+                                  icon: Image.asset(
+                                    'assets/images/google.png',
+                                    height: 24,
+                                    width: 24,
+                                  ),
+                                  label: Text(
+                                    "Iniciar Sesión con Google",
+                                    style: TextStyle(fontSize: isSmallScreen ? 14 : 16),
+                                  ),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+
+                      // Sign up option
+                      SizedBox(height: isSmallScreen ? 15 : 20),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          // Botón con flecha hacia la izquierda
-                          InkWell(
+                          Text(
+                            "No Tienes Una Cuenta? ",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: isSmallScreen ? 12 : 14,
+                            ),
+                          ),
+                          GestureDetector(
                             onTap: () {
-                              Navigator.pushReplacement(
+                              Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => const BuzosMt(), // Reemplaza con tu clase de MainScreen
+                                  builder: (context) => const RegisterScreen(),
                                 ),
                               );
                             },
-                            child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                color: const Color(0xFFF5F5F5),
-                                borderRadius: BorderRadius.circular(12),
-                                    ),
-                              child: const Icon(
-                                Icons.arrow_back,
-                                color: Color(0xFF064c41),
-                                size: 24,
+                            child: Text(
+                              "Registrarme",
+                              style: TextStyle(
+                                color: const Color(0xFF064c41),
+                                fontSize: isSmallScreen ? 12 : 14,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
-                          const SizedBox(height: 12),
-
-                          // Logo (reemplazar con tu imagen)
-                          Center(
-                            child: Padding(
-                              padding: const EdgeInsets.only(bottom: 20.0),
-                              child: Image.asset(
-                                'assets/images/image.png', // Reemplaza esta ruta con la ubicación de tu logo
-                                height: 130, // Aumentado de 100 a 130
-                                width: double.infinity,
-                                fit: BoxFit.contain,
-                              ),
-                            ),
-                          ),
-
-                          // App name "LOGIN PAGE"
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                "BUZOS",
-                                style: TextStyle(
-                                  color: Color(0xFF064c41),
-                                  fontSize: 32,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Text(
-                                "MT",
-                                style: TextStyle(
-                                  color: Color(0xFF20A67B),
-                                  fontSize: 28,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(height: 30),
-
-                          // Login form content
-                          const _LoginFormContent(),
-
-                          const SizedBox(height: 20),
-
-                          // Google Login Button
-                          Center(
-                          child:ElevatedButton.icon(
-                            onPressed: () => _signInWithGoogle(context),
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.grey[800],
-                              padding: const EdgeInsets.symmetric(
-                                vertical: 13,
-                                horizontal: 12,
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(30),
-                                side: BorderSide(color: Colors.grey[300]!),
-                              ),
-                              elevation: 2,
-                            ),
-                            icon: Image.asset(
-                              'assets/images/google.png', // Reemplaza con la ruta correcta a tu logo de Google
-                              height: 24,
-                              width: 24,
-                            ),
-                            label: const Text(
-                              "Iniciar Sesión con Google",
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          )
                         ],
                       ),
-                    ),
-
-                    // Sign up option
-                    const SizedBox(height: 20),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          "No Tienes Una Cuenta? ",
-                          style: TextStyle(color: Colors.white, fontSize: 14),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const RegisterScreen(),
-                              ),
-                            );
-                          },
-                          child: const Text(
-                            "Registrarme",
-                            style: TextStyle(
-                              color: Color(0xFF064c41),
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -239,7 +253,6 @@ class _LoginFormContentState extends State<_LoginFormContent> {
   final TextEditingController passwordController = TextEditingController();
   late Future<List<DropdownMenuItem<int>>> itemsFuture;
   Map<String?, dynamic> _errors = {};
-  bool _rememberMe = false;
 
   @override
   void initState() {
@@ -266,7 +279,6 @@ class _LoginFormContentState extends State<_LoginFormContent> {
         ),
       );
       
-      
       final errors = validator.loginValidate();
 
       setState(() {
@@ -274,7 +286,6 @@ class _LoginFormContentState extends State<_LoginFormContent> {
       });
       if (_errors.isEmpty) {
         final status = await validator.loginUser();
-        // print(status);
         if (status['status'] != 'success') {
           numDocController.clear();
           passwordController.clear();
@@ -300,6 +311,10 @@ class _LoginFormContentState extends State<_LoginFormContent> {
 
   @override
   Widget build(BuildContext context) {
+    // Obtenemos el tamaño de la pantalla
+    final Size screenSize = MediaQuery.of(context).size;
+    final bool isSmallScreen = screenSize.width < 600;
+    
     return Form(
       key: _formKey,
       child: Column(
@@ -314,7 +329,7 @@ class _LoginFormContentState extends State<_LoginFormContent> {
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: isSmallScreen ? 6 : 8),
 
           // Document Type Dropdown
           FutureBuilder<List<DropdownMenuItem<int>>>(
@@ -339,11 +354,13 @@ class _LoginFormContentState extends State<_LoginFormContent> {
                       Expanded(
                         child: DropdownButtonFormField<int>(
                           value: tDoc,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             hintText: "Selecciona un tipo de documento",
                             border: InputBorder.none,
-                            hintStyle: TextStyle(color: Colors.grey),
-                            contentPadding: EdgeInsets.symmetric(vertical: 12),
+                            hintStyle: const TextStyle(color: Colors.grey),
+                            contentPadding: EdgeInsets.symmetric(
+                              vertical: isSmallScreen ? 10 : 12,
+                            ),
                           ),
                           items: snapshot.data,
                           onChanged: (value) {
@@ -375,7 +392,7 @@ class _LoginFormContentState extends State<_LoginFormContent> {
               ),
             ),
 
-          const SizedBox(height: 20),
+          SizedBox(height: isSmallScreen ? 15 : 20),
 
           // Número de documento
           const Text(
@@ -386,9 +403,9 @@ class _LoginFormContentState extends State<_LoginFormContent> {
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: isSmallScreen ? 6 : 8),
 
-          // Document Number Field (sin el chulito)
+          // Document Number Field
           Container(
             decoration: BoxDecoration(
               color: const Color(0xFFF5F5F5),
@@ -403,14 +420,16 @@ class _LoginFormContentState extends State<_LoginFormContent> {
                 Expanded(
                   child: TextFormField(
                     controller: numDocController,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: "Ingresa tu número de documento",
                       border: InputBorder.none,
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: isSmallScreen ? 10 : 12,
+                      ),
                     ),
                   ),
                 ),
-                // Se eliminó el chulito aquí
               ],
             ),
           ),
@@ -424,7 +443,7 @@ class _LoginFormContentState extends State<_LoginFormContent> {
               ),
             ),
 
-          const SizedBox(height: 20),
+          SizedBox(height: isSmallScreen ? 15 : 20),
 
           // Password Field
           const Text(
@@ -435,7 +454,7 @@ class _LoginFormContentState extends State<_LoginFormContent> {
               fontWeight: FontWeight.w500,
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: isSmallScreen ? 6 : 8),
 
           Container(
             decoration: BoxDecoration(
@@ -452,10 +471,13 @@ class _LoginFormContentState extends State<_LoginFormContent> {
                   child: TextFormField(
                     controller: passwordController,
                     obscureText: true,
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       hintText: "Ingresa tu contraseña",
                       border: InputBorder.none,
-                      hintStyle: TextStyle(color: Colors.grey),
+                      hintStyle: const TextStyle(color: Colors.grey),
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: isSmallScreen ? 10 : 12,
+                      ),
                     ),
                   ),
                 ),
@@ -472,63 +494,33 @@ class _LoginFormContentState extends State<_LoginFormContent> {
               ),
             ),
 
-          const SizedBox(height: 16),
+          SizedBox(height: isSmallScreen ? 12 : 16),
 
-          // Remember me and Forgot password
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Remember me checkbox
-              Row(
-                children: [
-                  SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: Checkbox(
-                      value: _rememberMe,
-                      onChanged: (value) {
-                        setState(() {
-                          _rememberMe = value ?? false;
-                        });
-                      },
-                      activeColor: const Color(0xFF20A67B),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                    ),
+          // Forgot password - ahora alineado a la derecha sin el checkbox
+          Align(
+            alignment: Alignment.centerRight,
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ForgotPasswordScreen(),
                   ),
-                  const SizedBox(width: 8),
-                  const Text(
-                    "Recordarme",
-                    style: TextStyle(color: Colors.grey, fontSize: 14),
-                  ),
-                ],
+                );
+              },
+              child: const Text(
+                "Olvide Mi Contraseña",
+                style: TextStyle(color: Color(0xFF20A67B), fontSize: 14),
               ),
-
-              // Forgot password - Modificado para navegar a otra pantalla
-              GestureDetector(
-                onTap: () {
-                  // Navegar a la pantalla de olvidé mi contraseña
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ForgotPasswordScreen(), // Crea este archivo
-                    ),
-                  );
-                },
-                child: const Text(
-                  "Olvide Mi Contraseña",
-                  style: TextStyle(color: Color(0xFF20A67B), fontSize: 14),
-                ),
-              ),
-            ],
+            ),
           ),
-          const SizedBox(height: 30),
+                
+          SizedBox(height: isSmallScreen ? 20 : 30),
 
           // Sign In Button
           SizedBox(
             width: double.infinity,
-            height: 55,
+            height: isSmallScreen ? 48 : 55,
             child: ElevatedButton(
               onPressed: dataValidate,
               style: ElevatedButton.styleFrom(
@@ -538,11 +530,11 @@ class _LoginFormContentState extends State<_LoginFormContent> {
                 ),
                 elevation: 0,
               ),
-              child: const Text(
+              child: Text(
                 "Iniciar Sesión",
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 16,
+                  fontSize: isSmallScreen ? 14 : 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
