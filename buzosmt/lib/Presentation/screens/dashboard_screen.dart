@@ -104,9 +104,7 @@ class _DashboardState extends State<Dashboard> {
                       child: const CircleAvatar(
                         radius: 35,
                         backgroundColor: Colors.white,
-                        backgroundImage: AssetImage('assets/images/profile.jpg'),
-                        // Si no tienes una imagen, usa el icono
-                        child: Icon(Icons.person, size: 40, color: Color(0xFF0D3D4A)),
+                        backgroundImage: AssetImage('assets/images/logo.png'),
                       ),
                     ),
                     const SizedBox(height: 12),
