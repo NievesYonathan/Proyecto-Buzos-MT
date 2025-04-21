@@ -8,6 +8,8 @@ import 'package:buzosmt/Domains/usecases/getdocs_usecase.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:buzosmt/Presentation/Widgets/butons/customelevatedbutton.dart';
 import 'package:buzosmt/Presentation/screens/register_screen.dart';
+import 'package:buzosmt/Presentation/screens/forgot_password_screen.dart';
+import 'package:buzosmt/main.dart'; // Asegúrate de crear este archivo
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -82,15 +84,43 @@ class LoginScreen extends StatelessWidget {
                         ],
                       ),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          // Botón con flecha hacia la izquierda
+                          InkWell(
+                            onTap: () {
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const BuzosMt(), // Reemplaza con tu clase de MainScreen
+                                ),
+                              );
+                            },
+                            child: Container(
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                color: const Color(0xFFF5F5F5),
+                                borderRadius: BorderRadius.circular(12),
+                                    ),
+                              child: const Icon(
+                                Icons.arrow_back,
+                                color: Color(0xFF064c41),
+                                size: 24,
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 12),
+
                           // Logo (reemplazar con tu imagen)
-                          Padding(
-                            padding: const EdgeInsets.only(bottom: 20.0),
-                            child: Image.asset(
-                              'assets/images/image.png', // Reemplaza esta ruta con la ubicación de tu logo
-                              height: 130, // Aumentado de 100 a 130
-                              width: double.infinity,
-                              fit: BoxFit.contain,
+                          Center(
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 20.0),
+                              child: Image.asset(
+                                'assets/images/image.png', // Reemplaza esta ruta con la ubicación de tu logo
+                                height: 130, // Aumentado de 100 a 130
+                                width: double.infinity,
+                                fit: BoxFit.contain,
+                              ),
                             ),
                           ),
 
@@ -124,14 +154,15 @@ class LoginScreen extends StatelessWidget {
                           const SizedBox(height: 20),
 
                           // Google Login Button
-                          ElevatedButton.icon(
+                          Center(
+                          child:ElevatedButton.icon(
                             onPressed: () => _signInWithGoogle(context),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: Colors.white,
                               foregroundColor: Colors.grey[800],
                               padding: const EdgeInsets.symmetric(
-                                vertical: 12,
-                                horizontal: 16,
+                                vertical: 13,
+                                horizontal: 12,
                               ),
                               shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(30),
@@ -149,6 +180,7 @@ class LoginScreen extends StatelessWidget {
                               style: TextStyle(fontSize: 16),
                             ),
                           ),
+                          )
                         ],
                       ),
                     ),
@@ -245,16 +277,16 @@ class _LoginFormContentState extends State<_LoginFormContent> {
         // print(status);
         if (status['status'] != 'success') {
           numDocController.clear();
-      passwordController.clear();
+          passwordController.clear();
           // Handle error
-          // Fluttertoast.showToast(
-          //   msg: status['message'],
-          //   toastLength: Toast.LENGTH_SHORT,
-          //   gravity: ToastGravity.BOTTOM,
-          //   backgroundColor: Colors.red,
-          //   textColor: Colors.white,
-          //   fontSize: 16.0,
-          // );
+          Fluttertoast.showToast(
+            msg: status['message'],
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
           return;
         }
 
@@ -473,10 +505,16 @@ class _LoginFormContentState extends State<_LoginFormContent> {
                 ],
               ),
 
-              // Forgot password
+              // Forgot password - Modificado para navegar a otra pantalla
               GestureDetector(
                 onTap: () {
-                  // Forgot password functionality
+                  // Navegar a la pantalla de olvidé mi contraseña
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ForgotPasswordScreen(), // Crea este archivo
+                    ),
+                  );
                 },
                 child: const Text(
                   "Olvide Mi Contraseña",
