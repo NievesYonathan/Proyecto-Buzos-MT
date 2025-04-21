@@ -1,5 +1,3 @@
-import 'getdocs_usecase.dart';
-import '../../Presentation/screens/login_screen.dart';
 import '../models/user_model.dart';
 
 class UsesCasesUser {
@@ -10,32 +8,32 @@ class UsesCasesUser {
     if (user.tDoc == null || user.tDoc == 0) {
       return {'tDocError': 'Selecciona un tipo de documento'};
     }
-    if (user.numDoc.isEmpty) {
-      return {'numDocError': 'Número de documento requerido'};
-    }
-    if (RegExp(r'[a-zA-Z]').hasMatch(user.numDoc)) {
-      return {'numDocError': 'El número de documento no puede contener letras'};
-    }
-    if (user.numDoc.length > 10) {
-      return {
-        'numDocError':
-            'El numero de documento no puede tener más de 10 dígitos',
-      };
-    }
-    if (user.numDoc.length < 10) {
-      return {
-        'numDocError':
-            'El numero de documento no puede tener menos de 10 dígitos',
-      };
-    }
-    if (user.password.isEmpty) {
-      return {'passwordError': 'Contraseña requerida'};
-    }
-    if (user.password.length < 6) {
-      return {
-        'passwordError': 'La contraseña debe tener al menos 6 caracteres',
-      };
-    }
+    // if (user.numDoc.isEmpty) {
+    //   return {'numDocError': 'Número de documento requerido'};
+    // }
+    // if (RegExp(r'[a-zA-Z]').hasMatch(user.numDoc)) {
+    //   return {'numDocError': 'El número de documento no puede contener letras'};
+    // }
+    // if (user.numDoc.length > 10) {
+    //   return {
+    //     'numDocError':
+    //         'El numero de documento no puede tener más de 10 dígitos',
+    //   };
+    // }
+    // if (user.numDoc.length < 10) {
+    //   return {
+    //     'numDocError':
+    //         'El numero de documento no puede tener menos de 10 dígitos',
+    //   };
+    // }
+    // if (user.password.isEmpty) {
+    //   return {'passwordError': 'Contraseña requerida'};
+    // }
+    // if (user.password.length < 6) {
+    //   return {
+    //     'passwordError': 'La contraseña debe tener al menos 6 caracteres',
+    //   };
+    // }
     return {}; // Sin errores
   }
 
@@ -43,24 +41,24 @@ class UsesCasesUser {
     if (user.tDoc == null || user.tDoc == 0) {
       return {'tDocError': 'Selecciona un tipo de documento'};
     }
-    if (user.numDoc.isEmpty) {
+    if (user.numDoc == null) {
       return {'numDocError': 'Número de documento requerido'};
     }
-    if (user.numDoc.length > 10) {
-      return {
-        'numDocError':
-            'El numero de documento no puede tener más de 10 dígitos',
-      };
-    }
-    if (user.numDoc.length < 10) {
-      return {
-        'numDocError':
-            'El numero de documento no puede tener menos de 10 dígitos',
-      };
-    }
-    if (RegExp(r'[a-zA-Z]').hasMatch(user.numDoc)) {
-      return {'numDocError': 'El número de documento no puede contener letras'};
-    }
+    // if (user.numDoc.length > 10) {
+    //   return {
+    //     'numDocError':
+    //         'El numero de documento no puede tener más de 10 dígitos',
+    //   };
+    // }
+    // if (user.numDoc.length < 10) {
+    //   return {
+    //     'numDocError':
+    //         'El numero de documento no puede tener menos de 10 dígitos',
+    //   };
+    // }
+    // if (RegExp(r'[a-zA-Z]').hasMatch(user.numDoc)) {
+    //   return {'numDocError': 'El número de documento no puede contener letras'};
+    // }
     if (user.usuNombres!.isEmpty) {
       return {'usuNombresError': 'El nombre es requerido'};
     }
@@ -70,14 +68,14 @@ class UsesCasesUser {
         'usuApellidosError': 'El nombre debe tener al menos 3 caracteres',
       };
     }
-    if (user.password.isEmpty) {
-      return {'passwordError': 'Contraseña requerida'};
-    }
-    if (user.password.length < 6) {
-      return {
-        'passwordError': 'La contraseña debe tener al menos 6 caracteres',
-      };
-    }
+    // if (user.password.isEmpty) {
+    //   return {'passwordError': 'Contraseña requerida'};
+    // }
+    // if (user.password.length < 6) {
+    //   return {
+    //     'passwordError': 'La contraseña debe tener al menos 6 caracteres',
+    //   };
+    // }
     if (user.usuEmail!.isEmpty) {
       return {'usuEmailError': 'Correo electrónico requerido'};
     }

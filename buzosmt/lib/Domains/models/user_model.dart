@@ -3,32 +3,32 @@ import '../../Data/repositories/user_repository.dart';
 
 class User {
   final int? tDoc;
-  final String numDoc;
+  final String? numDoc;
   final String? usuNombres;
   final String? usuApellidos;
   final String? usuFechaNacimiento;
   final String? usuSexo;
   final String? usuTelefono;
   final String? usuEmail;
-  final String password;
+  final String? password;
   final String? passwordConfirmation;
   final String? usuDireccion;
   final int usuEstado;
 
   // Constructor principal
   User({
-    required this.tDoc,
-    required this.numDoc,
+    this.tDoc,
+    this.numDoc,
     this.usuNombres,
     this.usuApellidos,
     this.usuFechaNacimiento,
     this.usuSexo,
     this.usuTelefono,
     this.usuEmail,
-    required this.password,
+    this.password,
     this.passwordConfirmation,
     this.usuEstado = 1,
-    this.usuDireccion,
+    this.usuDireccion
   });
 
   Future<Map<String, dynamic>> jsonForLogin() async {
@@ -56,12 +56,20 @@ class User {
       'usu_estado': usuEstado,
       'password': password,
       'password_confirmation': passwordConfirmation,
-      'usu_direccion': usuDireccion,
+      'usu_direccion': usuDireccion
     };
 
     final String data = jsonEncode(user);
     UserRepository register = UserRepository();
     final status = await register.apiRegister(data);
+    return status;
+  }
+
+  Future<Map<String, dynamic>> jsonForPassword() async {
+    final Map<String, dynamic> user = {'email': usuEmail};
+    final String data = jsonEncode(user);
+    UserRepository resetPassword = UserRepository();
+    final status = await resetPassword.resetPassword(data);
     return status;
   }
 }

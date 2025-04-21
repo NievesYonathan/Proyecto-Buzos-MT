@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:buzosmt/Domains/models/user_model.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -53,24 +54,26 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       ),
                       child: Stack(
                         children: [
-                          
-                            // Botón de volver en la esquina superior izquierda
-                            Positioned(
+                          // Botón de volver en la esquina superior izquierda
+                          Positioned(
                             top: 0,
                             left: 0,
                             child: Container(
                               padding: const EdgeInsets.all(2),
                               decoration: BoxDecoration(
-                              color: const Color(0xFFF5F5F5),
-                              borderRadius: BorderRadius.circular(12),
+                                color: const Color(0xFFF5F5F5),
+                                borderRadius: BorderRadius.circular(12),
                               ),
                               child: IconButton(
-                              icon: const Icon(Icons.arrow_back, color: Color(0xFF064c41)),
-                              onPressed: () => Navigator.pop(context),
+                                icon: const Icon(
+                                  Icons.arrow_back,
+                                  color: Color(0xFF064c41),
+                                ),
+                                onPressed: () => Navigator.pop(context),
                               ),
                             ),
-                            ),
-                          
+                          ),
+
                           Form(
                             key: _formKey,
                             child: Column(
@@ -78,17 +81,23 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                               children: [
                                 // Espacio para no solapar con el botón de retroceso
                                 const SizedBox(height: 16),
-                                
+
                                 // Logo
                                 Center(
                                   child: Padding(
-                                  padding: const EdgeInsets.only(top: 10.0, bottom: 20.0),
-                                  child: Image.asset(
-                                    'assets/images/image.png',
-                                    height: isSmallScreen ? 120 : 150, // Increased size
-                                    width: double.infinity,
-                                    fit: BoxFit.contain,
-                                  ),
+                                    padding: const EdgeInsets.only(
+                                      top: 10.0,
+                                      bottom: 20.0,
+                                    ),
+                                    child: Image.asset(
+                                      'assets/images/image.png',
+                                      height:
+                                          isSmallScreen
+                                              ? 120
+                                              : 150, // Increased size
+                                      width: double.infinity,
+                                      fit: BoxFit.contain,
+                                    ),
                                   ),
                                 ),
                                 const Text(
@@ -99,9 +108,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                
+
                                 const SizedBox(height: 16),
-                                
+
                                 const Text(
                                   "Ingresa tu correo electrónico y te enviaremos instrucciones para recuperar tu contraseña.",
                                   style: TextStyle(
@@ -109,9 +118,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                     fontSize: 14,
                                   ),
                                 ),
-                                
+
                                 const SizedBox(height: 24),
-                                
+
                                 // Email field
                                 const Text(
                                   "Correo Electrónico",
@@ -122,7 +131,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   ),
                                 ),
                                 const SizedBox(height: 8),
-                                
+
                                 Container(
                                   decoration: BoxDecoration(
                                     color: const Color(0xFFF5F5F5),
@@ -131,22 +140,34 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                   child: Row(
                                     children: [
                                       const Padding(
-                                        padding: EdgeInsets.symmetric(horizontal: 16),
-                                        child: Icon(Icons.email_outlined, color: Colors.grey),
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 16,
+                                        ),
+                                        child: Icon(
+                                          Icons.email_outlined,
+                                          color: Colors.grey,
+                                        ),
                                       ),
                                       Expanded(
                                         child: TextFormField(
                                           controller: _emailController,
-                                          keyboardType: TextInputType.emailAddress,
+                                          keyboardType:
+                                              TextInputType.emailAddress,
                                           decoration: const InputDecoration(
-                                            hintText: "Ingresa tu correo electrónico",
+                                            hintText:
+                                                "Ingresa tu correo electrónico",
                                             border: InputBorder.none,
-                                            hintStyle: TextStyle(color: Colors.grey),
+                                            hintStyle: TextStyle(
+                                              color: Colors.grey,
+                                            ),
                                           ),
                                           validator: (value) {
-                                            if (value == null || value.isEmpty) {
+                                            if (value == null ||
+                                                value.isEmpty) {
                                               return 'Por favor ingresa tu correo electrónico';
-                                            } else if (!RegExp(r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$').hasMatch(value)) {
+                                            } else if (!RegExp(
+                                              r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                                            ).hasMatch(value)) {
                                               return 'Ingresa un correo electrónico válido';
                                             }
                                             return null;
@@ -156,9 +177,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                     ],
                                   ),
                                 ),
-                                
+
                                 const SizedBox(height: 30),
-                                
+
                                 // Submit button
                                 SizedBox(
                                   width: double.infinity,
@@ -167,9 +188,20 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                                     onPressed: () {
                                       if (_formKey.currentState!.validate()) {
                                         // Implementar lógica para enviar correo de recuperación
-                                        ScaffoldMessenger.of(context).showSnackBar(
+
+                                        User user = User(
+                                          usuEmail: _emailController.text,
+                                        );
+                                        final status = user.jsonForPassword();
+                                        print(status);
+
+                                        ScaffoldMessenger.of(
+                                          context,
+                                        ).showSnackBar(
                                           const SnackBar(
-                                            content: Text('Correo de recuperación enviado!'),
+                                            content: Text(
+                                              'Correo de recuperación enviado!',
+                                            ),
                                             backgroundColor: Color(0xFF20A67B),
                                           ),
                                         );
@@ -207,7 +239,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       ),
     );
   }
-  
+
   @override
   void dispose() {
     _emailController.dispose();

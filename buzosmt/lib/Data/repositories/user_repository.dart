@@ -10,6 +10,7 @@ class UserRepository {
   // Rutas específicas
   final Uri loginUrl = Uri.parse('$urlBase/api/Login');
   final Uri registerUrl = Uri.parse('$urlBase/api/Register');
+  final Uri resetPasswordUrl = Uri.parse('$urlBase/api/password/reset');
 
   // Lista de documentos
   Future<List<dynamic>> getDoc() async {
@@ -44,6 +45,19 @@ class UserRepository {
       registerUrl,
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
       body: data,
+    );
+    final Map<String, dynamic> status = jsonDecode(response.body);
+    if (response.statusCode == 400) {
+      return status;
+    }
+    return status;
+  }
+
+  Future<Map<String, dynamic>> resetPassword(String data) async {
+    final response = await http.post(
+      resetPasswordUrl,
+      headers: {'Content-Type': 'application/json; charset=UTF-8'},
+      body: data
     );
     final Map<String, dynamic> status = jsonDecode(response.body);
     if (response.statusCode == 400) {
