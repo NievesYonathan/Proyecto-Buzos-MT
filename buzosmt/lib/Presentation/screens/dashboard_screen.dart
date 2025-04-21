@@ -29,10 +29,10 @@ class _DashboardState extends State<Dashboard> {
   ];
 
   final List<ProductionItem> recentItems = [
-    ProductionItem('Camisas Polo', 235, 'Completado', Colors.green),
-    ProductionItem('Pantalones', 128, 'En proceso', Colors.orange),
-    ProductionItem('Chaquetas', 94, 'Retrasado', Colors.red),
-    ProductionItem('Vestidos', 182, 'Completado', Colors.green),
+    ProductionItem('Buzo Rojo', 235, 'Completado', Colors.green),
+    ProductionItem('Buzo Azul', 128, 'En proceso', Colors.orange),
+    ProductionItem('Buzo Verde', 94, 'Retrasado', Colors.red),
+    ProductionItem('Buzo Morado', 182, 'Completado', Colors.green),
   ];
 
   Future<void> _logout(BuildContext context) async {
