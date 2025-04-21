@@ -62,7 +62,7 @@ class RegisterScreen extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              // Botón de retorno al login
+                              // Botón de retorno 
                               Align(
                                 alignment: Alignment.topLeft,
                                 child: InkWell(
@@ -292,7 +292,6 @@ class _FormRegisterState extends State<_RegisterForm> {
   Future<void> dataValidate() async {
     FocusScope.of(context).unfocus();
     if (_formKey.currentState!.validate()) {
-      print(usuFechaNacimientoController.text);
       UsesCasesUser validator = UsesCasesUser(
         User(
           tDoc: tDoc,
