@@ -82,10 +82,10 @@ Route::put('/tipos-documentos/{id}', [TipoDocApiController::class, 'update']);
 
 //estados
 Route::prefix('estados')->group(function () {
-    Route::get('/', [EstadoApiController::class, 'index']);          // Obtener todos los estados
-    Route::post('/', [EstadoApiController::class, 'store']);         // Crear un nuevo estado
-    Route::put('/{id_estados}', [EstadoApiController::class, 'update']); // Actualizar un estado
-    Route::delete('/{id_estados}', [EstadoApiController::class, 'destroy']); // Eliminar un estado
+    Route::get('/', [EstadoApiController::class, 'index']);          
+    Route::post('/', [EstadoApiController::class, 'store']);        
+    Route::put('/{id_estados}', [EstadoApiController::class, 'update']); 
+    Route::delete('/{id_estados}', [EstadoApiController::class, 'destroy']);
 });
 
 //cargos
