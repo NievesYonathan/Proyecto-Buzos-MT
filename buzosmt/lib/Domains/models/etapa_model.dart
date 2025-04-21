@@ -6,7 +6,7 @@ class Etapa {
   final String ? etaDescripcion;
   final EtapaRepository etapaObj = EtapaRepository();
 
-  Etapa({ required this.etaNombre, required this.etaDescripcion, required this.etaId});
+  Etapa({ required this.etaNombre, required this.etaDescripcion, this.etaId});
 
   Future<Map<String, dynamic>> etapaUpdate() async {
     final int ? etaId = this.etaId; 
@@ -27,9 +27,6 @@ class Etapa {
     return etapa;
   }
   Future<Map<String, dynamic>> etapaShow() async {
-    final Map<String, dynamic> etapa = {                                   
-      'eta_id': etaId
-    };
     final status = await etapaObj.getEtapaById(etaId);
     return status;
   }
@@ -38,10 +35,8 @@ class Etapa {
     return status;
   }
   Future<Map<String, dynamic>> etapaDelete(etaId) async {
-    final Map<String, dynamic> etapa = {
-      'eta_id': etaId,
-    };
-    return etapa;
+    final status = await etapaObj.deleteEtapa(etaId);
+    return status;
   }
 
 }

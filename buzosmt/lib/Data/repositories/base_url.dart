@@ -1,5 +1,5 @@
 class Api {
-  
-  static const String urlBase = 'http://127.0.0.1:8001';
+
+  static const String urlBase = 'http://192.168.80.26:8000';
   
 }

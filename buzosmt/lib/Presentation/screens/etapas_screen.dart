@@ -1,4 +1,6 @@
+import 'package:buzosmt/Domains/models/etapa_model.dart';
 import 'package:flutter/material.dart';
+import 'package:buzosmt/Domains/usecases/etapas_usecase.dart';
 
 class EtapasScreen extends StatefulWidget {
   const EtapasScreen({super.key});
@@ -8,30 +10,46 @@ class EtapasScreen extends StatefulWidget {
 }
 
 class _EtapasScreenState extends State<EtapasScreen> {
-  final TextEditingController nombreController = TextEditingController();
+  final TextEditingController nombreEtapaController = TextEditingController();
   final TextEditingController descripcionController = TextEditingController();
+  // Instancia de la clase EtapasUsecase
+  Map<String?, dynamic> _errors = {};
+  final keyForm = GlobalKey<FormState>();
 
   void limpiarCampos() {
-    nombreController.clear();
+    nombreEtapaController.clear();
     descripcionController.clear();
   }
 
-  void guardarEtapa() {
+  void guardarEtapa() async {
+    FocusScope.of(context).unfocus();
+    if (keyForm.currentState!.validate()) {
+      final EtapasUsecase validator = EtapasUsecase(
+        Etapa(
+          etaNombre: nombreEtapaController.text,
+          etaDescripcion: descripcionController.text
+        ),
+      );
+      final Map<String, String> errors = validator.dataValidate();
+      setState(() {
+        _errors = errors;
+      });
+      
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Registrar Etapa'),
-      ),
+      appBar: AppBar(title: const Text('Etapas')),
       body: Padding(
+        key: keyForm,
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             // Formulario
             TextField(
-              controller: nombreController,
+              controller: nombreEtapaController,
               decoration: const InputDecoration(
                 labelText: 'Nombre de la etapa',
                 border: OutlineInputBorder(),

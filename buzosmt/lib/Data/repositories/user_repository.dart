@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:buzosmt/Data/repositories/base_url.dart';
 
 class UserRepository {
   // URL base de la API
-  static const String urlBase = 'http://192.168.80.26:8000';
+  static const String urlBase = Api.urlBase;
 
   // Rutas específicas
   final Uri loginUrl = Uri.parse('$urlBase/api/Login');

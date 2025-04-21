@@ -1,128 +1,713 @@
-import 'package:buzosmt/main.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'login_screen.dart';
 import 'configuration_user.dart';
+import 'etapas_screen.dart';
+import 'package:buzosmt/main.dart';
 
-class Dashboard extends StatelessWidget {
+class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
+
+  @override
+  State<Dashboard> createState() => _DashboardState();
+}
+
+class _DashboardState extends State<Dashboard> {
+  int selectedIndex = 0;
+  String selectedPeriod = 'Semanal';
+  
+  // Datos de ejemplo para gráficas
+  final List<ProductionData> weeklyData = [
+    ProductionData('Lun', 42),
+    ProductionData('Mar', 58),
+    ProductionData('Mié', 63),
+    ProductionData('Jue', 76),
+    ProductionData('Vie', 82),
+    ProductionData('Sáb', 35),
+    ProductionData('Dom', 20),
+  ];
+
+  final List<ProductionItem> recentItems = [
+    ProductionItem('Camisas Polo', 235, 'Completado', Colors.green),
+    ProductionItem('Pantalones', 128, 'En proceso', Colors.orange),
+    ProductionItem('Chaquetas', 94, 'Retrasado', Colors.red),
+    ProductionItem('Vestidos', 182, 'Completado', Colors.green),
+  ];
 
   Future<void> _logout(BuildContext context) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.remove('token'); // elimina el token guardado
+    await prefs.remove('token');
 
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(builder: (context) => const MyHomePage()),
     );
   }
-  Widget _buildDrawerItem(IconData icon, String text) {
-  return ListTile(
-    leading: Icon(icon, color: Colors.white),
-    title: Text(text, style: const TextStyle(color: Colors.white)),
-    onTap: () {
-      // Acción al pulsar
-    },
-  );
-}
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: true, // Ensure the menu icon is shown
-        title: const Text('Home'),
+        backgroundColor: const Color(0xFF0D3D4A),
+        elevation: 0,
+        title: Row(
+          children: [
+            const Text(
+              'Dashboard Producción',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
+            const Spacer(),
+            IconButton(
+              icon: const Icon(Icons.notifications_outlined, color: Colors.white),
+              onPressed: () {},
+            ),
+          ],
+        ),
       ),
-      drawer: Drawer(
-  child: Container(
-    decoration: const BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topCenter,
-        end: Alignment.bottomCenter,
-        colors: [
-          Color(0xFF0D3D4A),
-          Color(0xFF34E69F),
-        ],
-      ),
-    ),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const SizedBox(height: 60),
-        // Avatar + nombre + rol
-        Center(
-          child: Column(
-            children: const [
-              CircleAvatar(
-                radius: 30,
-                backgroundColor: Colors.white,
-                child: Icon(Icons.person, size: 35, color: Colors.grey),
-              ),
-              SizedBox(height: 8),
-              Text(
-                'Harold',
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-              ),
-              Text(
-                'Jefe Producción',
-                style: TextStyle(color: Colors.white70, fontSize: 12),
-              ),
+      drawer: _buildDrawer(context),
+      body: _buildBody(),
+      bottomNavigationBar: _buildBottomNavigationBar(),
+    );
+  }
+
+  Widget _buildDrawer(BuildContext context) {
+    return Drawer(
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [
+              Color(0xFF0D3D4A),
+              Color(0xFF34E69F),
             ],
           ),
         ),
-
-        const Divider(color: Colors.white30, height: 40),
-
-        // Menú
-        Expanded(
-          child: ListView(
-            children: [
-              _buildDrawerItem(Icons.dashboard, 'Dashboard'),
-              ExpansionTile(
-              leading: const Icon(Icons.factory, color: Colors.white),
-              title: const Text('Producción', style: TextStyle(color: Colors.white)),
-              children: [
-                ListTile(
-                leading: const Icon(Icons.factory, color: Colors.white),
-                title: const Text('Gestion de Produccion', style: TextStyle(color: Colors.white70)),
-                onTap: () {
-
-                },
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 30),
+              child: Center(
+                child: Column(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(4),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        shape: BoxShape.circle,
+                      ),
+                      child: const CircleAvatar(
+                        radius: 35,
+                        backgroundColor: Colors.white,
+                        backgroundImage: AssetImage('assets/images/profile.jpg'),
+                        // Si no tienes una imagen, usa el icono
+                        child: Icon(Icons.person, size: 40, color: Color(0xFF0D3D4A)),
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    const Text(
+                      'Harold',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.2),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Text(
+                        'Jefe Producción',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                ListTile(
-                leading: const Icon(Icons.checkroom, color: Colors.white),
-                title: const Text('Gestion productos Fabricados', style: TextStyle(color: Colors.white70),),
-                onTap: () {
-                
-                },
-                ),
-              ],
               ),
-              _buildDrawerItem(Icons.calendar_today, 'Tareas'),
-              ListTile(
-              leading: const Icon(Icons.settings, color: Colors.white),
-              title: const Text('Configuración', style: TextStyle(color: Colors.white)),
-              onTap: () {
-                Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const ConfigurationUserScreen()),
-                );
-              },
+            ),
+            const Divider(color: Colors.white30, height: 1),
+            Expanded(
+              child: ListView(
+                padding: EdgeInsets.zero,
+                children: [
+                  _buildDrawerItem(Icons.dashboard, 'Dashboard',
+                    onTap: () => Navigator.pop(context), isSelected: true),
+                  ExpansionTile(
+                    iconColor: Colors.white,
+                    collapsedIconColor: Colors.white,
+                    leading: const Icon(Icons.factory, color: Colors.white),
+                    title: const Text('Producción',
+                        style: TextStyle(color: Colors.white)),
+                    children: [
+                      _buildDrawerSubItem(Icons.assessment, 'Gestión de Producción'),
+                      _buildDrawerSubItem(Icons.checkroom, 'Productos Fabricados'),
+                    ],
+                  ),
+                  _buildDrawerItem(Icons.calendar_today, 'Tareas'),
+                  _buildDrawerItem(Icons.auto_graph, 'Estadísticas'),
+                  _buildDrawerItem(Icons.layers, 'Etapas',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const EtapasScreen()),
+                      );
+                    }),
+                  _buildDrawerItem(Icons.inventory, 'Inventario'),
+                  _buildDrawerItem(Icons.people, 'Trabajadores'),
+                  _buildDrawerItem(Icons.settings, 'Configuración',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const ConfigurationUserScreen()),
+                      );
+                    }),
+                ],
               ),
-            ],
-          ),
-        ),
-      ],
-    ),
-  ),
-)
-,
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () => _logout(context),
-          child: const Text('Cerrar sesión'),
+            ),
+            const Divider(color: Colors.white30, height: 1),
+            ListTile(
+              leading: const Icon(Icons.logout, color: Colors.white),
+              title: const Text('Cerrar Sesión',
+                  style: TextStyle(color: Colors.white)),
+              onTap: () => _logout(context),
+            ),
+          ],
         ),
       ),
     );
   }
+
+  Widget _buildDrawerItem(IconData icon, String text,
+      {VoidCallback? onTap, bool isSelected = false}) {
+    return ListTile(
+      leading: Icon(icon, color: Colors.white),
+      title: Text(text,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+          )),
+      onTap: onTap ?? () {},
+      selectedTileColor: Colors.white.withOpacity(0.1),
+      selected: isSelected,
+    );
+  }
+
+  Widget _buildDrawerSubItem(IconData icon, String text) {
+    return ListTile(
+      contentPadding: const EdgeInsets.only(left: 70),
+      leading: Icon(icon, color: Colors.white70, size: 20),
+      title: Text(text, style: const TextStyle(color: Colors.white70, fontSize: 14)),
+      onTap: () {},
+    );
+  }
+
+  Widget _buildBody() {
+    return Container(
+      color: Colors.grey.shade100,
+      child: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildHeader(),
+            const SizedBox(height: 20),
+            _buildChartSection(),
+            const SizedBox(height: 20),
+            _buildProductionStats(),
+            const SizedBox(height: 20),
+            _buildRecentProduction(),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeader() {
+    return Row(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              'Panel de Control',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF0D3D4A),
+              ),
+            ),
+            Text(
+              'Resumen de producción - ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}',
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey.shade600,
+              ),
+            ),
+          ],
+        ),
+        const Spacer(),
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.1),
+                spreadRadius: 1,
+                blurRadius: 2,
+              ),
+            ],
+          ),
+          child: DropdownButton<String>(
+            value: selectedPeriod,
+            icon: const Icon(Icons.keyboard_arrow_down, color: Color(0xFF0D3D4A)),
+            elevation: 0,
+            underline: const SizedBox(),
+            style: const TextStyle(color: Color(0xFF0D3D4A)),
+            onChanged: (String? newValue) {
+              setState(() {
+                selectedPeriod = newValue!;
+              });
+            },
+            items: <String>['Diario', 'Semanal', 'Mensual', 'Anual']
+                .map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildChartSection() {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 5,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            'Producción Semanal',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Color(0xFF0D3D4A),
+            ),
+          ),
+          const SizedBox(height: 5),
+          Text(
+            '14 - 20 Abril, 2025',
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey.shade600,
+            ),
+          ),
+          const SizedBox(height: 20),
+          SizedBox(
+            height: 250,
+            child: BarChart(
+              BarChartData(
+                alignment: BarChartAlignment.spaceAround,
+                maxY: 100,
+                barTouchData: BarTouchData(
+                  enabled: true,
+                  touchTooltipData: BarTouchTooltipData(
+                    tooltipBgColor: const Color(0xFF0D3D4A).withOpacity(0.8),
+                    getTooltipItem: (group, groupIndex, rod, rodIndex) {
+                      return BarTooltipItem(
+                        '${weeklyData[groupIndex].day}: ${rod.toY.round()}',
+                        const TextStyle(color: Colors.white),
+                      );
+                    },
+                  ),
+                ),
+                titlesData: FlTitlesData(
+                  show: true,
+                  bottomTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: (value, meta) {
+                        return SideTitleWidget(
+                          axisSide: meta.axisSide,
+                          child: Text(
+                            weeklyData[value.toInt()].day,
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey.shade700,
+                            ),
+                          ),
+                        );
+                      },
+                      reservedSize: 30,
+                    ),
+                  ),
+                  leftTitles: AxisTitles(
+                    sideTitles: SideTitles(
+                      showTitles: true,
+                      getTitlesWidget: (value, meta) {
+                        return SideTitleWidget(
+                          axisSide: meta.axisSide,
+                          child: Text(
+                            value.toInt().toString(),
+                            style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey.shade700,
+                            ),
+                          ),
+                        );
+                      },
+                      reservedSize: 30,
+                    ),
+                  ),
+                  topTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  rightTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                ),
+                borderData: FlBorderData(
+                  show: false,
+                ),
+                gridData: FlGridData(
+                  show: true,
+                  horizontalInterval: 20,
+                  getDrawingHorizontalLine: (value) {
+                    return FlLine(
+                      color: Colors.grey.shade200,
+                      strokeWidth: 1,
+                    );
+                  },
+                ),
+                barGroups: weeklyData.asMap().entries.map((entry) {
+                  final index = entry.key;
+                  final data = entry.value;
+                  return BarChartGroupData(
+                    x: index,
+                    barRods: [
+                      BarChartRodData(
+                        toY: data.value,
+                        color: const Color(0xFF34E69F),
+                        width: 20,
+                        borderRadius: const BorderRadius.only(
+                          topLeft: Radius.circular(4),
+                          topRight: Radius.circular(4),
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList(),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProductionStats() {
+    return Row(
+      children: [
+        Expanded(
+          child: _buildStatCard(
+            'Total Producción',
+            '586',
+            'unidades',
+            Icons.inventory_2,
+            const Color(0xFF0D3D4A),
+            '+12% vs semana anterior',
+          ),
+        ),
+        const SizedBox(width: 16),
+        Expanded(
+          child: _buildStatCard(
+            'Eficiencia',
+            '94',
+            '%',
+            Icons.speed,
+            const Color(0xFF34E69F),
+            '+3% vs semana anterior',
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildStatCard(String title, String value, String unit, IconData icon,
+      Color color, String comparison) {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 5,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Icon(
+                  icon,
+                  color: color,
+                  size: 24,
+                ),
+              ),
+              const Spacer(),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.green.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  children: [
+                    const Icon(
+                      Icons.arrow_upward,
+                      color: Colors.green,
+                      size: 12,
+                    ),
+                    const SizedBox(width: 2),
+                    Text(
+                      comparison,
+                      style: const TextStyle(
+                        color: Colors.green,
+                        fontSize: 10,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20),
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.grey.shade600,
+            ),
+          ),
+          const SizedBox(height: 5),
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.baseline,
+            textBaseline: TextBaseline.alphabetic,
+            children: [
+              Text(
+                value,
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.grey.shade900,
+                ),
+              ),
+              const SizedBox(width: 5),
+              Text(
+                unit,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildRecentProduction() {
+    return Container(
+      padding: const EdgeInsets.all(20),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 5,
+          ),
+        ],
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text(
+                'Producción Reciente',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF0D3D4A),
+                ),
+              ),
+              TextButton(
+                onPressed: () {},
+                child: const Text(
+                  'Ver todos',
+                  style: TextStyle(
+                    color: Color(0xFF34E69F),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Column(
+            children: recentItems.map((item) => _buildProductionItem(item)).toList(),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildProductionItem(ProductionItem item) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: const Color(0xFF0D3D4A).withOpacity(0.1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: const Icon(
+              Icons.checkroom,
+              color: Color(0xFF0D3D4A),
+              size: 20,
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  item.name,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.grey.shade800,
+                  ),
+                ),
+                Text(
+                  '${item.quantity} unidades',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey.shade600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+            decoration: BoxDecoration(
+              color: item.color.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Text(
+              item.status,
+              style: TextStyle(
+                fontSize: 12,
+                color: item.color,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBottomNavigationBar() {
+    return BottomNavigationBar(
+      currentIndex: selectedIndex,
+      onTap: (index) {
+        setState(() {
+          selectedIndex = index;
+        });
+      },
+      selectedItemColor: const Color(0xFF34E69F),
+      unselectedItemColor: Colors.grey,
+      backgroundColor: Colors.white,
+      type: BottomNavigationBarType.fixed,
+      elevation: 10,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.dashboard),
+          label: 'Dashboard',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.factory),
+          label: 'Producción',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.analytics),
+          label: 'Reportes',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.person),
+          label: 'Perfil',
+        ),
+      ],
+    );
+  }
+}
+
+// Clases para almacenar datos de ejemplo
+class ProductionData {
+  final String day;
+  final double value;
+
+  ProductionData(this.day, this.value);
+}
+
+class ProductionItem {
+  final String name;
+  final int quantity;
+  final String status;
+  final Color color;
+
+  ProductionItem(this.name, this.quantity, this.status, this.color);
 }

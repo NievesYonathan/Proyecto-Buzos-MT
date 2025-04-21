@@ -17,9 +17,9 @@ class EtapaRepository {
     }
     return status;
   }
-  Future<Map<String, dynamic>> getEtapaById(int ? data) async {
+  Future<Map<String, dynamic>> getEtapaById(int ? id) async {
     final response = await http.get(
-      Uri.parse('$urlBase/api/etapas/$data'),
+      Uri.parse('$urlBase/api/etapas/$id'),
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
     );
     final Map<String, dynamic> status = jsonDecode(response.body);
@@ -33,7 +33,7 @@ class EtapaRepository {
     final response = await http.post(
       etapaUrl,
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
-      body: data,
+      body: data
     );
     final Map<String, dynamic> status = jsonDecode(response.body);
     if (response.statusCode == 400) {
@@ -46,7 +46,7 @@ class EtapaRepository {
     final response = await http.put(
       Uri.parse('$urlBase/api/etapas/$id'),
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
-      body: data,
+      body: data
     );
     final Map<String, dynamic> status = jsonDecode(response.body);
     if (response.statusCode == 400) {
@@ -55,11 +55,10 @@ class EtapaRepository {
     return status;
   }
 
-  Future<Map<String, dynamic>> deleteEtapa(String data) async {
+  Future<Map<String, dynamic>> deleteEtapa(int? id) async {
     final response = await http.delete(
-      etapaUrl,
+      Uri.parse('$urlBase/api/etapas/$id'),
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
-      body: data,
     );
     final Map<String, dynamic> status = jsonDecode(response.body);
     if (response.statusCode == 400) {
