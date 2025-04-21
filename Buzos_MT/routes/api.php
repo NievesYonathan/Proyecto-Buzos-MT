@@ -16,6 +16,7 @@ use App\Http\Controllers\Api\EstadoApiController;
 use App\Http\Controllers\Api\CargoApiController;
 use App\Http\Controllers\Api\ListaCargoApiController;
 use App\Http\Controllers\Api\TareaApiController;
+use App\Http\Controllers\Auth\PasswordResetLinkController;
 
 // Rutas para gestión de imágenes de usuarios
 Route::post('/user/image/{id}', [UserProfileController::class, 'storeImage'])->name('storeImage');
@@ -41,6 +42,7 @@ Route::post('/Login', [ApiAuthenticatedSessionController::class, 'store']);
 Route::post('/Register', [ApiRegisteredUserController::class, 'store']);
 // Route::get('/Register',[ApiRegisteredUserController::class, 'create']);
 Route::middleware('jwt')->delete('/logout', [ApiAuthenticatedSessionController::class, 'destroy']);
+Route::post('/password/reset', [PasswordResetLinkController::class, 'store'])->name('password.email');
 
 // Rutas para 'Jefe Producción'
 Route::get('/producciones', [ProduccionController::class, 'index']);
