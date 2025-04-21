@@ -25,38 +25,22 @@ class PasswordResetLinkController extends Controller{
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request): RedirectResponse
     {
-        // Validar el campo 'usu_email'
-        $validator = Validator::make($request->all(), [
-            'usu_email' => ['required', 'email'], // Cambiar 'usu_email' a 'email' para validación correcta
+        $request->validate([
+            'email' => ['required', 'email'],
         ]);
 
-        if ($validator->fails()) {
-            return response()->json([
-                'status' => 'error',
-                'message' => $validator->errors()->first(),
-            ], 422);
-        }
-
-        // Intentar enviar el enlace de restablecimiento de contraseña
-        $request->validate(['usu_email' => 'required|email']);
-
-        $status = Password::broker()->sendResetLink(
-            ['usu_email' => $request->usu_email]
+        // We will send the password reset link to this user. Once we have attempted
+        // to send the link, we will examine the response then see the message we
+        // need to show to the user. Finally, we'll send out a proper response.
+        $status = Password::sendResetLink(
+            $request->only('email')
         );
 
-        // Responder según el estado del envío
-        if ($status === Password::RESET_LINK_SENT) {
-            return response()->json([
-                'status' => 'success',
-                'message' => __($status),
-            ], 200);
-        }
-
-        return response()->json([
-            'status' => 'error',
-            'message' => __($status),
-        ], 500);
+        return $status == Password::RESET_LINK_SENT
+                    ? back()->with('status', __($status))
+                    : back()->withInput($request->only('email'))
+                        ->withErrors(['email' => __($status)]);
     }
 }

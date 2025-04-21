@@ -15,6 +15,39 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Laravel\Socialite\Facades\Socialite;
+use Illuminate\Support\Facades\Mail;
+
+Route::get('/test-email', function () {
+    try {
+        // Primero veamos la configuración actual
+        $config = [
+            'host' => config('mail.mailers.smtp.host'),
+            'port' => config('mail.mailers.smtp.port'),
+            'from' => config('mail.from.address'),
+            'to' => 'yonathannieves17@gmail.com'
+        ];
+        
+        dd($config); // Esto nos mostrará la configuración antes de intentar enviar
+
+        Mail::raw('Test email content', function ($message) {
+            $message->to('yonathannieves17@gmail.com')
+                   ->subject('Test Email')
+                   ->from(config('mail.from.address'), config('mail.from.name'));
+        });
+        
+        return [
+            'status' => 'success',
+            'message' => 'Email sent successfully!',
+            'config' => $config
+        ];
+    } catch (\Exception $e) {
+        return [
+            'status' => 'error',
+            'message' => $e->getMessage(),
+            'trace' => $e->getTraceAsString()
+        ];
+    }
+});
 
 Route::get('/', function () {
     return view('welcome');
@@ -97,20 +130,28 @@ Route::get('/cargos', [CargoController::class, 'index'])->name('cargos');
 Route::get('/cargos/create', [CargoController::class, 'create'])->name('cargos.create');
 Route::post('/cargos', [CargoController::class, 'store'])->name('cargos.store');
 Route::put('/cargos/{id}', [CargoController::class, 'update'])->name('cargos.update');
-Route::get('/usuarios', [ListaCargoController::class, 'index'])->name('user-list-cargo');
+Route::get('/usuarios', [ListaCargoController::class, 'index'])->name('user-list-cargo2');
 Route::get('/usuarios-cargos', [ListaCargoController::class, 'index'])->name('user-list-cargo');
 Route::post('/usuarios-cargos', [ListaCargoController::class, 'store'])->name('cargosUsuarios.store');
 
-    //rutas RR.HH
-    Route::get('/informes', [InformeController::class, 'index'])->name('informe-RRHH');
-    Route::get('/informes/users', [InformeController::class, 'fetchUsers'])->name('informes-RRHH.fetchUsers');
-
-    // Rutas de 'Perfil de Producción'
+// Rutas de 'Perfil de Producción'
+Route::middleware('auth')->group(function () {
     Route::get('/produccion', [produccionController::class, 'indexTwo'])->name('produccion');
     Route::put('/produccion/{id}', [produccionController::class, 'update'])->name('update_produccion');
     Route::get('/productos-fabricados', [produccionController::class, 'index'])->name('pro_fabricados');
     Route::post('/productos-formulario', [produccionController::class, 'store'])->name('nuevo-producto');
+});
 
+// Rutas para las vistas
+Route::get('/perfil-produccion/etapas', [EtapaController::class, 'indexView'])->name('perfil-produccion.etapas'); // Mostrar etapas
+Route::post('/perfil-produccion/etapas', [EtapaController::class, 'storeFromView'])->name('perfil-produccion.etapas.store'); // Crear nueva etapa
+Route::get('/perfil-produccion/etapas/{id}/edit', [EtapaController::class, 'updateView'])->name('perfil-produccion.etapas.edit'); // Editar etapa
+Route::put('/perfil-produccion/etapas/{id}', [EtapaController::class, 'updateFromView'])->name('perfil-produccion.etapas.update'); // Actualizar etapa
+Route::delete('/perfil-produccion/etapas/{id}', [EtapaController::class, 'destroy'])->name('perfil-produccion.etapas.destroy'); //para eliminar :)
+//Rutas de 'Tarea'
+Route::post('/tareas-crear', [TareaController::class, 'store'])->name('nueva_tarea');
+Route::get('/tareas-produccion', [TareaController::class, 'index'])->name('pro_tareas');
+Route::put('/tarea-actualizar/{id}', [TareaController::class, 'update'])->name('update_tarea');
 
     // Rutas para las vistas
     Route::get('/perfil-produccion/etapas', [EtapaController::class, 'indexView'])->name('perfil-produccion.etapas'); // Mostrar etapas

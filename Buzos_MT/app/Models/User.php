@@ -7,7 +7,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable 
 {
     use HasFactory, Notifiable;
 
@@ -28,7 +28,7 @@ class User extends Authenticatable implements JWTSubject
         'usu_sexo',
         'usu_direccion',
         'usu_telefono',
-        'usu_email',
+        'email',
         'usu_fecha_contratacion',
         'usu_estado',
         'imag_perfil',
@@ -48,6 +48,7 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     public $timestamps = false; // Deshabilitar timestamps
+    protected $remember_token = null;
 
     // Relación con el modelo Seguridad
     public function seguridad()
@@ -80,26 +81,11 @@ class User extends Authenticatable implements JWTSubject
         return $this->hasMany(MateriaPrima::class, 'proveedores_id_proveedores', 'num_doc');
     }
 
-    public function getJWTIdentifier()
-    {
-        return $this->getKey();
-    }
-
-    public function getJWTCustomClaims()
-    {
-        return [];
-    }
-
-    /**
-     * Get the email address that should be used for password reset.
-     *
-     * @return string
-     */
     public function getEmailForPasswordReset()
     {
-        return $this->usu_email;
+        return $this->email;
     }
-    
+
 }
 
 

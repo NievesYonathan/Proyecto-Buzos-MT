@@ -8,6 +8,9 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ asset('Logo/logo.png') }}">
+
     <!-- Fuentes -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -30,20 +33,27 @@
 
      <!--Laravel Notify-->
     @notifyCss
+
+    <!-- SweetAlert2 CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <!-- SweetAlert2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 </head>
 
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
 
         <div class="container-fluid">
-            <div class="row">
+            <div class="row mt-0">
                 <!-- Sidebar -->
-                <div class="col-md-3 col-lg-2 p-0 position-relative">
+                <div class="col-md-3 col-lg-2 p-0 nav-lateral">
                     <x-sidebar />
                 </div>
 
                 <!-- Main Content -->
-                <div class="full-box col-md-9 col-lg-10">
+                <div class="page-content col-md-9 col-lg-10">
                     @include('layouts.navigation')
 
                     <!-- Page Heading -->
@@ -73,12 +83,29 @@
     <script src="{{ asset('js/main.js') }}"></script>
     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js'></script>
     <script src="{{ asset('js/calendear.js') }}"></script>
-    <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
-    <script src="{{ asset('js/duplicarInputs.js') }}"></script>
+{{--     <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
+ --}}    <script src="{{ asset('js/duplicarInputs.js') }}"></script>
 
     <!-- Laravel Notify -->
     <x-notify::notify />
     @notifyJs
+    <!-- Gestión de apis de producción -->
+    <script src="{{ asset('js/produccion-update.js') }}"></script>
+    <!-- Gestión de inputs vacíos -->
+    <script src="{{ asset('js/inputs-vacios.js') }}"></script>
+    <!-- Gestión de inputs vacíos -->
+    <script src="{{ asset('js/delete-materia-prima.js') }}"></script>
+
+    @push('scripts')
+    <script src="{{ asset('js/ajax-forms.js') }}"></script>
+    @endpush
+
+    <script>
+        if (performance.getEntriesByType("navigation")[0]?.type === "back_forward") {
+            location.reload();
+        }
+    </script>    
+
 </body>
 
 </html>

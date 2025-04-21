@@ -6,7 +6,7 @@
 
         @php
         $name = auth()->user()->usu_nombres;
-        $perfil = auth()->user()->cargos()->first()->car_nombre;
+        $perfil = auth()->user()->cargos()->first()->car_nombre ?? 'Sin Cargo';
 
         @endphp
 

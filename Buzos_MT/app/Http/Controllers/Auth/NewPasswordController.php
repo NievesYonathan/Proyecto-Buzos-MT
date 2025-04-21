@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use App\Models\Seguridad;
 
 class NewPasswordController extends Controller
 {
@@ -41,14 +42,17 @@ class NewPasswordController extends Controller
         $status = Password::reset(
             $request->only('email', 'password', 'password_confirmation', 'token'),
             function ($user) use ($request) {
-                $user->forceFill([
-                    'password' => Hash::make($request->password),
-                    'remember_token' => Str::random(60),
-                ])->save();
-
+                // Guardar nueva clave en la tabla 'seguridad'
+                Seguridad::where('usu_num_doc', $user->num_doc)->update([
+                    'seg_clave_hash' => Hash::make($request->password)
+                ]);
+            
+                // Actualizar remember_token
+                $user->setRememberToken(Str::random(60));
+                $user->save();
+            
                 event(new PasswordReset($user));
-            }
-        );
+            }        );
 
         // If the password was successfully reset, we will redirect the user back to
         // the application's home authenticated view. If there is an error we can

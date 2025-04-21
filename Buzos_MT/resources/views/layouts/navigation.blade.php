@@ -6,8 +6,8 @@
                 <!-- Toggle Sidebar Button -->
                 <div class="me-2 flex items-center">
                     <button
-                        class="p-2 rounded-md text-gray-400 hover:text-gray-500 focus:outline-none show-nav-lateral">
-                        <!-- Ícono para el botón -->
+                        class="p-2 rounded-md text-gray-400 hover:text-gray-500 focus:outline-none show-nav-lateral"
+                        onclick="toggleMainLayout()">
                         <i class="fas fa-exchange-alt"></i>
                     </button>
                 </div>

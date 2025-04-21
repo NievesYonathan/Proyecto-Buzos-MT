@@ -5,7 +5,7 @@
         </h2>
     </x-slot>
 
-    <div class="py-12">
+{{--     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
@@ -14,15 +14,15 @@
             </div>
         </div>
     </div>
-
+ --}}
     @php
-        $perfil = auth()->user()->cargos()->first()->car_nombre;
+        $perfil = auth()->user()->cargos()->first()->car_nombre ?? 'Sin Cargo';
     @endphp
 
     <!-- Card de Producción -->
     <div class="row">
         @if ($perfil === 'Jefe Producción')
-            <div class="col-sm-12 col-md-3 tile-container">
+            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 tile-container">
                 <a href="{{ route('produccion') }}" class="tile">
                     <div class="tile-tittle">Producción</div>
                     <div class="tile-icon">
@@ -31,16 +31,16 @@
                 </a>
             </div>
 
-            <div class="col-sm-12 col-md-3 tile-container">
+            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 tile-container">
                 <a href="{{ route('pro_fabricados') }}" class="tile">
-                    <div class="tile-tittle">Detalles de Producción</div>
+                    <div class="tile-tittle" style="line-height: 1.2;">Detalles de Producción</div>
                     <div class="tile-icon">
                         <i class="fa-solid fa-shirt"></i>
                     </div>
                 </a>
             </div>
 
-            <div class="col-sm-12 col-md-3 tile-container">
+            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 tile-container">
                 <a href="{{ route('pro_tareas') }}" class="tile">
                     <div class="tile-tittle">Tareas</div>
                     <div class="tile-icon">
@@ -49,7 +49,7 @@
                 </a>
             </div>
 
-            <div class="col-sm-12 col-md-3 tile-container">
+            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 tile-container">
                 <a href="#" class="tile">
                     <div class="tile-tittle">Informes</div>
                     <div class="tile-icon">
@@ -58,7 +58,7 @@
                 </a>
             </div>
 
-            <div class="col-sm-12 col-md-3 tile-container">
+            <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 tile-container">
                 <a href="{{ route('perfil-produccion.etapas') }}" class="tile">
                     <div class="tile-tittle">Etapas</div>
                     <div class="tile-icon">

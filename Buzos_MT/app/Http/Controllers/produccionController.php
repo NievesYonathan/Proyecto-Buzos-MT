@@ -33,19 +33,19 @@ class produccionController extends Controller
 
     public function indexTwo()
     {
-        $producciones = Produccion::with('etapa', 'regProFabricados', 'materiasPrimas', 'tareas')->get();
+        $producciones = Produccion::with('etapa', 'regProFabricados', 'materiasPrimas', 'tareas')->orderBy('id_produccion', 'desc')->get();
 
-        $tareas = Tarea::all();
+        $todasTareas = Tarea::all();
 
         $etapas = Etapas::all();
 
-        $materiasPrimas = MateriaPrima::all();
+        $materiasPrimas1 = MateriaPrima::all();
 
         $operarios = User::whereHas('cargos', function ($query) {
             $query->where('id_cargos', 3);
         })->get();
 
-        return view('Perfil_Produccion.produccion', compact('producciones', 'etapas', 'operarios', 'tareas', 'materiasPrimas'));
+        return view('Perfil_Produccion.produccion', compact('producciones', 'etapas', 'operarios', 'todasTareas', 'materiasPrimas1'));
     }
 
     public function update(Request $request, $id)

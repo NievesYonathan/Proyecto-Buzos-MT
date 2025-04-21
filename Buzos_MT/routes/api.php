@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\Api\ApiAuthenticatedSessionController;
 use App\Http\Controllers\Api\ApiRegisteredUserController;
-use App\Http\Controllers\Api\EmpTareasController;
+use App\Http\Controllers\Api\EmpTareaController;
 use App\Http\Controllers\Api\ProduccionController;
 use App\Http\Controllers\Api\RegProMateriaPrimaController;
 use App\Http\Controllers\Api\EtapaController;
@@ -29,9 +29,9 @@ Route::delete('/producto/image/delete/{id}', [BuzosImageController::class, 'dele
 
 // Rutas para 'Jefe Materia Prima'
 Route::get('/materia-prima', [MateriaPrimaController::class, 'index'])->name('lista-de-item');
-Route::post('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'show'])->name('Detalles-producto');
-Route::post('/materia-prima-agregar', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto');
-Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'update'])->name('update-producto');
+Route::post('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'show'])->name('Detalles-producto2');
+Route::post('/materia-prima-agregar', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto2');
+Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class,'update'])->name('update-producto');
 Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'delete'])->name('materia-prima-delete');
 
 //Rutas para la Api de la aplicacion mobile
@@ -46,12 +46,16 @@ Route::middleware('jwt')->delete('/logout', [ApiAuthenticatedSessionController::
 Route::get('/producciones', [ProduccionController::class, 'index']);
 Route::get('/produccion/{id}', [ProduccionController::class, 'show']);
 Route::post('/nueva-produccion', [ProduccionController::class, 'store']);
-Route::post('/nueva-prod-matPrima/{id}', [RegProMateriaPrimaController::class, 'store']);
-Route::put('/produccion-editar/{id}', [ProduccionController::class, 'update']);
+Route::put('/produccion-editar/{id}', [ProduccionController::class, 'update'])->name('update_produccion_api');
 Route::patch('/produccion-editar-selec/{id}', [ProduccionController::class, 'updatePartial']);
 Route::delete('/produccion-eliminar/{id}', [ProduccionController::class, 'destroy']);
+Route::post('/nueva-prod-matPrima/{id}', [RegProMateriaPrimaController::class, 'store']);
+Route::put('/editar-materiaPrima', [RegProMateriaPrimaController::class, 'update'])->name('update_mPrima_api');
+Route::delete('/eliminar-materiaPrima/{id}', [RegProMateriaPrimaController::class, 'destroy']);
 
-Route::post('/produccion-tareas/{id}', [EmpTareasController::class, 'store']);
+Route::post('/produccion-tareas/{id}', [EmpTareaController::class, 'store']);
+Route::put('/produccion-tareas-editar', [EmpTareaController::class, 'update'])->name('update_tareas_api');
+Route::delete('/produccion-tareas-eliminar/{id}', [EmpTareaController::class, 'destroy']);
 
 // Rutas para el CRUD de Etapas
 Route::get('/etapas', [EtapaController::class, 'index']); // Obtener todas las etapas
