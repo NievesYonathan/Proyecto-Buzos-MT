@@ -74,175 +74,197 @@ class _FormularioTareaState extends State<FormularioTarea> {
       }
     }
   }
-  
+
   // Método para editar una etapa
   // Enfoque simplificado para el modal de edición
-Future<void> editarEtapa(dynamic item) async {
-  // Obtener los datos de la etapa
-  final id = item['eta_id'] ?? item['id'];
-  final nombreOriginal = item['eta_nombre'] ?? item['nombre'] ?? '';
-  final descripcionOriginal = item['eta_descripcion'] ?? item['descripcion'] ?? '';
-  
-  // Variables para mantener los valores editados
-  String nombreEditado = nombreOriginal;
-  String descripcionEditada = descripcionOriginal;
-  
-  // Mostrar el diálogo modal
-  await showDialog(
-    context: context,
-    barrierDismissible: false,
-    builder: (BuildContext dialogContext) {
-      return AlertDialog(
-        title: Row(
-          children: [
-            Icon(Icons.edit, color: secondaryColor, size: 24),
-            const SizedBox(width: 10),
-            Text('Editar Tarea', style: TextStyle(color: primaryColor)),
+  Future<void> editarEtapa(dynamic item) async {
+    // Obtener los datos de la etapa
+    final id = item['id_etapas'] ?? item['id'];
+    final nombreOriginal = item['eta_nombre'] ?? item['nombre'] ?? '';
+    final descripcionOriginal =
+        item['eta_descripcion'] ?? item['descripcion'] ?? '';
+
+    // Variables para mantener los valores editados
+    String nombreEditado = nombreOriginal;
+    String descripcionEditada = descripcionOriginal;
+
+    // Mostrar el diálogo modal
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Row(
+            children: [
+              Icon(Icons.edit, color: secondaryColor, size: 24),
+              const SizedBox(width: 10),
+              Text('Editar Tarea', style: TextStyle(color: primaryColor)),
+            ],
+          ),
+          contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
+          content: Container(
+            width: double.maxFinite,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Campo de nombre
+                  Text(
+                    'Nombre de la tarea',
+                    style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    initialValue: nombreOriginal,
+                    onChanged: (value) => nombreEditado = value,
+                    decoration: InputDecoration(
+                      hintText: '$id',
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+
+                  const SizedBox(height: 16),
+
+                  // Campo de descripción
+                  Text(
+                    'Descripción',
+                    style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    initialValue: descripcionOriginal,
+                    onChanged: (value) => descripcionEditada = value,
+                    maxLines: 4,
+                    decoration: InputDecoration(
+                      hintText: 'Ingrese la descripción',
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            OutlinedButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: primaryColor,
+                side: BorderSide(color: primaryColor),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
+              ),
+              child: const Text('Cancelar'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                // Cerrar el diálogo
+                Navigator.of(dialogContext).pop();
+
+                // Aquí implementarías la llamada a la API para actualizar
+                // Por ejemplo:
+                final status = await etapa.etapaUpdate(
+                  id,
+                  nombreEditado,
+                  descripcionEditada,
+                );
+
+                // Mostrar mensaje de actualización
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(status['message']),
+                    backgroundColor: Colors.orange,
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                );
+
+                // Actualizar la lista de etapas
+                setState(() {
+                  etapasFuture = etapa.etapaGet();
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: secondaryColor,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
+              ),
+              child: const Text('Actualizar'),
+            ),
           ],
-        ),
-        contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
-        content: Container(
-          width: double.maxFinite,
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Campo de nombre
-                Text(
-                  'Nombre de la tarea',
-                  style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  initialValue: nombreOriginal,
-                  onChanged: (value) => nombreEditado = value,
-                  decoration: InputDecoration(
-                    hintText: 'Ingrese el nombre',
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-                
-                const SizedBox(height: 16),
-                
-                // Campo de descripción
-                Text(
-                  'Descripción',
-                  style: TextStyle(
-                    color: primaryColor,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 14,
-                  ),
-                ),
-                const SizedBox(height: 8),
-                TextFormField(
-                  initialValue: descripcionOriginal,
-                  onChanged: (value) => descripcionEditada = value,
-                  maxLines: 4,
-                  decoration: InputDecoration(
-                    hintText: 'Ingrese la descripción',
-                    contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 20),
-              ],
-            ),
-          ),
-        ),
-        actions: [
-          OutlinedButton(
-            onPressed: () => Navigator.of(dialogContext).pop(),
-            style: OutlinedButton.styleFrom(
-              foregroundColor: primaryColor,
-              side: BorderSide(color: primaryColor),
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            ),
-            child: const Text('Cancelar'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              // Cerrar el diálogo
-              Navigator.of(dialogContext).pop();
-              
-              // Aquí implementarías la llamada a la API para actualizar
-              // Por ejemplo:
-              // final status = await etapa.etapaUpdate(id, nombreEditado, descripcionEditada);
-              
-              // Mostrar mensaje de actualización
-              ScaffoldMessenger.of(context).showSnackBar(
-                SnackBar(
-                  content: Text('Tarea actualizada: $nombreEditado'),
-                  backgroundColor: Colors.orange,
-                  behavior: SnackBarBehavior.floating,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              );
-              
-              // Actualizar la lista de etapas
-              setState(() {
-                etapasFuture = etapa.etapaGet();
-              });
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: secondaryColor,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-            ),
-            child: const Text('Actualizar'),
-          ),
-        ],
-      );
-    },
-  );
-}
-  
+        );
+      },
+    );
+  }
+
   // Método para eliminar una etapa
   Future<void> eliminarEtapa(dynamic item) async {
     // Obtener el ID de la etapa
-    final id = item['eta_id'] ?? item['id'];
-    final nombre = item['eta_nombre'] ?? item['nombre'] ?? '';
-    
+    final id = item['id_etapas'];
+    final nombre = item['eta_nombre'];
+
     // Mostrar diálogo de confirmación
-    bool confirmar = await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Confirmar eliminación'),
-        content: Text('¿Estás seguro que deseas eliminar la tarea "$nombre"?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text('Cancelar'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: Text('Eliminar'),
-          ),
-        ],
-      ),
-    ) ?? false;
-    
+    bool confirmar =
+        await showDialog(
+          context: context,
+          builder:
+              (context) => AlertDialog(
+                title: Text('Confirmar eliminación'),
+                content: Text(
+                  '¿Estás seguro que deseas eliminar la tarea "$nombre"?',
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: Text('Cancelar'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    style: TextButton.styleFrom(foregroundColor: Colors.red),
+                    child: Text('Eliminar'),
+                  ),
+                ],
+              ),
+        ) ??
+        false;
+
     if (confirmar) {
       // TODO: Implementar la llamada a la API para eliminar
       // Ejemplo:
-      // final resultado = await etapa.etapaDelete(id);
-      
+      final status = await etapa.etapaDelete(id);
+
       // Por ahora, simplemente mostraremos un mensaje
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('Tarea "$nombre" eliminada'),
+          content: Text(status['message']),
           backgroundColor: Colors.red.shade700,
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
@@ -250,7 +272,7 @@ Future<void> editarEtapa(dynamic item) async {
           ),
         ),
       );
-      
+
       // Actualizar lista después de eliminar
       setState(() {
         etapasFuture = etapa.etapaGet();
@@ -302,7 +324,10 @@ Future<void> editarEtapa(dynamic item) async {
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide(color: secondaryColor, width: 2),
                       ),
-                      prefixIcon: Icon(Icons.task_outlined, color: secondaryColor),
+                      prefixIcon: Icon(
+                        Icons.task_outlined,
+                        color: secondaryColor,
+                      ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -324,7 +349,10 @@ Future<void> editarEtapa(dynamic item) async {
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide(color: secondaryColor, width: 2),
                       ),
-                      prefixIcon: Icon(Icons.description_outlined, color: secondaryColor),
+                      prefixIcon: Icon(
+                        Icons.description_outlined,
+                        color: secondaryColor,
+                      ),
                     ),
                     maxLines: 3,
                     validator: (value) {
@@ -346,7 +374,10 @@ Future<void> editarEtapa(dynamic item) async {
                         style: OutlinedButton.styleFrom(
                           foregroundColor: primaryColor,
                           side: BorderSide(color: primaryColor),
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 15,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -366,7 +397,10 @@ Future<void> editarEtapa(dynamic item) async {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: secondaryColor,
                           foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 15,
+                          ),
                           elevation: 3,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -413,7 +447,10 @@ Future<void> editarEtapa(dynamic item) async {
                   return Container();
                 } else if (snapshot.hasData) {
                   return Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: secondaryColor.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(20),
@@ -489,28 +526,31 @@ Future<void> editarEtapa(dynamic item) async {
                 );
               } else {
                 final List<dynamic> etapas = snapshot.data!;
-                
+
                 return ListView.builder(
                   itemCount: etapas.length,
                   itemBuilder: (context, index) {
                     final dynamic item = etapas[index];
-                    
+
                     // Acceder a los campos de manera segura
+
                     String nombre = '';
                     String descripcion = '';
-                    
+
                     if (item is Map) {
                       // Intentar acceder al nombre con diferentes claves posibles
-                      nombre = item['eta_nombre']?.toString() ?? 
-                              item['nombre']?.toString() ?? 
-                              'Tarea ${index + 1}';
-                              
+                      nombre =
+                          item['eta_nombre']?.toString() ??
+                          item['nombre']?.toString() ??
+                          'Tarea ${index + 1}';
+
                       // Intentar acceder a la descripción con diferentes claves posibles
-                      descripcion = item['eta_descripcion']?.toString() ?? 
-                                   item['descripcion']?.toString() ?? 
-                                   'Sin descripción';
+                      descripcion =
+                          item['eta_descripcion']?.toString() ??
+                          item['descripcion']?.toString() ??
+                          'Descripción no disponible';
                     }
-                    
+
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 12),
                       child: Card(
@@ -536,7 +576,9 @@ Future<void> editarEtapa(dynamic item) async {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    nombre.isNotEmpty ? nombre[0].toUpperCase() : '?',
+                                    nombre.isNotEmpty
+                                        ? nombre[0].toUpperCase()
+                                        : '?',
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 22,
@@ -574,7 +616,10 @@ Future<void> editarEtapa(dynamic item) async {
                                 children: [
                                   // Botón de editar
                                   IconButton(
-                                    icon: Icon(Icons.edit, color: Colors.orange),
+                                    icon: Icon(
+                                      Icons.edit,
+                                      color: Colors.orange,
+                                    ),
                                     onPressed: () => editarEtapa(item),
                                     tooltip: 'Editar tarea',
                                   ),

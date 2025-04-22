@@ -31,7 +31,7 @@ class EtapaController extends Controller
 
         return response()->json([
             'status' => 200,
-            'message' => 'Etapa registrada correctamente',
+            'message' => 'Etapa actualizada correctamente',
         ]);
     }
 
@@ -74,15 +74,20 @@ class EtapaController extends Controller
     // Eliminar una etapa
     public function destroy($id)
 {
+
     $etapa = Etapas::find($id);
 
+    // Verificar si la etapa existe
     if (!$etapa) {
         return response()->json(['message' => 'Etapa no encontrada'], 404);
     }
-
+    
     $etapa->delete();
 
-    return redirect()->route('perfil-produccion.etapas')->with('success', 'Etapa eliminada exitosamente.');
+    return response()->json([
+        'status' => 200,
+        'message' => 'Etapa eliminada correctamente',
+    ]);
 }
 
     // Mostrar la vista con todas las etapass

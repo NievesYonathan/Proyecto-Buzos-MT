@@ -8,8 +8,7 @@ class Etapa {
 
   Etapa({  this.etaNombre, this.etaDescripcion, this.etaId});
 
-  Future<Map<String, dynamic>> etapaUpdate() async {
-    final int ? etaId = this.etaId; 
+  Future<Map<String, dynamic>> etapaUpdate(int ? etaId, String ? etaNombre, String? etaDescripcion) async {
     final Map<String, dynamic> etapa = {
       'eta_nombre': etaNombre,
       'eta_descripcion': etaDescripcion,

@@ -46,11 +46,13 @@ class TareaApiController extends Controller
         $request->validate([
             'tar_nombre' => 'required|string|max:50',
             'tar_descripcion' => 'required|string|max:200',
+            'tar_estado' => 'required|numeric',
         ]);
 
         $tarea->update([
             'tar_nombre' => $request->tar_nombre,
             'tar_descripcion' => $request->tar_descripcion,
+            'tar_estado' => $request->tar_estado,
         ]);
 
         return response()->json([
