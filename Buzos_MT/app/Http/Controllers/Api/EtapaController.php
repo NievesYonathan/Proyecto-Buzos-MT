@@ -29,7 +29,10 @@ class EtapaController extends Controller
             'eta_descripcion' => $request->eta_descripcion,
         ]);
 
-        return response()->json($etapa, 201);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Etapa registrada correctamente',
+        ]);
     }
 
     // Obtener una etapa por ID

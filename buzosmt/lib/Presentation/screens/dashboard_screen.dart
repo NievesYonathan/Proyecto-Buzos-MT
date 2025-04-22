@@ -19,7 +19,7 @@ class _DashboardState extends State<Dashboard> {
   
   // Datos de ejemplo para gráficas
   final List<ProductionData> weeklyData = [
-    ProductionData('Lun', 42),
+    ProductionData('Lun', 70),
     ProductionData('Mar', 58),
     ProductionData('Mié', 63),
     ProductionData('Jue', 76),
@@ -83,7 +83,7 @@ class _DashboardState extends State<Dashboard> {
             end: Alignment.bottomCenter,
             colors: [
               Color(0xFF0D3D4A),
-              Color(0xFF34E69F),
+              Color(0xFF20A67B),
             ],
           ),
         ),
@@ -160,7 +160,6 @@ class _DashboardState extends State<Dashboard> {
                         MaterialPageRoute(builder: (context) => const TareasScreen()),
                       );
                     }),
-                  _buildDrawerItem(Icons.auto_graph, 'Estadísticas'),
                   _buildDrawerItem(Icons.layers, 'Etapas',
                     onTap: () {
                       Navigator.push(
@@ -168,8 +167,6 @@ class _DashboardState extends State<Dashboard> {
                         MaterialPageRoute(builder: (context) => const EtapasScreen()),
                       );
                     }),
-                  _buildDrawerItem(Icons.inventory, 'Inventario'),
-                  _buildDrawerItem(Icons.people, 'Trabajadores'),
                   _buildDrawerItem(Icons.settings, 'Configuración',
                     onTap: () {
                       Navigator.push(
@@ -220,82 +217,247 @@ class _DashboardState extends State<Dashboard> {
   Widget _buildBody() {
     return Container(
       color: Colors.grey.shade100,
-      child: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildHeader(),
-            const SizedBox(height: 20),
-            _buildChartSection(),
-            const SizedBox(height: 20),
-            _buildProductionStats(),
-            const SizedBox(height: 20),
-            _buildRecentProduction(),
-          ],
-        ),
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          // Si el ancho es mayor a 900px, usamos diseño de tablet/desktop
+          if (constraints.maxWidth >= 900) {
+            return _buildWideLayout();
+          } else {
+            // Para dispositivos móviles usamos diseño en columna
+            return _buildNarrowLayout();
+          }
+        },
+      ),
+    );
+  }
+
+  Widget _buildWideLayout() {
+    // Diseño adaptado para pantallas grandes (tablet/desktop)
+    return SingleChildScrollView(
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildHeader(),
+          const SizedBox(height: 24),
+          // Primera fila: gráfica y estadísticas
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // Gráfica ocupa el 65% del ancho
+              Expanded(
+                flex: 65,
+                child: _buildChartSection(),
+              ),
+              const SizedBox(width: 24),
+              // Estadísticas ocupan el 35% del ancho
+              Expanded(
+                flex: 35,
+                child: Column(
+                  children: [
+                    _buildStatCard(
+                      'Total Producción',
+                      '586',
+                      'unidades',
+                      Icons.inventory_2,
+                      const Color(0xFF0D3D4A),
+                      '+12% vs semana anterior',
+                    ),
+                    const SizedBox(height: 16),
+                    _buildStatCard(
+                      'Eficiencia',
+                      '94',
+                      '%',
+                      Icons.speed,
+                      const  Color(0xFF20A67B),
+                      '+3% vs semana anterior',
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 24),
+          // Producción reciente
+          _buildRecentProduction(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildNarrowLayout() {
+    // Diseño para dispositivos móviles
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildHeader(),
+          const SizedBox(height: 20),
+          _buildChartSection(),
+          const SizedBox(height: 20),
+          // En móvil, las estadísticas se muestran en fila o columna según el ancho
+          LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth >= 600) {
+                // Para tabletas en vertical o móviles landscape
+                return Row(
+                  children: [
+                    Expanded(
+                      child: _buildStatCard(
+                        'Total Producción',
+                        '586',
+                        'unidades',
+                        Icons.inventory_2,
+                        const Color(0xFF0D3D4A),
+                        '+12% vs semana anterior',
+                      ),
+                    ),
+                    const SizedBox(width: 16),
+                    Expanded(
+                      child: _buildStatCard(
+                        'Eficiencia',
+                        '94',
+                        '%',
+                        Icons.speed,
+                        const Color(0xFF20A67B),
+                        '+3% vs semana anterior',
+                      ),
+                    ),
+                  ],
+                );
+              } else {
+                // Para móviles en portrait
+                return Column(
+                  children: [
+                    _buildStatCard(
+                      'Total Producción',
+                      '586',
+                      'unidades',
+                      Icons.inventory_2,
+                      const Color(0xFF0D3D4A),
+                      '+12% vs semana anterior',
+                    ),
+                    const SizedBox(height: 16),
+                    _buildStatCard(
+                      'Eficiencia',
+                      '94',
+                      '%',
+                      Icons.speed,
+                      const Color(0xFF20A67B),
+                      '+3% vs semana anterior',
+                    ),
+                  ],
+                );
+              }
+            },
+          ),
+          const SizedBox(height: 20),
+          _buildRecentProduction(),
+        ],
       ),
     );
   }
 
   Widget _buildHeader() {
-    return Row(
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Panel de Control',
-              style: TextStyle(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF0D3D4A),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        // Adaptar el header según el ancho disponible
+        if (constraints.maxWidth >= 500) {
+          // Header en fila para pantallas más anchas
+          return Row(
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'Panel de Control',
+                    style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF0D3D4A),
+                    ),
+                  ),
+                  Text(
+                    'Resumen de producción - ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                ],
               ),
-            ),
-            Text(
-              'Resumen de producción - ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}',
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.grey.shade600,
+              const Spacer(),
+              _buildPeriodDropdown(),
+            ],
+          );
+        } else {
+          // Header en columna para pantallas estrechas
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Panel de Control',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF0D3D4A),
+                ),
               ),
-            ),
-          ],
-        ),
-        const Spacer(),
-        Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.1),
-                spreadRadius: 1,
-                blurRadius: 2,
+              Text(
+                'Resumen de producción - ${DateTime.now().day}/${DateTime.now().month}/${DateTime.now().year}',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey.shade600,
+                ),
+              ),
+              const SizedBox(height: 12),
+              Row(
+                children: [
+                  const Spacer(),
+                  _buildPeriodDropdown(),
+                ],
               ),
             ],
+          );
+        }
+      },
+    );
+  }
+
+  Widget _buildPeriodDropdown() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 1,
+            blurRadius: 2,
           ),
-          child: DropdownButton<String>(
-            value: selectedPeriod,
-            icon: const Icon(Icons.keyboard_arrow_down, color: Color(0xFF0D3D4A)),
-            elevation: 0,
-            underline: const SizedBox(),
-            style: const TextStyle(color: Color(0xFF0D3D4A)),
-            onChanged: (String? newValue) {
-              setState(() {
-                selectedPeriod = newValue!;
-              });
-            },
-            items: <String>['Diario', 'Semanal', 'Mensual', 'Anual']
-                .map<DropdownMenuItem<String>>((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-          ),
-        ),
-      ],
+        ],
+      ),
+      child: DropdownButton<String>(
+        value: selectedPeriod,
+        icon: const Icon(Icons.keyboard_arrow_down, color: Color(0xFF0D3D4A)),
+        elevation: 0,
+        underline: const SizedBox(),
+        style: const TextStyle(color: Color(0xFF0D3D4A)),
+        onChanged: (String? newValue) {
+          setState(() {
+            selectedPeriod = newValue!;
+          });
+        },
+        items: <String>['Diario', 'Semanal', 'Mensual', 'Anual']
+            .map<DropdownMenuItem<String>>((String value) {
+          return DropdownMenuItem<String>(
+            value: value,
+            child: Text(value),
+          );
+        }).toList(),
+      ),
     );
   }
 
@@ -333,8 +495,9 @@ class _DashboardState extends State<Dashboard> {
             ),
           ),
           const SizedBox(height: 20),
-          SizedBox(
-            height: 250,
+          // Altura adaptable para el gráfico
+          AspectRatio(
+            aspectRatio: 16 / 9, // Proporciones estándar para gráficos
             child: BarChart(
               BarChartData(
                 alignment: BarChartAlignment.spaceAround,
@@ -357,14 +520,24 @@ class _DashboardState extends State<Dashboard> {
                     sideTitles: SideTitles(
                       showTitles: true,
                       getTitlesWidget: (value, meta) {
+                        // Comprobamos si debemos mostrar etiquetas más cortas
                         return SideTitleWidget(
                           axisSide: meta.axisSide,
-                          child: Text(
-                            weeklyData[value.toInt()].day,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey.shade700,
-                            ),
+                          child: LayoutBuilder(
+                            builder: (context, constraints) {
+                              // En dispositivos pequeños, usamos iniciales
+                              final String label = MediaQuery.of(context).size.width < 400
+                                  ? weeklyData[value.toInt()].day[0] // Solo la inicial
+                                  : weeklyData[value.toInt()].day;   // Nombre completo
+                                  
+                              return Text(
+                                label,
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey.shade700,
+                                ),
+                              );
+                            },
                           ),
                         );
                       },
@@ -412,13 +585,15 @@ class _DashboardState extends State<Dashboard> {
                 barGroups: weeklyData.asMap().entries.map((entry) {
                   final index = entry.key;
                   final data = entry.value;
+                  // Ancho adaptativo para barras
+                  final double barWidth = MediaQuery.of(context).size.width < 400 ? 10 : 20;
                   return BarChartGroupData(
                     x: index,
                     barRods: [
                       BarChartRodData(
                         toY: data.value,
-                        color: const Color(0xFF34E69F),
-                        width: 20,
+                        color: const Color(0xFF20A67B),
+                        width: barWidth,
                         borderRadius: const BorderRadius.only(
                           topLeft: Radius.circular(4),
                           topRight: Radius.circular(4),
@@ -432,34 +607,6 @@ class _DashboardState extends State<Dashboard> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _buildProductionStats() {
-    return Row(
-      children: [
-        Expanded(
-          child: _buildStatCard(
-            'Total Producción',
-            '586',
-            'unidades',
-            Icons.inventory_2,
-            const Color(0xFF0D3D4A),
-            '+12% vs semana anterior',
-          ),
-        ),
-        const SizedBox(width: 16),
-        Expanded(
-          child: _buildStatCard(
-            'Eficiencia',
-            '94',
-            '%',
-            Icons.speed,
-            const Color(0xFF34E69F),
-            '+3% vs semana anterior',
-          ),
-        ),
-      ],
     );
   }
 
@@ -502,22 +649,31 @@ class _DashboardState extends State<Dashboard> {
                   color: Colors.green.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(12),
                 ),
-                child: Row(
-                  children: [
-                    const Icon(
-                      Icons.arrow_upward,
-                      color: Colors.green,
-                      size: 12,
-                    ),
-                    const SizedBox(width: 2),
-                    Text(
-                      comparison,
-                      style: const TextStyle(
-                        color: Colors.green,
-                        fontSize: 10,
-                      ),
-                    ),
-                  ],
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    // Texto simplificado en pantallas muy pequeñas
+                    final String compText = MediaQuery.of(context).size.width < 350 
+                      ? '+12%' // Versión corta
+                      : comparison; // Versión completa
+                    
+                    return Row(
+                      children: [
+                        const Icon(
+                          Icons.arrow_upward,
+                          color:  Color(0xFF20A67B),
+                          size: 12,
+                        ),
+                        const SizedBox(width: 2),
+                        Text(
+                          compText,
+                          style: const TextStyle(
+                            color:  Color(0xFF20A67B),
+                            fontSize: 10,
+                          ),
+                        ),
+                      ],
+                    );
+                  },
                 ),
               ),
             ],
@@ -591,15 +747,39 @@ class _DashboardState extends State<Dashboard> {
                 child: const Text(
                   'Ver todos',
                   style: TextStyle(
-                    color: Color(0xFF34E69F),
+                    color:  Color(0xFF20A67B),
                   ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 10),
-          Column(
-            children: recentItems.map((item) => _buildProductionItem(item)).toList(),
+          // Lista adaptativa para producción reciente
+          LayoutBuilder(
+            builder: (context, constraints) {
+              if (constraints.maxWidth >= 900) {
+                // Para pantallas anchas, mostrar elementos en grid
+                return GridView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    childAspectRatio: 3,
+                    crossAxisSpacing: 16,
+                    mainAxisSpacing: 16,
+                  ),
+                  itemCount: recentItems.length,
+                  itemBuilder: (context, index) {
+                    return _buildProductionItem(recentItems[index]);
+                  },
+                );
+              } else {
+                // Para pantallas estrechas, mostrar en columna
+                return Column(
+                  children: recentItems.map((item) => _buildProductionItem(item)).toList(),
+                );
+              }
+            },
           ),
         ],
       ),
@@ -665,37 +845,40 @@ class _DashboardState extends State<Dashboard> {
   }
 
   Widget _buildBottomNavigationBar() {
-    return BottomNavigationBar(
-      currentIndex: selectedIndex,
-      onTap: (index) {
-        setState(() {
-          selectedIndex = index;
-        });
-      },
-      selectedItemColor: const Color(0xFF34E69F),
-      unselectedItemColor: Colors.grey,
-      backgroundColor: Colors.white,
-      type: BottomNavigationBarType.fixed,
-      elevation: 10,
-      items: const [
-        BottomNavigationBarItem(
-          icon: Icon(Icons.dashboard),
-          label: 'Dashboard',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.factory),
-          label: 'Producción',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.analytics),
-          label: 'Reportes',
-        ),
-        BottomNavigationBarItem(
-          icon: Icon(Icons.person),
-          label: 'Perfil',
-        ),
-      ],
-    );
+    // Solo mostramos el BottomNavigationBar en pantallas pequeñas
+    return MediaQuery.of(context).size.width <= 600
+        ? BottomNavigationBar(
+            currentIndex: selectedIndex,
+            onTap: (index) {
+              setState(() {
+                selectedIndex = index;
+              });
+            },
+            selectedItemColor: const Color(0xFF34E69F),
+            unselectedItemColor: Colors.grey,
+            backgroundColor: Colors.white,
+            type: BottomNavigationBarType.fixed,
+            elevation: 10,
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.dashboard),
+                label: 'Dashboard',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.factory),
+                label: 'Producción',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.analytics),
+                label: 'Reportes',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Perfil',
+              ),
+            ],
+          )
+        : const SizedBox.shrink(); // No mostrar en pantallas grandes
   }
 }
 
