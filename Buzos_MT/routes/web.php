@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use App\Http\Controllers\produccionController;
 use App\Http\Controllers\UserController;
@@ -10,6 +10,7 @@ use App\Http\Controllers\ListaCargoController;
 use App\Http\Controllers\MateriaPrimaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TareaController;
+use App\Http\Controllers\ReporteProduccionController;
 use App\Http\Controllers\Api\EtapaController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -26,15 +27,15 @@ Route::get('/test-email', function () {
             'from' => config('mail.from.address'),
             'to' => 'yonathannieves17@gmail.com'
         ];
-        
+
         dd($config); // Esto nos mostrará la configuración antes de intentar enviar
 
         Mail::raw('Test email content', function ($message) {
             $message->to('yonathannieves17@gmail.com')
-                   ->subject('Test Email')
-                   ->from(config('mail.from.address'), config('mail.from.name'));
+                ->subject('Test Email')
+                ->from(config('mail.from.address'), config('mail.from.name'));
         });
-        
+
         return [
             'status' => 'success',
             'message' => 'Email sent successfully!',
@@ -74,7 +75,7 @@ Route::get('/callback-url', function () {
 
     $userExists = User::where('external_id', $user->id)->where('external_auth', 'google')->first();
 
-    if ($userExists){
+    if ($userExists) {
         Auth::login($userExists);
     } else {
         // Crear el usuario en la tabla usuarios
@@ -83,7 +84,7 @@ Route::get('/callback-url', function () {
             't_doc' => $user->t_doc,
             'usu_nombres' => $user->usu_nombres,
             'usu_apellidos' => $user->usu_apellidos,
-            'usu_email' => $user->usu_email,
+            'email' => $user->email,
             'usu_fecha_nacimiento' => $user->usu_fecha_nacimiento,
             'usu_sexo' => $user->usu_sexo,
             'usu_direccion' => 'NULL',
@@ -105,27 +106,29 @@ Route::controller(UserController::class)->group(function () {
     Route::put('/user-update/{num_doc}', 'update')->name('user-update');
     Route::put('/user-cambiar-estado/{num_doc}', 'cambiarestado')->name('user-cambiarestado');
     Route::get('/user-search', 'buscar')->name('user-search');
+    Route::get('/informes', [InformeController::class, 'index'])->name('informe-RRHH');
+    Route::get('/informes/users', [InformeController::class, 'fetchUsers'])->name('informes-RRHH.fetchUsers');
 });
 
 // rutas tipo-doc
 Route::controller(TipoDocController::class)->group(function () {
-    Route::get('/tipo-documentos', 'index')->name('tipo-documentos');             
-    Route::get('/tipo-documentos/new', 'create')->name('tipo-documentos.new');    
-    Route::post('/tipo-documentos', 'store')->name('tipo-documentos.store');     
-    Route::put('/tipo-documentos/{id}', 'update')->name('tipo-documentos.update'); 
-    Route::delete('/tipo-documentos/{id}', 'destroy')->name('tipo-documentos.delete'); 
+    Route::get('/tipo-documentos', 'index')->name('tipo-documentos');
+    Route::get('/tipo-documentos/new', 'create')->name('tipo-documentos.new');
+    Route::post('/tipo-documentos', 'store')->name('tipo-documentos.store');
+    Route::put('/tipo-documentos/{id}', 'update')->name('tipo-documentos.update');
+    Route::delete('/tipo-documentos/{id}', 'destroy')->name('tipo-documentos.delete');
 });
 
 
-    //estados
- Route::controller(EstadoController::class)->group(function () {
+//estados
+Route::controller(EstadoController::class)->group(function () {
     Route::get('/estados', 'index')->name('vistaEstados');
     Route::get('/estados/new', 'create')->name('estados.new');
     Route::post('/estados', 'store')->name('estados.store');
-    Route::put('/estados/{id_estados}', 'update')->name('estados.update'); 
+    Route::put('/estados/{id_estados}', 'update')->name('estados.update');
 });
 
-    //Rutas de 'Cargos'
+//Rutas de 'Cargos'
 Route::get('/cargos', [CargoController::class, 'index'])->name('cargos');
 Route::get('/cargos/create', [CargoController::class, 'create'])->name('cargos.create');
 Route::post('/cargos', [CargoController::class, 'store'])->name('cargos.store');
@@ -153,40 +156,41 @@ Route::post('/tareas-crear', [TareaController::class, 'store'])->name('nueva_tar
 Route::get('/tareas-produccion', [TareaController::class, 'index'])->name('pro_tareas');
 Route::put('/tarea-actualizar/{id}', [TareaController::class, 'update'])->name('update_tarea');
 
-    // Rutas para las vistas
-    Route::get('/perfil-produccion/etapas', [EtapaController::class, 'indexView'])->name('perfil-produccion.etapas'); // Mostrar etapas
-    Route::post('/perfil-produccion/etapas', [EtapaController::class, 'storeFromView'])->name('perfil-produccion.etapas.store'); // Crear nueva etapa
-    Route::get('/perfil-produccion/etapas/{id}/edit', [EtapaController::class, 'updateView'])->name('perfil-produccion.etapas.edit'); // Editar etapa
-    Route::put('/perfil-produccion/etapas/{id}', [EtapaController::class, 'updateFromView'])->name('perfil-produccion.etapas.update'); // Actualizar etapa
-    Route::delete('/perfil-produccion/etapas/{id}', [EtapaController::class, 'destroy'])->name('perfil-produccion.etapas.destroy'); //para eliminar :)
-    
-    //Rutas de 'Tarea'
-    Route::post('/tareas-crear', [TareaController::class, 'store'])->name('nueva_tarea');
-    Route::get('/tareas-produccion', [TareaController::class, 'index'])->name('pro_tareas');
-    Route::put('/tarea-actualizar/{id}', [TareaController::class, 'update'])->name('update_tarea');
+// Rutas para las vistas
+Route::get('/perfil-produccion/etapas', [EtapaController::class, 'indexView'])->name('perfil-produccion.etapas'); // Mostrar etapas
+Route::post('/perfil-produccion/etapas', [EtapaController::class, 'storeFromView'])->name('perfil-produccion.etapas.store'); // Crear nueva etapa
+Route::get('/perfil-produccion/etapas/{id}/edit', [EtapaController::class, 'updateView'])->name('perfil-produccion.etapas.edit'); // Editar etapa
+Route::put('/perfil-produccion/etapas/{id}', [EtapaController::class, 'updateFromView'])->name('perfil-produccion.etapas.update'); // Actualizar etapa
+Route::delete('/perfil-produccion/etapas/{id}', [EtapaController::class, 'destroy'])->name('perfil-produccion.etapas.destroy'); //para eliminar :)
 
-    //Rutas de 'Perfil Operario'
-    Route::get('/tareas-asignadas', [TareaController::class, 'tareasAsignadas'])->name('tareas-asignadas');
+//Rutas de 'Tarea'
+Route::post('/tareas-crear', [TareaController::class, 'store'])->name('nueva_tarea');
+Route::get('/tareas-produccion', [TareaController::class, 'index'])->name('pro_tareas');
+Route::put('/tarea-actualizar/{id}', [TareaController::class, 'update'])->name('update_tarea');
 
-    // Nuevas Rutas para editar y actualizar el estado de una tarea
-    Route::get('/tarea/editar/{id_tarea}/{id_empleado_tarea}', [TareaController::class, 'editarEstado'])->name('tarea.editar');
-    Route::post('/tarea/actualizar/{id_tarea}/{id_empleado_tarea}', [TareaController::class, 'actualizarEstado'])->name('tarea.actualizarEstado');
+//Rutas de 'Perfil Operario'
+Route::get('/tareas-asignadas', [TareaController::class, 'tareasAsignadas'])->name('tareas-asignadas');
 
-    // Rutas para 'Jefe inventario'
-    Route::get('/materia-prima', [MateriaPrimaController::class, 'index'])->name('lista-item');
-    Route::get('/materia-prima-agregar-formulario', [MateriaPrimaController::class, 'form_nuevo'])->name('vistaForm');
-    Route::post('/nuevo-producto', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto');
-    Route::get('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'show'])->name('Detalles-producto');
-    Route::get('/materia-prima-buscar', [MateriaPrimaController::class, 'showSearchForm'])->name('buscar-producto');
-    Route::post('/materia-prima-resultados', [MateriaPrimaController::class, 'search'])->name('resultados-producto');
-    Route::post('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'edit'])->name('editar-producto');
-    Route::get('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'edit'])->name('editar-producto-get');         
+// Nuevas Rutas para editar y actualizar el estado de una tarea
+Route::get('/tarea/editar/{id_tarea}/{id_empleado_tarea}', [TareaController::class, 'editarEstado'])->name('tarea.editar');
+Route::post('/tarea/actualizar/{id_tarea}/{id_empleado_tarea}', [TareaController::class, 'actualizarEstado'])->name('tarea.actualizarEstado');
 
-    // Rutas para Tipos de Documento
-    Route::controller(TipoDocController::class)->group(function () {
-        Route::get('/tipos-documentos', 'index')->name('tipoDocumentos');
-        Route::post('/tipos-documentos', 'store')->name('tipoDocumentos.store');
-        Route::put('/tipos-documentos/{id_tipo_documento}', 'update')->name('tipoDocumentos.update');
-    });
+// Rutas para 'Jefe inventario'
+Route::get('/materia-prima', [MateriaPrimaController::class, 'index'])->name('lista-item');
+Route::get('/materia-prima-agregar-formulario', [MateriaPrimaController::class, 'form_nuevo'])->name('vistaForm');
+Route::post('/nuevo-producto', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto');
+Route::get('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'show'])->name('Detalles-producto');
+Route::get('/materia-prima-buscar', [MateriaPrimaController::class, 'showSearchForm'])->name('buscar-producto');
+Route::post('/materia-prima-resultados', [MateriaPrimaController::class, 'search'])->name('resultados-producto');
+Route::post('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'edit'])->name('editar-producto');
+Route::get('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'edit'])->name('editar-producto-get');
+Route::get('/reporte-produccion', [ReporteProduccionController::class, 'index'])->name('reportes');
 
-    require __DIR__ . '/auth.php';
+// Rutas para Tipos de Documento
+Route::controller(TipoDocController::class)->group(function () {
+    Route::get('/tipos-documentos', 'index')->name('tipoDocumentos');
+    Route::post('/tipos-documentos', 'store')->name('tipoDocumentos.store');
+    Route::put('/tipos-documentos/{id_tipo_documento}', 'update')->name('tipoDocumentos.update');
+});
+
+require __DIR__ . '/auth.php';

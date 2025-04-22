@@ -44,7 +44,7 @@
                         <td>{{ $usuario['usu_nombres'] }}</td>
                         <td>{{ $usuario['usu_apellidos'] }}</td>
                         <td>{{ $usuario['usu_telefono'] }}</td>
-                        <td>{{ $usuario['usu_email'] }}</td>
+                        <td>{{ $usuario['email'] }}</td>
                         <td>{{ $usuario['estado']['nombre_estado'] }}</td>
                         <td>
                             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateModal{{ $usuario['num_doc'] }}">
@@ -157,7 +157,7 @@
                                                     <div class="col-12 col-md-6">
                                                         <div class="form-group">
                                                             <label for="usuario_email" class="bmd-label-floating">Email</label>
-                                                            <input type="email" class="form-control" name="usu_email" id="usu_email" value="{{ $usuario['usu_email'] }}" maxlength="70">
+                                                            <input type="email" class="form-control" name="email" id="email" value="{{ $usuario['email'] }}" maxlength="70">
                                                         </div>
                                                     </div>
 

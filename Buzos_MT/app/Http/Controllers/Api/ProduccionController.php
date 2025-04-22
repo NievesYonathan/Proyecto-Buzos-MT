@@ -133,8 +133,13 @@ class ProduccionController extends Controller
             'producto' => $producto,
             'status' => 200
         ];
-        // Redirigir o retornar una respuesta de éxito
-        return redirect()->route('pro_fabricados')->with('success', 'Producción actualizada exitosamente.');
+        
+        if (!$request->expectsJson()) {
+            // Redirigir o retornar una respuesta de éxito
+            return redirect()->route('pro_fabricados')->with('success', 'Producción actualizada exitosamente.');
+        }
+
+        return response()->json($data, 200);
     }
 
     public function updatePartial(Request $request, $id)

@@ -30,7 +30,7 @@ Route::delete('/producto/image/delete/{id}', [BuzosImageController::class, 'dele
 
 // Rutas para 'Jefe Materia Prima'
 Route::get('/materia-prima', [MateriaPrimaController::class, 'index'])->name('lista-de-item');
-Route::post('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'show'])->name('Detalles-producto2');
+Route::get('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'show'])->name('Detalles-producto2');
 Route::post('/materia-prima-agregar', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto2');
 Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class,'update'])->name('update-producto');
 Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'delete'])->name('materia-prima-delete');
@@ -89,10 +89,10 @@ Route::put('/tipos-documentos/{id}', [TipoDocApiController::class, 'update']);
 
 //estados
 Route::prefix('estados')->group(function () {
-    Route::get('/', [EstadoApiController::class, 'index']);          // Obtener todos los estados
-    Route::post('/', [EstadoApiController::class, 'store']);         // Crear un nuevo estado
-    Route::put('/{id_estados}', [EstadoApiController::class, 'update']); // Actualizar un estado
-    Route::delete('/{id_estados}', [EstadoApiController::class, 'destroy']); // Eliminar un estado
+    Route::get('/', [EstadoApiController::class, 'index']);          
+    Route::post('/', [EstadoApiController::class, 'store']);        
+    Route::put('/{id_estados}', [EstadoApiController::class, 'update']); 
+    Route::delete('/{id_estados}', [EstadoApiController::class, 'destroy']);
 });
 
 //cargos

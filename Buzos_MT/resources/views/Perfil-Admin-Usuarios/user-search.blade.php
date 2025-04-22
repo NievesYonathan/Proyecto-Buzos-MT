@@ -77,7 +77,7 @@
                         <td>{{ $row['usu_fecha_nacimiento'] }}</td>
                         <td>{{ $row['usu_sexo'] }}</td>
                         <td>{{ $row['usu_telefono'] }}</td>
-                        <td>{{ $row['usu_email'] }}</td>
+                        <td>{{ $row['email'] }}</td>
                         <td class="text-center">{{ $row['usu_direccion'] }}</td>
                         <td class="text-center">{{ \Carbon\Carbon::parse($row['usu_fecha_contratacion'])->format('Y-m-d') }}</td>
                         <td>{{ $row['usu_estado'] == 1 ? 'Activo' : 'Inactivo' }}</td>
