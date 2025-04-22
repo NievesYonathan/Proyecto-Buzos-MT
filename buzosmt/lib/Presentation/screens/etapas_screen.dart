@@ -10,7 +10,7 @@ class EtapasScreen extends StatefulWidget {
 
 class _EtapasScreenState extends State<EtapasScreen> {
   // Definición de colores de la paleta
-  final Color primaryColor = const Color(0xFF064c41);
+  final Color primaryColor = const Color(0xFF0D3D4A);
   final Color secondaryColor = const Color(0xFF20A67B);
 
   final TextEditingController nombreEtapaController = TextEditingController();
@@ -320,7 +320,7 @@ class _EtapasScreenState extends State<EtapasScreen> {
       appBar: AppBar(
         title: const Text('Etapas de Producción'),
         elevation: 0,
-        backgroundColor: primaryColor,
+        backgroundColor: Color(0xFF0D3D4A),
         foregroundColor: Colors.white,
       ),
       backgroundColor: Colors.grey.shade100,
