@@ -21,10 +21,12 @@ class Tarea  {
   }
   Future<Map<String, dynamic>> tareaStore(String tarNombre,String tarDescripcion) async {
     final Map<String, dynamic> etapa = {
-      'eta_nombre': tarNombre,
-      'eta_descripcion': tarDescripcion,
+      'tar_nombre': tarNombre,
+      'tar_descripcion': tarDescripcion,
     };
-    return etapa;
+    final String data = jsonEncode(etapa);
+    final status = await tareaObj.createTarea(data);
+    return status;
   }
   Future<Map<String, dynamic>> tareaShow() async {
     final status = await tareaObj.getTareaById(tarId);

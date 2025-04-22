@@ -9,9 +9,9 @@ class EtapaRepository {
   static final Uri etapaUrl = Uri.parse('$urlBase/api/etapas');
 
   // Lista de documentos
-  Future<Map<String,String?>> getEtapa() async {
+  Future<List<dynamic>> getEtapa() async {
     final response = await http.get(etapaUrl);
-    final Map<String, String?> status = jsonDecode(response.body);
+    final List<dynamic> status = jsonDecode(response.body);
     if (response.statusCode == 400) {
       return status;
     }

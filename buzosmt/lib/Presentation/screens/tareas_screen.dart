@@ -58,7 +58,7 @@ class _FormularioTareaState extends State<FormularioTarea> {
       if (status != null) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: const Text('Tarea guardada con éxito'),
+            content: Text(status['message']),
             backgroundColor: secondaryColor,
             behavior: SnackBarBehavior.floating,
             shape: RoundedRectangleBorder(
