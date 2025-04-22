@@ -30,7 +30,7 @@ Route::delete('/producto/image/delete/{id}', [BuzosImageController::class, 'dele
 
 // Rutas para 'Jefe Materia Prima'
 Route::get('/materia-prima', [MateriaPrimaController::class, 'index'])->name('lista-de-item');
-Route::post('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'show'])->name('Detalles-producto2');
+Route::get('/materia-prima-detalles/{id}', [MateriaPrimaController::class, 'show'])->name('Detalles-producto2');
 Route::post('/materia-prima-agregar', [MateriaPrimaController::class, 'store'])->name('reg-nuevo-producto2');
 Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class,'update'])->name('update-producto');
 Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'delete'])->name('materia-prima-delete');

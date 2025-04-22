@@ -1,21 +1,11 @@
 <x-app-layout>
-    <main class="full-box main-container">
-        <section class="full-box page-content">
+    <div class="container-fluid">
+        <section class="">
 
-            <div class="full-box page-header">
+            <div class="mt-2">
                 <h3 class="text-left">
-                    <i class="fas fa-industry fa-fw"></i> &nbsp; INFORME PRODUCCIÓN
+                    <i class="fas fa-industry fa-fw"></i> &nbsp; REPORTE INVENTARIO
                 </h3>
-            </div>
-
-            <div class="container-fluid">
-                <ul class="full-box list-unstyled page-nav-tabs">
-                    <li>
-                        <a class="active" href="{{ route('reportes') }}">
-                            <i class="fas fa-chart-bar fa-fw"></i> &nbsp; INFORME PRODUCCIÓN
-                        </a>
-                    </li>
-                </ul>
             </div>
 
             <div class="container-fluid tile-container">
@@ -36,7 +26,7 @@
                 </div>
 
                 <!-- Tabla de datos -->
-                <div class="table-responsive">
+                <div class="table-overflow-x">
                     <table class="table table-dark table-sm">
                         <thead>
                             <tr class="text-center roboto-medium">
@@ -46,7 +36,7 @@
                         </thead>
                         <tbody>
                             @forelse($datosProduccion as $fila)
-                                <tr class="text-center">
+                                <tr class="text-center table-light">
                                     <td>{{ $fila->reg_pf_tipo_prenda }}</td>
                                     <td>{{ $fila->cantidad_total }}</td>
                                 </tr>
@@ -60,7 +50,7 @@
                 </div>
             </div>
         </section>
-    </main>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
