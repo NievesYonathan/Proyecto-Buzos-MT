@@ -65,7 +65,10 @@ class EtapaController extends Controller
             'eta_descripcion' => $request->eta_descripcion,
         ]);
 
-        return response()->json($etapa);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Etapa registrada correctamente',
+        ]);
     }
 
     // Eliminar una etapa
