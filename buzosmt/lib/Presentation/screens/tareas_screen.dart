@@ -74,18 +74,20 @@ class _FormularioTareaState extends State<FormularioTarea> {
       }
     }
   }
-  
+
   // Método para editar una tarea
   Future<void> editarTarea(dynamic item) async {
     // Obtener los datos de la tarea
-    final id = item['tar_id'] ?? item['id'];
+    final id = item['id_tarea'] ?? item['id'];
     final nombreOriginal = item['tar_nombre'] ?? item['nombre'] ?? '';
-    final descripcionOriginal = item['tar_descripcion'] ?? item['descripcion'] ?? '';
-    
+    final descripcionOriginal =
+        item['tar_descripcion'] ?? item['descripcion'] ?? '';
+    final estadoOriginal = item['tar_estado'];
+
     // Variables para mantener los valores editados
     String nombreEditado = nombreOriginal;
     String descripcionEditada = descripcionOriginal;
-    
+
     // Mostrar el diálogo modal
     await showDialog(
       context: context,
@@ -122,15 +124,18 @@ class _FormularioTareaState extends State<FormularioTarea> {
                     onChanged: (value) => nombreEditado = value,
                     decoration: InputDecoration(
                       hintText: 'Ingrese el nombre',
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                   ),
-                  
+
                   const SizedBox(height: 16),
-                  
+
                   // Campo de descripción
                   Text(
                     'Descripción',
@@ -147,7 +152,10 @@ class _FormularioTareaState extends State<FormularioTarea> {
                     maxLines: 4,
                     decoration: InputDecoration(
                       hintText: 'Ingrese la descripción',
-                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -164,23 +172,31 @@ class _FormularioTareaState extends State<FormularioTarea> {
               style: OutlinedButton.styleFrom(
                 foregroundColor: primaryColor,
                 side: BorderSide(color: primaryColor),
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
               ),
               child: const Text('Cancelar'),
             ),
             ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
                 // Cerrar el diálogo
                 Navigator.of(dialogContext).pop();
-                
+
                 // Aquí implementarías la llamada a la API para actualizar
                 // Por ejemplo:
-                // final status = await tarea.tareaUpdate(id, nombreEditado, descripcionEditada);
-                
+                final status = await tarea.tareaUpdate(
+                  id,
+                  nombreEditado,
+                  descripcionEditada,
+                  estadoOriginal,
+                );
+
                 // Mostrar mensaje de actualización
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
-                    content: Text('Tarea actualizada: $nombreEditado'),
+                    content: Text(status['message']),
                     backgroundColor: Colors.orange,
                     behavior: SnackBarBehavior.floating,
                     shape: RoundedRectangleBorder(
@@ -188,7 +204,7 @@ class _FormularioTareaState extends State<FormularioTarea> {
                     ),
                   ),
                 );
-                
+
                 // Actualizar la lista de tareas
                 setState(() {
                   tareasFuture = tarea.tareaGet();
@@ -197,7 +213,10 @@ class _FormularioTareaState extends State<FormularioTarea> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: secondaryColor,
                 foregroundColor: Colors.white,
-                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
               ),
               child: const Text('Actualizar'),
             ),
@@ -205,56 +224,6 @@ class _FormularioTareaState extends State<FormularioTarea> {
         );
       },
     );
-  }
-  
-  // Método para eliminar una tarea
-  Future<void> eliminarTarea(dynamic item) async {
-    // Obtener el ID de la tarea
-    final id = item['tar_id'] ?? item['id'];
-    final nombre = item['tar_nombre'] ?? item['nombre'] ?? '';
-    
-    // Mostrar diálogo de confirmación
-    bool confirmar = await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Confirmar eliminación'),
-        content: Text('¿Estás seguro que deseas eliminar la tarea "$nombre"?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(false),
-            child: Text('Cancelar'),
-          ),
-          TextButton(
-            onPressed: () => Navigator.of(context).pop(true),
-            style: TextButton.styleFrom(foregroundColor: Colors.red),
-            child: Text('Eliminar'),
-          ),
-        ],
-      ),
-    ) ?? false;
-    
-    if (confirmar) {
-      // TODO: Implementar la llamada a la API para eliminar
-      // Ejemplo:
-      // final resultado = await tarea.tareaDelete(id);
-      
-      // Por ahora, simplemente mostraremos un mensaje
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text('Tarea "$nombre" eliminada'),
-          backgroundColor: Colors.red.shade700,
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-      );
-      
-      // Actualizar lista después de eliminar
-      setState(() {
-        tareasFuture = tarea.tareaGet();
-      });
-    }
   }
 
   @override
@@ -301,7 +270,10 @@ class _FormularioTareaState extends State<FormularioTarea> {
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide(color: secondaryColor, width: 2),
                       ),
-                      prefixIcon: Icon(Icons.task_outlined, color: secondaryColor),
+                      prefixIcon: Icon(
+                        Icons.task_outlined,
+                        color: secondaryColor,
+                      ),
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -323,7 +295,10 @@ class _FormularioTareaState extends State<FormularioTarea> {
                         borderRadius: BorderRadius.circular(12),
                         borderSide: BorderSide(color: secondaryColor, width: 2),
                       ),
-                      prefixIcon: Icon(Icons.description_outlined, color: secondaryColor),
+                      prefixIcon: Icon(
+                        Icons.description_outlined,
+                        color: secondaryColor,
+                      ),
                     ),
                     maxLines: 3,
                     validator: (value) {
@@ -345,7 +320,10 @@ class _FormularioTareaState extends State<FormularioTarea> {
                         style: OutlinedButton.styleFrom(
                           foregroundColor: primaryColor,
                           side: BorderSide(color: primaryColor),
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 15,
+                          ),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -365,7 +343,10 @@ class _FormularioTareaState extends State<FormularioTarea> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: secondaryColor,
                           foregroundColor: Colors.white,
-                          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 15,
+                          ),
                           elevation: 3,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
@@ -412,7 +393,10 @@ class _FormularioTareaState extends State<FormularioTarea> {
                   return Container();
                 } else if (snapshot.hasData) {
                   return Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 6,
+                    ),
                     decoration: BoxDecoration(
                       color: secondaryColor.withOpacity(0.2),
                       borderRadius: BorderRadius.circular(20),
@@ -488,36 +472,39 @@ class _FormularioTareaState extends State<FormularioTarea> {
                 );
               } else {
                 final List<dynamic> tareas = snapshot.data!;
-                
+
                 return ListView.builder(
                   itemCount: tareas.length,
                   itemBuilder: (context, index) {
                     final dynamic item = tareas[index];
-                    
+
                     // Acceder a los campos de manera segura
                     String nombre = '';
                     String descripcion = '';
                     String estado = '';
-                    
+
                     if (item is Map) {
                       // Intentar acceder al nombre con diferentes claves posibles
-                      nombre = item['tar_nombre']?.toString() ?? 
-                              item['nombre']?.toString() ?? 
-                              'Tarea ${index + 1}';
-                              
+                      nombre =
+                          item['tar_nombre']?.toString() ??
+                          item['nombre']?.toString() ??
+                          'Tarea ${index + 1}';
+
                       // Intentar acceder a la descripción con diferentes claves posibles
-                      descripcion = item['tar_descripcion']?.toString() ?? 
-                                   item['descripcion']?.toString() ?? 
-                                   'Sin descripción';
-                                   
+                      descripcion =
+                          item['tar_descripcion']?.toString() ??
+                          item['descripcion']?.toString() ??
+                          'Sin descripción';
+
                       // Intentar acceder al estado
                       if (item['estados'] is Map) {
-                        estado = item['estados']['nombre_estado']?.toString() ?? '';
+                        estado =
+                            item['estados']['nombre_estado']?.toString() ?? '';
                       } else {
                         estado = item['estado']?.toString() ?? '';
                       }
                     }
-                    
+
                     return Padding(
                       padding: const EdgeInsets.only(bottom: 12),
                       child: Card(
@@ -543,7 +530,9 @@ class _FormularioTareaState extends State<FormularioTarea> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    nombre.isNotEmpty ? nombre[0].toUpperCase() : '?',
+                                    nombre.isNotEmpty
+                                        ? nombre[0].toUpperCase()
+                                        : '?',
                                     style: const TextStyle(
                                       color: Colors.white,
                                       fontSize: 22,
@@ -582,7 +571,10 @@ class _FormularioTareaState extends State<FormularioTarea> {
                                   // Estado
                                   if (estado.isNotEmpty)
                                     Container(
-                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 12,
+                                        vertical: 6,
+                                      ),
                                       decoration: BoxDecoration(
                                         color: secondaryColor.withOpacity(0.2),
                                         borderRadius: BorderRadius.circular(20),
@@ -599,15 +591,12 @@ class _FormularioTareaState extends State<FormularioTarea> {
                                   // Botones de acción
                                   // Botón de editar
                                   IconButton(
-                                    icon: Icon(Icons.edit, color: Colors.orange),
+                                    icon: Icon(
+                                      Icons.edit,
+                                      color: Colors.orange,
+                                    ),
                                     onPressed: () => editarTarea(item),
                                     tooltip: 'Editar tarea',
-                                  ),
-                                  // Botón de eliminar
-                                  IconButton(
-                                    icon: Icon(Icons.delete, color: Colors.red),
-                                    onPressed: () => eliminarTarea(item),
-                                    tooltip: 'Eliminar tarea',
                                   ),
                                 ],
                               ),

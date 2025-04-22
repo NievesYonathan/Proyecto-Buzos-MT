@@ -1,5 +1,3 @@
-// ignore_for_file: unnecessary_null_comparison
-
 import 'package:flutter/material.dart';
 import 'package:buzosmt/Domains/models/etapa_model.dart';
 
@@ -257,7 +255,6 @@ class _FormularioTareaState extends State<FormularioTarea> {
         false;
 
     if (confirmar) {
-      // TODO: Implementar la llamada a la API para eliminar
       // Ejemplo:
       final status = await etapa.etapaDelete(id);
 
