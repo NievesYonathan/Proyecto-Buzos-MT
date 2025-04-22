@@ -74,6 +74,188 @@ class _FormularioTareaState extends State<FormularioTarea> {
       }
     }
   }
+  
+  // Método para editar una tarea
+  Future<void> editarTarea(dynamic item) async {
+    // Obtener los datos de la tarea
+    final id = item['tar_id'] ?? item['id'];
+    final nombreOriginal = item['tar_nombre'] ?? item['nombre'] ?? '';
+    final descripcionOriginal = item['tar_descripcion'] ?? item['descripcion'] ?? '';
+    
+    // Variables para mantener los valores editados
+    String nombreEditado = nombreOriginal;
+    String descripcionEditada = descripcionOriginal;
+    
+    // Mostrar el diálogo modal
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Row(
+            children: [
+              Icon(Icons.edit, color: secondaryColor, size: 24),
+              const SizedBox(width: 10),
+              Text('Editar Tarea', style: TextStyle(color: primaryColor)),
+            ],
+          ),
+          contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
+          content: Container(
+            width: double.maxFinite,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Campo de nombre
+                  Text(
+                    'Nombre de la tarea',
+                    style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    initialValue: nombreOriginal,
+                    onChanged: (value) => nombreEditado = value,
+                    decoration: InputDecoration(
+                      hintText: 'Ingrese el nombre',
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                  
+                  const SizedBox(height: 16),
+                  
+                  // Campo de descripción
+                  Text(
+                    'Descripción',
+                    style: TextStyle(
+                      color: primaryColor,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    initialValue: descripcionOriginal,
+                    onChanged: (value) => descripcionEditada = value,
+                    maxLines: 4,
+                    decoration: InputDecoration(
+                      hintText: 'Ingrese la descripción',
+                      contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            OutlinedButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: primaryColor,
+                side: BorderSide(color: primaryColor),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              ),
+              child: const Text('Cancelar'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // Cerrar el diálogo
+                Navigator.of(dialogContext).pop();
+                
+                // Aquí implementarías la llamada a la API para actualizar
+                // Por ejemplo:
+                // final status = await tarea.tareaUpdate(id, nombreEditado, descripcionEditada);
+                
+                // Mostrar mensaje de actualización
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text('Tarea actualizada: $nombreEditado'),
+                    backgroundColor: Colors.orange,
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                );
+                
+                // Actualizar la lista de tareas
+                setState(() {
+                  tareasFuture = tarea.tareaGet();
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: secondaryColor,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
+              ),
+              child: const Text('Actualizar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+  
+  // Método para eliminar una tarea
+  Future<void> eliminarTarea(dynamic item) async {
+    // Obtener el ID de la tarea
+    final id = item['tar_id'] ?? item['id'];
+    final nombre = item['tar_nombre'] ?? item['nombre'] ?? '';
+    
+    // Mostrar diálogo de confirmación
+    bool confirmar = await showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Confirmar eliminación'),
+        content: Text('¿Estás seguro que deseas eliminar la tarea "$nombre"?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(false),
+            child: Text('Cancelar'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(true),
+            style: TextButton.styleFrom(foregroundColor: Colors.red),
+            child: Text('Eliminar'),
+          ),
+        ],
+      ),
+    ) ?? false;
+    
+    if (confirmar) {
+      // TODO: Implementar la llamada a la API para eliminar
+      // Ejemplo:
+      // final resultado = await tarea.tareaDelete(id);
+      
+      // Por ahora, simplemente mostraremos un mensaje
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Tarea "$nombre" eliminada'),
+          backgroundColor: Colors.red.shade700,
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+        ),
+      );
+      
+      // Actualizar lista después de eliminar
+      setState(() {
+        tareasFuture = tarea.tareaGet();
+      });
+    }
+  }
 
   @override
   void dispose() {
@@ -394,23 +576,36 @@ class _FormularioTareaState extends State<FormularioTarea> {
                                   ],
                                 ),
                               ),
-                              // Estado
-                              if (estado.isNotEmpty)
-                                Container(
-                                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                  decoration: BoxDecoration(
-                                    color: secondaryColor.withOpacity(0.2),
-                                    borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: Text(
-                                    estado,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      color: secondaryColor,
-                                      fontSize: 12,
+                              // Estado y botones de acción
+                              Row(
+                                children: [
+                                  // Estado
+                                  if (estado.isNotEmpty)
+                                    Container(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                      decoration: BoxDecoration(
+                                        color: secondaryColor.withOpacity(0.2),
+                                        borderRadius: BorderRadius.circular(20),
+                                      ),
+                                      child: Text(
+                                        estado,
+                                        style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: secondaryColor,
+                                          fontSize: 12,
+                                        ),
+                                      ),
                                     ),
+                                  // Botones de acción
+                                  // Botón de editar
+                                  IconButton(
+                                    icon: Icon(Icons.edit, color: Colors.orange),
+                                    onPressed: () => editarTarea(item),
+                                    tooltip: 'Editar tarea',
                                   ),
-                                ),
+                                  // Botón de eliminar
+                                ],
+                              ),
                             ],
                           ),
                         ),
