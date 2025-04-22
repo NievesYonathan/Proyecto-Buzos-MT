@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fl_chart/fl_chart.dart';
-<<<<<<< Updated upstream
 import 'package:buzosmt/Presentation/screens/tareas_screen.dart';
-=======
->>>>>>> Stashed changes
 import 'configuration_user.dart';
 import 'etapas_screen.dart';
 import '../../main.dart';
