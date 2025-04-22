@@ -1,4 +1,4 @@
-<?php
+        <?php
 class InventarioModel {
     private $conexion;
 

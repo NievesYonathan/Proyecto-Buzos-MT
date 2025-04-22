@@ -1,4 +1,4 @@
-<x-app-layout>            
+<x-app-layout>
             <!--CONTENT-->
            <div class="container-fluid">
 				<div class="table-responsive">
@@ -14,7 +14,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center table-light details">		
+							<tr class="text-center table-light details">
 								<td><?=$materiaPrima->id_materia_prima?></td>
 								<td><?=$materiaPrima->mat_pri_nombre?></td>
 								<td><?=$materiaPrima->mat_pri_cantidad?></td>

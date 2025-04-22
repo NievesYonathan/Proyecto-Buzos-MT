@@ -10,6 +10,7 @@ use App\Http\Controllers\ListaCargoController;
 use App\Http\Controllers\MateriaPrimaController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TareaController;
+use App\Http\Controllers\ReporteProduccionController;
 use App\Http\Controllers\Api\EtapaController;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -183,6 +184,7 @@ Route::get('/materia-prima-buscar', [MateriaPrimaController::class, 'showSearchF
 Route::post('/materia-prima-resultados', [MateriaPrimaController::class, 'search'])->name('resultados-producto');
 Route::post('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'edit'])->name('editar-producto');
 Route::get('/materia-prima-editar/{id}', [MateriaPrimaController::class, 'edit'])->name('editar-producto-get');
+Route::get('/reporte-produccion', [ReporteProduccionController::class, 'index'])->name('reportes');
 
 // Rutas para Tipos de Documento
 Route::controller(TipoDocController::class)->group(function () {

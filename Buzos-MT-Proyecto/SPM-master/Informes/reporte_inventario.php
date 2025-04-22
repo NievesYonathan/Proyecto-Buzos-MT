@@ -114,7 +114,7 @@ include '../Componentes/Head/head.php';
                                 borderColor: 'rgba(255, 99, 132, 1)',
                                 borderWidth: 1
                             }]
-                        },
+                        },  
                         options: {
                             scales: {
                                 y: {
