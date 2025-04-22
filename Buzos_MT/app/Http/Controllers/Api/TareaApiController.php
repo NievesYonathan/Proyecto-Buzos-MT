@@ -29,7 +29,10 @@ class TareaApiController extends Controller
             'tar_estado' => 1,
         ]);
 
-        return response()->json($tarea, 201);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Etapa registrada correctamente',
+        ]);
     }
 
     public function update(Request $request, $id)
