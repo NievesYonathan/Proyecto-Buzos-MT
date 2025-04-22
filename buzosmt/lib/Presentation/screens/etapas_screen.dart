@@ -10,7 +10,7 @@ class EtapasScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Registrar nueva tarea'),
+        title: const Text('Registrar nueva Etapa'),
         elevation: 0,
         backgroundColor: const Color(0xFF0D3D4A),
         foregroundColor: Colors.white,
@@ -98,7 +98,7 @@ class _FormularioTareaState extends State<FormularioTarea> {
             children: [
               Icon(Icons.edit, color: secondaryColor, size: 24),
               const SizedBox(width: 10),
-              Text('Editar Tarea', style: TextStyle(color: primaryColor)),
+              Text('Editar Etapa', style: TextStyle(color: primaryColor)),
             ],
           ),
           contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
@@ -111,7 +111,7 @@ class _FormularioTareaState extends State<FormularioTarea> {
                 children: [
                   // Campo de nombre
                   Text(
-                    'Nombre de la tarea',
+                    'Nombre de la Etapa',
                     style: TextStyle(
                       color: primaryColor,
                       fontWeight: FontWeight.bold,
@@ -239,7 +239,7 @@ class _FormularioTareaState extends State<FormularioTarea> {
               (context) => AlertDialog(
                 title: Text('Confirmar eliminación'),
                 content: Text(
-                  '¿Estás seguro que deseas eliminar la tarea "$nombre"?',
+                  '¿Estás seguro que deseas eliminar la Etapa "$nombre"?',
                 ),
                 actions: [
                   TextButton(
@@ -304,7 +304,7 @@ class _FormularioTareaState extends State<FormularioTarea> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Información de la tarea',
+                    'Información de la Etapa',
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
@@ -315,7 +315,7 @@ class _FormularioTareaState extends State<FormularioTarea> {
                   TextFormField(
                     controller: nombreController,
                     decoration: InputDecoration(
-                      labelText: 'Nombre de la tarea',
+                      labelText: 'Nombre de la Etapa',
                       labelStyle: TextStyle(color: primaryColor),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -431,7 +431,7 @@ class _FormularioTareaState extends State<FormularioTarea> {
                 Icon(Icons.list_alt, color: primaryColor),
                 const SizedBox(width: 8),
                 Text(
-                  'Lista de tareas',
+                  'Lista de Etapa',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
@@ -460,7 +460,7 @@ class _FormularioTareaState extends State<FormularioTarea> {
                         Icon(Icons.assignment, size: 16, color: secondaryColor),
                         const SizedBox(width: 6),
                         Text(
-                          '${snapshot.data!.length} tareas',
+                          '${snapshot.data!.length} Etapas',
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: secondaryColor,
@@ -515,7 +515,7 @@ class _FormularioTareaState extends State<FormularioTarea> {
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        'No hay tareas disponibles',
+                        'No hay Etapas disponibles',
                         style: TextStyle(
                           color: primaryColor.withOpacity(0.6),
                           fontSize: 16,
@@ -542,7 +542,7 @@ class _FormularioTareaState extends State<FormularioTarea> {
                       nombre =
                           item['eta_nombre']?.toString() ??
                           item['nombre']?.toString() ??
-                          'Tarea ${index + 1}';
+                          'Etapa ${index + 1}';
 
                       // Intentar acceder a la descripción con diferentes claves posibles
                       descripcion =
@@ -621,13 +621,13 @@ class _FormularioTareaState extends State<FormularioTarea> {
                                       color: Colors.orange,
                                     ),
                                     onPressed: () => editarEtapa(item),
-                                    tooltip: 'Editar tarea',
+                                    tooltip: 'Editar Etapa',
                                   ),
                                   // Botón de eliminar
                                   IconButton(
                                     icon: Icon(Icons.delete, color: Colors.red),
                                     onPressed: () => eliminarEtapa(item),
-                                    tooltip: 'Eliminar tarea',
+                                    tooltip: 'Eliminar Etapa',
                                   ),
                                 ],
                               ),

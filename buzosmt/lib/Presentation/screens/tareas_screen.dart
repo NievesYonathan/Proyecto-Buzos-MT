@@ -604,6 +604,11 @@ class _FormularioTareaState extends State<FormularioTarea> {
                                     tooltip: 'Editar tarea',
                                   ),
                                   // Botón de eliminar
+                                  IconButton(
+                                    icon: Icon(Icons.delete, color: Colors.red),
+                                    onPressed: () => eliminarTarea(item),
+                                    tooltip: 'Eliminar tarea',
+                                  ),
                                 ],
                               ),
                             ],
