@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'login_screen.dart';
+import 'package:buzosmt/Presentation/screens/tareas_screen.dart';
 import 'configuration_user.dart';
 import 'etapas_screen.dart';
 import '../../main.dart';
@@ -153,7 +153,13 @@ class _DashboardState extends State<Dashboard> {
                       _buildDrawerSubItem(Icons.checkroom, 'Productos Fabricados'),
                     ],
                   ),
-                  _buildDrawerItem(Icons.calendar_today, 'Tareas'),
+                  _buildDrawerItem(Icons.calendar_today, 'Tareas',
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const TareasScreen()),
+                      );
+                    }),
                   _buildDrawerItem(Icons.auto_graph, 'Estadísticas'),
                   _buildDrawerItem(Icons.layers, 'Etapas',
                     onTap: () {

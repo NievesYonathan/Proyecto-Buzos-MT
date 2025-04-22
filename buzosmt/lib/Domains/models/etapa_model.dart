@@ -6,7 +6,7 @@ class Etapa {
   final String ? etaDescripcion;
   final EtapaRepository etapaObj = EtapaRepository();
 
-  Etapa({ required this.etaNombre, required this.etaDescripcion, this.etaId});
+  Etapa({  this.etaNombre, this.etaDescripcion, this.etaId});
 
   Future<Map<String, dynamic>> etapaUpdate() async {
     final int ? etaId = this.etaId; 
