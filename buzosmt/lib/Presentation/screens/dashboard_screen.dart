@@ -5,6 +5,7 @@ import 'package:buzosmt/Presentation/screens/tareas_screen.dart';
 import 'configuration_user.dart';
 import 'etapas_screen.dart';
 import '../../main.dart';
+import 'package:buzosmt/Presentation/screens/gestion_produccion_screen.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -149,10 +150,20 @@ class _DashboardState extends State<Dashboard> {
                     title: const Text('Producción',
                         style: TextStyle(color: Colors.white)),
                     children: [
-                      _buildDrawerSubItem(Icons.assessment, 'Gestión de Producción'),
-                      _buildDrawerSubItem(Icons.checkroom, 'Productos Fabricados'),
+                      _buildDrawerSubItem(Icons.assessment, 'Gestión de Producción', onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const GestionProduccionScreen()),
+                      );
+                      }),
+                      // _buildDrawerSubItem(Icons.checkroom, 'Productos Fabricados', onTap: () {
+                      // Navigator.push(
+                      //   context,
+                      //   MaterialPageRoute(builder: (context) => const ProductosFabricadosScreen()),
+                      // );
+                      // }),
                     ],
-                  ),
+                    ),
                   _buildDrawerItem(Icons.calendar_today, 'Tareas',
                     onTap: () {
                       Navigator.push(
@@ -205,12 +216,12 @@ class _DashboardState extends State<Dashboard> {
     );
   }
 
-  Widget _buildDrawerSubItem(IconData icon, String text) {
+  Widget _buildDrawerSubItem(IconData icon, String text, {VoidCallback? onTap}) {
     return ListTile(
       contentPadding: const EdgeInsets.only(left: 70),
       leading: Icon(icon, color: Colors.white70, size: 20),
       title: Text(text, style: const TextStyle(color: Colors.white70, fontSize: 14)),
-      onTap: () {},
+      onTap: onTap ?? () {},
     );
   }
 
