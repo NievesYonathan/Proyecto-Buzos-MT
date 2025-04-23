@@ -12,7 +12,7 @@ class Produccion {
     String proFechaInicio,
     String proFechaFin,
     int proCantidad,
-    int proEtapa,
+    int ? proEtapa,
   ) async {
     final produccion = {
       'proNombre': proNombre,
@@ -31,16 +31,17 @@ class Produccion {
     String proFechaInicio,
     String proFechaFin,
     int proCantidad,
-    int proEtapa,
+    int ? proEtapa,
   ) async {
     final produccion = {
-      'proNombre': proNombre,
-      'proFechaInicio': proFechaInicio,
-      'proFechaFin': proFechaFin,
-      'proCantidad': proCantidad,
-      'proEtapa': proEtapa,
+      'pro_nombre' : proNombre,
+    'pro_fecha_inicio': proFechaInicio,
+    'pro_fecha_fin': proFechaFin,
+    'pro_cantidad': proCantidad,
+    'pro_etapa': proEtapa
     };
     final data = jsonEncode(produccion);
+    print(data);
     final status = await productionObj.create(data);
     return status;
   }
@@ -49,7 +50,7 @@ class Produccion {
     final status = await productionObj.getProdducion(proId);
     return status;
   }
-  Future<List<dynamic>> productionGet() async {
+  Future<Map<String, dynamic>> productionGet() async {
     final status = await productionObj.getProducciones();
     return status;
   }

@@ -8,6 +8,14 @@ class Etapa {
 
   Etapa({  this.etaNombre, this.etaDescripcion, this.etaId});
 
+  // Método fromJson para convertir un mapa JSON en una instancia de Etapa
+  factory Etapa.fromJson(Map<String, dynamic> json) {
+    return Etapa(
+      etaId: json['id_etapas'] as int?, // Ajusta las claves según el JSON que recibes
+      etaNombre: json['eta_nombre'] as String?,
+      etaDescripcion: json['eta_descripcion'] as String?,
+    );
+  }
   Future<Map<String, dynamic>> etapaUpdate(int ? etaId, String ? etaNombre, String? etaDescripcion) async {
     final Map<String, dynamic> etapa = {
       'eta_nombre': etaNombre,

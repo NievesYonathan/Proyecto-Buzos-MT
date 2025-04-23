@@ -6,7 +6,7 @@ class EtapaRepository {
   // URL base
   // Rutas específicas
   static const String urlBase = Api.urlBase;
-  static final Uri tareaUrl = Uri.parse('$urlBase/api/tareas');
+  static final Uri tareaUrl = Uri.parse('$urlBase/tareas');
 
   // Lista de documentos
   Future<List<dynamic>> getTarea() async {

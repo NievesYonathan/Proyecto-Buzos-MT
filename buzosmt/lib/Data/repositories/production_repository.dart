@@ -6,11 +6,11 @@ class ProductionRepository {
   static const String baseUrl = Api.urlBase;
 
   // GET: Fetch all items
-  Future<List<dynamic>> getProducciones() async {
+  Future<Map<String, dynamic>> getProducciones() async {
     final response = await http.get(Uri.parse('$baseUrl/producciones'));
     final status = jsonDecode(response.body);
     if (response.statusCode == 400) {
-      return [];
+      return status;
     }
     return status;
   }
@@ -29,8 +29,8 @@ class ProductionRepository {
   Future<Map<String, dynamic>> create(String data) async {
     final response = await http.post(
       Uri.parse('$baseUrl/nueva-produccion'),
-      headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(data),
+      headers: {'Content-Type': 'application/json '},
+      body: data
     );
     final status = jsonDecode(response.body);
     if (response.statusCode == 400) {
