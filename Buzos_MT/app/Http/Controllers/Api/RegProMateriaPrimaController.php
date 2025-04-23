@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\RegProMateriaPrima;
 use Illuminate\Support\Facades\Validator;
+use App\Models\MateriaPrima; // Agregar al inicio del archivo
 
 class RegProMateriaPrimaController extends Controller
 {
@@ -72,6 +73,16 @@ class RegProMateriaPrimaController extends Controller
                         ], 400);
                     }
 
+                    // Buscar la materia prima y actualizar su cantidad
+                    $materiaPrima = MateriaPrima::find($materiaData['id_pro_materia_prima']);
+                    if (!$materiaPrima || $materiaPrima->mat_pri_cantidad < $materiaData['reg_pmp_cantidad_usada']) {
+                        return response()->json([
+                            'message' => 'No hay suficiente cantidad de materia prima disponible',
+                            'status' => 400
+                        ], 400);
+                    }
+
+                    // Crear el registro de uso
                     $materia = RegProMateriaPrima::create([
                         'reg_pmp_cantidad_usada' => $materiaData['reg_pmp_cantidad_usada'],
                         'reg_pmp_fecha_registro' => now()->toDateString(),
@@ -79,12 +90,9 @@ class RegProMateriaPrimaController extends Controller
                         'id_produccion' => (int)$id
                     ]);
 
-                    if(!$materia) {
-                        return response()->json([
-                            'message' => 'Error al crear el registro de materia prima',
-                            'status' => 500
-                        ], 500);
-                    }
+                    // Actualizar la cantidad en materia_prima
+                    $materiaPrima->mat_pri_cantidad -= $materiaData['reg_pmp_cantidad_usada'];
+                    $materiaPrima->save();
 
                     $materias[] = $materia;
                 }
@@ -112,6 +120,15 @@ class RegProMateriaPrimaController extends Controller
             $materias = [];
             
             for ($i = 0; $i < count($request->id_pro_materia_prima); $i++) {
+                // Buscar la materia prima y verificar cantidad
+                $materiaPrima = MateriaPrima::find($request->id_pro_materia_prima[$i]);
+                if (!$materiaPrima || $materiaPrima->mat_pri_cantidad < $request->reg_pmp_cantidad_usada[$i]) {
+                    return response()->json([
+                        'message' => 'No hay suficiente cantidad de materia prima disponible',
+                        'status' => 400
+                    ], 400);
+                }
+
                 $materia = RegProMateriaPrima::create([
                     'reg_pmp_cantidad_usada' => $request->reg_pmp_cantidad_usada[$i],
                     'reg_pmp_fecha_registro' => now()->toDateString(),
@@ -119,12 +136,9 @@ class RegProMateriaPrimaController extends Controller
                     'id_produccion' => (int)$id
                 ]);
 
-                if(!$materia) {
-                    return response()->json([
-                        'message' => 'Error al crear el registro de materia prima',
-                        'status' => 500
-                    ], 500);
-                }
+                // Actualizar la cantidad en materia_prima
+                $materiaPrima->mat_pri_cantidad -= $request->reg_pmp_cantidad_usada[$i];
+                $materiaPrima->save();
 
                 $materias[] = $materia;
             }
@@ -187,30 +201,124 @@ class RegProMateriaPrimaController extends Controller
 
     public function destroy($id)
     {
-        $producto = RegProMateriaPrima::find($id);
+        $registro = RegProMateriaPrima::find($id);
 
-        if(!$producto){
-            $data = [
-                'message' => 'Registrto no encontrado',
+        if(!$registro){
+            return response()->json([
+                'message' => 'Registro no encontrado',
                 'status' => 404
-            ]; 
-            return response()->json($data, 404);
+            ], 404);
         }
 
-        $producto->delete();
+        try {
+            // Obtener la materia prima asociada
+            $materiaPrima = MateriaPrima::find($registro->id_pro_materia_prima);
+            
+            if ($materiaPrima) {
+                // Devolver la cantidad al stock
+                $materiaPrima->mat_pri_cantidad += $registro->reg_pmp_cantidad_usada;
+                $materiaPrima->save();
+            }
 
-        $data = [
-            'message' => 'Registrto eliminado',
-            'status' => 200
-        ]; 
+            $registro->delete();
 
-        return response()->json($data, 200);
+            return response()->json([
+                'message' => 'Registro eliminado y stock actualizado',
+                'status' => 200
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al eliminar el registro',
+                'error' => $e->getMessage(),
+                'status' => 500
+            ], 500);
+        }
     }
 
     public function update(Request $request)
     {
         try {
-            // Si es form-data
+            // Si es un array JSON
+            if ($request->isJson()) {
+                $materiasData = $request->json()->all();
+                $materiasActualizadas = [];
+
+                foreach ($materiasData as $materiaData) {
+                    $validator = Validator::make($materiaData, [
+                        'id_registro' => 'nullable',
+                        'produccion_mtPrima' => 'required',
+                        'mtPrima_cantidad' => 'required',
+                        'id_produccion' => 'required'
+                    ]);
+
+                    if ($validator->fails()) {
+                        return response()->json([
+                            'message' => 'Error en la validación de datos',
+                            'errors' => $validator->errors(),
+                            'status' => 400
+                        ], 400);
+                    }
+
+                    if (isset($materiaData['id_registro'])) {
+                        $materia = RegProMateriaPrima::find($materiaData['id_registro']);
+                        $materiaPrima = MateriaPrima::find($materiaData['produccion_mtPrima']);
+
+                        if (!$materia || !$materiaPrima) {
+                            return response()->json([
+                                'message' => 'Materia prima no encontrada',
+                                'status' => 404
+                            ], 404);
+                        }
+
+                        // Calcular la diferencia de cantidad
+                        $diferencia = $materiaData['mtPrima_cantidad'] - $materia->reg_pmp_cantidad_usada;
+                        
+                        if ($diferencia > 0 && $materiaPrima->mat_pri_cantidad < $diferencia) {
+                            return response()->json([
+                                'message' => 'No hay suficiente cantidad de materia prima disponible',
+                                'status' => 400
+                            ], 400);
+                        }
+
+                        $materiaPrima->mat_pri_cantidad -= $diferencia;
+                        $materiaPrima->save();
+
+                        $materia->reg_pmp_cantidad_usada = $materiaData['mtPrima_cantidad'];
+                        $materia->id_pro_materia_prima = $materiaData['produccion_mtPrima'];
+                        $materia->save();
+                    } else {
+                        $materiaPrima = MateriaPrima::find($materiaData['produccion_mtPrima']);
+                        
+                        if (!$materiaPrima || $materiaPrima->mat_pri_cantidad < $materiaData['mtPrima_cantidad']) {
+                            return response()->json([
+                                'message' => 'No hay suficiente cantidad de materia prima disponible',
+                                'status' => 400
+                            ], 400);
+                        }
+
+                        $materia = RegProMateriaPrima::create([
+                            'reg_pmp_cantidad_usada' => $materiaData['mtPrima_cantidad'],
+                            'reg_pmp_fecha_registro' => now()->toDateString(),
+                            'id_pro_materia_prima' => $materiaData['produccion_mtPrima'],
+                            'id_produccion' => $materiaData['id_produccion']
+                        ]);
+
+                        $materiaPrima->mat_pri_cantidad -= $materiaData['mtPrima_cantidad'];
+                        $materiaPrima->save();
+                    }
+
+                    $materiasActualizadas[] = $materia;
+                }
+
+                return response()->json([
+                    'message' => 'Materias primas actualizadas correctamente',
+                    'materias' => $materiasActualizadas,
+                    'status' => 200
+                ], 200);
+            }
+
+            // Si es form-data (código existente)
             $validator = Validator::make($request->all(), [
                 'id_registro.*' => 'nullable',
                 'produccion_mtPrima.*' => 'required',
