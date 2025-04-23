@@ -86,8 +86,8 @@ class ProduccionController extends Controller
         }
 
         $data = [
-            'producto' => $producto,
-            'status' => 201
+            'message' => 'Producción creada exitosamente',
+                'status' => 200
         ];
 
         return response()->json($data, 201);
