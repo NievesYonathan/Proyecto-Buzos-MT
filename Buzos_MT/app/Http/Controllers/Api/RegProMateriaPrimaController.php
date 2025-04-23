@@ -27,7 +27,7 @@ class RegProMateriaPrimaController extends Controller
             'status' => 200
         ];
     
-        return response()->json($data, 200);    
+        return response()->json($data, 200);
     }
 
     public function show($id)
@@ -257,15 +257,17 @@ class RegProMateriaPrimaController extends Controller
                 $materiasActualizadas[] = $materia;
             }
 
-/*             return response()->json([
+            if (!$request->expectsJson()) {
+                // Redirigir o retornar una respuesta de éxito
+                return redirect()->route('pro_fabricados')->with('success', 'Producción actualizada exitosamente.');
+            }
+
+            return response()->json([
                 'message' => 'Materias primas actualizadas correctamente',
                 'materias' => $materiasActualizadas,
                 'status' => 200
             ], 200);
- */
 
-        // Redirigir o retornar una respuesta de éxito
-        return redirect()->route('pro_fabricados')->with('success', 'Producción actualizada exitosamente.');
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Error al actualizar las materias primas',
