@@ -29,6 +29,6 @@ class RegProMateriaPrima extends Model
 
     public function materiaPrima()
     {
-        return $this->belongsTo(MateriaPrima::class, 'id_pro_materia_prima', 'id_pro_materia_prima');
+        return $this->belongsTo(MateriaPrima::class, 'id_materia_prima', 'id_pro_materia_prima');
     }
 }

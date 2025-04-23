@@ -1,19 +1,17 @@
 <x-app-layout>
     <div class="container-fluid">
         <section class="">
-
             <div class="mt-2">
                 <h3 class="text-left">
-                    <i class="fas fa-industry fa-fw"></i> &nbsp; REPORTE INVENTARIO
+                    <i class="fas fa-industry fa-fw"></i> &nbsp; REPORTE USO DE MATERIAS PRIMAS
                 </h3>
             </div>
 
             <div class="container-fluid tile-container">
-                <!-- Depuración de datos -->
                 <div class="alert alert-info">
                     <p><strong>Estado de datos:</strong> 
-                        @if(isset($datosProduccion) && count($datosProduccion) > 0)
-                            Hay {{ count($datosProduccion) }} registros disponibles.
+                        @if(isset($materiasPrimas) && count($materiasPrimas) > 0)
+                            Hay {{ count($materiasPrimas) }} registros disponibles.
                         @else
                             No hay datos disponibles para mostrar.
                         @endif
@@ -22,27 +20,31 @@
 
                 <!-- Contenedor para el gráfico -->
                 <div class="mb-4" style="min-height: 300px;">
-                    <canvas id="graficoProduccion"></canvas>
+                    <canvas id="graficoMateriasPrimas"></canvas>
                 </div>
 
-                <!-- Tabla de datos -->
+                <!-- Tabla detallada -->
                 <div class="table-overflow-x">
                     <table class="table table-dark table-sm">
                         <thead>
                             <tr class="text-center roboto-medium">
-                                <th>Tipo de Prenda</th>
-                                <th>Cantidad Total</th>
+                                <th>Materia Prima</th>
+                                <th>Producción</th>
+                                <th>Cantidad Usada</th>
+                                <th>Fecha de Uso</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @forelse($datosProduccion as $fila)
+                            @forelse($registrosUso as $registro)
                                 <tr class="text-center table-light">
-                                    <td>{{ $fila->reg_pf_tipo_prenda }}</td>
-                                    <td>{{ $fila->cantidad_total }}</td>
+                                    <td>{{ $registro->mat_pri_nombre }}</td>
+                                    <td>{{ $registro->pro_nombre }}</td>
+                                    <td>{{ $registro->reg_pmp_cantidad_usada }}</td>
+                                    <td>{{ $registro->reg_pmp_fecha_registro }}</td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="2" class="text-center">No hay datos disponibles.</td>
+                                    <td colspan="4" class="text-center">No hay datos disponibles.</td>
                                 </tr>
                             @endforelse
                         </tbody>
@@ -55,47 +57,14 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            console.log("DOM cargado completamente");
+            const datos = @json($materiasPrimas ?? []);
+            const canvas = document.getElementById('graficoMateriasPrimas');
             
-            // Obtener los datos
-            const datos = @json($datosProduccion ?? []);
-            console.log("Datos recibidos:", datos);
-            
-            // Verificar si el canvas existe
-            const canvas = document.getElementById('graficoProduccion');
-            if (!canvas) {
-                console.error("No se encontró el elemento canvas con ID 'graficoProduccion'");
-                return;
-            }
-            console.log("Canvas encontrado correctamente");
-            
-            // Verificar que tengamos datos antes de intentar crear el gráfico
-            if (datos && datos.length > 0) {
-                console.log("Iniciando creación de gráfico con " + datos.length + " registros");
-                
+            if (datos && datos.length > 0 && canvas) {
                 try {
-                    // Extraer los valores para verificar que sean correctos
-                    const etiquetas = datos.map(item => {
-                        if (!item.reg_pf_tipo_prenda) {
-                            console.warn("Encontrado un item sin propiedad reg_pf_tipo_prenda:", item);
-                            return "Sin tipo";
-                        }
-                        return item.reg_pf_tipo_prenda;
-                    });
+                    const etiquetas = datos.map(item => item.nombre_materia_prima);
+                    const valores = datos.map(item => item.cantidad_total_usada);
                     
-                    const valores = datos.map(item => {
-                        if (item.cantidad_total === undefined || item.cantidad_total === null) {
-                            console.warn("Encontrado un item sin propiedad cantidad_total:", item);
-                            return 0;
-                        }
-                        // Convertir a número en caso de que sea string
-                        return Number(item.cantidad_total);
-                    });
-                    
-                    console.log("Etiquetas:", etiquetas);
-                    console.log("Valores:", valores);
-                    
-                    // Generar colores aleatorios para cada barra
                     const colores = datos.map(() => {
                         const r = Math.floor(Math.random() * 255);
                         const g = Math.floor(Math.random() * 255);
@@ -103,14 +72,13 @@
                         return `rgba(${r}, ${g}, ${b}, 0.7)`;
                     });
                     
-                    // Crear el gráfico
                     const ctx = canvas.getContext('2d');
                     new Chart(ctx, {
                         type: 'bar',
                         data: {
                             labels: etiquetas,
                             datasets: [{
-                                label: 'Cantidad Total',
+                                label: 'Cantidad Total Usada',
                                 data: valores,
                                 backgroundColor: colores,
                                 borderColor: colores.map(color => color.replace('0.7', '1')),
@@ -123,18 +91,11 @@
                             plugins: {
                                 legend: {
                                     position: 'top',
-                                    labels: {
-                                        font: {
-                                            size: 14
-                                        }
-                                    }
                                 },
                                 title: {
                                     display: true,
-                                    text: 'Cantidad de Prendas Fabricadas por Tipo',
-                                    font: {
-                                        size: 18
-                                    }
+                                    text: 'Uso Total de Materias Primas',
+                                    font: { size: 18 }
                                 }
                             },
                             scales: {
@@ -142,7 +103,7 @@
                                     beginAtZero: true,
                                     title: {
                                         display: true,
-                                        text: 'Cantidad'
+                                        text: 'Cantidad Usada'
                                     },
                                     ticks: {
                                         precision: 0
@@ -151,21 +112,16 @@
                                 x: {
                                     title: {
                                         display: true,
-                                        text: 'Tipo de Prenda'
+                                        text: 'Materia Prima'
                                     }
                                 }
                             }
                         }
                     });
-                    console.log("Gráfico creado exitosamente");
-                    
                 } catch (error) {
                     console.error("Error al crear el gráfico:", error);
                     canvas.parentNode.innerHTML = `<div class="alert alert-danger">Error al crear el gráfico: ${error.message}</div>`;
                 }
-            } else {
-                console.warn("No hay datos para graficar");
-                canvas.parentNode.innerHTML = '<div class="alert alert-warning">No hay datos disponibles para graficar</div>';
             }
         });
     </script>
