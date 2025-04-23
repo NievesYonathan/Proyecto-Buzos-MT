@@ -118,7 +118,7 @@ class ProduccionController extends Controller
                 'errors' => $validator->errors(),
                 'status' => 400
             ];
-            return response()->json($data, 400);
+            return response()->json($data, 400); 
         }
 
         $producto->pro_nombre = $request->produccion_nombre;

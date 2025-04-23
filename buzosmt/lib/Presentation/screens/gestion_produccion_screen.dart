@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -991,3 +992,8 @@ class _GestionProduccionScreenState extends State<GestionProduccionScreen> {
     super.dispose();
   }
 }
+=======
+import 'package:buzosmt/Domains/models/produccion_model.dart';
+
+//
+>>>>>>> origin/AppMobile

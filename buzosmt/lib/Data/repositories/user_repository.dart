@@ -8,9 +8,9 @@ class UserRepository {
   static const String urlBase = Api.urlBase;
 
   // Rutas específicas
-  final Uri loginUrl = Uri.parse('$urlBase/api/Login');
-  final Uri registerUrl = Uri.parse('$urlBase/api/Register');
-  final Uri resetPasswordUrl = Uri.parse('$urlBase/api/password/reset');
+  final Uri loginUrl = Uri.parse('$urlBase/Login');
+  final Uri registerUrl = Uri.parse('$urlBase/Register');
+  final Uri resetPasswordUrl = Uri.parse('$urlBase/password/reset');
 
   // Lista de documentos
   Future<List<dynamic>> getDoc() async {
