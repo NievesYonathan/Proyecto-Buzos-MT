@@ -82,7 +82,7 @@ class ApiAuthenticatedSessionController extends Controller
             't_doc' => $usuario->t_doc,
             'usu_nombres' => $usuario->usu_nombres,
             'usu_apellidos' => $usuario->usu_apellidos,
-            'usu_email' => $usuario->usu_email,
+            'email' => $usuario->email,
             'imag_perfil' => $usuario->imag_perfil,
         ]
     ]);    
