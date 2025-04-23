@@ -55,4 +55,8 @@ class Produccion {
     final status = await productionObj.delete(proId);
     return status;
   }
+  Future<Map<String, dynamic>> productionMateria() async {
+    final status = await productionObj.getProduccionMateria();
+    return status;
+  }
 }

@@ -45,7 +45,7 @@ class ProductionRepository {
     String data) async {
     final response = await http.put(
       Uri.parse('$baseUrl/produccion-editar/$id'),
-      headers: {'Content-Type': 'application/json'},
+      headers: {'Content-Type': 'application/json','Accept': 'application/json'},
       body: data
     );
     final status = jsonDecode(response.body);
@@ -58,6 +58,17 @@ class ProductionRepository {
   // DELETE: Delete an item by ID
   Future<Map<String, dynamic>> delete(int id) async {
     final response = await http.delete(Uri.parse('$baseUrl/produccion-eliminar/$id'));
+    final status = jsonDecode(response.body);
+    if (response.statusCode == 400) {
+      return status;
+    }
+    return status;
+  }
+  
+  Future<Map<String, dynamic>> getProduccionMateria() async {
+    final response = await http.get(Uri.parse('$baseUrl/materia-prima'),
+    headers: {'Content-Type': 'application/json','Accept': 'application/json'}
+    );
     final status = jsonDecode(response.body);
     if (response.statusCode == 400) {
       return status;

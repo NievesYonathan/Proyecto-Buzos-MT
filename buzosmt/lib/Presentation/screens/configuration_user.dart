@@ -1,18 +1,34 @@
 import 'package:flutter/material.dart';
 
 class ConfigurationUserScreen extends StatelessWidget {
-  const ConfigurationUserScreen({super.key});
-  
-  // Definición de los colores principales
-  static const Color primaryColor = Color(0xFF0D3D4A);
-  static const Color accentColor = Color(0xFF20A67B);
-  
+  final Map<String, dynamic> userData; // Recibe los datos del usuario
+
+  const ConfigurationUserScreen({super.key, required this.userData});
+
   @override
   Widget build(BuildContext context) {
-    // Definimos un tema para los botones y campos de texto
+    // Controladores para los campos de texto
+    final TextEditingController nombreController = TextEditingController(
+      text: '${userData['usu_nombres']} ${userData['usu_apellidos']}',
+    );
+    final TextEditingController emailController = TextEditingController(
+      text: userData['email'] ?? '',
+    );
+
+    // Controladores para los campos de contraseña
+    final TextEditingController currentPasswordController =
+        TextEditingController();
+    final TextEditingController newPasswordController = TextEditingController();
+    final TextEditingController confirmPasswordController =
+        TextEditingController();
+
+    // Definición de los colores principales
+    const Color primaryColor = Color(0xFF0D3D4A);
+    const Color accentColor = Color(0xFF20A67B);
+
     final inputDecoration = InputDecoration(
       labelStyle: TextStyle(color: primaryColor.withOpacity(0.8)),
-      hintStyle: TextStyle(color: Colors.grey),
+      hintStyle: const TextStyle(color: Colors.grey),
       border: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8.0),
         borderSide: BorderSide(color: Colors.grey.shade300),
@@ -23,7 +39,7 @@ class ConfigurationUserScreen extends StatelessWidget {
       ),
       focusedBorder: OutlineInputBorder(
         borderRadius: BorderRadius.circular(8.0),
-        borderSide: BorderSide(color: accentColor, width: 2.0),
+        borderSide: const BorderSide(color: accentColor, width: 2.0),
       ),
       filled: true,
       fillColor: Colors.white,
@@ -32,34 +48,25 @@ class ConfigurationUserScreen extends StatelessWidget {
     final buttonStyle = ElevatedButton.styleFrom(
       backgroundColor: accentColor,
       foregroundColor: Colors.white,
-      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(8.0),
-      ),
+      padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
       elevation: 2,
-    );
-    
-    final sectionHeadingStyle = TextStyle(
-      fontSize: 20.0,
-      fontWeight: FontWeight.bold,
-      color: primaryColor,
-      letterSpacing: 0.5,
     );
 
     return Scaffold(
       backgroundColor: Colors.grey.shade100,
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Configuración de Usuario',
           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
         ),
         backgroundColor: primaryColor,
         elevation: 0,
         centerTitle: true,
-        iconTheme: IconThemeData(color: Colors.white),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -78,32 +85,39 @@ class ConfigurationUserScreen extends StatelessWidget {
                         BoxShadow(
                           color: Colors.black.withOpacity(0.1),
                           blurRadius: 10,
-                          offset: Offset(0, 5),
+                          offset: const Offset(0, 5),
                         ),
                       ],
                     ),
-                    child: Icon(
-                      Icons.person,
-                      size: 60,
-                      color: primaryColor,
+                    child: CircleAvatar(
+                      radius: 50,
+                      backgroundColor: Colors.white,
+                      backgroundImage:
+                          userData['imag_perfil'] != null
+                              ? NetworkImage(
+                                'http://tu-servidor.com/${userData['imag_perfil']}',
+                              )
+                              : const AssetImage('assets/images/logo.png')
+                                  as ImageProvider,
                     ),
                   ),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(
-                    'Editar Perfil',
-                    style: TextStyle(
+                    '${userData['usu_nombres']} ${userData['usu_apellidos']}',
+                    style: const TextStyle(
                       color: accentColor,
                       fontWeight: FontWeight.w600,
+                      fontSize: 18,
                     ),
                   ),
                 ],
               ),
             ),
-            SizedBox(height: 32.0),
-            
-            // First Container: Información del perfil
+            const SizedBox(height: 32.0),
+
+            // Información del perfil
             Container(
-              padding: EdgeInsets.all(24.0),
+              padding: const EdgeInsets.all(24.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12.0),
@@ -112,45 +126,37 @@ class ConfigurationUserScreen extends StatelessWidget {
                     color: Colors.grey.withOpacity(0.2),
                     spreadRadius: 1,
                     blurRadius: 10,
-                    offset: Offset(0, 4),
+                    offset: const Offset(0, 4),
                   ),
                 ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Icon(Icons.person_outline, color: accentColor),
-                      SizedBox(width: 8.0),
-                      Text(
-                        'Información del perfil',
-                        style: sectionHeadingStyle,
-                      ),
-                    ],
-                  ),
-                  Divider(
-                    color: primaryColor.withOpacity(0.1),
-                    thickness: 1.0,
-                    height: 32.0,
-                  ),
-                  SizedBox(height: 8.0),
                   TextField(
+                    controller:
+                        nombreController, // Muestra el nombre del usuario
                     decoration: inputDecoration.copyWith(
                       labelText: 'Nombre de usuario',
-                      hintText: 'Usuario estático',
-                      prefixIcon: Icon(Icons.account_circle, color: primaryColor.withOpacity(0.6)),
+                      prefixIcon: Icon(
+                        Icons.account_circle,
+                        color: primaryColor.withOpacity(0.6),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   TextField(
+                    controller:
+                        emailController, // Muestra el correo del usuario
                     decoration: inputDecoration.copyWith(
                       labelText: 'Correo electrónico',
-                      hintText: 'correo@ejemplo.com',
-                      prefixIcon: Icon(Icons.email_outlined, color: primaryColor.withOpacity(0.6)),
+                      prefixIcon: Icon(
+                        Icons.email_outlined,
+                        color: primaryColor.withOpacity(0.6),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 24.0),
+                  const SizedBox(height: 24.0),
                   Row(
                     children: [
                       Expanded(
@@ -158,37 +164,24 @@ class ConfigurationUserScreen extends StatelessWidget {
                           onPressed: () {
                             // Acción para actualizar
                           },
-                          icon: Icon(Icons.check),
-                          label: Text('Actualizar', style: TextStyle(fontSize: 16.0)),
+                          icon: const Icon(Icons.check),
+                          label: const Text(
+                            'Actualizar',
+                            style: TextStyle(fontSize: 16.0),
+                          ),
                           style: buttonStyle,
                         ),
                       ),
                     ],
                   ),
-                  SizedBox(height: 16.0),
-                  OutlinedButton.icon(
-                    onPressed: () {
-                      // Acción para adjuntar imagen
-                    },
-                    icon: Icon(Icons.add_photo_alternate, color: accentColor),
-                    label: Text('Adjuntar imagen', style: TextStyle(fontSize: 16.0)),
-                    style: OutlinedButton.styleFrom(
-                      foregroundColor: accentColor,
-                      side: BorderSide(color: accentColor),
-                      padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                  ),
                 ],
               ),
             ),
-            SizedBox(height: 32.0),
-            
-            // Second Container: Actualizar contraseña
+            const SizedBox(height: 32.0),
+
+            // Actualizar contraseña
             Container(
-              padding: EdgeInsets.all(24.0),
+              padding: const EdgeInsets.all(24.0),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12.0),
@@ -197,53 +190,49 @@ class ConfigurationUserScreen extends StatelessWidget {
                     color: Colors.grey.withOpacity(0.2),
                     spreadRadius: 1,
                     blurRadius: 10,
-                    offset: Offset(0, 4),
+                    offset: const Offset(0, 4),
                   ),
                 ],
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Row(
-                    children: [
-                      Icon(Icons.lock_outline, color: accentColor),
-                      SizedBox(width: 8.0),
-                      Text(
-                        'Actualizar contraseña',
-                        style: sectionHeadingStyle,
-                      ),
-                    ],
-                  ),
-                  Divider(
-                    color: primaryColor.withOpacity(0.1),
-                    thickness: 1.0,
-                    height: 32.0,
-                  ),
-                  SizedBox(height: 8.0),
                   TextField(
+                    controller: currentPasswordController,
                     obscureText: true,
                     decoration: inputDecoration.copyWith(
                       labelText: 'Contraseña actual',
-                      prefixIcon: Icon(Icons.vpn_key, color: primaryColor.withOpacity(0.6)),
+                      prefixIcon: Icon(
+                        Icons.vpn_key,
+                        color: primaryColor.withOpacity(0.6),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   TextField(
+                    controller: newPasswordController,
                     obscureText: true,
                     decoration: inputDecoration.copyWith(
                       labelText: 'Nueva contraseña',
-                      prefixIcon: Icon(Icons.lock, color: primaryColor.withOpacity(0.6)),
+                      prefixIcon: Icon(
+                        Icons.lock,
+                        color: primaryColor.withOpacity(0.6),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 20.0),
+                  const SizedBox(height: 20.0),
                   TextField(
+                    controller: confirmPasswordController,
                     obscureText: true,
                     decoration: inputDecoration.copyWith(
                       labelText: 'Confirmar nueva contraseña',
-                      prefixIcon: Icon(Icons.lock_clock, color: primaryColor.withOpacity(0.6)),
+                      prefixIcon: Icon(
+                        Icons.lock_clock,
+                        color: primaryColor.withOpacity(0.6),
+                      ),
                     ),
                   ),
-                  SizedBox(height: 24.0),
+                  const SizedBox(height: 24.0),
                   Row(
                     children: [
                       Expanded(
@@ -251,36 +240,17 @@ class ConfigurationUserScreen extends StatelessWidget {
                           onPressed: () {
                             // Acción para actualizar contraseña
                           },
-                          icon: Icon(Icons.security),
-                          label: Text('Actualizar contraseña', style: TextStyle(fontSize: 16.0)),
+                          icon: const Icon(Icons.security),
+                          label: const Text(
+                            'Actualizar contraseña',
+                            style: TextStyle(fontSize: 16.0),
+                          ),
                           style: buttonStyle,
                         ),
                       ),
                     ],
                   ),
                 ],
-              ),
-            ),
-            
-            SizedBox(height: 40.0),
-            
-            // Botón de cerrar sesión
-            Container(
-              width: double.infinity,
-              child: OutlinedButton.icon(
-                onPressed: () {
-                  // Acción para cerrar sesión
-                },
-                icon: Icon(Icons.logout, color: Colors.red.shade700),
-                label: Text('Cerrar sesión', style: TextStyle(fontSize: 16.0)),
-                style: OutlinedButton.styleFrom(
-                  foregroundColor: Colors.red.shade700,
-                  side: BorderSide(color: Colors.red.shade300),
-                  padding: EdgeInsets.symmetric(vertical: 16.0),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                  ),
-                ),
               ),
             ),
           ],

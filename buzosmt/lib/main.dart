@@ -3,6 +3,7 @@ import 'Presentation/screens/login_screen.dart';
 import 'Presentation/screens/register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'Presentation/screens/dashboard_screen.dart';
+import 'dart:convert';
 
 void main() {
   runApp(const BuzosMt());
@@ -74,10 +75,13 @@ class _MyHomePageState extends State<MyHomePage> with SingleTickerProviderStateM
   Future<void> checkSession() async {
     final prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-    if (mounted && token != null && token != '') {
+    final user = prefs.getString('user');
+
+   if (mounted && token != null && token.isNotEmpty && user != null) {
+    final userData = jsonDecode(user); // Convierte el JSON a un mapa
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const Dashboard()),
+        MaterialPageRoute(builder: (context) => Dashboard(userData: userData)),
       );
     }
   }

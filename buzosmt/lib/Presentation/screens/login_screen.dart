@@ -32,11 +32,19 @@ class LoginScreen extends StatelessWidget {
       final String? accessToken = googleAuth.accessToken;
       final String? idToken = googleAuth.idToken;
 
-      // Navega al Dashboard después del inicio de sesión exitoso
+      // Simulate fetching user data using the idToken or accessToken
+      final userData = {
+        'usu_nombres': googleUser.displayName,
+        'email': googleUser.email,
+        'imag_perfil': googleUser.photoUrl,
+      };
+
+      // Pass user data to the Dashboard
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => Dashboard()),
+        MaterialPageRoute(builder: (context) => Dashboard(userData: userData)),
       );
+
     } catch (e) {
       // Maneja errores de inicio de sesión
       ScaffoldMessenger.of(context).showSnackBar(
@@ -303,7 +311,7 @@ class _LoginFormContentState extends State<_LoginFormContent> {
 
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => Dashboard()),
+          MaterialPageRoute(builder: (context) => Dashboard(userData: status['user'])),
         );
       }
     }

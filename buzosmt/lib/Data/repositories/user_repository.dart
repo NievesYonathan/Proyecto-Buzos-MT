@@ -34,9 +34,12 @@ class UserRepository {
       return status;
     }
     final token = status['token'] ?? '';
+    final user = status['user'] ?? {};
     final tockLocal = await SharedPreferences.getInstance();
 
     await tockLocal.setString('token', token);
+    await tockLocal.setString('user', jsonEncode(user));    
+    
     return status;
   }
 
