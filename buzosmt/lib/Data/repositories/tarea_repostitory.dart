@@ -21,7 +21,7 @@ class EtapaRepository {
 
   Future<Map<String, dynamic>> getTareaById(int? id) async {
     final response = await http.get(
-      Uri.parse('$urlBase/api/tareas/$id'),
+      Uri.parse('$urlBase/tareas/$id'),
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
     );
     final Map<String, dynamic> status = jsonDecode(response.body);
@@ -46,7 +46,7 @@ class EtapaRepository {
 
   Future<Map<String, dynamic>> updateTarea(int? id, String data) async {
     final response = await http.put(
-      Uri.parse('$urlBase/api/tareas/$id'),
+      Uri.parse('$urlBase/tareas/$id'),
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
       body: data,
     );

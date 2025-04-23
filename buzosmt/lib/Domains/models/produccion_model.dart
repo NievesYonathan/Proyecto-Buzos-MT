@@ -1,51 +1,60 @@
 import 'dart:convert';
+import 'package:buzosmt/Data/repositories/production_repository.dart';
 
 // import '../../Data/repositories/production_repository.dart';
-class ProduccionModel {
-  final String proNombre;
-  final DateTime proFechaInicio;
-  final DateTime proFechaFin;
-  final int proCantidad;
-  final String proEtapa;
-  final String? proImg;
+class Produccion {
+  
+  final ProductionRepository productionObj = ProductionRepository();
 
-  ProduccionModel({
-    required this.proNombre,
-    required this.proFechaInicio,
-    required this.proFechaFin,
-    required this.proCantidad,
-    required this.proEtapa,
-    this.proImg
-  });
-
-   Future<Map<String, dynamic>> jsonForProduction() async {
-    final Map<String, dynamic> produccion = {
-      'pro_nombre' : proNombre,
-        'pro_fecha_inicio': proFechaInicio,
-        'pro_fecha_fin' : proFechaFin,
-        'pro_cantidad' : proCantidad,
-        'pro_etapa' : proEtapa
+  Future<Map<String, dynamic>> productionUpdate(
+    int proId,
+    String proNombre,
+    String proFechaInicio,
+    String proFechaFin,
+    int proCantidad,
+    int proEtapa,
+  ) async {
+    final produccion = {
+      'proNombre': proNombre,
+      'proFechaInicio': proFechaInicio,
+      'proFechaFin': proFechaFin,
+      'proCantidad': proCantidad,
+      'proEtapa': proEtapa,
     };
-    return produccion;
+    final data = jsonEncode(produccion);
+    final status = await productionObj.update(proId,data);
+    return status;
   }
-  Future<Map<String, dynamic>> productionUpdate(Map<String, dynamic> produccionData) async {
-    final jsonData = await jsonForProduction();
-    return jsonData;
+
+  Future<Map<String, dynamic>> productionCreate(
+    String proNombre,
+    String proFechaInicio,
+    String proFechaFin,
+    int proCantidad,
+    int proEtapa,
+  ) async {
+    final produccion = {
+      'proNombre': proNombre,
+      'proFechaInicio': proFechaInicio,
+      'proFechaFin': proFechaFin,
+      'proCantidad': proCantidad,
+      'proEtapa': proEtapa,
+    };
+    final data = jsonEncode(produccion);
+    final status = await productionObj.create(data);
+    return status;
   }
-  Future<Map<String, dynamic>> productionCreate(Map<String, dynamic> produccionData) async {
-    final jsonData = await jsonForProduction();
-    return jsonData;
+
+  Future<Map<String, dynamic>> productionShow(int proId) async {
+    final status = await productionObj.getProdducion(proId);
+    return status;
   }
-  // Future<Map<String, dynamic>> productionShow(Map<String, dynamic> produccionData) async {
-  //   final jsonData = await jsonForProduction(produccionData);
-  //   return jsonData;
-  // }
-  // Future<Map<String, dynamic>> productionGet(Map<String, dynamic> produccionData) async {
-  //   final jsonData = await jsonForProduction(produccionData);
-  //   return jsonData;
-  // }
-  // Future<Map<String, dynamic>> productionDelete(Map<String, dynamic> produccionData) async {
-  //   final jsonData = await jsonForProduction(produccionData);
-  //   return jsonData;
-  // }
+  Future<List<dynamic>> productionGet() async {
+    final status = await productionObj.getProducciones();
+    return status;
+  }
+  Future<Map<String, dynamic>> productionDelete(int proId) async {
+    final status = await productionObj.delete(proId);
+    return status;
+  }
 }

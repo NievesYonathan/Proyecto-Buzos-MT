@@ -6,7 +6,7 @@ class EtapaRepository {
   // URL base
   // Rutas específicas
   static const String urlBase = Api.urlBase;
-  static final Uri etapaUrl = Uri.parse('$urlBase/api/etapas');
+  static final Uri etapaUrl = Uri.parse('$urlBase/etapas');
 
   // Lista de documentos
   Future<List<dynamic>> getEtapa() async {
@@ -19,7 +19,7 @@ class EtapaRepository {
   }
   Future<Map<String, dynamic>> getEtapaById(int ? id) async {
     final response = await http.get(
-      Uri.parse('$urlBase/api/etapas/$id'),
+      Uri.parse('$urlBase/etapas/$id'),
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
     );
     final Map<String, dynamic> status = jsonDecode(response.body);
@@ -44,7 +44,7 @@ class EtapaRepository {
 
   Future<Map<String, dynamic>> updateEtapa(int? id,String data) async {
     final response = await http.put(
-      Uri.parse('$urlBase/api/etapas/$id'),
+      Uri.parse('$urlBase/etapas/$id'),
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
       body: data
     );
@@ -57,7 +57,7 @@ class EtapaRepository {
 
   Future<Map<String, dynamic>> deleteEtapa(int? id) async {
     final response = await http.delete(
-      Uri.parse('$urlBase/api/etapas/$id'),
+      Uri.parse('$urlBase/etapas/$id'),
       headers: {'Content-Type': 'application/json; charset=UTF-8'},
     );
     final Map<String, dynamic> status = jsonDecode(response.body);
