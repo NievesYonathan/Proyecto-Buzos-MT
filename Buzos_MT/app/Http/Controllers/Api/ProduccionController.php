@@ -130,14 +130,13 @@ class ProduccionController extends Controller
 
         $data = [
             'message' => 'Registro actualizado',
-            'producto' => $producto,
             'status' => 200
         ];
         
-        if (!$request->expectsJson()) {
-            // Redirigir o retornar una respuesta de éxito
-            return redirect()->route('pro_fabricados')->with('success', 'Producción actualizada exitosamente.');
-        }
+        // if (!$request->expectsJson()) {
+        //     // Redirigir o retornar una respuesta de éxito
+        //     return redirect()->route('pro_fabricados')->with('success', 'Producción actualizada exitosamente.');
+        // }
 
         return response()->json($data, 200);
     }

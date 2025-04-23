@@ -50,7 +50,7 @@ Route::get('/produccion/{id}', [ProduccionController::class, 'show']);
 Route::post('/nueva-produccion', [ProduccionController::class, 'store']);
 Route::put('/produccion-editar/{id}', [ProduccionController::class, 'update'])->name('update_produccion_api');
 // Route::patch('/produccion-editar-selec/{id}', [ProduccionController::class, 'updatePartial']);
-Route::delete('/produccion-eliminar/{id}', [ProduccionController::class, 'destroy']);
+Route::delete('/produccion-eliminar/{id}', [ProduccionController::class, 'destroy']);                               
 Route::post('/nueva-prod-matPrima/{id}', [RegProMateriaPrimaController::class, 'store']);
 Route::put('/editar-materiaPrima', [RegProMateriaPrimaController::class, 'update'])->name('update_mPrima_api');
 Route::delete('/eliminar-materiaPrima/{id}', [RegProMateriaPrimaController::class, 'destroy']);

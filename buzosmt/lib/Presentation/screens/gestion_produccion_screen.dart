@@ -32,6 +32,221 @@ class _GestionProduccionScreenState extends State<GestionProduccionScreen> {
     cargarEtapas();
   }
 
+  Future<void> editarProduccion(dynamic item) async {
+    // Obtener los datos de la producción
+    final id = item['id_produccion'] ?? item['id'];
+    final nombreOriginal = item['pro_nombre'] ?? item['nombre'] ?? '';
+    final fechaInicioOriginal =
+        item['pro_fecha_inicio'] ?? item['fecha_inicio'] ?? '';
+    final fechaFinOriginal = item['pro_fecha_fin'] ?? item['fecha_fin'] ?? '';
+    final cantidadOriginal = item['pro_cantidad'] ?? item['cantidad'] ?? '';
+    final etapaOriginal = item['id_etapa'] ?? item['etapa'] ?? '';
+
+    // Variables para mantener los valores editados
+    String nombreEditado = nombreOriginal;
+    String fechaInicioEditada = fechaInicioOriginal;
+    String fechaFinEditada = fechaFinOriginal;
+    String cantidadEditada = cantidadOriginal.toString();
+    int etapaEditada = etapaOriginal is int ? etapaOriginal : int.tryParse(etapaOriginal.toString()) ?? 0;
+
+    // Cargar las etapas antes de mostrar el diálogo
+    cargarEtapas();
+
+    // Mostrar el diálogo modal
+    await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          title: Row(
+            children: [
+              Icon(Icons.edit, color: Colors.orange, size: 24),
+              const SizedBox(width: 10),
+              Text('Editar Producción', style: TextStyle(color: Colors.blue)),
+            ],
+          ),
+          contentPadding: const EdgeInsets.fromLTRB(24, 20, 24, 0),
+          content: Container(
+            width: double.maxFinite,
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Campo de nombre
+                  Text(
+                    'Nombre de la Producción',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    initialValue: nombreOriginal,
+                    onChanged: (value) => nombreEditado = value,
+                    decoration: InputDecoration(
+                      hintText: 'Ingrese el nombre',
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Campo de cantidad
+                  Text(
+                    'Cantidad',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    initialValue: cantidadOriginal.toString(),
+                    keyboardType: TextInputType.number,
+                    onChanged: (value) => cantidadEditada = value,
+                    decoration: InputDecoration(
+                      hintText: 'Ingrese la cantidad',
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Campo de etapa
+                  Text(
+                    'Etapa',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  DropdownButtonFormField<int>(
+                    value: _etapas.any((etapa) => etapa.etaId == etapaEditada) ? etapaEditada : null,
+                    decoration: InputDecoration(
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                    items: _etapas.map((etapa) {
+                      return DropdownMenuItem<int>(
+                        value: etapa.etaId,
+                        child: Text(etapa.etaNombre ?? 'Sin nombre'),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      etapaEditada = value!;
+                    },
+                  ),
+                  const SizedBox(height: 16),
+
+
+                  // Campo de fecha de fin
+                  Text(
+                    'Fecha de Fin',
+                    style: TextStyle(
+                      color: Colors.blue,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 14,
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  TextFormField(
+                    initialValue: fechaFinOriginal,
+                    readOnly: true,
+                    onTap: () => _selectDateFin(context),
+                    decoration: InputDecoration(
+                      hintText: 'Seleccione la fecha de fin',
+                      contentPadding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                        vertical: 12,
+                      ),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          actions: [
+            OutlinedButton(
+              onPressed: () => Navigator.of(dialogContext).pop(),
+              style: OutlinedButton.styleFrom(
+                foregroundColor: Colors.blue,
+                side: BorderSide(color: Colors.blue),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
+              ),
+              child: const Text('Cancelar'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+                // Cerrar el diálogo
+                Navigator.of(dialogContext).pop();
+
+                // Llamada a la API para actualizar
+                final status = await produccion.productionUpdate(
+                  id,
+                  nombreEditado,
+                  fechaFinEditada,
+                  int.parse(cantidadEditada),
+                  etapaEditada,
+                );
+
+                // Mostrar mensaje de actualización
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      status['message'] ?? 'Producción actualizada con éxito',
+                    ),
+                    backgroundColor: Colors.green,
+                  ),
+                );
+
+                // Actualizar la lista de producciones
+                setState(() {
+                  produccionesFuture = produccion.productionGet();
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.orange,
+                foregroundColor: Colors.white,
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 10,
+                ),
+              ),
+              child: const Text('Actualizar'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Future<void> eliminarProduccion(dynamic item) async {
     // Obtener el ID de la etapa
     final id = item['id_produccion'];
@@ -90,6 +305,7 @@ class _GestionProduccionScreenState extends State<GestionProduccionScreen> {
     setState(() {
       _etapas = response.map<Etapa>((e) => Etapa.fromJson(e)).toList();
     });
+    
   }
 
   Future<void> _selectDateInicio(BuildContext context) async {
@@ -148,12 +364,6 @@ class _GestionProduccionScreenState extends State<GestionProduccionScreen> {
     }
   }
 
-  // void eliminarProduccion(int index) {
-  //   setState(() {
-  //     _producciones.removeAt(index);
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -194,7 +404,6 @@ class _GestionProduccionScreenState extends State<GestionProduccionScreen> {
                   ),
                   const SizedBox(height: 8),
                   DropdownButtonFormField<int>(
-                    // value: _etapaSeleccionada,
                     decoration: const InputDecoration(
                       labelText: 'Etapa de Producción',
                     ),
@@ -395,8 +604,7 @@ class _GestionProduccionScreenState extends State<GestionProduccionScreen> {
                                           Icons.edit,
                                           color: Colors.orange,
                                         ),
-                                        onPressed: () {},
-                                        // editarEtapa(item),
+                                        onPressed: () => editarProduccion(item),
                                         tooltip: 'Editar Etapa',
                                       ),
                                       // Botón de eliminar

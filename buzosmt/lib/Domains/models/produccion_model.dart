@@ -9,19 +9,18 @@ class Produccion {
   Future<Map<String, dynamic>> productionUpdate(
     int proId,
     String proNombre,
-    String proFechaInicio,
     String proFechaFin,
     int proCantidad,
     int ? proEtapa,
   ) async {
     final produccion = {
-      'proNombre': proNombre,
-      'proFechaInicio': proFechaInicio,
-      'proFechaFin': proFechaFin,
-      'proCantidad': proCantidad,
-      'proEtapa': proEtapa,
+      'produccion_nombre' : proNombre,
+    'produccion_fecha_fin': proFechaFin,
+    'produccion_cantidad': proCantidad,
+    'produccion_etapa': proEtapa
     };
     final data = jsonEncode(produccion);
+    print(data);
     final status = await productionObj.update(proId,data);
     return status;
   }
@@ -41,7 +40,6 @@ class Produccion {
     'pro_etapa': proEtapa
     };
     final data = jsonEncode(produccion);
-    print(data);
     final status = await productionObj.create(data);
     return status;
   }
