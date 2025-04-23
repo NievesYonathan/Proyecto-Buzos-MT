@@ -46,7 +46,7 @@ class ProductionRepository {
     final response = await http.put(
       Uri.parse('$baseUrl/produccion-editar/$id'),
       headers: {'Content-Type': 'application/json'},
-      body: jsonEncode(data),
+      body: data
     );
     final status = jsonDecode(response.body);
     if (response.statusCode == 400) {

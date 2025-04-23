@@ -20,7 +20,6 @@ class Produccion {
     'produccion_etapa': proEtapa
     };
     final data = jsonEncode(produccion);
-    print(data);
     final status = await productionObj.update(proId,data);
     return status;
   }
