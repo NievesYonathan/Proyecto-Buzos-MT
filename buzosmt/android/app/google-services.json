@@ -1,1 +1,29 @@
-{"installed":{"client_id":"193487647390-cangvgajaoh21mopgbnk8vfva6p1gt0v.apps.googleusercontent.com","project_id":"buzosmt","auth_uri":"https://accounts.google.com/o/oauth2/auth","token_uri":"https://oauth2.googleapis.com/token","auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs"}}
+{
+    "project_info": {
+      "project_number": "674773445457",
+      "project_id": "buzos-mt",
+      "storage_bucket": "buzos-mt.firebasestorage.app"
+    },
+    "client": [
+      {
+        "client_info": {
+          "mobilesdk_app_id": "1:674773445457:android:93ca064e757190470e4170",
+          "android_client_info": {
+            "package_name": "com.example.buzosmt"
+          }
+        },
+        "oauth_client": [],
+        "api_key": [
+          {
+            "current_key": "AIzaSyBrlM_Q-FyOgVYr_wyJ-C0Y_iGMLHjpvHQ"
+          }
+        ],
+        "services": {
+          "appinvite_service": {
+            "other_platform_oauth_client": []
+          }
+        }
+      }
+    ],
+    "configuration_version": "1"
+  }

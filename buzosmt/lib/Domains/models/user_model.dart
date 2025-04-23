@@ -52,7 +52,7 @@ class User {
       'usu_fecha_nacimiento': usuFechaNacimiento,
       'usu_sexo': usuSexo,
       'usu_telefono': usuTelefono,
-      'usu_email': usuEmail,
+      'email': usuEmail,
       'usu_estado': usuEstado,
       'password': password,
       'password_confirmation': passwordConfirmation,

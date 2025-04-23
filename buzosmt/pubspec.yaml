@@ -33,7 +33,8 @@ dependencies:
   intl: ^0.20.2
   image_picker: ^1.0.7
   flutter_svg: ^2.0.7
-  google_sign_in: ^5.4.0
+  google_sign_in: ^6.1.0
+  firebase_auth: ^4.9.0 # Opcional si usas Firebase
   flutter_custom_clippers: ^2.1.0
   fl_chart: ^0.65.0
   

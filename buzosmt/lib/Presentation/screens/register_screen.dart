@@ -6,6 +6,9 @@ import '../../Domains/usecases/login_user.dart';
 import 'package:intl/intl.dart';
 import '../../main.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class RegisterScreen extends StatelessWidget {
   const RegisterScreen({super.key});
@@ -123,34 +126,7 @@ class RegisterScreen extends StatelessWidget {
                               // Registration form
                               const _RegisterForm(),
                               
-                              // Google Registration Button
-                              const SizedBox(height: 20),
-                              Center(
-                                child: ElevatedButton.icon(
-                                  onPressed: () {
-                                    // Implementar registro con Google
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    foregroundColor: Colors.grey[800],
-                                    padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                      side: BorderSide(color: Colors.grey[300]!),
-                                    ),
-                                    elevation: 2,
-                                  ),
-                                  icon: Image.asset(
-                                    'assets/images/google.png', // Asegúrate que esta ruta sea correcta
-                                    height: 24,
-                                    width: 24,
-                                  ),
-                                  label: const Text(
-                                    "Registrarme con Google",
-                                    style: TextStyle(fontSize: 16),
-                                  ),
-                                ),
-                              ),
+                              // Google Registration Button está ahora dentro de _RegisterForm
                             ],
                           ),
                         ),
@@ -337,6 +313,143 @@ class _FormRegisterState extends State<_RegisterForm> {
           MaterialPageRoute(builder: (context) => LoginScreen()),
         );
       }
+    }
+  }
+
+  // Función para iniciar sesión con Google
+  Future<void> _signInWithGoogle() async {
+    try {
+      final GoogleSignIn googleSignIn = GoogleSignIn(
+        scopes: [
+          'email',
+          'https://www.googleapis.com/auth/userinfo.profile',
+        ],
+        );
+
+      // Intentar iniciar sesión con Google
+      final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+      
+      if (googleUser == null) {
+        // El usuario canceló el inicio de sesión
+        return;
+      }
+
+      // Obtener la autenticación del usuario de Google
+      final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
+
+      // Mostrar un indicador de carga
+      showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (BuildContext context) {
+          return const Center(
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Color(0xFF20A67B)),
+            ),
+          );
+        },
+      );
+
+      try {
+        // Obtener información adicional del usuario
+        final http.Response response = await http.get(
+          Uri.parse('https://www.googleapis.com/oauth2/v3/userinfo'),
+          headers: {'Authorization': 'Bearer ${googleAuth.accessToken}'},
+        );
+
+        // Cerrar el diálogo de carga
+        Navigator.of(context).pop();
+
+        if (response.statusCode == 200) {
+          final userData = json.decode(response.body);
+          
+          // Rellenar los campos del formulario con los datos obtenidos
+          setState(() {
+            // Email
+            usuEmailController.text = googleUser.email;
+            
+            // Nombre y apellidos
+            if (userData['given_name'] != null) {
+              usuNombresController.text = userData['given_name'];
+            }
+            
+            if (userData['family_name'] != null) {
+              usuApellidosController.text = userData['family_name'];
+            }
+            
+            // Si no hay given_name o family_name separados, intentar con el nombre completo
+            if (userData['name'] != null && (usuNombresController.text.isEmpty || usuApellidosController.text.isEmpty)) {
+              final String fullName = userData['name'];
+              final List<String> nameParts = fullName.split(' ');
+              
+              if (nameParts.length > 1) {
+                // Si el campo de nombres está vacío, llenarlo
+                if (usuNombresController.text.isEmpty) {
+                  usuNombresController.text = nameParts.first;
+                }
+                
+                // Si el campo de apellidos está vacío, llenarlo con el resto
+                if (usuApellidosController.text.isEmpty) {
+                  usuApellidosController.text = nameParts.sublist(1).join(' ');
+                }
+              } else if (usuNombresController.text.isEmpty) {
+                // Si solo hay una palabra en el nombre y el campo está vacío
+                usuNombresController.text = fullName;
+              }
+            }
+            
+            // Generar una contraseña aleatoria para el usuario
+            String randomPassword = DateTime.now().millisecondsSinceEpoch.toString();
+            passwordController.text = randomPassword;
+            passwordConfirmationController.text = randomPassword;
+          });
+
+          // Mostrar mensaje al usuario para completar los datos restantes
+          Fluttertoast.showToast(
+            msg: "Por favor completa los campos restantes para finalizar el registro",
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: const Color(0xFF20A67B),
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+        } else {
+          // Error al obtener la información del usuario
+          Fluttertoast.showToast(
+            msg: "No se pudo obtener la información de tu cuenta de Google",
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            backgroundColor: Colors.red,
+            textColor: Colors.white,
+            fontSize: 16.0,
+          );
+        }
+      } catch (e) {
+        // Cerrar el diálogo de carga si hay un error
+        if (Navigator.canPop(context)) {
+          Navigator.of(context).pop();
+        }
+        
+        // Mostrar error
+        Fluttertoast.showToast(
+          msg: "Error al procesar la información: ${e.toString()}",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0,
+        );
+      }
+    } catch (e) {
+      // Error en el proceso de inicio de sesión con Google
+      Fluttertoast.showToast(
+        msg: "Error al iniciar sesión con Google: ${e.toString()}",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0,
+      );
     }
   }
 
@@ -689,6 +802,33 @@ class _FormRegisterState extends State<_RegisterForm> {
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
+              ),
+            ),
+          ),
+          
+          // Google Registration Button
+          const SizedBox(height: 20),
+          Center(
+            child: ElevatedButton.icon(
+              onPressed: _signInWithGoogle,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.white,
+                foregroundColor: Colors.grey[800],
+                padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                  side: BorderSide(color: Colors.grey[300]!),
+                ),
+                elevation: 2,
+              ),
+              icon: Image.asset(
+                'assets/images/google.png', // Asegúrate que esta ruta sea correcta
+                height: 24,
+                width: 24,
+              ),
+              label: const Text(
+                "Registrarme con Google",
+                style: TextStyle(fontSize: 16),
               ),
             ),
           ),
