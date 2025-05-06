@@ -1,4 +1,5 @@
-# Implementación de un Sistema de Gestión para la Empresa Buzos MT
+
+# :sunglasses: Implementación de un Sistema de Gestión para la Empresa Buzos MT
 
 <p align="center">
 <img src="https://github.com/NievesYonathan/Proyecto-Buzos-MT/assets/164965803/44c6abdd-11de-4d60-b945-41a448bd0e0e">
