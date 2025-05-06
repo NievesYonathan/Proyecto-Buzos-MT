@@ -7,7 +7,7 @@ use App\Models\Tarea;
 use App\Models\Estado;
 use App\Models\EmpTarea;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
 
 class TareaApiController extends Controller
 {
@@ -29,22 +29,38 @@ class TareaApiController extends Controller
             'tar_estado' => 1,
         ]);
 
-        return response()->json($tarea, 201);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Etapa registrada correctamente',
+        ]);
     }
 
     public function update(Request $request, $id)
     {
+        $tarea = Tarea::find($id);
+
+        if (!$tarea) {
+            return response()->json(['message' => 'Tarea no encontrada'], 404);
+        }
+
         $request->validate([
-            'tar_nombre' => 'string|max:50',
-            'tar_descripcion' => 'string|max:200',
-            'tar_estado' => 'numeric',
+            'tar_nombre' => 'required|string|max:50',
+            'tar_descripcion' => 'required|string|max:200',
+            'tar_estado' => 'required|numeric',
         ]);
 
-        $tarea = Tarea::findOrFail($id);
-        $tarea->update($request->all());
+        $tarea->update([
+            'tar_nombre' => $request->tar_nombre,
+            'tar_descripcion' => $request->tar_descripcion,
+            'tar_estado' => $request->tar_estado,
+        ]);
 
-        return response()->json(['message' => 'Tarea actualizada']);
+        return response()->json([
+            'status' => 200,
+            'message' => 'Tarea actualizada correctamente',
+        ]);
     }
+    
 
     public function show($id)
     {

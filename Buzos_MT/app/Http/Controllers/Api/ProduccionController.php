@@ -86,8 +86,8 @@ class ProduccionController extends Controller
         }
 
         $data = [
-            'producto' => $producto,
-            'status' => 201
+            'message' => 'Producción creada exitosamente',
+                'status' => 200
         ];
 
         return response()->json($data, 201);
@@ -118,7 +118,7 @@ class ProduccionController extends Controller
                 'errors' => $validator->errors(),
                 'status' => 400
             ];
-            return response()->json($data, 400);
+            return response()->json($data, 400); 
         }
 
         $producto->pro_nombre = $request->produccion_nombre;
@@ -130,14 +130,13 @@ class ProduccionController extends Controller
 
         $data = [
             'message' => 'Registro actualizado',
-            'producto' => $producto,
             'status' => 200
         ];
         
-        if (!$request->expectsJson()) {
-            // Redirigir o retornar una respuesta de éxito
-            return redirect()->route('pro_fabricados')->with('success', 'Producción actualizada exitosamente.');
-        }
+        // if (!$request->expectsJson()) {
+        //     // Redirigir o retornar una respuesta de éxito
+        //     return redirect()->route('pro_fabricados')->with('success', 'Producción actualizada exitosamente.');
+        // }
 
         return response()->json($data, 200);
     }

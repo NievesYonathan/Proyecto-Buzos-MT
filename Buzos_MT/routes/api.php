@@ -1,22 +1,22 @@
 <?php
-
 use App\Http\Controllers\Api\BuzosImageController;
 
+use App\Http\Controllers\MateriaPrimaController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\UserProfileController;
+use App\Http\Controllers\Api\ApiAuthenticatedSessionController;
+use App\Http\Controllers\Api\ApiRegisteredUserController;
 use App\Http\Controllers\Api\EmpTareaController;
 use App\Http\Controllers\Api\ProduccionController;
 use App\Http\Controllers\Api\RegProMateriaPrimaController;
-use App\Http\Controllers\Api\MateriaPrimaController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\UserProfileController;
 use App\Http\Controllers\Api\EtapaController;
-use App\Models\RegProMateriaPrima;
 use App\Http\Controllers\Api\UserApiController;
 use App\Http\Controllers\Api\TipoDocApiController;
 use App\Http\Controllers\Api\EstadoApiController;
 use App\Http\Controllers\Api\CargoApiController;
 use App\Http\Controllers\Api\ListaCargoApiController;
 use App\Http\Controllers\Api\TareaApiController;
+use App\Http\Controllers\Api\PasswordResetLinkController;
 
 // Rutas para gestión de imágenes de usuarios
 Route::post('/user/image/{id}', [UserProfileController::class, 'storeImage'])->name('storeImage');
@@ -35,15 +35,22 @@ Route::post('/materia-prima-agregar', [MateriaPrimaController::class, 'store'])-
 Route::put('/materia-prima-editar/{id}', [MateriaPrimaController::class,'update'])->name('update-producto');
 Route::delete('/materia-prima/{id}', [MateriaPrimaController::class, 'delete'])->name('materia-prima-delete');
 
+//Rutas para la Api de la aplicacion mobile
 
+Route::get('/Login', [ApiAuthenticatedSessionController::class, 'create']);
+Route::post('/Login', [ApiAuthenticatedSessionController::class, 'store']);
+Route::post('/Register', [ApiRegisteredUserController::class, 'store']);
+// Route::get('/Register',[ApiRegisteredUserController::class, 'create']);
+Route::middleware('jwt')->delete('/logout', [ApiAuthenticatedSessionController::class, 'destroy']);
+Route::post('/password/reset', [PasswordResetLinkController::class, 'store'])->name('password.email_api');
 
 // Rutas para 'Jefe Producción'
 Route::get('/producciones', [ProduccionController::class, 'index']);
 Route::get('/produccion/{id}', [ProduccionController::class, 'show']);
 Route::post('/nueva-produccion', [ProduccionController::class, 'store']);
 Route::put('/produccion-editar/{id}', [ProduccionController::class, 'update'])->name('update_produccion_api');
-Route::patch('/produccion-editar-selec/{id}', [ProduccionController::class, 'updatePartial']);
-Route::delete('/produccion-eliminar/{id}', [ProduccionController::class, 'destroy']);
+// Route::patch('/produccion-editar-selec/{id}', [ProduccionController::class, 'updatePartial']);
+Route::delete('/produccion-eliminar/{id}', [ProduccionController::class, 'destroy']);                               
 Route::post('/nueva-prod-matPrima/{id}', [RegProMateriaPrimaController::class, 'store']);
 Route::put('/editar-materiaPrima', [RegProMateriaPrimaController::class, 'update'])->name('update_mPrima_api');
 Route::delete('/eliminar-materiaPrima/{id}', [RegProMateriaPrimaController::class, 'destroy']);
