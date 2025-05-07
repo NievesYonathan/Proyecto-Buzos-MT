@@ -1,0 +1,454 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+    overflow-x: hidden;
+}
+
+section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #0f3443, #34e69f);
+    overflow: hidden;
+}
+
+.color {
+    position: absolute;
+    filter: blur(100px);
+    /* Reducción del blur para mayor visibilidad */
+}
+
+
+.box {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+
+.square {
+    position: absolute;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    animation: animate 10s linear infinite;
+    animation-delay: calc(-1s * var(--i));
+}
+
+@keyframes animate {
+
+    0%,
+    100% {
+        transform: translatex(-30px);
+    }
+
+    50% {
+        transform: translateY(30px);
+    }
+}
+
+.square:nth-child(1) {
+    top: -50px;
+    right: -60px;
+    width: 100px;
+    height: 100px;
+}
+
+.square:nth-child(2) {
+    top: 150px;
+    left: -100px;
+    width: 120px;
+    height: 120px;
+    z-index: 2;
+}
+
+.square:nth-child(3) {
+    bottom: 50px;
+    right: -60px;
+    width: 80px;
+    height: 80px;
+    z-index: 2;
+}
+
+.square:nth-child(4) {
+    bottom: -40px;
+    left: 100px;
+    width: 50px;
+    height: 50px;
+}
+
+.square:nth-child(5) {
+    top: -80px;
+    left: 140px;
+    width: 60px;
+    height: 60px;
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+    min-height: 400px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+.form .inputBox select,
+.form .inputBox input {
+    width: 100%;
+    max-width: 300px;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    border-radius: 35px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.form .inputBox select option {
+    background: #12464c77;
+    color: #fff;
+    padding: 10px;
+}
+
+.form .inputBox select option:hover {
+    background: #12464c77;
+}
+
+.form .inputBox select option:selected {
+    background: #12464c77;
+}
+
+.form .inputBox select option,
+.form .inputBox input::placeholder {
+    color: #fff;
+    position: center;
+}
+
+.form {
+    position: relative;
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.form h2 {
+    position: relative;
+    color: #fff;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-top: -30px;
+    /* Reduce el margen superior */
+    margin-bottom: 10px;
+    /* Ajusta el margen inferior si es necesario */
+    text-align: center;
+}
+
+.form h4 {
+    position: center;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    margin-top: -50px;
+    /* Reduce el margen superior */
+    margin-bottom: 2px;
+    /* Ajusta el margen inferior si es necesario */
+    text-align: center;
+}
+
+
+.form h2::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    bottom: -5px;
+    width: 80px;
+    height: 4px;
+    background: #fff;
+    transform: translateX(-50%);
+}
+
+.form .inputBox {
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.form .inputBox input[type="submit"] {
+    background: #12464c77;
+    color: #fff;
+    max-width: 150px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-weight: 600;
+}
+
+.submit-btn {
+    display: inline-block;
+    background: #12464c77;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 35px;
+    text-decoration: none;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+}
+
+.forget {
+    margin-top: 20px;
+    margin-bottom: -20px;
+    color: #fff;
+    text-align: center;
+}
+
+.forget a {
+    color: #fff;
+    /* Color de texto por defecto */
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+    /* Añade una transición suave */
+}
+
+.forget a:hover {
+    color: #12464c;
+    /* Cambia el color del texto al pasar el mouse */
+    transform: scale(1.05);
+    /* Escala el enlace ligeramente al pasar el mouse */
+}
+
+
+@media (max-width: 768px) {
+
+    .box,
+    .container {
+        width: 90%;
+        max-width: 350px;
+    }
+
+    .form .inputBox input,
+    .form .inputBox select {
+        max-width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .box,
+    .container {
+        width: 95%;
+        max-width: 300px;
+    }
+
+    .form h2 {
+        font-size: 18px;
+    }
+
+    .form .inputBox input,
+    .form .inputBox select {
+        max-width: 95%;
+        font-size: 14px;
+    }
+
+    .submit-btn {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+}
+
+
+
+
+/*Arreglo de contenedor y squares para el formulario de registros*/
+
+
+
+.squares {
+    position: absolute;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    animation: animate 10s linear infinite;
+    animation-delay: calc(-1s * var(--i));
+}
+
+@keyframes animate {
+
+    0%,
+    100% {
+        transform: translatex(-30px);
+    }
+
+    50% {
+        transform: translateY(30px);
+    }
+}
+
+.squares:nth-child(1) {
+    top: -60px;
+    right: -120px;
+    width: 120px;
+    height: 120px;
+}
+
+.squares:nth-child(2) {
+    top: 150px;
+    left: -200px;
+    width: 130px;
+    height: 130px;
+    z-index: 2;
+}
+
+.squares:nth-child(3) {
+    bottom: 3px;
+    right: -70px;
+    width: 80px;
+    height: 80px;
+    z-index: 2;
+}
+
+.squares:nth-child(4) {
+    bottom: -40px;
+    left: 180px;
+    width: 50px;
+    height: 50px;
+}
+
+.squares:nth-child(5) {
+    top: -80px;
+    left: 10px;
+    width: 60px;
+    height: 60px;
+}
+
+
+#registro-container {
+    width: 600px !important;
+    padding: 20px;
+    border-radius: 10px;
+    background-color: rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    position: relative;
+    left: -120px;
+    /* Desplazamiento a la izquierda */
+}
+
+@media (max-width: 768px) {
+    #registro-container {
+        width: 90% !important;
+        /* Ancho adaptado para pantallas pequeñas */
+    }
+}
+
+.form .inputBox {
+    display: flex;
+    flex-direction: column;
+    /* Coloca el label arriba del input */
+    margin-top: 20px;
+    width: 100%;
+}
+
+.form .inputBox label {
+    color: #fff;
+    font-size: 16px;
+    margin-left: 25px;
+    margin-bottom: 5px;
+    /* Espacio entre el label y el input */
+}
+
+.form .inputBox input[type="date"] {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    border-radius: 35px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    color: #fff;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* Asegúrate de que el contenedor principal tenga posición relativa */
+.full-box {
+    position: relative;
+
+}
+
+/* Posiciona el botón en la esquina superior izquierda */
+#btn-reversa {
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 10px;
+    /* Ajusta el margen si es necesario */
+}
+
+/* Opcional: Si quieres que el botón esté encima de otros elementos, asegúrate de darle un z-index alto */
+#btn-reversa {
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+
+
+/* Asegúrate de que el contenedor principal tenga posición relativa */
+.full-boxx {
+    position: relative;
+
+}
+
+/* Posiciona el botón en la esquina superior izquierda */
+#btn-reversas {
+    position: absolute;
+    top: 20px;
+    left: -100px;
+    margin: 6px;
+    /* Ajusta el margen si es necesario */
+}
+
+/* Opcional: Si quieres que el botón esté encima de otros elementos, asegúrate de darle un z-index alto */
+#btn-reversas {
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilo para el campo de texto cuando está vacío */
+.inputBox input[type="text"] {
+    color: #ffffff;
+    /* Color gris claro para el texto del placeholder */
+}
+
+/* Estilo cuando el campo de texto está en foco y el tipo cambia a date */
+.inputBox input[type="date"] {
+    color: #000;
+    /* Color negro para la fecha seleccionada */
+}   
