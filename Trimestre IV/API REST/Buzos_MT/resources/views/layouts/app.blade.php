@@ -31,9 +31,6 @@
     <!-- jQuery Custom Content Scroller V3.1.5 -->
     <link rel="stylesheet" href="{{ asset('css/jquery.mCustomScrollbar.css') }}">
 
-     <!--Laravel Notify-->
-    @notifyCss
-
     <!-- SweetAlert2 CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
@@ -86,9 +83,6 @@
 {{--     <script src="{{ asset('js/jquery.mCustomScrollbar.concat.min.js') }}"></script>
  --}}    <script src="{{ asset('js/duplicarInputs.js') }}"></script>
 
-    <!-- Laravel Notify -->
-    <x-notify::notify />
-    @notifyJs
     <!-- Gestión de apis de producción -->
     <script src="{{ asset('js/produccion-update.js') }}"></script>
     <!-- Gestión de inputs vacíos -->
