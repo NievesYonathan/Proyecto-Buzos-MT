@@ -4,16 +4,15 @@
 <img src="https://github.com/NievesYonathan/Proyecto-Buzos-MT/assets/164965803/44c6abdd-11de-4d60-b945-41a448bd0e0e">
 </p>
 
-## Problematíca del proyecto
+## Problematíca de proyecto
 
 * En Buzos MT, la falta de un software de gestión para producción y almacenamiento afecta gravemente la planificación y gestión del inventario.
 * Esto obliga al personal a realizar registros manuales laboriosos y propensos a errores, como controlar materiales y productos terminados en libretas.
-* Esta situación ha persistido desde la fundación de la empresa hace 5 años, obstaculizando la eficiencia y limitando el crecimiento.
+* Esta situación, persistente desde la fundación hace 5 años, obstaculiza la eficiencia y limita el crecimiento de la empresa.
 
 ## Objetivo general
 
-* Diseñar e implementar un sistema de información integral que abarque los procesos clave de la empresa Buzos MT.
-* Los procesos incluyen:
+* Diseñar e implementar un sistema de información que abarque los procesos clave de la empresa Buzos MT, los cuáles serían:
 
   * Administración de usuarios
   * Asignación de tareas
@@ -22,25 +21,14 @@
   * Gestión de proveedores
   * Gestión de reportes
   * Gestión de productos fabricados
-* Todo con el fin de optimizar la eficiencia operativa.
+* Con el fin de optimizar la eficiencia operativa.
 
 ## Objetivos específicos
 
-* **Sistema de autenticación seguro:**
-
-  * Permitir que los usuarios se registren e inicien sesión de manera eficiente y confiable.
-
-* **Roles de usuario y permisos:**
-
-  * Implementar roles y permisos adecuados para limitar el acceso a las funciones del sistema según las responsabilidades de cada usuario.
-
-* **Sistema de seguimiento de inventario:**
-
-  * Registrar y mantener actualizado el stock de materias primas disponibles en el almacén.
-
-* **Planificación de la producción:**
-
-  * Crear un módulo para programar y asignar tareas de manera eficiente, teniendo en cuenta la disponibilidad de recursos y los plazos de entrega.
+* Desarrollar un sistema de autenticación seguro que permita a los usuarios registrarse e iniciar sesión de manera eficiente y confiable.
+* Implementar roles de usuario y permisos adecuados que limiten el acceso a las funciones del sistema según las responsabilidades de cada usuario.
+* Diseñar un sistema de seguimiento de inventario que permita registrar y mantener actualizado el stock de materias primas disponibles en el almacén.
+* Crear un módulo de planificación de la producción que permita programar y asignar tareas de manera eficiente, teniendo en cuenta la disponibilidad de recursos y los plazos de entrega.
 
 ## Justificación
 
@@ -53,7 +41,7 @@
 
 ## Alcance y delimitación
 
-* El proyecto se centra en el diseño e implementación de un sistema de información integral para Buzos Mayte, fabricante de buzos personalizados.
-* El estudio se llevará a cabo en un período de **18 meses**, dividido en **6 trimestres**, con un cronograma detallado de entregables para cada trimestre.
-* Se utilizarán **métodos cuantitativos y cualitativos** para analizar y recopilar datos sobre la efectividad y objetividad del nuevo sistema.
+* Esta investigación se centra en el diseño e implementación de un sistema de información integral para la empresa Buzos Mayte, fabricante de buzos personalizados.
+* Este estudio se llevará a cabo en un periodo de **18 meses**, dividido en **6 trimestres**, con un cronograma detallado en los entregables de cada trimestre.
+* Se utilizarán **métodos cuantitativos y cualitativos** para analizar y recopilar datos sobre la objetividad del nuevo sistema.
 
