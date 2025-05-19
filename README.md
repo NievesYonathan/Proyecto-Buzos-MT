@@ -21,4 +21,3 @@ Este proyecto es crucial para optimizar la gestión de inventario y producción 
 # Alcance y delimitación 
 Esta investigación se centra en el diseño e implementacion de un sistema de información integral para la empresa Buzos Mayte fabricante de buzos personalizados.
 Este estudio se llevará a cabo en un periodo de 18 meses divido en 6 trimestre en un cronograma detallado en los entregables de cada trimestre ,esto incluira metodos cuantitativos y cualitativos para analizar y recopilar datos sobre la objetividad del nuevo sistema.
-
