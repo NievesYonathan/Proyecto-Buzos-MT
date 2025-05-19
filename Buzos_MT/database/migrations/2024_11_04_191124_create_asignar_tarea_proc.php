@@ -10,6 +10,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+         DB::unprepared("DROP PROCEDURE IF EXISTS asignar_tarea");
+
         DB::unprepared("CREATE DEFINER=`root`@`localhost` PROCEDURE `asignar_tarea`(IN `p_id_tarea` INT, IN `p_id_empleado` INT)
 BEGIN
     -- Asignar tarea a empleado

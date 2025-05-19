@@ -8,8 +8,12 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
+
+     
     public function up(): void
     {
+             DB::unprepared("DROP PROCEDURE IF EXISTS ConsultarTareasPorOperario");
+
         DB::unprepared("CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarTareasPorOperario`(IN `usuario_num_doc` INT)
 BEGIN
     SELECT t.tar_nombre, et.emp_tar_fecha_asignacion, et.emp_tar_fecha_entrega

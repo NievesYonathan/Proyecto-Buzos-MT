@@ -10,6 +10,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        DB::unprepared("DROP PROCEDURE IF EXISTS ObtenerDatosSeguridad");
+
         DB::unprepared("CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerDatosSeguridad`(IN `numero_doc` INT, IN `tipo_doc` INT)
 BEGIN
     -- Selecciona datos de la tabla 'seguridad' y descifra la columna 'seg_clave_hash'

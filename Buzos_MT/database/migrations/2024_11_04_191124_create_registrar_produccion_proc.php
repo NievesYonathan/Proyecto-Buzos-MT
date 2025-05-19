@@ -10,6 +10,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+                 DB::unprepared("DROP PROCEDURE IF EXISTS registrar_produccion");
+
         DB::unprepared("CREATE DEFINER=`root`@`localhost` PROCEDURE `registrar_produccion`(IN `p_id_produccion` INT, IN `p_id_materia_prima` INT)
 BEGIN
     -- Restar cantidad de materia prima utilizada

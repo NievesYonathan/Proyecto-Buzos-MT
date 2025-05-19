@@ -199,7 +199,7 @@ class ProduccionController extends Controller
         $producto->delete();
 
         $data = [
-            'message' => 'Registrto eliminado',
+            'message' => 'Producción eliminada correctamente',
             'status' => 200
         ]; 
 

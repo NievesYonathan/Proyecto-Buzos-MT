@@ -10,7 +10,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::unprepared("CREATE DEFINER=`root`@`localhost` PROCEDURE `ConsultarEstadoProduccion`(IN `produccion_id` INT)
+        // Asegura que no exista previamente
+        DB::unprepared("DROP PROCEDURE IF EXISTS ConsultarEstadoProduccion");
+
+        DB::unprepared("CREATE PROCEDURE ConsultarEstadoProduccion(IN produccion_id INT)
 BEGIN
     SELECT p.pro_nombre, p.pro_fecha_inicio, p.pro_fecha_fin, e.eta_nombre AS estado_actual
     FROM produccion AS p

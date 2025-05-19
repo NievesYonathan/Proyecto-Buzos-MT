@@ -10,6 +10,8 @@ return new class extends Migration
      */
     public function up(): void
     {
+        DB::unprepared("DROP PROCEDURE IF EXISTS ObtenerDatosSeguridadGmail");
+
         DB::unprepared("CREATE DEFINER=`root`@`localhost` PROCEDURE `ObtenerDatosSeguridadGmail`(IN `gmail` VARCHAR(50))
 BEGIN
     SELECT 
