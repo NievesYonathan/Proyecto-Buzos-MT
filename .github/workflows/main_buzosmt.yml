@@ -27,15 +27,20 @@ jobs:
         id: check_files
         uses: andstor/file-existence-action@v1
         with:
-          files: 'composer.json'
+          files: 'Trimestre IV/API REST/Buzos_MT/composer.json'
 
       - name: Run composer install if composer.json exists
         if: steps.check_files.outputs.files_exists == 'true'
-        run: composer validate --no-check-publish && composer install --prefer-dist --no-progress
+        run: |
+          cd "Trimestre IV/API REST/Buzos_MT"
+          composer validate --no-check-publish
+          composer install --prefer-dist --no-progress
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./* -r
-
+        run: |
+          cd "Trimestre IV/API REST/Buzos_MT"
+          zip -r ../../../../release.zip ./
+          
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
         with:

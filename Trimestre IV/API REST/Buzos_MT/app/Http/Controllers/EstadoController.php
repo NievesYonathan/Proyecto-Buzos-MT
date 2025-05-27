@@ -13,7 +13,7 @@ class EstadoController extends Controller
     public function __construct()
     {
         // Configuración de la API base
-        $this->apiBase = 'http://localhost/Proyecto-Buzos-MT/Buzos_MT/public/api';
+        $this->apiBase = 'http://localhost/dash/Proyecto-Buzos-MT/Trimestre IV/API REST/Buzos_MT/public/api';
     }
 
     // Obtener todos los estados
