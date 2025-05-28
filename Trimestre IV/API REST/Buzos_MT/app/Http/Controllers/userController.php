@@ -11,7 +11,7 @@ class UserController extends Controller
 
     public function __construct()
     {
-        $this->apiBase = 'http://localhost/Proyecto-Buzos-MT/Buzos_MT/public/api';
+        $this->apiBase = 'http://127.0.0.1:8000/api';
         Http::timeout(5);
     }
 

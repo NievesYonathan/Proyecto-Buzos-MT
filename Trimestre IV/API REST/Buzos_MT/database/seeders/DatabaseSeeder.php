@@ -21,6 +21,12 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
+            TipoDocSeeder::class,
+            EstadosSeeder::class,
+            CargosSeeder::class,
+            UsuariosSeeder::class,
+            SeguridadSeeder::class,
+            CargosHasUsuariosSeeder::class,
             EtapasSeeder::class,
             ProduccionSeeder::class,
         ]);
